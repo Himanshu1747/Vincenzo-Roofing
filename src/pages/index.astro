@@ -41,6 +41,16 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 						exterior solutions backed by exceptional service and a
 						lifetime workmanship warranty.
 					</p>
+					<ul class="listworks">
+						<li>Locally Owned Small Business</li>
+						<li>Full Service Exteriors Contractor</li>
+						<li>High Quality Roofing & Siding Materials</li>
+						<li>Skilled Professional Workmanship</li>
+						<li>Outstanding Customer Service</li>
+						<li>Lifetime Workmanship Warranty</li>
+						<li>Transparent, Competitive Pricing</li>
+						<li>Offering On-site and Virtual FREE Estimates</li>
+					</ul>
 					<div class="universal-button">
 						<a
 							href="#"
@@ -483,6 +493,20 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 				max-width: fit-content;
 				width: 100%;
 			}
+
+			ul.listworks li {
+				background: #ffffff3d;
+				color: #ffffff;
+				padding: 4px 10px;
+				border-radius: 9px;
+				font-size: 14px;
+			}
+			ul.listworks {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 15px;
+				padding: 20px 0px;
+			}
 			@media (max-width: 1600px) {
 				section.home-banner {
 					min-height: 629px;
@@ -521,9 +545,20 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 				.process-grids {
 					max-width: 100%;
 				}
+				section.home-banner {
+					min-height: 720px;
+					text-align: center;
+				}
+				ul.listworks {
+					justify-content: center;
+				}
+				ul.listworks li {
+					width: 45%;
+					text-align: center;
+				}
 			}
 			@media (max-width: 767px) {
-				.process-step{
+				.process-step {
 					max-width: 75px;
 				}
 				.service-holders .fs-30 {
@@ -540,6 +575,13 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 				}
 				.service-holders .fs-30 {
 					font-size: 18px;
+				}
+				ul.listworks li {
+					background: #ffffff3d;
+					color: #fff;
+					padding: 4px 9px;
+					border-radius: 9px;
+					font-size: 14px;
 				}
 			}
 			@media (max-width: 425px) {
