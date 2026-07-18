@@ -416,10 +416,14 @@ import HeaderLink from "./HeaderLink.astro";
 		ul.mainnav-links li.lastbuttons {
 			display: none;
 		}
+		    .lastbuttons a {
+        font-size: 14px;
+        padding: 5px 10px;
+    }
 	}
 	@media (max-width: 450px) {
 		.lastbuttons a {
-			font-size: 12px;
+			font-size: 13px;
 			padding: 5px 10px;
 		}
 		.menuholders {
@@ -480,7 +484,7 @@ import HeaderLink from "./HeaderLink.astro";
 		$(".menu-icon")
 			.off("click")
 			.on("click", function () {
-				$(this).find(".bars").toggleClass("active");
+				// $(this).find(".bars").toggleClass("active");
 				$(".main-navlists").slideToggle();
 			});
 
