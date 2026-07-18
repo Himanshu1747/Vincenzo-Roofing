@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nick Tracey Roofing - Formerly Seacoast Roofing & Exteriors | Roofing & Siding Contractor</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.0/index.min.css">
+<style>
+:root {
+  --color-white: #fff;
+  --color-black: #000;
+  --color-transparent: transparent;
+  --color-blue: #2722df;
+  --color-blue-dark: #1a16a8;
+  --color-blue-light: #eef0ff;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--color-gray-800);
+  line-height: 1.6;
+  background: var(--color-white);
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; text-decoration: none; }
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Top Bar */
+.top-bar {
+  background: var(--color-blue);
+  color: var(--color-white);
+  padding: 0.6rem 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.top-bar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.top-bar a { color: var(--color-white); }
+.top-bar a:hover { opacity: 0.85; }
+
+.top-bar-phone {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+/* Header */
+.header {
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-gray-200);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logo-main {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-blue);
+  letter-spacing: -0.02em;
+}
+
+.logo-sub {
+  font-size: 0.7rem;
+  color: var(--color-gray-500);
+  font-weight: 500;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.nav a {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-gray-700);
+  transition: color 0.2s;
+  position: relative;
+}
+
+.nav a:hover { color: var(--color-blue); }
+
+.nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-blue);
+  transition: width 0.3s;
+}
+
+.nav a:hover::after { width: 100%; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--color-blue);
+  color: var(--color-white);
+}
+
+.btn-primary:hover {
+  background: var(--color-blue-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-outline {
+  background: var(--color-white);
+  color: var(--color-blue);
+  border: 2px solid var(--color-blue);
+}
+
+.btn-outline:hover {
+  background: var(--color-blue);
+  color: var(--color-white);
+}
+
+.btn-white {
+  background: var(--color-white);
+  color: var(--color-blue);
+}
+
+.btn-white:hover {
+  background: var(--color-gray-100);
+  transform: translateY(-2px);
+}
+
+.mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--color-gray-800);
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(39,34,223,0.85) 0%, rgba(26,22,168,0.9) 100%),
+              url('https://image.qwenlm.ai/public_source/59df620e-ba75-407a-a825-eae3e075712c/11d8a8c67-edca-460d-93e0-9cc79c16452b.png') center/cover no-repeat;
+  color: var(--color-white);
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  padding: 4rem 0;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.hero h1 {
+  font-size: clamp(2.25rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+}
+
+.hero h1 span { color: #fde68a; }
+
+.hero-sub {
+  font-size: 1.125rem;
+  opacity: 0.95;
+  margin-bottom: 2rem;
+  max-width: 560px;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+
+.hero-phone {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.hero-phone a {
+  color: var(--color-white);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 500px;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+.hero-stat-num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fde68a;
+}
+
+.hero-stat-label {
+  font-size: 0.875rem;
+  opacity: 0.9;
+}
+
+/* Section */
+.section { padding: 5rem 0; }
+
+.section-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 3rem;
+}
+
+.section-tag {
+  display: inline-block;
+  color: var(--color-blue);
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.75rem;
+}
+
+.section-title {
+  font-size: clamp(1.875rem, 4vw, 2.75rem);
+  font-weight: 800;
+  color: var(--color-gray-900);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: var(--color-gray-600);
+}
+
+/* Features */
+.features {
+  background: var(--color-gray-50);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.feature-card {
+  background: var(--color-white);
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid var(--color-gray-200);
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 0;
+  background: var(--color-blue);
+  transition: height 0.3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-blue);
+}
+
+.feature-card:hover::before { height: 100%; }
+
+.feature-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--color-blue-light);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  color: var(--color-blue);
+  font-size: 1.5rem;
+}
+
+.feature-card h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--color-gray-900);
+}
+
+.feature-card p {
+  color: var(--color-gray-600);
+  font-size: 0.95rem;
+}
+
+/* Partners */
+.partners {
+  background: var(--color-white);
+  padding: 3rem 0;
+  border-top: 1px solid var(--color-gray-200);
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+.partners-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3rem;
+  opacity: 0.7;
+}
+
+.partner-logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-gray-700);
+  letter-spacing: -0.02em;
+}
+
+/* Process */
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  position: relative;
+}
+
+.step-card {
+  background: var(--color-white);
+  padding: 2.5rem 2rem;
+  border-radius: 1rem;
+  border: 2px solid var(--color-gray-200);
+  position: relative;
+  transition: all 0.3s;
+}
+
+.step-card:hover {
+  border-color: var(--color-blue);
+  box-shadow: var(--shadow-lg);
+}
+
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background: var(--color-blue);
+  color: var(--color-white);
+  border-radius: 50%;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 1.25rem;
+}
+
+.step-card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.step-card p {
+  color: var(--color-gray-600);
+}
+
+/* Services */
+.services {
+  background: linear-gradient(180deg, var(--color-gray-50) 0%, var(--color-white) 100%);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.service-card {
+  background: var(--color-white);
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid var(--color-gray-200);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-xl);
+}
+
+.service-img {
+  height: 220px;
+  overflow: hidden;
+  position: relative;
+}
+
+.service-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.service-card:hover .service-img img { transform: scale(1.08); }
+
+.service-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+}
+
+.service-body {
+  padding: 1.5rem;
+}
+
+.service-body h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--color-gray-900);
+}
+
+.service-body p {
+  color: var(--color-gray-600);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.service-link {
+  color: var(--color-blue);
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* About */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.about-img {
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+  position: relative;
+}
+
+.about-img img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+}
+
+.about-badge {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--color-blue);
+  color: var(--color-white);
+  padding: 1.25rem 1.5rem;
+  border-radius: 1rem;
+  box-shadow: var(--shadow-lg);
+}
+
+.about-badge-num {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.about-badge-label {
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+.about-content h2 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--color-gray-900);
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.about-content p {
+  color: var(--color-gray-600);
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+}
+
+.about-list {
+  list-style: none;
+  margin: 1.5rem 0;
+}
+
+.about-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.about-list li::before {
+  content: '✓';
+  color: var(--color-white);
+  background: var(--color-blue);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* CTA Banner */
+.cta-banner {
+  background: linear-gradient(135deg, var(--color-blue) 0%, var(--color-blue-dark) 100%);
+  color: var(--color-white);
+  padding: 4rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-banner::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 50%;
+}
+
+.cta-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
+}
+
+.cta-text h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.cta-text p {
+  opacity: 0.9;
+  font-size: 1.1rem;
+}
+
+.cta-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.cta-phone {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fde68a;
+}
+
+/* FAQ */
+.faq-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  border: 1px solid var(--color-gray-200);
+  border-radius: 0.75rem;
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.faq-item.active {
+  border-color: var(--color-blue);
+  box-shadow: var(--shadow-md);
+}
+
+.faq-q {
+  padding: 1.25rem 1.5rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1.05rem;
+  background: var(--color-white);
+  transition: background 0.2s;
+}
+
+.faq-q:hover { background: var(--color-gray-50); }
+
+.faq-icon {
+  width: 28px;
+  height: 28px;
+  background: var(--color-blue-light);
+  color: var(--color-blue);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+
+.faq-item.active .faq-icon {
+  transform: rotate(45deg);
+  background: var(--color-blue);
+  color: var(--color-white);
+}
+
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding: 0 1.5rem;
+}
+
+.faq-item.active .faq-a {
+  max-height: 300px;
+  padding: 0 1.5rem 1.25rem;
+}
+
+.faq-a p {
+  color: var(--color-gray-600);
+  line-height: 1.7;
+}
+
+/* Testimonials */
+.testimonials {
+  background: var(--color-gray-50);
+}
+
+.testimonials-slider {
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonials-track {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.testimonial-card {
+  min-width: 100%;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .testimonial-card { min-width: 50%; }
+}
+
+@media (min-width: 1024px) {
+  .testimonial-card { min-width: 33.333%; }
+}
+
+.testimonial-inner {
+  background: var(--color-white);
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid var(--color-gray-200);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s;
+}
+
+.testimonial-inner:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.testimonial-stars {
+  color: #fbbf24;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+}
+
+.testimonial-text {
+  color: var(--color-gray-700);
+  font-style: italic;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.testimonial-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-blue), var(--color-blue-dark));
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.testimonial-name {
+  font-weight: 700;
+  color: var(--color-gray-900);
+}
+
+.testimonial-role {
+  font-size: 0.85rem;
+  color: var(--color-gray-500);
+}
+
+.slider-controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.slider-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--color-gray-300);
+  background: var(--color-white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.2s;
+  color: var(--color-gray-700);
+}
+
+.slider-btn:hover {
+  background: var(--color-blue);
+  color: var(--color-white);
+  border-color: var(--color-blue);
+}
+
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.slider-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-gray-300);
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.slider-dot.active {
+  background: var(--color-blue);
+  width: 30px;
+  border-radius: 5px;
+}
+
+/* Gallery */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.gallery-item {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  cursor: pointer;
+  position: relative;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.gallery-item:hover img { transform: scale(1.08); }
+
+.gallery-item::after {
+  content: '🔍';
+  position: absolute;
+  inset: 0;
+  background: rgba(39,34,223,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 2rem;
+}
+
+.gallery-item:hover::after { opacity: 1; }
+
+/* Locations */
+.locations {
+  background: var(--color-gray-50);
+}
+
+.locations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.75rem;
+}
+
+.location-item {
+  background: var(--color-white);
+  padding: 0.875rem 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid var(--color-gray-200);
+  transition: all 0.2s;
+}
+
+.location-item:hover {
+  border-color: var(--color-blue);
+  color: var(--color-blue);
+  transform: translateX(4px);
+}
+
+.location-item::before {
+  content: '✓';
+  color: var(--color-blue);
+  font-weight: 700;
+}
+
+/* Contact */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.contact-form {
+  background: var(--color-white);
+  padding: 2.5rem;
+  border-radius: 1rem;
+  border: 1px solid var(--color-gray-200);
+  box-shadow: var(--shadow-md);
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--color-gray-700);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--color-gray-300);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.2s;
+  background: var(--color-white);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-blue);
+  box-shadow: 0 0 0 3px rgba(39,34,223,0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact-info-card {
+  background: var(--color-white);
+  padding: 1.75rem;
+  border-radius: 1rem;
+  border: 1px solid var(--color-gray-200);
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  transition: all 0.3s;
+}
+
+.contact-info-card:hover {
+  border-color: var(--color-blue);
+  box-shadow: var(--shadow-md);
+}
+
+.contact-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--color-blue-light);
+  color: var(--color-blue);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.contact-info-card h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.contact-info-card p {
+  color: var(--color-gray-600);
+  font-size: 0.95rem;
+}
+
+/* Footer */
+.footer {
+  background: var(--color-gray-900);
+  color: var(--color-gray-300);
+  padding: 4rem 0 1.5rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.footer-brand .logo-main { color: var(--color-white); }
+.footer-brand .logo-sub { color: var(--color-gray-400); }
+
+.footer-brand p {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--color-gray-400);
+}
+
+.footer h4 {
+  color: var(--color-white);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.footer-links {
+  list-style: none;
+}
+
+.footer-links li { margin-bottom: 0.6rem; }
+
+.footer-links a {
+  color: var(--color-gray-400);
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--color-white); }
+
+.footer-bottom {
+  border-top: 1px solid var(--color-gray-800);
+  padding-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.875rem;
+  color: var(--color-gray-500);
+}
+
+.footer-bottom a { color: var(--color-gray-400); }
+.footer-bottom a:hover { color: var(--color-white); }
+
+/* Cookie Consent */
+.cookie-consent {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  max-width: 500px;
+  background: var(--color-white);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-xl);
+  z-index: 1000;
+  border: 1px solid var(--color-gray-200);
+  display: none;
+}
+
+.cookie-consent.show { display: block; animation: slideUp 0.4s ease; }
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.cookie-consent h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.cookie-consent p {
+  font-size: 0.9rem;
+  color: var(--color-gray-600);
+  margin-bottom: 1rem;
+}
+
+.cookie-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.cookie-actions button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-accept { background: var(--color-blue); color: var(--color-white); }
+.btn-reject { background: var(--color-gray-200); color: var(--color-gray-700); }
+.btn-preferences { background: var(--color-white); color: var(--color-blue); border: 1px solid var(--color-blue) !important; }
+
+/* Animations */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .nav { display: none; }
+  .mobile-toggle { display: block; }
+  .nav.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--color-white);
+    padding: 1.5rem;
+    border-top: 1px solid var(--color-gray-200);
+    box-shadow: var(--shadow-lg);
+  }
+  .about-grid,
+  .contact-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .cta-inner { flex-direction: column; text-align: center; }
+  .about-img img { height: 350px; }
+}
+
+@media (max-width: 640px) {
+  .hero { min-height: 70vh; }
+  .hero-content { padding: 3rem 0; }
+  .hero-stats { grid-template-columns: 1fr; gap: 1rem; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .section { padding: 3rem 0; }
+  .locations-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="top-bar">
+  <div class="container top-bar-inner">
+    <div>📍 Serving NH, ME & MA | 24/7 Emergency Service Available</div>
+    <div class="top-bar-phone">
+       <a href="tel:6036051616">(603) 605-1616</a>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="#" class="logo">
+      <span class="logo-main">Nick Tracey Roofing</span>
+      <span class="logo-sub">Formerly Seacoast Roofing & Exteriors</span>
+    </a>
+    <nav class="nav" id="mainNav">
+      <a href="#about">About Us</a>
+      <a href="#services">Services</a>
+      <a href="#locations">Locations</a>
+      <a href="#projects">Projects</a>
+      <a href="#warranty">Warranty</a>
+      <a href="#blog">Blog</a>
+      <a href="#contact" class="btn btn-primary">Request Quote</a>
+    </nav>
+    <button class="mobile-toggle" onclick="toggleNav()">☰</button>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container hero-content">
+    <div class="hero-badge">⭐ Rated By Hundreds Of Satisfied Clients</div>
+    <h1>Roofing & Siding Issues?<br><span>We're Here to Help!</span></h1>
+    <p class="hero-sub">Elevate Your Property's Protection: Trusted Roofing & Siding Contractor in New Hampshire. Locally owned, fully licensed & insured.</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-white">Request a FREE Inspection</a>
+      <a href="tel:6036051616" class="btn btn-outline" style="color:white;border-color:white;">📞 Call Now</a>
+    </div>
+    <div class="hero-phone">
+      Call Our Roofing & Siding Experts! <a href="tel:6036051616">(603) 605-1616</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">500+</div>
+        <div class="hero-stat-label">Happy Clients</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">15+</div>
+        <div class="hero-stat-label">Years Experience</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">Lifetime</div>
+        <div class="hero-stat-label">Workmanship Warranty</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="section features">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Why Choose Us</div>
+      <h2 class="section-title">Trusted Roofing & Siding Contractor</h2>
+      <p class="section-subtitle">"Nick Tracey Roofing - Formerly Seacoast Roofing & Exteriors"</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🏠</div>
+        <h3>Locally Owned Small Business</h3>
+        <p>Proudly serving our community with personalized attention and local expertise.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🔧</div>
+        <h3>Full Service Exteriors Contractor</h3>
+        <p>From roofing to siding, gutters and more — we handle it all under one roof.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">⭐</div>
+        <h3>High Quality Materials</h3>
+        <p>Premium roofing & siding materials from GAF, James Hardie, LP Building Solutions & more.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">👷</div>
+        <h3>Skilled Professional Workmanship</h3>
+        <p>Licensed, insured professionals delivering exceptional craftsmanship every time.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">💬</div>
+        <h3>Outstanding Customer Service</h3>
+        <p>Transparent communication from start to finish, with 24/7 availability.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">️</div>
+        <h3>Lifetime Workmanship Warranty</h3>
+        <p>We stand behind our work with a lifetime warranty for your peace of mind.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">💰</div>
+        <h3>Transparent, Competitive Pricing</h3>
+        <p>Honest, upfront quotes with no hidden fees or surprises.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon"></div>
+        <h3>FREE On-site & Virtual Estimates</h3>
+        <p>Convenient scheduling with flexible options to meet your needs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Partners -->
+<section class="partners">
+  <div class="container">
+    <p style="text-align:center;color:var(--color-gray-500);font-size:0.85rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1.5rem;font-weight:600;">Preferred Contractor For</p>
+    <div class="partners-grid">
+      <div class="partner-logo">GAF</div>
+      <div class="partner-logo">James Hardie</div>
+      <div class="partner-logo">Tando</div>
+      <div class="partner-logo">LP Building Solutions</div>
+    </div>
+  </div>
+</section>
+
+<!-- Process -->
+<section class="section" id="process">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Our Process</div>
+      <h2 class="section-title">Schedule A Roof Inspection</h2>
+      <p class="section-subtitle">We take pride in delivering high-quality roofing solutions tailored to your needs.</p>
+    </div>
+    <div class="process-steps">
+      <div class="step-card fade-in">
+        <div class="step-num">1</div>
+        <h3>Request a FREE Estimate</h3>
+        <p>Call or fill out our contact form to schedule a FREE ESTIMATE. We'll work around your schedule.</p>
+      </div>
+      <div class="step-card fade-in">
+        <div class="step-num">2</div>
+        <h3>Get In Touch</h3>
+        <p>A licensed, insured professional from Nick Tracey Roofing will be in touch soon to help you get started.</p>
+      </div>
+      <div class="step-card fade-in">
+        <div class="step-num">3</div>
+        <h3>Jobs Done Right</h3>
+        <p>We complete your project with precision, clean up thoroughly, and back it with our lifetime warranty.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="section services" id="services">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">What We Do</div>
+      <h2 class="section-title">Services We Offer</h2>
+      <p class="section-subtitle" style="font-style:italic;color:var(--color-blue);font-weight:600;">"JOBS DONE RIGHT"</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card fade-in">
+        <div class="service-img"><img src="https://image.qwenlm.ai/public_source/59df620e-ba75-407a-a825-eae3e075712c/102398472-cae2-4d77-9fea-23e582ddaf50.png" alt="Emergency Roof Repair"></div>
+        <div class="service-body">
+          <h3>Emergency Roof Repair</h3>
+          <p>24/7 rapid response for storm damage, leaks, and urgent roofing emergencies.</p>
+          <span class="service-link">Learn More →</span>
+        </div>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-img"><img src="https://image.qwenlm.ai/public_source/59df620e-ba75-407a-a825-eae3e075712c/1640e841d-cec2-4ef4-9511-2bc00c048ab7.png" alt="Asphalt Shingles"></div>
+        <div class="service-body">
+          <h3>Asphalt Shingles</h3>
+          <p>Premium architectural shingles from GAF with lifetime warranties and superior durability.</p>
+          <span class="service-link">Learn More →</span>
+        </div>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-img"><img src="https://image.qwenlm.ai/public_source/59df620e-ba75-407a-a825-eae3e075712c/1078d4766-ce53-4184-ae5e-a1cb9cbd02d7.png" alt="Metal Roofing"></div>
+        <div class="service-body">
+          <h3>Metal Roofing</h3>
+          <p>Long-lasting, energy-efficient metal roofing systems built to withstand New England weather.</p>
+          <span class="service-link">Learn More →</span>
+        </div>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-img"><img src="https://image.qwenlm.ai/public_source/59df620e-ba75-407a-a825-eae3e075712c/1d0d103ec-dcef-41c5-b9af-b73422b39408.png" alt="Rubber Roofing"></div>
+        <div class="service-body">
+          <h3>Rubber Roofing</h3>
+          <p>EPDM rubber roofing for flat and low-slope roofs with excellent waterproofing performance.</p>
+          <span class="service-link">Learn More →</span>
+        </div>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-img"><img src="https://image.qwenlm.ai/public_source/59df620e-ba75-407a-a825-eae3e075712c/1c5b5e509-f8ae-46be-9678-ccb251283a0f.png" alt="Siding"></div>
+        <div class="service-body">
+          <h3>Siding</h3>
+          <p>James Hardie, LP, and Tando siding options to match your home's unique charm with minimal maintenance.</p>
+          <span class="service-link">Learn More →</span>
+        </div>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-img"><img src="https://image.qwenlm.ai/public_source/59df620e-ba75-407a-a825-eae3e075712c/103d291a2-3615-4959-ade9-911168c159d2.png" alt="Gutters"></div>
+        <div class="service-body">
+          <h3>Gutters</h3>
+          <p>Seamless aluminum gutter installation and replacement to protect your home from water damage.</p>
+          <span class="service-link">Learn More →</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Banner -->
+<section class="cta-banner">
+  <div class="container cta-inner">
+    <div class="cta-text">
+      <h2>CALL US: (603) 605-1616</h2>
+      <p>SPEAK TO OUR ROOFING AND SIDING EXPERTS</p>
+    </div>
+    <div class="cta-actions">
+      <a href="tel:6036051616" class="btn btn-white">📞 Call Now</a>
+      <a href="#contact" class="btn btn-outline" style="color:white;border-color:white;">Request Inspection</a>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img fade-in">
+        <img src="https://image.qwenlm.ai/public_source/59df620e-ba75-407a-a825-eae3e075712c/11d8a8c67-edca-460d-93e0-9cc79c16452b.png" alt="Roofing Team">
+        <div class="about-badge">
+          <div class="about-badge-num">15+</div>
+          <div class="about-badge-label">Years Experience</div>
+        </div>
+      </div>
+      <div class="about-content fade-in">
+        <div class="section-tag">About Us</div>
+        <h2>SEACOAST ROOFING AND SIDING CONTRACTORS</h2>
+        <p style="font-style:italic;color:var(--color-blue);font-weight:600;margin-bottom:1.25rem;">"JOBS DONE RIGHT"</p>
+        <p>Nick Tracey Roofing - Formerly Seacoast Roofing & Exteriors is your trusted partner for exceptional roofing solutions in New Hampshire. With years of experience and a commitment to excellence, we provide top-notch roofing services tailored to meet the unique needs of your home or business.</p>
+        <p>Our ethos is built on the pillars of hard work, outstanding customer service, honesty, and integrity. We understand that your roof is a significant investment, and we respect that by offering advice and solutions specifically suited to your unique needs and financial plans.</p>
+        <ul class="about-list">
+          <li>Upgrading to new roofing and siding enhances property value and appearance</li>
+          <li>Variety of siding styles and colors to match your home's unique charm</li>
+          <li>Professional team guides you in selecting the perfect siding</li>
+          <li>Minimal maintenance needs with premium materials</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary">Schedule Inspection</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How Can We Help -->
+<section class="section" style="background:var(--color-gray-50);">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Our Services</div>
+      <h2 class="section-title">How Can We Help You Today?</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card fade-in" style="text-align:center;">
+        <div class="feature-icon" style="margin:0 auto 1rem;">️</div>
+        <h3>Roof Installation, Maintenance & Repair</h3>
+        <p>Complete roofing solutions from new installation to ongoing maintenance and emergency repairs.</p>
+      </div>
+      <div class="feature-card fade-in" style="text-align:center;">
+        <div class="feature-icon" style="margin:0 auto 1rem;">🏡</div>
+        <h3>Siding, Rot Repair & Exterior</h3>
+        <p>Transform your home's exterior with premium siding and professional rot repair services.</p>
+      </div>
+      <div class="feature-card fade-in" style="text-align:center;">
+        <div class="feature-icon" style="margin:0 auto 1rem;">🪟</div>
+        <h3>Windows, Doors & Decks</h3>
+        <p>Complete exterior renovations including windows, doors, and custom deck installations.</p>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2.5rem;">
+      <a href="#projects" class="btn btn-outline">View Our Projects</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">FAQ</div>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list fade-in">
+      <div class="faq-item active">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Why Choose Nick Tracey Roofing - Formerly Seacoast Roofing & Exteriors?</span>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">
+          <p>We are a locally owned, full-service exteriors contractor with years of experience, skilled professional workmanship, outstanding customer service, and a lifetime workmanship warranty. We use only high-quality materials from trusted brands like GAF, James Hardie, and LP Building Solutions.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Do You Offer Free Roof Assessments?</span>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">
+          <p>Yes! We offer both on-site and virtual FREE estimates. Simply call us at (603) 605-1616 or fill out our contact form to schedule your free inspection today.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Can Nick Tracey Roofing Assist with Insurance Claims?</span>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">
+          <p>Absolutely. We have extensive experience working with insurance companies and can help guide you through the claims process to ensure you receive fair compensation for storm or hail damage.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>What Emergency Services Does Nick Tracey Roofing Provide?</span>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">
+          <p>We provide 24/7 emergency roof repair services for storm damage, leaks, fallen trees, and other urgent situations. Call us anytime at (603) 605-1616 for rapid response.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>How Can I Contact Nick Tracey Roofing?</span>
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">
+          <p>You can reach us 24 hours a day at (603) 605-1616, fill out our contact form on this website, or email us. We're always ready to respond swiftly, especially in urgent situations.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section testimonials">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Testimonials</div>
+      <h2 class="section-title">What Our Clients Say</h2>
+      <p class="section-subtitle">Rated By Hundreds Of Satisfied Clients</p>
+    </div>
+    <div class="testimonials-slider fade-in">
+      <div class="testimonials-track" id="testimonialsTrack">
+        <div class="testimonial-card">
+          <div class="testimonial-inner">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"They are responsive, knowledgeable, timely and affordable! Our roof was in really rough shape after an unknown number of years since it's replacement."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">MM</div>
+              <div>
+                <div class="testimonial-name">Meghan Misset</div>
+                <div class="testimonial-role">Verified Client</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-inner">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"Had a great experience with Seacoast. I had a few roof leaks that they were very responsive to come check out, and took the time to explain the issue, along with pointing out an issue with my chimney flashing."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">DB</div>
+              <div>
+                <div class="testimonial-name">David Beauregard</div>
+                <div class="testimonial-role">Verified Client</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-inner">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"Seacoast Roofing and Exteriors installed a large roof for me as well as some minor structural repairs. They gave me updates along the way and were quick to communicate before, during, and after the install."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">MM</div>
+              <div>
+                <div class="testimonial-name">Maggie Moran</div>
+                <div class="testimonial-role">Verified Client</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-inner">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"We are so very impressed with the work that Vincenzo and his crew did on our home. The work they put into replacing our roof and trim was nothing short of perfection. If I could give them a 10 star I would!"</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">MD</div>
+              <div>
+                <div class="testimonial-name">Marcie Dow</div>
+                <div class="testimonial-role">Verified Client</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-inner">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"As part of a much larger job, Seacoast replaced two skylights in our condo. They did the work when we were away, and when we returned everything was perfect. These guys are terrific."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">KM</div>
+              <div>
+                <div class="testimonial-name">Kath Mullholand</div>
+                <div class="testimonial-role">Verified Client</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-inner">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"Seacoast Roofing and exteriors did an amazing job on the siding and roofing in my early 1900's home. They were extremely detailed and it came out fantastic! Vincenzo always got back to me if I had any concerns."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">HS</div>
+              <div>
+                <div class="testimonial-name">Heather Standley</div>
+                <div class="testimonial-role">Verified Client</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slider-controls">
+      <button class="slider-btn" onclick="slideTestimonials(-1)">←</button>
+      <button class="slider-btn" onclick="slideTestimonials(1)">→</button>
+    </div>
+    <div class="slider-dots" id="sliderDots"></div>
+    <div style="text-align:center;margin-top:2rem;">
+      <a href="#" class="btn btn-outline">Read More Testimonials</a>
+    </div>
+  </div>
+</section>
+
+<!-- Financing -->
+<section class="section" style="background:var(--color-blue-light);padding:3rem 0;">
+  <div class="container" style="text-align:center;">
+    <p style="font-size:0.875rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-gray-600);font-weight:600;margin-bottom:1rem;">Financing Through</p>
+    <div style="font-size:2rem;font-weight:800;color:var(--color-blue);">🏦 HEARTH</div>
+    <p style="color:var(--color-gray-600);margin-top:0.5rem;">Flexible financing options available for your roofing project</p>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section class="section" id="projects">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Our Work</div>
+      <h2 class="section-title">Photo Gallery</h2>
+      <p class="section-subtitle">Seacoast Roofing & Exteriors - Recent Projects</p>
+    </div>
+    <div class="gallery-grid fade-in">
+      <div class="gallery-item"><img src="https://image.qwenlm.ai/public_source/59df620e-ba75-407a-a825-eae3e075712c/11ad48fbd-23c3-4997-908e-82ebcd56b8f6.png" alt="Project 1"></div>
+      <div class="gallery-item"><img src="https://image.qwenlm.ai/public_source/59df620e-ba75-407a-a825-eae3e075712c/160430513-5925-4a80-a5ad-bffd57df3b48.png" alt="Project 2"></div>
+      <div class="gallery-item"><img src="https://image.qwenlm.ai/public_source/59df620e-ba75-407a-a825-eae3e075712c/1451c1509-7475-4958-9714-e0f521a07257.png" alt="Project 3"></div>
+      <div class="gallery-item"><img src="https://image.qwenlm.ai/public_source/59df620e-ba75-407a-a825-eae3e075712c/1df6c31f4-54fe-457a-9b1e-9db9064e2546.png" alt="Project 4"></div>
+      <div class="gallery-item"><img src="https://image.qwenlm.ai/public_source/59df620e-ba75-407a-a825-eae3e075712c/1d4eb96c1-affd-453c-8229-216cc3176a04.png" alt="Project 5"></div>
+      <div class="gallery-item"><img src="https://image.qwenlm.ai/public_source/59df620e-ba75-407a-a825-eae3e075712c/1c5b5e509-f8ae-46be-9678-ccb251283a0f.png" alt="Project 6"></div>
+      <div class="gallery-item"><img src="https://image.qwenlm.ai/public_source/59df620e-ba75-407a-a825-eae3e075712c/1078d4766-ce53-4184-ae5e-a1cb9cbd02d7.png" alt="Project 7"></div>
+      <div class="gallery-item"><img src="https://image.qwenlm.ai/public_source/59df620e-ba75-407a-a825-eae3e075712c/103d291a2-3615-4959-ade9-911168c159d2.png" alt="Project 8"></div>
+      <div class="gallery-item"><img src="https://image.qwenlm.ai/public_source/59df620e-ba75-407a-a825-eae3e075712c/11d8a8c67-edca-460d-93e0-9cc79c16452b.png" alt="Project 9"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Locations -->
+<section class="section locations" id="locations">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Service Area</div>
+      <h2 class="section-title">Locations We Serve</h2>
+      <p class="section-subtitle">Coastal communities of Rockingham County NH, Strafford County NH, York County ME, Essex County MA</p>
+    </div>
+    <div class="locations-grid fade-in">
+      <div class="location-item">Auburn, NH</div>
+      <div class="location-item">Amesbury, MA</div>
+      <div class="location-item">Barrington, NH</div>
+      <div class="location-item">Berwick, ME</div>
+      <div class="location-item">Brentwood, NH</div>
+      <div class="location-item">Cape Neddick, ME</div>
+      <div class="location-item">Candia, NH</div>
+      <div class="location-item">Chester, NH</div>
+      <div class="location-item">Danville, NH</div>
+      <div class="location-item">Deerfield, NH</div>
+      <div class="location-item">Dover, NH</div>
+      <div class="location-item">Durham, NH</div>
+      <div class="location-item">East Kingston, NH</div>
+      <div class="location-item">Eliot, ME</div>
+      <div class="location-item">Epping, NH</div>
+      <div class="location-item">Exeter, NH</div>
+      <div class="location-item">Farmington, NH</div>
+      <div class="location-item">Fremont, NH</div>
+      <div class="location-item">Georgetown, MA</div>
+      <div class="location-item">Greenland, NH</div>
+      <div class="location-item">Hampstead, NH</div>
+      <div class="location-item">Hampton, NH</div>
+      <div class="location-item">Hampton Falls, NH</div>
+      <div class="location-item">Haverhill, MA</div>
+      <div class="location-item">Kensington, NH</div>
+      <div class="location-item">Kingston, NH</div>
+      <div class="location-item">Kittery, ME</div>
+      <div class="location-item">Lee, NH</div>
+      <div class="location-item">Londonderry, NH</div>
+      <div class="location-item">Madbury, NH</div>
+      <div class="location-item">Manchester, NH</div>
+      <div class="location-item">Merrimac, MA</div>
+      <div class="location-item">Methuen, MA</div>
+      <div class="location-item">Newbury, MA</div>
+      <div class="location-item">Newburyport, MA</div>
+      <div class="location-item">Newcastle, NH</div>
+      <div class="location-item">Plum Island, MA</div>
+      <div class="location-item">Portsmouth, NH</div>
+      <div class="location-item">Raymond, NH</div>
+      <div class="location-item">Rochester, NH</div>
+      <div class="location-item">Rollinsford, NH</div>
+      <div class="location-item">Rowley, MA</div>
+      <div class="location-item">Rye, NH</div>
+      <div class="location-item">Salem, NH</div>
+      <div class="location-item">Salisbury, MA</div>
+      <div class="location-item">Sandown, NH</div>
+      <div class="location-item">Seabrook, NH</div>
+      <div class="location-item">Somersworth, NH</div>
+      <div class="location-item">South Berwick, ME</div>
+      <div class="location-item">South Hampton, NH</div>
+      <div class="location-item">Stratham, NH</div>
+      <div class="location-item">Windham, NH</div>
+      <div class="location-item">Wells, ME</div>
+      <div class="location-item">West Newbury, MA</div>
+      <div class="location-item">York, ME</div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="section" id="contact" style="background:var(--color-gray-50);">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Get In Touch</div>
+      <h2 class="section-title">SCHEDULE A ROOFING OR SIDING INSPECTION</h2>
+      <p class="section-subtitle">Whether you're inquiring about our services, seeking expert advice, or requesting a quote for your roofing or siding project, we're here to help - "JOBS DONE RIGHT"</p>
+    </div>
+    <div class="contact-grid fade-in">
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label>Full Name *</label>
+          <input type="text" required placeholder="John Smith">
+        </div>
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" required placeholder="john@example.com">
+        </div>
+        <div class="form-group">
+          <label>Phone *</label>
+          <input type="tel" required placeholder="(603) 555-0123">
+        </div>
+        <div class="form-group">
+          <label>Service Needed</label>
+          <select>
+            <option>Roof Inspection</option>
+            <option>Roof Replacement</option>
+            <option>Emergency Repair</option>
+            <option>Siding Installation</option>
+            <option>Gutters</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell us about your project..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Request FREE Inspection</button>
+      </form>
+      <div class="contact-info">
+        <div class="contact-info-card">
+          <div class="contact-icon">📍</div>
+          <div>
+            <h4>Our Address</h4>
+            <p>Nick Tracey Roofing & Exteriors<br>PO Box 2485<br>Seabrook, NH 03874</p>
+          </div>
+        </div>
+        <div class="contact-info-card">
+          <div class="contact-icon"></div>
+          <div>
+            <h4>Call Us 24 Hours A Day!</h4>
+            <p><a href="tel:6036051616" style="color:var(--color-blue);font-weight:700;">(603) 605-1616</a></p>
+          </div>
+        </div>
+        <div class="contact-info-card">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <h4>Working Hours</h4>
+            <p>Monday - Sunday: 24/7<br>Emergency service always available</p>
+          </div>
+        </div>
+        <div class="contact-info-card">
+          <div class="contact-icon">⭐</div>
+          <div>
+            <h4>BBB Accredited</h4>
+            <p>Seacoast Roofing & Exteriors BBB Business Review</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="cta-banner">
+  <div class="container cta-inner">
+    <div class="cta-text">
+      <h2>DON'T HESITATE TO GET IN TOUCH</h2>
+      <p>We're ready to make your roofing and siding project a success.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="tel:6036051616" class="btn btn-white">📞 (603) 605-1616</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <span class="logo-main">Nick Tracey Roofing</span>
+          <span class="logo-sub">& Exteriors</span>
+        </div>
+        <p>PO Box 2485<br>Seabrook, NH 03874<br><br>CALL US 24 HOURS A DAY!<br><a href="tel:6036051616" style="color:var(--color-white);font-weight:700;">(603) 605-1616</a></p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul class="footer-links">
+          <li><a href="#services">Emergency Roof Repair</a></li>
+          <li><a href="#services">Asphalt Shingles</a></li>
+          <li><a href="#services">Metal Roofing</a></li>
+          <li><a href="#services">Rubber Roofing</a></li>
+          <li><a href="#services">Hail Damage Repair</a></li>
+          <li><a href="#services">Siding</a></li>
+          <li><a href="#services">Gutters</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul class="footer-links">
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#locations">Locations</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul class="footer-links">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms Of Use</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+          <li><a href="#">Sitemap</a></li>
+          <li><a href="#">BBB Review</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>Copyright 2025 © Nick Tracey Roofing. Formerly Seacoast Roofing & Exteriors Seabrook NH. All Rights Reserved.</div>
+      <div>
+        <a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Cookie Consent -->
+<div class="cookie-consent" id="cookieConsent">
+  <h4>🍪 Cookie Consent</h4>
+  <p>We use cookies to improve your experience on our site. By using our site, you consent to cookies.</p>
+  <div class="cookie-actions">
+    <button class="btn-preferences" onclick="closeCookie()">Preferences</button>
+    <button class="btn-reject" onclick="closeCookie()">Reject</button>
+    <button class="btn-accept" onclick="closeCookie()">Accept All</button>
+  </div>
+</div>
+
+<script>
+// Mobile Nav
+function toggleNav() {
+  document.getElementById('mainNav').classList.toggle('open');
+}
+
+// FAQ
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const wasActive = item.classList.contains('active');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+  if (!wasActive) item.classList.add('active');
+}
+
+// Testimonials Slider
+let currentSlide = 0;
+const track = document.getElementById('testimonialsTrack');
+const cards = track.children;
+let cardsPerView = 3;
+
+function updateCardsPerView() {
+  if (window.innerWidth < 768) cardsPerView = 1;
+  else if (window.innerWidth < 1024) cardsPerView = 2;
+  else cardsPerView = 3;
+}
+
+function getTotalSlides() {
+  return Math.max(1, cards.length - cardsPerView + 1);
+}
+
+function renderDots() {
+  const dotsContainer = document.getElementById('sliderDots');
+  dotsContainer.innerHTML = '';
+  const total = getTotalSlides();
+  for (let i = 0; i < total; i++) {
+    const dot = document.createElement('button');
+    dot.className = 'slider-dot' + (i === currentSlide ? ' active' : '');
+    dot.onclick = () => goToSlide(i);
+    dotsContainer.appendChild(dot);
+  }
+}
+
+function goToSlide(idx) {
+  const total = getTotalSlides();
+  currentSlide = Math.max(0, Math.min(idx, total - 1));
+  const pct = (currentSlide * 100) / cardsPerView;
+  track.style.transform = `translateX(-${pct}%)`;
+  renderDots();
+}
+
+function slideTestimonials(dir) {
+  goToSlide(currentSlide + dir);
+}
+
+window.addEventListener('resize', () => {
+  updateCardsPerView();
+  goToSlide(Math.min(currentSlide, getTotalSlides() - 1));
+});
+
+updateCardsPerView();
+renderDots();
+
+// Auto slide
+setInterval(() => {
+  const total = getTotalSlides();
+  goToSlide((currentSlide + 1) % total);
+}, 6000);
+
+// Cookie Consent
+function closeCookie() {
+  document.getElementById('cookieConsent').classList.remove('show');
+  localStorage.setItem('cookieAccepted', 'true');
+}
+
+if (!localStorage.getItem('cookieAccepted')) {
+  setTimeout(() => {
+    document.getElementById('cookieConsent').classList.add('show');
+  }, 1500);
+}
+
+// Form Submit
+function handleSubmit(e) {
+  e.preventDefault();
+  alert('Thank you! We will contact you shortly to schedule your FREE inspection.');
+  e.target.reset();
+}
+
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Close mobile nav on link click
+document.querySelectorAll('.nav a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.getElementById('mainNav').classList.remove('open');
+  });
+});
+</script>
+
+</body>
+</html>

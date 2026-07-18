@@ -1,0 +1,633 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import Testimonials from "../components/Testimonials.astro";
+import Faqcompo from "../components/Faqcompo.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+		/>
+	</head>
+	<body>
+		<Header />
+		<section class="home-banner">
+			<img
+				src="/home-banner.webp"
+				alt=""
+				class="home-image"
+				width="1920"
+				height="809"
+				fetchpriority="high"
+			/>
+			<div class="container">
+				<div class="home-content">
+					<h1 class="fs-70">
+						Protect Your Home with Expert <span class="text-golden"
+							>Roofing & Siding Solutions</span
+						>
+					</h1>
+					<p>
+						Protect your home with expert roofing and siding
+						services built on quality craftsmanship, durable
+						materials, and honest pricing. We deliver reliable
+						exterior solutions backed by exceptional service and a
+						lifetime workmanship warranty.
+					</p>
+					<div class="universal-button">
+						<a
+							href="#"
+							class="button-links golden"
+							title="Request a FREE Inspection"
+							>Request a FREE Inspection</a
+						>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div class="marquee-container">
+			<div class="marquee-track">
+				<div class="marquee-content">
+					<p>
+						Locally Owned Small Business Full Service Exteriors
+						Contractor High Quality Roofing & Siding Materials
+						Skilled Professional Workmanship Outstanding Customer
+						Service Lifetime Workmanship Warranty Transparent,
+						Competitive Pricing Offering On-site and Virtual FREE
+						Estimates
+					</p>
+				</div>
+			</div>
+		</div>
+		<section class="aboutus-sec section-padding">
+			<div class="container">
+				<div class="row align-items-center g-4">
+					<div class="col-lg-7">
+						<div class="content-holders">
+							<span class="badge-text">About Us</span>
+							<h2 class="fs-60">
+								Vincenzo Roofing and Siding Contractors
+							</h2>
+							<p>
+								Vincenzo Roofing & Exteriors is your trusted
+								partner for exceptional roofing solutions in New
+								Hampshire. With years of experience and a
+								commitment to excellence, we provide top-notch
+								roofing services tailored to meet the unique
+								needs of your home or business.
+							</p>
+							<p>
+								Our ethos is built on the pillars of hard work,
+								outstanding customer service, honesty, and
+								integrity. We understand that your roof is a
+								significant investment, and we respect that by
+								offering advice and solutions specifically
+								suited to your unique needs and financial plans.
+							</p>
+							<div class="universal-button">
+								<a
+									href="#"
+									class="button-links"
+									title="Discover More">Discover More</a
+								>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-5">
+						<div class="image-data">
+							<img
+								src="/about-home.webp"
+								alt=""
+								width="642"
+								height="628"
+								loading="lazy"
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="service-sec section-padding">
+			<div class="container">
+				<div class="center-data">
+					<span class="badge-text">Our services</span>
+					<h2 class="fs-60">Exterior Solutions</h2>
+					<p>
+						Upgrading is a significant improvement that enhances
+						property value. We offer a variety of styles and colors
+						to match your home's unique charm with minimal
+						maintenance needs.
+					</p>
+				</div>
+				<div class="grid-services">
+					<div class="service-holders">
+						<a href="#">
+							<div class="bootm-dataservices">
+								<div class="service-icon">
+									<img
+										src="/Icon-Emergency-Roof-Repair.png"
+										alt=""
+										width="100"
+										height="100"
+									/>
+								</div>
+								<h4 class="fs-30">Emergency Roof Repair</h4>
+							</div>
+						</a>
+					</div>
+					<div class="service-holders">
+						<a href="#">
+							<div class="bootm-dataservices">
+								<div class="service-icon">
+									<img
+										src="/Icon-Asphalt-Shingles.png"
+										alt=""
+										width="100"
+										height="100"
+									/>
+								</div>
+								<h4 class="fs-30">Asphalt Shingles</h4>
+							</div>
+						</a>
+					</div>
+					<div class="service-holders">
+						<a href="#">
+							<div class="bootm-dataservices">
+								<div class="service-icon">
+									<img
+										src="/Icon-Metal-Roofing.png"
+										alt=""
+										width="100"
+										height="100"
+									/>
+								</div>
+								<h4 class="fs-30">Metal Roofing</h4>
+							</div>
+						</a>
+					</div>
+					<div class="service-holders">
+						<a href="#">
+							<div class="bootm-dataservices">
+								<div class="service-icon">
+									<img
+										src="/Icon-Rubber-Roofing.png"
+										alt=""
+										width="100"
+										height="100"
+									/>
+								</div>
+								<h4 class="fs-30">Rubber Roofing</h4>
+							</div>
+						</a>
+					</div>
+					<div class="service-holders">
+						<a href="#">
+							<div class="bootm-dataservices">
+								<div class="service-icon">
+									<img
+										src="/Icon-Siding.png"
+										alt=""
+										width="100"
+										height="100"
+									/>
+								</div>
+								<h4 class="fs-30">Siding</h4>
+							</div>
+						</a>
+					</div>
+					<div class="service-holders">
+						<a href="#">
+							<div class="bootm-dataservices">
+								<div class="service-icon">
+									<img
+										src="/Icon-Gutter.png"
+										alt=""
+										width="100"
+										height="100"
+									/>
+								</div>
+								<h4 class="fs-30">Gutters</h4>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="universal-button">
+					<a
+						href="#"
+						class="button-links"
+						title="Discover Our Services">Discover Our Services</a
+					>
+				</div>
+			</div>
+		</section>
+		<section class="process-sec section-padding">
+			<div class="container">
+				<div class="row g-4">
+					<div class="col-lg-6">
+						<div class="content-holders stickyy">
+							<span class="badge-text">Our Process</span>
+							<h3 class="fs-60">Schedule A Roof Inspection</h3>
+							<p>
+								Don't wait for a leak to think about your roof.
+								Scheduling an annual professional inspection is
+								the best way to catch minor issues before they
+								become costly repairs. Think of it as
+								preventative healthcare for your home: a small
+								upfront investment that can extend your roof's
+								lifespan and save you thousands down the line.
+							</p>
+							<div class="universal-button">
+								<a
+									href="#"
+									class="button-links"
+									title="Contact Us Today">Contact Us Today</a
+								>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="process-grids">
+							<!-- Step 1 -->
+							<div class="grid-numberprocess">
+								<div class="process-step">
+									<p class="fs-100">01.</p>
+								</div>
+								<div class="process-data">
+									<h5 class="fs-30">Schedule</h5>
+									<p>
+										Call or fill out our contact form to
+										schedule a totally free, no-obligation
+										estimate.
+									</p>
+								</div>
+							</div>
+
+							<!-- Step 2 -->
+							<div class="grid-numberprocess">
+								<div class="process-step">
+									<p class="fs-100">02.</p>
+								</div>
+								<div class="process-data">
+									<h5 class="fs-30">Consultation</h5>
+									<p>
+										A licensed, insured professional will be
+										in touch to review materials and
+										timelines.
+									</p>
+								</div>
+							</div>
+
+							<!-- Step 3 -->
+							<div class="grid-numberprocess">
+								<div class="process-step">
+									<p class="fs-100">03.</p>
+								</div>
+								<div class="process-data">
+									<h5 class="fs-30">Execution</h5>
+									<p>
+										We execute the project with absolute
+										precision, maintaining clean job sites
+										and clear communication.
+									</p>
+								</div>
+							</div>
+
+							<!-- Step 4 (Suggested Addition) -->
+							<div class="grid-numberprocess">
+								<div class="process-step">
+									<p class="fs-100">04.</p>
+								</div>
+								<div class="process-data">
+									<h5 class="fs-30">
+										Final Review &amp; Support
+									</h5>
+									<p>
+										We conduct a thorough final walkthrough
+										to ensure complete satisfaction and
+										provide your long-term warranty details.
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<Testimonials />
+		<Faqcompo />
+
+		<Footer />
+		<style>
+			.home-image {
+				position: absolute;
+				inset: 0;
+				height: 100%;
+				width: 100%;
+				object-fit: cover;
+				object-position: center;
+				z-index: -1;
+			}
+			section.home-banner {
+				position: relative;
+				min-height: 809px;
+				padding: 40px 0;
+				overflow: hidden;
+				display: flex;
+				align-items: center;
+				color: var(--color-white);
+			}
+			section.home-banner::after {
+				position: absolute;
+				content: "";
+				background: #2722dfad;
+				inset: 0;
+				z-index: -1;
+			}
+
+			.home-content {
+				max-width: 900px;
+				width: 100%;
+			}
+			.home-content .fs-70 {
+				text-transform: uppercase;
+			}
+			.marquee-container {
+				width: 100%;
+				overflow: hidden;
+				padding: 15px 0;
+				/* background: var(--color-blue); */
+			}
+
+			.marquee-track {
+				display: flex;
+				width: max-content;
+			}
+
+			.marquee-content {
+				white-space: nowrap;
+				padding-right: 50px;
+			}
+			.marquee-content p {
+				margin: 0;
+				padding: 0;
+				font-size: 100px;
+				text-transform: uppercase;
+				font-weight: 700;
+				letter-spacing: 4px;
+				line-height: normal;
+				/* color: var(--color-white); */
+			}
+
+			.marquee-track {
+				display: flex;
+				width: max-content;
+			}
+			.service-holders {
+				max-width: 500px;
+				width: 100%;
+				background: var(--color-white);
+				text-align: center;
+				border-radius: 10px;
+				border: 1px solid #e3e3e3;
+				transition: 0.3s ease-in;
+			}
+
+			.service-holders a {
+				display: block;
+				height: 100%;
+				width: 100%;
+				padding: 30px;
+				transition: 0.1s ease-in;
+			}
+
+			.service-holders .fs-30 {
+				transition: 0.3s ease-in;
+			}
+			.service-holders:hover .fs-30,
+			.grid-services .service-holders:nth-child(even) .fs-30 {
+				color: var(--color-white);
+			}
+
+			/* Removed the redundant .service-holders at the end */
+			.service-holders:hover,
+			.grid-services .service-holders:nth-child(even) {
+				background: var(--color-blue);
+			}
+
+			/* Removed the extra comma before the { */
+			.service-holders:hover .service-icon img,
+			.grid-services .service-holders:nth-child(even) .service-icon img {
+				filter: invert(1) brightness(28.5);
+			}
+
+			.grid-services {
+				display: grid;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				gap: 40px;
+			}
+
+			.service-icon img {
+				filter: saturate(1.5) hue-rotate(22deg);
+				transition: 0.3s ease-in;
+			}
+			section.service-sec {
+				background: var(--color-creame);
+			}
+			.service-icon {
+				max-width: 100px;
+				margin: 0 auto 15px;
+			}
+			section.service-sec .universal-button {
+				max-width: fit-content;
+				margin: 0 auto;
+				padding-top: 50px;
+			}
+			.home-content .universal-button {
+				padding-top: 15px;
+			}
+			.grid-numberprocess {
+				display: flex;
+				gap: 48px;
+				align-items: start;
+				border-bottom: 1px solid var(--color-black);
+				padding-bottom: 10px;
+			}
+			.process-grids {
+				display: flex;
+				flex-direction: column;
+				gap: 30px;
+				max-width: 90%;
+				width: 100%;
+				margin-left: auto;
+			}
+			.process-step .fs-100 {
+				letter-spacing: 5px;
+				padding: 0;
+			}
+			.process-step {
+				max-width: 150px;
+				width: 100%;
+			}
+			.content-holders.stickyy {
+				position: sticky;
+				top: 18%;
+			}
+			.process-data {
+				max-width: fit-content;
+				width: 100%;
+			}
+			@media (max-width: 1600px) {
+				section.home-banner {
+					min-height: 629px;
+				}
+				.process-step {
+					max-width: 120px;
+				}
+			}
+			@media (max-width: 1400px) {
+				.marquee-content p {
+					font-size: 70px;
+				}
+				.home-content {
+					max-width: 600px;
+				}
+				section.home-banner {
+					min-height: 520px;
+				}
+				.process-step {
+					max-width: 115px;
+				}
+				.grid-numberprocess {
+					gap: 30px;
+				}
+			}
+			@media (max-width: 1199px) {
+				.marquee-content p {
+					font-size: 50px;
+				}
+			}
+			@media (max-width: 991px) {
+				.grid-services {
+					grid-template-columns: repeat(2, minmax(0, 1fr));
+					gap: 20px;
+				}
+				.process-grids {
+					max-width: 100%;
+				}
+			}
+			@media (max-width: 767px) {
+				.process-step{
+					max-width: 75px;
+				}
+				.service-holders .fs-30 {
+					font-size: 20px;
+				}
+			}
+
+			@media (max-width: 575px) {
+				.service-icon {
+					max-width: 65px;
+				}
+				.service-holders a {
+					padding: 10px;
+				}
+				.service-holders .fs-30 {
+					font-size: 18px;
+				}
+			}
+			@media (max-width: 425px) {
+				.service-icon {
+					max-width: 40px;
+					margin: 0 auto 10px;
+				}
+			}
+		</style>
+		<script
+			is:inline
+			src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"
+			data-astro-rerun></script>
+		<script is:inline>
+			const runOnVisible = (element, callback, rootMargin = "0px") => {
+				const observer = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting) {
+								callback();
+								observer.unobserve(element);
+							}
+						});
+					},
+					{ rootMargin },
+				);
+				observer.observe(element);
+			};
+
+			const tracks = document.querySelectorAll(".marquee-track");
+
+			tracks.forEach((track) => {
+				// 1. Get the original single copy of your text
+				const originalContent = track.innerHTML;
+				let expandedContent = originalContent;
+
+				// 2. FIX: If the text is short, repeat it until it fills the screen width.
+				// This pushes the "reset point" safely off the left side of the screen.
+				track.innerHTML = expandedContent;
+				while (track.scrollWidth < window.innerWidth) {
+					expandedContent += originalContent;
+					track.innerHTML = expandedContent;
+				}
+
+				// 3. NOW, duplicate that full-screen block exactly once.
+				// This makes your `width / 2` math work flawlessly with zero empty space.
+				track.innerHTML = expandedContent + expandedContent;
+
+				let pos = 0;
+				const speed = 1;
+				let width = track.scrollWidth;
+				let rafId;
+
+				track.style.willChange = "transform";
+
+				const updateWidth = () => (width = track.scrollWidth);
+
+				window.addEventListener(
+					"resize",
+					() => {
+						clearTimeout(track._resizeTimer);
+						track._resizeTimer = setTimeout(updateWidth, 200);
+					},
+					{ passive: true },
+				);
+
+				const animate = () => {
+					pos -= speed;
+					// The reset happens here, completely hidden off-screen!
+					if (Math.abs(pos) > width / 2) pos = 0;
+					track.style.transform = `translate3d(${pos}px,0,0)`;
+					rafId = requestAnimationFrame(animate);
+				};
+
+				runOnVisible(
+					track,
+					() => {
+						rafId = requestAnimationFrame(animate);
+					},
+					"200px",
+				);
+
+				// pause when tab inactive
+				document.addEventListener("visibilitychange", () => {
+					if (document.hidden) cancelAnimationFrame(rafId);
+					else rafId = requestAnimationFrame(animate);
+				});
+			});
+		</script>
+	</body>
+</html>
