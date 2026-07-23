@@ -6,21 +6,10 @@ const today = new Date();
 <footer>
   <div class="container footer-grid">
     <div class="footer-brand">
-      <div class="logo">
-        <svg
-          class="logo-mark"
-          viewBox="0 0 44 44"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M22 3L41 24H34V41H10V24H3L22 3Z" fill="#FFFFFF"></path>
-          <path d="M22 11L33 23H29V35H15V23H11L22 11Z" fill="#0D47A1"></path>
-          <path d="M22 19L27 24.5H25V30H19V24.5H17L22 19Z" fill="#FFFFFF"
-          ></path>
-        </svg>
-        <span class="logo-text" style="color:var(--white);"
-          >Vincenzo's Roofing<span>New Hampshire</span></span
-        >
+      <div class="logo footer">
+        <a href="/">
+          <img src="/logo.png" alt="" width="190" height="109" loading="lazy" />
+        </a>
       </div>
       <p>
         Licensed, insured residential and commercial roofing across New
@@ -55,7 +44,14 @@ const today = new Date();
       </ul>
     </div>
     <div class="footer-col">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52816169.558200695!2d-161.49265223136007!3d36.102185713814805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2sUnited%20States!5e0!3m2!1sen!2sin!4v1784472204006!5m2!1sen!2sin" width="600" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52816169.558200695!2d-161.49265223136007!3d36.102185713814805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2sUnited%20States!5e0!3m2!1sen!2sin!4v1784472204006!5m2!1sen!2sin"
+        width="600"
+        height="250"
+        style="border:0;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </div>
   </div>
   <div class="container footer-bottom">
@@ -85,96 +81,18 @@ const today = new Date();
   </div>
 </div>
 
-<script is:inline>
-  /* Header shadow on scroll */
-  const hdr = document.getElementById("siteHeader");
-  addEventListener(
-    "scroll",
-    () => hdr.classList.toggle("scrolled", scrollY > 8),
-    { passive: true },
-  );
-
-  /* Mobile panel */
-  const btn = document.getElementById("menuToggle");
-  const panel = document.getElementById("mobilePanel");
-  btn.addEventListener("click", () => {
-    const isOpen = panel.classList.toggle("open");
-    btn.classList.toggle("active", isOpen);
-    btn.setAttribute("aria-expanded", isOpen);
-    document.body.style.overflow = isOpen ? "hidden" : "";
-  });
-  panel.querySelectorAll("a").forEach((a) =>
-    a.addEventListener("click", () => {
-      panel.classList.remove("open");
-      btn.classList.remove("active");
-      btn.setAttribute("aria-expanded", "false");
-      document.body.style.overflow = "";
-    }),
-  );
-
-  /* Duplicate marquee content for seamless loop */
-  const mq = document.getElementById("marquee");
-  mq.innerHTML += mq.innerHTML;
-
-  /* FAQ accordion */
-  document.querySelectorAll(".faq-item").forEach((item) => {
-    item.querySelector(".faq-q").addEventListener("click", () => {
-      const wasOpen = item.classList.contains("open");
-      document
-        .querySelectorAll(".faq-item")
-        .forEach((i) => i.classList.remove("open"));
-      if (!wasOpen) item.classList.add("open");
-    });
-  });
-
-  /* Scroll reveal */
-  const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add("reveal-in");
-          io.unobserve(e.target);
-        }
-      });
-    },
-    { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
-  );
-  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
-
-  /* Animated counter */
-  const counter = document.querySelector("[data-count]");
-  if (counter) {
-    const target = +counter.dataset.count;
-    const cio = new IntersectionObserver(
-      (entries) => {
-        if (!entries[0].isIntersecting) return;
-        cio.disconnect();
-        const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-        if (reduced) {
-          counter.textContent = target.toLocaleString();
-          return;
-        }
-        const t0 = performance.now(),
-          dur = 1400;
-        (function tick(t) {
-          const p = Math.min((t - t0) / dur, 1);
-          counter.textContent = Math.round(
-            target * (1 - Math.pow(1 - p, 3)),
-          ).toLocaleString();
-          if (p < 1) requestAnimationFrame(tick);
-        })(t0);
-      },
-      { threshold: 0.4 },
-    );
-    cio.observe(counter);
-  }
-</script>
 <style>
   .footer-col ul {
     padding: 0;
   }
-  .footer-col iframe{
+  .footer-col iframe {
     width: 100%;
+    border-radius: 10px;
+  }
+  .logo.footer {
+    background: #fff;
+    max-width: fit-content;
+    padding: 10px;
     border-radius: 10px;
   }
 </style>

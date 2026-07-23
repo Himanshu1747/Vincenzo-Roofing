@@ -1,0 +1,96 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import Testimonials from "../../components/Testimonials.astro";
+import Faqcompo from "../../components/Faqcompo.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+   
+    </head>
+    <body>
+        <Header />
+
+     <main id="top">
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="../index.html">Home</a> <span>/</span> <span style="color:#fff;">Gallery</span></div>
+      <h1 class="fade-up">Real roofs, <em style="font-style:normal;color:#9CC0FF;">across New Hampshire.</em></h1>
+      <p class="lede-page fade-up">A look at recent replacements, storm restorations, and commercial installs completed by our in-house crews.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="gallery-filters">
+        <button class="gfilter active" data-filter="all">All Projects</button>
+        <button class="gfilter" data-filter="residential">Residential</button>
+        <button class="gfilter" data-filter="commercial">Commercial</button>
+        <button class="gfilter" data-filter="storm">Storm Restoration</button>
+        <button class="gfilter" data-filter="metal">Metal Roofing</button>
+      </div>
+
+      <div class="gallery-masonry">
+        <div class="photo-frame ratio-4-3" data-cat="residential">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80" onerror="imgFallback(this,'g1')" alt="Completed shingle roof replacement, Manchester NH" loading="lazy">
+          <div class="g-cap">Manchester, NH — Shingle Replacement</div>
+        </div>
+        <div class="photo-frame ratio-1-1" data-cat="commercial">
+          <img src="https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?auto=format&fit=crop&w=700&q=80" onerror="imgFallback(this,'g2')" alt="Commercial flat roof install, Portsmouth NH" loading="lazy">
+          <div class="g-cap">Portsmouth, NH — Commercial Flat Roof</div>
+        </div>
+        <div class="photo-frame ratio-3-4" data-cat="storm">
+          <img src="https://images.unsplash.com/photo-1632759145351-1d592919f522?auto=format&fit=crop&w=700&q=80" onerror="imgFallback(this,'g3')" alt="Storm damage restoration, Nashua NH" loading="lazy">
+          <div class="g-cap">Nashua, NH — Storm Restoration</div>
+        </div>
+        <div class="photo-frame ratio-4-3" data-cat="metal">
+          <img src="https://images.unsplash.com/photo-1632863677831-3fa5d1c0a5e4?auto=format&fit=crop&w=700&q=80" onerror="imgFallback(this,'g4')" alt="Standing seam metal roof, Concord NH" loading="lazy">
+          <div class="g-cap">Concord, NH — Standing-Seam Metal</div>
+        </div>
+        <div class="photo-frame ratio-1-1" data-cat="residential">
+          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=700&q=80" onerror="imgFallback(this,'g5')" alt="Residential roof re-roof, Salem NH" loading="lazy">
+          <div class="g-cap">Salem, NH — Full Re-Roof</div>
+        </div>
+        <div class="photo-frame ratio-4-3" data-cat="residential">
+          <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=700&q=80" onerror="imgFallback(this,'g6')" alt="Newly finished roof, Bedford NH" loading="lazy">
+          <div class="g-cap">Bedford, NH — Roof Replacement</div>
+        </div>
+        <div class="photo-frame ratio-3-4" data-cat="storm">
+          <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=700&q=80" onerror="imgFallback(this,'g7')" alt="Emergency tarping crew, Derry NH" loading="lazy">
+          <div class="g-cap">Derry, NH — Emergency Tarping</div>
+        </div>
+        <div class="photo-frame ratio-4-3" data-cat="commercial">
+          <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=700&q=80" onerror="imgFallback(this,'g8')" alt="Multi-unit commercial roofing, Dover NH" loading="lazy">
+          <div class="g-cap">Dover, NH — Multi-Unit Roofing</div>
+        </div>
+        <div class="photo-frame ratio-1-1" data-cat="metal">
+          <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=700&q=80" onerror="imgFallback(this,'g9')" alt="Metal roof detail, Keene NH" loading="lazy">
+          <div class="g-cap">Keene, NH — Metal Roof Detail</div>
+        </div>
+      </div>
+
+      <p class="note" style="margin-top:32px;">Have a project you'd like added to our next inspection schedule? <a href="contact.html" style="color:var(--blue);font-weight:700;">Get a free estimate →</a></p>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="cta-inner">
+      <h2>Want results <em>like these?</em></h2>
+      <div class="btns">
+        <a href="contact.html" class="btn btn-blue">Get Your Free Estimate</a>
+        <a href="tel:+16035550199" class="btn btn-ghost-w">Call Now</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+        <Footer />
+    </body>
+</html>

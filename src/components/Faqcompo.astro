@@ -1,96 +1,54 @@
-	<section class="section" id="faq">
-				<div class="container">
-					<div class="sec-header" style="text-align:center;">
-						<span class="eyebrow">FAQ</span>
-						<h2 class="sec-head">Straight answers first.</h2>
-					</div>
-					<div class="faq-list">
-						<div class="faq-item open">
-							<button class="faq-q"
-								><span
-									>How much does a roof replacement cost in
-									New Hampshire?</span
-								><span class="plus"></span></button
-							>
-							<div class="faq-a">
-								<p>
-									Most full roof replacements in New Hampshire
-									run between $8,000 and $22,000, depending on
-									roof size, pitch, material, and how much of
-									the underlying deck needs repair. We provide
-									a free, itemized estimate after an on-site
-									inspection so you know the exact cost before
-									any work begins.
-								</p>
-							</div>
-						</div>
-						<div class="faq-item">
-							<button class="faq-q"
-								><span
-									>Will my homeowners insurance cover storm or
-									wind damage?</span
-								><span class="plus"></span></button
-							>
-							<div class="faq-a">
-								<p>
-									Most NH homeowners policies cover sudden
-									storm, wind, and hail damage, though
-									coverage details vary by carrier. We
-									document the damage, meet with your
-									adjuster, and help you understand what your
-									policy covers as part of every storm damage
-									claim.
-								</p>
-							</div>
-						</div>
-						<div class="faq-item">
-							<button class="faq-q"
-								><span
-									>How long does a typical roof replacement
-									take?</span
-								><span class="plus"></span></button
-							>
-							<div class="faq-a">
-								<p>
-									Most residential roof replacements are
-									completed in one to three days, weather
-									permitting. Larger or steeper roofs, and
-									commercial flat roofs, can take longer.
-									You'll get a specific timeline in your
-									written estimate.
-								</p>
-							</div>
-						</div>
-						<div class="faq-item">
-							<button class="faq-q"
-								><span>Do you offer emergency roof repair?</span
-								><span class="plus"></span></button
-							>
-							<div class="faq-a">
-								<p>
-									Yes. We offer 24/7 emergency response for
-									active leaks, storm damage, and structural
-									concerns anywhere in our New Hampshire
-									service area, with temporary tarping
-									available the same day.
-								</p>
-							</div>
-						</div>
-						<div class="faq-item">
-							<button class="faq-q"
-								><span
-									>Do you work on commercial and flat roofs?</span
-								><span class="plus"></span></button
-							>
-							<div class="faq-a">
-								<p>
-									Yes. We install and repair commercial
-									low-slope and flat roofing systems for
-									retail, office, and multi-unit properties,
-									in addition to residential pitched roofs.
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
+---
+import { queryWordPress } from "../lib/wordpress";
+const FAQDATA = `
+query faqposts{
+ faqs(first: 50){
+    nodes {
+      title
+      content
+    }
+  }
+}
+`;
+const dataget = await queryWordPress(FAQDATA);
+const finaldata = dataget.faqs.nodes;
+---
+
+<div class="faq-list">
+	{
+		finaldata.map((faqitems) => (
+			<div class="faq-item">
+				<button class="faq-q">
+					<>
+						<span>{faqitems?.title || "error"}</span>
+						<span class="plus" />
+					</>
+				</button>
+				<div class="faq-a" set:html={faqitems?.content || "error"}></div>
+			</div>
+		))
+	}
+</div>
+<script is:inline>
+	document.addEventListener("DOMContentLoaded", () => {
+		// Select all FAQ question buttons
+		const faqButtons = document.querySelectorAll(".faq-q");
+
+		faqButtons.forEach((button) => {
+			button.addEventListener("click", () => {
+				// Find the parent item of the clicked button
+				const currentItem = button.closest(".faq-item");
+
+				// Optional: Close all other open FAQ items
+				document.querySelectorAll(".faq-item").forEach((item) => {
+					if (item !== currentItem) {
+						item.classList.remove("open");
+					}
+				});
+
+				// Toggle the 'open' class on the clicked item
+				currentItem.classList.toggle("open");
+			});
+		});
+	});
+</script>

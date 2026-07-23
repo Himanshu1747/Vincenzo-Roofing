@@ -1,0 +1,111 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import { queryWordPress } from "../../lib/wordpress";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+
+const SERVICEDATA = `
+query allservices {
+  services(first: 50) {
+    nodes {
+      slug
+      title
+      excerpt
+      content
+    }
+  }
+}
+`;
+const pagedata = await queryWordPress(SERVICEDATA);
+const responsedata = pagedata?.services?.nodes || [];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+
+    <main id="top">
+      <section class="page-hero">
+        <div class="container">
+          <div class="breadcrumb">
+            <a href="/">Home</a>
+            <span>/</span>
+            <span style="color:#fff;">Services</span>
+          </div>
+          <h1 class="fade-up">
+            Every roofing service, <em style="font-style:normal;color:#9CC0FF;"
+              >one accountable crew.</em
+            >
+          </h1>
+          <p class="lede-page fade-up">
+            From a single missing shingle to a full commercial re-roof, the same
+            licensed NH team handles it start to finish — no subcontracted
+            labor, ever.
+          </p>
+          <div class="hero-ctas" style="margin-top:28px;">
+            <a href="/contact" class="btn btn-blue">Get a Free Estimate</a>
+            <a href="tel:+16035550199" class="btn btn-ghost-w"
+              >Call (603) 555-0199</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- Detail rows -->
+      <section class="section">
+        <div class="container">
+          {
+            responsedata.map((servotems) => (
+              <div class="svc-detail-row" id={servotems.slug}>
+                <div class="photo-frame ratio-4-3 reveal">
+                  <img
+                    src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
+                    alt={servotems.title}
+                    loading="lazy"
+                  />
+                </div>
+                <div class="svc-detail-copy reveal">
+                  <div class="svc-icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path d="M3 11l9-7 9 7" />
+                      <path d="M5 10v10h14V10" />
+                    </svg>
+                  </div>
+                  <h3 set:html={servotems.title} />
+                  <div set:html={servotems.excerpt || servotems.content} />
+                  
+                  <a href={`/service/${servotems.slug}`} class="btn btn-blue">
+                    View Details
+                  </a>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- CTA band -->
+      <section class="cta-band">
+        <div class="cta-inner">
+          <h2>Not sure which service <em>you need?</em></h2>
+          <div class="btns">
+            <a href="/contact" class="btn btn-blue">Get a Free Inspection</a>
+            <a href="tel:+16035550199" class="btn btn-ghost-w">Call Now</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>

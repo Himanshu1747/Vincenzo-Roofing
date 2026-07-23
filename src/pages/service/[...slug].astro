@@ -1,0 +1,98 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import { queryWordPress } from "../../lib/wordpress";
+
+export async function getStaticPaths() {
+  const QUERY = `
+    query getServiceSlugs {
+      services(first: 100) {
+        nodes {
+          slug
+        }
+      }
+    }
+  `;
+
+  const data = await queryWordPress(QUERY);
+  const services = data?.services?.nodes || [];
+
+  return services.map((service) => ({
+    params: { slug: service.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+
+const SINGLE_SERVICE_QUERY = `
+  query getServiceBySlug($id: ID!) {
+    service(id: $id, idType: SLUG) {
+      title
+      content
+      excerpt
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+        }
+      }
+    }
+  }
+`;
+
+const data = await queryWordPress(SINGLE_SERVICE_QUERY, { id: slug });
+const service = data?.service;
+
+if (!service) {
+  return Astro.redirect("/404");
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={service.title} description={service.excerpt || service.title} />
+  </head>
+  <body>
+    <Header />
+
+    <main id="top">
+      <section class="page-hero">
+        <div class="container">
+          <div class="breadcrumb">
+            <a href="/">Home</a>
+            <span>/</span>
+            <a href="/service">Services</a>
+            <span>/</span>
+            <span style="color:#fff;">{service.title}</span>
+          </div>
+          <h1 class="fade-up" set:html={service.title} />
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          {
+            service.featuredImage?.node?.sourceUrl && (
+              <div class="photo-frame ratio-4-3 reveal" style="margin-bottom: 2rem;">
+                <img
+                  src={service.featuredImage.node.sourceUrl}
+                  alt={service.featuredImage.node.altText || service.title}
+                />
+              </div>
+            )
+          }
+
+          <div class="svc-detail-copy reveal" set:html={service.content} />
+
+          <div style="margin-top: 32px;">
+            <a href="/contact" class="btn btn-blue">Get a Quote for {service.title}</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>

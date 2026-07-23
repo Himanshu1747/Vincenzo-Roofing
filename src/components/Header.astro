@@ -1,88 +1,290 @@
 ---
 import { SITE_TITLE } from "../consts";
 import HeaderLink from "./HeaderLink.astro";
+import { queryWordPress } from "../lib/wordpress";
+
+const QUERY_MENU = `
+query MainMenu {
+  menu(id: "main-menu", idType: SLUG) {
+    menuItems(first: 100) {
+      nodes {
+        id
+        label
+        cssClasses
+        url
+        uri
+        parentId
+        target
+        order
+        childItems(first: 100) {
+          nodes {
+            label
+            url
+            uri
+            target
+          }
+        }
+      }
+    }
+  }
+  siteLogo {
+    sourceUrl
+    altText
+    mediaDetails {
+      width
+      height
+    }
+  }
+}
+`;
+
+// Fetch the menu data
+const data = await queryWordPress(QUERY_MENU);
+
+// Extract the menu nodes and default to an empty array if undefined
+const allMenuItems = data?.menu?.menuItems?.nodes || [];
+
+// Filter the top-level items (items that don't have a parentId)
+// and sort them based on their 'order' value
+const topLevelItems = allMenuItems
+    .filter((item: any) => !item.parentId)
+    .sort((a: any, b: any) => a.order - b.order);
+
+// Extract Logo Data with fallbacks
+const logoUrl = data?.siteLogo?.sourceUrl || "/logo.png";
+const logoAlt = data?.siteLogo?.altText || "Vincenzo's Roofing LLC";
+const logoWidth = data?.siteLogo?.mediaDetails?.width || "100";
+const logoHeight = data?.siteLogo?.mediaDetails?.height || "auto";
 ---
 
-
-
-<!-- Header -->
+<!-- Header --><!-- Top strip --><!-- Header -->
 <header id="siteHeader">
-	<!-- Top strip -->
-<div class="top-strip">
-	<div class="container">
-		<div class="left">
-			Licensed &amp; Insured · Serving all of New Hampshire
-		</div>
-		<div>
-			<span class="pulse"></span>24/7 Emergency Line: <a
-				href="tel:+16035550199">(603) 555-0199</a>
-		</div>
-	</div>
-</div>
-	<div class="nav-wrap">
-		<a href="#top" class="logo" aria-label="Vincenzo's Roofing LLC home">
-			<svg
-				class="logo-mark"
-				viewBox="0 0 44 44"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<path d="M22 3L41 24H34V41H10V24H3L22 3Z" fill="#111111"></path>
-				<path d="M22 11L33 23H29V35H15V23H11L22 11Z" fill="#0D47A1"
-				></path>
-				<path d="M22 19L27 24.5H25V30H19V24.5H17L22 19Z" fill="#FFFFFF"
-				></path>
-			</svg>
-			<span class="logo-text"
-				>Vincenzo's Roofing<span>New Hampshire</span></span
-			>
-		</a>
-		<nav class="primary" aria-label="Primary">
-			<a href="/about-us/">About Us</a>
-			<a href="/roofing-services/">Services</a>
-			<a href="/service-areas/">Service Areas</a>
-			<a href="/gallery/">Gallery</a>
-			<a href="/reviews/">Reviews</a>
-			<a href="/faq/">FAQ</a>
-		</nav>
-		<div class="header-ctas">
-			<a href="tel:+16035550199" class="header-phone">
-				<svg
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="1.9"
-					><path
-						d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.7A2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.7a2 2 0 01-.5 2.1L8 9.9a16 16 0 006 6l1.4-1.4a2 2 0 012.1-.5c.9.3 1.8.5 2.7.6a2 2 0 011.8 2.3z"
-					></path></svg
-				>
-				<span>(603) 555-0199</span>
-			</a>
-			<a href="#contact" class="btn btn-blue">Free Estimate</a>
-			<button
-				class="menu-toggle"
-				id="menuToggle"
-				aria-label="Open menu"
-				aria-expanded="false"><span></span></button
-			>
-		</div>
-	</div>
+    <div class="top-strip">
+        <div class="container">
+            <div class="left">
+                Licensed &amp; Insured · Serving all of New Hampshire
+            </div>
+            <div>
+                <span class="pulse"></span>24/7 Emergency Line: <a
+                    href="tel:+16035550199">(603) 555-0199</a
+                >
+            </div>
+        </div>
+    </div>
+    <div class="nav-wrap">
+         <div class="header-logo">
+            <a href="/" class="logo" aria-label={`${logoAlt} home`}>
+            <!-- Render the dynamic logo here -->
+            <img 
+                src={logoUrl} 
+                alt={logoAlt} 
+                width="100" 
+                height={logoHeight} 
+                fetchpriority="high"
+                loading="eager"
+                decoding="sync"
+            />
+        </a>
+         </div>
+        <nav class="primary" aria-label="Primary">
+            {
+                topLevelItems.map((item: any) => {
+                    const hasChildren =
+                        item.childItems &&
+                        item.childItems.nodes &&
+                        item.childItems.nodes.length > 0;
+
+                    if (hasChildren) {
+                        return (
+                            <div class="nav-dropdown">
+                                <a href={item.uri}>
+                                    {item.label}
+                                    <svg
+                                        class="nav-chevron"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2.6"
+                                    >
+                                        <path d="M6 9l6 6 6-6" />
+                                    </svg>
+                                </a>
+                                <div class="nav-dropdown-menu">
+                                    {item.childItems.nodes
+                                        .sort(
+                                            (a: any, b: any) =>
+                                                a.order - b.order,
+                                        )
+                                        .map((child: any) => (
+                                            <a
+                                                href={child.uri}
+                                                target={child.target || "_self"}
+                                            >
+                                                {child.label}
+                                            </a>
+                                        ))}
+                                </div>
+                            </div>
+                        );
+                    }
+
+                    // Standard top-level link using HeaderLink component
+                    return (
+                        <HeaderLink
+                            href={item.uri}
+                            target={item.target || "_self"}
+                        >
+                            {item.label}
+                        </HeaderLink>
+                    );
+                })
+            }
+        </nav>
+        <div class="header-ctas">
+            <a href="tel:+16035550199" class="header-phone">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.9"
+                >
+                    <path
+                        d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.7A2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.7a2 2 0 01-.5 2.1L8 9.9a16 16 0 006 6l1.4-1.4a2 2 0 012.1-.5c.9.3 1.8.5 2.7.6a2 2 0 011.8 2.3z"
+                    ></path>
+                </svg>
+                <span>(603) 555-0199</span>
+            </a>
+            <a href="/contact" class="btn btn-blue">Free Estimate</a>
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                aria-label="Open menu"
+                aria-expanded="false"><span></span></button
+            >
+        </div>
+    </div>
 </header>
 
 <div class="mobile-panel" id="mobilePanel">
-	<a href="/about-us/" class="mp-link">About Us</a>
-	<a href="/roofing-services/" class="mp-link">Services</a>
-	<a href="/service-areas/" class="mp-link">Service Areas</a>
-	<a href="/gallery/" class="mp-link">Gallery</a>
-	<a href="/reviews/" class="mp-link">Reviews</a>
-	<a href="/financing/" class="mp-link">Financing</a>
-	<a href="/blog/" class="mp-link">Blog</a>
-	<a href="/contact/" class="mp-link">Contact</a>
-	<div class="mp-ctas">
-		<a href="tel:+16035550199" class="btn btn-ghost-w"
-			>Call (603) 555-0199</a
-		>
-		<a href="#contact" class="btn btn-blue">Get a Free Estimate</a>
-	</div>
+    {
+        topLevelItems.map((item: any) => {
+            const hasChildren =
+                item.childItems &&
+                item.childItems.nodes &&
+                item.childItems.nodes.length > 0;
+
+            if (hasChildren) {
+                return (
+                    <div class="mp-link-group">
+                        <a
+                            href={item.uri !== "#" ? item.uri : ""}
+                            class="mp-toggle"
+                            aria-expanded="false"
+                        >
+                            <span>{item.label}</span>
+                            <svg
+                                class="mp-chevron"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.4"
+                            >
+                                <path d="M6 9l6 6 6-6" />
+                            </svg>
+                        </a>
+                        <div class="mp-submenu">
+                            {item.childItems.nodes
+                                .sort((a: any, b: any) => a.order - b.order)
+                                .map((child: any) => (
+                                    <a
+                                        href={child.uri}
+                                        class="mp-sublink"
+                                        target={child.target || "_self"}
+                                    >
+                                        {child.label}
+                                    </a>
+                                ))}
+                        </div>
+                    </div>
+                );
+            }
+
+            // Standard mobile link
+            return (
+                <a
+                    href={item.uri}
+                    class="mp-link"
+                    target={item.target || "_self"}
+                >
+                    {item.label}
+                </a>
+            );
+        })
+    }
+
+    <div class="mp-ctas">
+        <a href="tel:+16035550199" class="btn btn-ghost-w"
+            >Call (603) 555-0199</a
+        >
+        <a href="/contact" class="btn btn-blue">Get a Free Estimate</a>
+    </div>
 </div>
 
+<script>
+    /* ---------- Highly Optimized Vanilla JS ---------- */
+    // Using standard Astro <script> tag allows Astro to bundle and defer load it, 
+    // stopping it from blocking the logo rendering on initial page load.
+
+    const hdr = document.getElementById("siteHeader");
+    const btn = document.getElementById("menuToggle");
+    const panel = document.getElementById("mobilePanel");
+
+    /* ---------- Header shadow on scroll ---------- */
+    if (hdr) {
+        const onScroll = () => hdr.classList.toggle("scrolled", window.scrollY > 8);
+        onScroll();
+        window.addEventListener("scroll", onScroll, { passive: true });
+    }
+
+    /* ---------- Global Event Delegation (Replaces multiple loops) ---------- */
+    document.addEventListener("click", (e) => {
+        const target = e.target as HTMLElement;
+
+        // 1. Mobile menu toggle button
+        if (btn && (target === btn || btn.contains(target))) {
+            const isOpen = panel?.classList.toggle("open");
+            btn.classList.toggle("active", isOpen);
+            btn.setAttribute("aria-expanded", String(isOpen));
+            document.body.style.overflow = isOpen ? "hidden" : "";
+            return;
+        }
+
+        // 2. Click-to-close for active mobile links
+        if (target.closest("a.mp-link, a.mp-sublink")) {
+            panel?.classList.remove("open");
+            btn?.classList.remove("active");
+            btn?.setAttribute("aria-expanded", "false");
+            document.body.style.overflow = "";
+            return;
+        }
+
+        // 3. Mobile Accordions
+        const mpToggle = target.closest(".mp-toggle");
+        if (mpToggle) {
+            const href = mpToggle.getAttribute("href");
+            if (!href || href === "#") e.preventDefault();
+            
+            const submenu = mpToggle.nextElementSibling;
+            if (submenu && submenu.classList.contains("mp-submenu")) {
+                const isOpen = submenu.classList.toggle("open");
+                mpToggle.setAttribute("aria-expanded", String(isOpen));
+            }
+            return;
+        }
+
+        // 4. Desktop dropdown click-outside fallback
+        document.querySelectorAll(".nav-dropdown").forEach((dd) => {
+            if (!dd.contains(target)) dd.classList.remove("open");
+        });
+    });
+</script>

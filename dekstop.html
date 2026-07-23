@@ -1,0 +1,2570 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eco-Building Products — Homepage (Concept)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Arimo:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --purple: #663467;
+      --purple-deep: #4A2450;
+      --ink: #151515;
+      --ink2: #2B2530;
+      --muted: #6E6675;
+      --muted2: #A99FAE;
+      --line: #ECE8EE;
+      --tintA: #F4EDF6;
+      --tintB: #F0ECF1;
+      --orange: #E88C2E;
+      --green: #639C67;
+      --green-deep: #4E7A52;
+      --green-tint: #EDF3E3;
+      --white: #fff;
+      --bg: #FBFAFB;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-xs: 6px;
+      --shadow: 0 1px 2px rgba(26, 20, 34, .06), 0 4px 16px rgba(26, 20, 34, .05);
+      --maxw: 1240px;
+      --font: "Arimo", Arial, Helvetica, sans-serif;
+      --font-head: "Cabin", "Arimo", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0
+    }
+
+    body {
+      font-family: var(--font);
+      color: var(--ink);
+      background: var(--bg);
+      font-size: 15px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased
+    }
+
+    .logo,
+    .foot-logo,
+    h1,
+    h2.title,
+    .slide h1,
+    .rs-num,
+    .about h2,
+    .news h3,
+    .rewards h3,
+    .stat .sn,
+    .card .price {
+      font-family: var(--font-head)
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    img {
+      display: block;
+      max-width: 100%
+    }
+
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 28px
+    }
+
+    .sec {
+      padding: 40px 0
+    }
+
+    .sec-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      gap: 16px
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      color: var(--purple)
+    }
+
+    h2.title {
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin: 2px 0 0
+    }
+
+    .link-more {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--purple);
+      white-space: nowrap
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font);
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      border-radius: 100px;
+      padding: 11px 20px;
+      font-size: 14px;
+      transition: .15s
+    }
+
+    .btn-primary {
+      background: var(--purple);
+      color: #fff
+    }
+
+    .btn-primary:hover {
+      background: var(--purple-deep)
+    }
+
+    .btn-ghost {
+      background: #fff;
+      color: var(--purple);
+      border: 1.5px solid var(--line)
+    }
+
+    /* Preview ribbon */
+    .ribbon {
+      background: var(--ink);
+      color: #fff;
+      font-size: 12.5px;
+      text-align: center;
+      padding: 7px 14px;
+      letter-spacing: .02em
+    }
+
+    .ribbon b {
+      color: #E8D9EC
+    }
+
+    /* Utility bar (light, like current site) */
+    .util {
+      background: #F2F1F3;
+      color: #5a5560;
+      font-size: 12.5px;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .util .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 22px;
+      height: 36px
+    }
+
+    .util a {
+      color: #5a5560
+    }
+
+    .util a:hover {
+      color: var(--purple)
+    }
+
+    /* Header - logo spans both rows (matches current site) */
+    header.head {
+      background: #fff;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .masthead {
+      display: flex;
+      align-items: center;
+      gap: 34px;
+      padding: 12px 0
+    }
+
+    .masthead .logo {
+      flex: 0 0 auto;
+      display: block
+    }
+
+    .masthead .logo img {
+      height: 96px;
+      width: auto;
+      display: block
+    }
+
+    .mast-right {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 13px
+    }
+
+    .mast-row1 {
+      display: flex;
+      align-items: center;
+      gap: 22px
+    }
+
+    .search {
+      flex: 1;
+      display: flex;
+      align-items: stretch;
+      background: #fff;
+      border: 1.5px solid var(--line);
+      border-radius: 6px;
+      overflow: hidden;
+      max-width: 680px
+    }
+
+    .search input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: var(--font);
+      font-size: 14.5px;
+      padding: 12px 16px;
+      color: var(--ink);
+      min-width: 0
+    }
+
+    .search-btn {
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      width: 52px;
+      cursor: pointer;
+      font-size: 17px;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .cart-btn {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      background: none;
+      color: var(--ink);
+      border: none;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      white-space: nowrap
+    }
+
+    .cart-btn .cc {
+      background: var(--purple);
+      color: #fff;
+      border-radius: 100px;
+      min-width: 22px;
+      height: 22px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 6px
+    }
+
+    nav.mainnav {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+      font-size: 14.5px;
+      font-weight: 600
+    }
+
+    nav.mainnav a {
+      color: var(--ink2);
+      padding: 2px 0;
+      border-bottom: 2px solid transparent
+    }
+
+    nav.mainnav a:hover {
+      color: var(--purple);
+      border-bottom-color: var(--purple)
+    }
+
+    /* Hero slider */
+    .hero {
+      position: relative;
+      margin-top: 24px
+    }
+
+    .slider {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 1920/550;
+      box-shadow: var(--shadow)
+    }
+
+    .slides {
+      display: flex;
+      height: 100%;
+      transition: transform .6s cubic-bezier(.6, .02, .1, 1)
+    }
+
+    .slide {
+      min-width: 100%;
+      position: relative;
+      height: 100%
+    }
+
+    .slide img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 35%
+    }
+
+    .slide .scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(26, 20, 34, .78) 0%, rgba(26, 20, 34, .45) 45%, rgba(26, 20, 34, .05) 75%)
+    }
+
+    .slide .stext {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+      padding: 0 60px;
+      max-width: 620px
+    }
+
+    .badge {
+      align-self: flex-start;
+      background: var(--orange);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      padding: 6px 13px;
+      border-radius: 100px
+    }
+
+    .slide h1 {
+      color: #fff;
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin: 0;
+      line-height: 1.05
+    }
+
+    .slide p {
+      color: #F0E9F2;
+      font-size: 16.5px;
+      margin: 0;
+      max-width: 440px
+    }
+
+    .scta {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 26px;
+      display: flex;
+      justify-content: center;
+      z-index: 2
+    }
+
+    .dots {
+      position: absolute;
+      bottom: 18px;
+      left: 28px;
+      display: flex;
+      gap: 7px
+    }
+
+    .dot {
+      height: 6px;
+      width: 6px;
+      border-radius: 100px;
+      background: rgba(255, 255, 255, .5);
+      cursor: pointer;
+      transition: .3s
+    }
+
+    .dot.on {
+      width: 22px;
+      background: #fff
+    }
+
+    /* Chips */
+    .chips {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-top: 26px
+    }
+
+    .chip {
+      background: var(--green-tint);
+      border: 1px solid #DCE7CC;
+      border-radius: 100px;
+      padding: 9px 18px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--green-deep);
+      cursor: pointer
+    }
+
+    .chip:hover {
+      border-color: var(--purple);
+      color: var(--purple)
+    }
+
+    /* Brand grid */
+    .brand-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px
+    }
+
+    .brand-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: .15s
+    }
+
+    .brand-card:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px)
+    }
+
+    .brand-card .bimg {
+      aspect-ratio: 4/3;
+      background: var(--tintB);
+      overflow: hidden
+    }
+
+    .brand-card .bimg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .brand-card .bb {
+      padding: 12px 14px
+    }
+
+    .brand-card .bn {
+      font-weight: 700;
+      font-size: 14.5px
+    }
+
+    .brand-card .bt {
+      font-size: 12.5px;
+      color: var(--muted)
+    }
+
+    /* Best sellers */
+    .filter {
+      position: relative
+    }
+
+    .filter-btn {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      background: #fff;
+      border: 2px solid var(--purple);
+      border-radius: 100px;
+      padding: 13px 24px;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      color: var(--purple)
+    }
+
+    .filter-btn .fl-pre {
+      color: var(--muted);
+      font-weight: 600
+    }
+
+    .filter-btn .fl-car {
+      font-size: 12px
+    }
+
+    .filter-menu {
+      \1min-width: 260px;
+      z-index: 30;
+      display: none
+    }
+
+    .filter-menu.open {
+      display: block
+    }
+
+    \1font-size:14.5px;
+    cursor:pointer;
+    color:var(--ink2)
+    }
+
+    .filter-menu button:hover {
+      background: var(--tintB)
+    }
+
+    .filter-menu button .ct {
+      color: var(--muted2);
+      font-size: 12.5px
+    }
+
+    .prod-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column
+    }
+
+    .card .pimg {
+      aspect-ratio: 1/1;
+      background: var(--tintB);
+      overflow: hidden
+    }
+
+    .card .pimg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .card .pb {
+      padding: 13px 14px 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1
+    }
+
+    .card .pbrand {
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: var(--purple)
+    }
+
+    .card .pname {
+      font-size: 14.5px;
+      font-weight: 600;
+      line-height: 1.3;
+      min-height: 38px
+    }
+
+    .card .stars {
+      color: var(--orange);
+      font-size: 13px;
+      letter-spacing: 1px
+    }
+
+    .card .stars span {
+      color: var(--muted2);
+      font-size: 12px;
+      margin-left: 4px
+    }
+
+    .card .prow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 6px
+    }
+
+    .card .price {
+      font-size: 17px;
+      font-weight: 800
+    }
+
+    .card .add {
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      width: 38px;
+      height: 38px;
+      font-size: 20px;
+      cursor: pointer;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .card .add:hover {
+      background: var(--purple-deep)
+    }
+
+    /* Departments */
+    .dept-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px
+    }
+
+    .dept {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      height: 190px;
+      cursor: pointer
+    }
+
+    .dept img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .dept .dscrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(26, 20, 34, 0) 30%, rgba(26, 20, 34, .82) 100%)
+    }
+
+    .dept .dtext {
+      position: absolute;
+      left: 16px;
+      bottom: 14px;
+      color: #fff
+    }
+
+    .dept .dn {
+      font-weight: 700;
+      font-size: 16px
+    }
+
+    .dept .ds {
+      font-size: 12.5px;
+      opacity: .9
+    }
+
+    /* Rewards */
+    .rewards {
+      background: linear-gradient(120deg, var(--purple), var(--purple-deep));
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 34px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px
+    }
+
+    .rewards h3 {
+      margin: 0 0 6px;
+      font-size: 23px;
+      font-weight: 800
+    }
+
+    .rewards p {
+      margin: 0;
+      color: #EAD9EE;
+      max-width: 520px;
+      font-size: 14.5px
+    }
+
+    /* Reviews summary */
+    .rev-summary {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 34px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 30px 34px;
+      align-items: center
+    }
+
+    .rs-score {
+      text-align: center
+    }
+
+    .rs-num {
+      font-size: 58px;
+      font-weight: 800;
+      line-height: 1;
+      color: var(--ink)
+    }
+
+    .rs-stars {
+      color: var(--orange);
+      font-size: 20px;
+      letter-spacing: 2px;
+      margin: 6px 0
+    }
+
+    .rs-sub {
+      color: var(--muted);
+      font-size: 13.5px
+    }
+
+    .rs-sa {
+      margin-top: 10px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--purple)
+    }
+
+    .bars {
+      display: flex;
+      flex-direction: column;
+      gap: 9px
+    }
+
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px
+    }
+
+    .bar-row .bl {
+      width: 26px;
+      color: var(--muted2);
+      font-weight: 600
+    }
+
+    .bar-track {
+      flex: 1;
+      height: 9px;
+      background: var(--tintB);
+      border-radius: 100px;
+      overflow: hidden
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: var(--orange);
+      border-radius: 100px
+    }
+
+    .bar-row .bc {
+      width: 34px;
+      text-align: right;
+      color: var(--muted);
+      font-size: 12.5px
+    }
+
+    .r95 {
+      margin-top: 14px;
+      font-size: 13.5px;
+      color: var(--ink2)
+    }
+
+    .r95 b {
+      color: var(--purple)
+    }
+
+    /* Review cards */
+    .rev-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px
+    }
+
+    .rev-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px
+    }
+
+    .rev-card .rstars {
+      color: var(--orange);
+      font-size: 13px;
+      letter-spacing: 1px
+    }
+
+    .rev-card .rt {
+      font-weight: 700;
+      font-size: 14.5px
+    }
+
+    .rev-card .rbody {
+      font-size: 13.5px;
+      color: var(--ink2);
+      flex: 1
+    }
+
+    .rev-card .rmeta {
+      font-size: 12.5px;
+      color: var(--muted)
+    }
+
+    .rev-card .rmeta b {
+      color: var(--ink2)
+    }
+
+    /* Awards */
+    .awards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      justify-items: center;
+      align-items: center
+    }
+
+    .award {
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .award img {
+      max-height: 124px;
+      width: auto;
+      object-fit: contain
+    }
+
+    .award .amark {
+      width: 44px;
+      height: 44px;
+      border-radius: 100px;
+      background: var(--tintA);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px
+    }
+
+    .award .an {
+      font-size: 12.5px;
+      font-weight: 700;
+      text-align: center;
+      color: var(--ink2);
+      line-height: 1.25
+    }
+
+    /* About */
+    .about {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 40px;
+      align-items: center
+    }
+
+    .about h2 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin: 0 0 14px
+    }
+
+    .about p {
+      color: var(--ink2);
+      font-size: 15px;
+      margin: 0 0 12px
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px
+    }
+
+    .stat {
+      background: var(--green-tint);
+      border: 1px solid #DCE7CC;
+      border-radius: var(--radius);
+      padding: 18px 16px;
+      text-align: center
+    }
+
+    .stat .sn {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--green-deep)
+    }
+
+    .stat .sl {
+      font-size: 12.5px;
+      color: var(--ink2);
+      margin-top: 4px
+    }
+
+    /* Newsletter */
+    .news {
+      background: var(--tintA);
+      border-radius: var(--radius);
+      padding: 32px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap
+    }
+
+    .news h3 {
+      margin: 0 0 4px;
+      font-size: 21px;
+      font-weight: 800
+    }
+
+    .news p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px
+    }
+
+    .news form {
+      display: flex;
+      gap: 10px
+    }
+
+    .news input {
+      border: 1.5px solid var(--line);
+      background: #fff;
+      border-radius: 100px;
+      padding: 12px 18px;
+      font-family: var(--font);
+      font-size: 14px;
+      min-width: 250px;
+      outline: none
+    }
+
+    /* Footer */
+    footer {
+      background: var(--ink);
+      color: #C9C1CE;
+      margin-top: 20px
+    }
+
+    footer .wrap {
+      padding: 40px 28px 30px
+    }
+
+    .foot-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      flex-wrap: wrap;
+      align-items: flex-start
+    }
+
+    .foot-logo {
+      font-size: 24px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -.03em
+    }
+
+    .foot-links {
+      display: flex;
+      gap: 34px;
+      flex-wrap: wrap
+    }
+
+    .foot-links a {
+      font-size: 13.5px;
+      color: #C9C1CE
+    }
+
+    .foot-links a:hover {
+      color: #fff
+    }
+
+    .foot-bottom {
+      border-top: 1px solid #33293A;
+      margin-top: 26px;
+      padding-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 12.5px;
+      color: #8A8090;
+      flex-wrap: wrap;
+      gap: 8px
+    }
+
+    /* Floating cart */
+    .float-cart {
+      position: fixed;
+      right: 26px;
+      bottom: 26px;
+      background: var(--purple);
+      color: #fff;
+      border-radius: 100px;
+      padding: 13px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 8px 30px rgba(96, 54, 100, .45);
+      cursor: pointer;
+      z-index: 50
+    }
+
+    .float-cart .fc-i {
+      font-size: 18px
+    }
+
+    .float-cart .fc-t {
+      font-weight: 700;
+      font-size: 14px
+    }
+
+    .float-cart .fc-c {
+      background: #fff;
+      color: var(--purple);
+      border-radius: 100px;
+      min-width: 22px;
+      height: 22px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 6px;
+      font-weight: 800
+    }
+
+    .reward-launch {
+      position: fixed;
+      left: 22px;
+      bottom: 24px;
+      width: 56px;
+      height: 56px;
+      border-radius: 100px;
+      background: var(--green);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 22px rgba(99, 156, 103, .5);
+      cursor: pointer;
+      z-index: 50;
+      border: 3px solid #fff
+    }
+
+    .reward-launch svg {
+      width: 24px;
+      height: 24px
+    }
+
+    @media (max-width:1000px) {
+      .brand-grid {
+        grid-template-columns: repeat(3, 1fr)
+      }
+
+      .prod-grid,
+      .rev-grid,
+      .dept-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .about {
+        grid-template-columns: 1fr
+      }
+
+      .rev-summary {
+        grid-template-columns: 1fr
+      }
+    }
+
+    /* Service badges */
+    .service-badges {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px
+    }
+
+    .svc {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+      color: var(--purple);
+      cursor: pointer;
+      transition: .15s
+    }
+
+    .svc:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px)
+    }
+
+    .svc svg {
+      width: 46px;
+      height: 46px
+    }
+
+    .svc .svc-t {
+      font-weight: 700;
+      font-size: 14.5px;
+      color: var(--ink)
+    }
+
+    .svc .svc-s {
+      font-size: 12.5px;
+      color: var(--muted)
+    }
+
+    /* Promotional programs */
+    .promos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      justify-items: center;
+      align-items: start
+    }
+
+    .promo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      width: 100%
+    }
+
+    .promo img {
+      width: 100%;
+      max-width: 152px;
+      height: auto;
+      object-fit: contain
+    }
+
+    .promo-badge.placeholder {
+      width: 100%;
+      max-width: 152px;
+      aspect-ratio: 1;
+      border-radius: 100px;
+      border: 3px solid var(--green);
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center
+    }
+
+    .promo-badge.placeholder span {
+      color: var(--purple);
+      font-weight: 800;
+      font-size: 18px;
+      font-family: var(--font-head);
+      line-height: 1.15
+    }
+
+    .promo-label {
+      font-weight: 700;
+      font-size: 14.5px;
+      color: var(--ink);
+      text-align: center
+    }
+
+    .promo-note {
+      font-size: 11px;
+      color: var(--muted2);
+      text-align: center;
+      margin-top: -4px
+    }
+
+    /* Three blocks */
+    .three-blocks {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px
+    }
+
+    .tb {
+      background: var(--tintB);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px 22px;
+      text-align: center;
+      cursor: pointer;
+      transition: .15s
+    }
+
+    .tb:hover {
+      background: var(--tintA);
+      border-color: var(--purple)
+    }
+
+    .tb-title {
+      font-weight: 800;
+      font-size: 17px;
+      font-family: var(--font-head);
+      color: var(--purple)
+    }
+
+    .tb-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 5px
+    }
+
+    @media(max-width:1000px) {
+      .three-blocks {
+        grid-template-columns: 1fr
+      }
+    }
+
+    /* ------- MOBILE (also used by the Mobile toggle via the phone frame) ------- */
+    @media(max-width:760px) {
+      .util {
+        display: none
+      }
+
+      header.head {
+        border-bottom: 1px solid var(--line)
+      }
+
+      .masthead {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 0
+      }
+
+      .masthead .logo {
+        align-self: center
+      }
+
+      .masthead .logo img {
+        height: 56px
+      }
+
+      .mast-right {
+        width: 100%;
+        gap: 10px
+      }
+
+      .mast-row1 {
+        gap: 12px
+      }
+
+      .search {
+        max-width: none
+      }
+
+      nav.mainnav {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        gap: 18px;
+        font-size: 13.5px;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 2px
+      }
+
+      nav.mainnav a {
+        white-space: nowrap
+      }
+
+      .wrap {
+        padding: 0 16px
+      }
+
+      .sec {
+        padding: 26px 0
+      }
+
+      h2.title {
+        font-size: 21px
+      }
+
+      .sec-head {
+        margin-bottom: 16px
+      }
+
+      /* horizontal swipe rows (matches the concept Jim liked) */
+      .prod-grid,
+      .brand-grid {
+        display: flex;
+        overflow-x: auto;
+        gap: 14px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 8px
+      }
+
+      .prod-grid>.card {
+        min-width: 64%;
+        scroll-snap-align: start
+      }
+
+      .brand-grid>.brand-card {
+        min-width: 60%;
+        scroll-snap-align: start
+      }
+
+      .dept-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px
+      }
+
+      .dept {
+        height: 150px
+      }
+
+      .chips {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-top: 0;
+        padding-bottom: 8px
+      }
+
+      .chip {
+        white-space: nowrap
+      }
+
+      .rev-summary {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 22px 20px
+      }
+
+      .rev-grid {
+        display: flex;
+        overflow-x: auto;
+        gap: 12px;
+        padding-bottom: 8px;
+        grid-template-columns: none
+      }
+
+      .rev-grid>.rev-card {
+        min-width: 80%
+      }
+
+      .service-badges {
+        gap: 12px;
+        grid-template-columns: 1fr 1fr
+      }
+
+      .svc {
+        padding: 16px 10px
+      }
+
+      .promos {
+        gap: 12px;
+        grid-template-columns: repeat(3, 1fr)
+      }
+
+      .promo-badge.placeholder span {
+        font-size: 14px
+      }
+
+      .about {
+        gap: 20px
+      }
+
+      .stats {
+        gap: 10px
+      }
+
+      .three-blocks {
+        grid-template-columns: 1fr
+      }
+
+      .news {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+        padding: 24px 20px
+      }
+
+      .news form {
+        flex-direction: column
+      }
+
+      .news input {
+        min-width: 0
+      }
+
+      .hero {
+        margin-top: 14px
+      }
+
+      .awards {
+        gap: 16px;
+        grid-template-columns: 1fr 1fr
+      }
+
+      .award img {
+        max-height: 74px
+      }
+
+      .foot-top {
+        flex-direction: column;
+        gap: 18px
+      }
+
+      .foot-links {
+        gap: 16px 22px
+      }
+
+      .foot-bottom {
+        flex-direction: column;
+        gap: 6px
+      }
+
+      footer .wrap {
+        padding: 28px 16px 24px
+      }
+
+      .float-cart {
+        right: 14px;
+        bottom: 14px;
+        padding: 11px 16px
+      }
+
+      .reward-launch {
+        left: 14px;
+        bottom: 16px;
+        width: 50px;
+        height: 50px
+      }
+    }
+
+    /* mobile header + hero swap (base = hidden on desktop) */
+    .mtop,
+    .msearchbar,
+    .mdrawer {
+      display: none
+    }
+
+    .slide img.hero-m,
+    .mscrim,
+    .mtext {
+      display: none
+    }
+
+    .herocta {
+      padding: 14px 30px;
+      font-size: 15px;
+      box-shadow: 0 6px 18px rgba(74, 36, 80, .4)
+    }
+
+    .filter-btn {
+      white-space: nowrap
+    }
+
+    @media(max-width:760px) {
+      header.head {
+        display: none
+      }
+
+      .mtop {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 14px;
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        position: sticky;
+        top: 0;
+        z-index: 60
+      }
+
+      .mtop .mlogo {
+        flex: 1;
+        display: flex;
+        justify-content: center
+      }
+
+      .mtop .mlogo img {
+        height: 40px;
+        width: auto;
+        display: block
+      }
+
+      .mtop-r {
+        display: flex;
+        gap: 0
+      }
+
+      .mbtn {
+        width: 42px;
+        height: 42px;
+        border: none;
+        background: none;
+        color: var(--purple);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        position: relative
+      }
+
+      .mbtn svg {
+        width: 23px;
+        height: 23px
+      }
+
+      .mcc {
+        position: absolute;
+        top: 5px;
+        right: 4px;
+        background: var(--purple);
+        color: #fff;
+        border-radius: 100px;
+        min-width: 15px;
+        height: 15px;
+        font-size: 9.5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 3px
+      }
+
+      .msearchbar {
+        padding: 0 14px 12px;
+        background: #fff;
+        border-bottom: 1px solid var(--line)
+      }
+
+      .msearchbar.open {
+        display: block
+      }
+
+      .mdrawer {
+        flex-direction: column;
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        padding: 0 16px 10px
+      }
+
+      .mdrawer.open {
+        display: flex
+      }
+
+      .mdrawer a {
+        padding: 12px 2px;
+        border-bottom: 1px solid var(--line);
+        font-weight: 600;
+        color: var(--ink2);
+        font-size: 15px
+      }
+
+      .mdrawer a:last-child {
+        border-bottom: none
+      }
+
+      .slider {
+        aspect-ratio: 16/10;
+        max-height: none
+      }
+
+      .slide img.hero-d {
+        display: none
+      }
+
+      .slide img.hero-m {
+        display: block;
+        object-position: center
+      }
+
+      .mscrim {
+        display: block;
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: linear-gradient(90deg, rgba(18, 12, 22, .84) 0%, rgba(18, 12, 22, .58) 52%, rgba(18, 12, 22, .14) 100%)
+      }
+
+      .mtext {
+        display: flex;
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 7px;
+        padding: 16px 18px
+      }
+
+      .mbadge {
+        background: var(--green);
+        color: #fff;
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: .09em;
+        text-transform: uppercase;
+        padding: 5px 10px;
+        border-radius: 100px
+      }
+
+      .mtitle {
+        color: #fff;
+        font-family: var(--font-head);
+        font-size: 21px;
+        font-weight: 800;
+        margin: 0;
+        line-height: 1.12;
+        max-width: 76%
+      }
+
+      .msub {
+        color: #EFE9F1;
+        font-size: 11.5px;
+        margin: 0;
+        max-width: 70%;
+        line-height: 1.35
+      }
+
+      .mcta {
+        background: #fff;
+        color: var(--purple);
+        padding: 8px 17px;
+        font-size: 12.5px;
+        font-weight: 700;
+        font-family: var(--font-head);
+        border: none;
+        border-radius: 100px;
+        margin-top: 5px;
+        cursor: pointer
+      }
+
+      .scta {
+        display: none
+      }
+
+      .dots {
+        left: auto;
+        right: 14px;
+        bottom: 11px
+      }
+
+      .filter-btn {
+        padding: 9px 15px;
+        font-size: 13.5px
+      }
+
+      .filter-btn .fl-pre {
+        display: none
+      }
+
+      .sec-head {
+        gap: 10px
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <div class="util">
+    <div class="wrap">
+      <a href="#">☏ 231-399-0700</a>
+      <a href="#">Register</a>
+      <a href="#">Log in</a>
+    </div>
+  </div>
+
+  <header class="head">
+    <div class="wrap masthead">
+      <a class="logo"><img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/download.png" alt="Eco-Building Products"></a>
+      <div class="mast-right">
+        <div class="mast-row1">
+          <div class="search"><input placeholder="Search"><button class="search-btn">🔍</button></div>
+          <button class="cart-btn" id="hcart">🛒 Cart <span class="cc" id="hcc">0</span></button>
+        </div>
+        <nav class="mainnav">
+          <a href="#">Home</a>
+          <a href="#">Shop by Department</a>
+          <a href="#">Shop by Brand</a>
+          <a href="#">About Us</a>
+          <a href="#">Discounts</a>
+          <a href="#">Terms &amp; Conditions</a>
+          <a href="#">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="mtop">
+    <button class="mbtn" id="hamBtn" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2.2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg></button>
+    <a class="mlogo"><img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/download.png" alt="Eco-Building Products"></a>
+    <div class="mtop-r">
+      <button class="mbtn" id="msearchBtn" aria-label="Search"><svg viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="21" y1="21" x2="16.5" y2="16.5"></line>
+        </svg></button>
+      <button class="mbtn" id="mcartBtn" aria-label="Cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="20" r="1.3"></circle>
+          <circle cx="18" cy="20" r="1.3"></circle>
+          <path d="M2 3h2.2l2.3 12.2a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21.5 7H6.2"></path>
+        </svg><span class="mcc" id="mcc2">0</span></button>
+    </div>
+  </div>
+  <div class="msearchbar" id="msearchbar">
+    <div class="search"><input placeholder="Search flooring, finishes, brands…"><button class="search-btn">🔍</button>
+    </div>
+  </div>
+  <nav class="mdrawer" id="mdrawer">
+    <a href="#">Home</a>
+    <a href="#">Shop by Department</a>
+    <a href="#">Shop by Brand</a>
+    <a href="#">About Us</a>
+    <a href="#">Discounts</a>
+    <a href="#">Terms &amp; Conditions</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="wrap hero">
+    <div class="slider">
+      <div class="slides" id="slides">
+        <div class="slide">
+          <img class="hero-d" src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/summersale_banner_2_copy.webp" alt="This Season's Best Deals">
+          <img class="hero-m" src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/Rectangle_6873_2.webp" alt="This Season's Best Deals">
+          <div class="mscrim"></div>
+          <div class="mtext">
+            <span class="mbadge">Summer Solstice Sale</span>
+            <h3 class="mtitle">This Season's Best Deals</h3>
+            <p class="msub">Savings across green flooring, finishes &amp; more.</p>
+            <button class="mcta">Shop the Sale &rarr;</button>
+          </div>
+          <div class="scta"><button class="btn btn-primary herocta">Shop the Sale &rarr;</button></div>
+        </div>
+        <div class="slide">
+          <img class="hero-d"
+            src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/wicanders_pure_floorandwall_banner_544ca7f3-ce71-4fb1-a053-21d71e50f5f9.webp"
+            alt="20% Off Engineered Oak">
+          <img class="hero-m" src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/Rectangle_6916.webp" alt="20% Off Engineered Oak">
+          <div class="mscrim"></div>
+          <div class="mtext">
+            <span class="mbadge">Reclaimed Flooring</span>
+            <h3 class="mtitle">20% Off Engineered Oak</h3>
+            <p class="msub">Beautiful, durable American Heritage hardwoods.</p>
+            <button class="mcta">Shop Flooring &rarr;</button>
+          </div>
+          <div class="scta"><button class="btn btn-primary herocta">Shop Flooring &rarr;</button></div>
+        </div>
+        <div class="slide">
+          <img class="hero-d" src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/Copy_of_33_Sink_Stainless_1920_x_550_px.webp"
+            alt="Kitchen &amp; Bath Upgrades">
+          <img class="hero-m"
+            src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/jackson-fireclay-25-single-bowl-drop-in-kitchen-sink-with-3-holes-5347659.webp"
+            alt="Kitchen &amp; Bath Upgrades">
+          <div class="mscrim"></div>
+          <div class="mtext">
+            <span class="mbadge">Water-Saving</span>
+            <h3 class="mtitle">Kitchen &amp; Bath Upgrades</h3>
+            <p class="msub">Caroma toilets and Sinkology copper sinks.</p>
+            <button class="mcta">Explore Baths &rarr;</button>
+          </div>
+          <div class="scta"><button class="btn btn-primary herocta">Explore Baths &rarr;</button></div>
+        </div>
+      </div>
+      <div class="dots" id="dots">
+        <span class="dot on" data-i="0"></span>
+        <span class="dot" data-i="1"></span>
+        <span class="dot" data-i="2"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEPARTMENTS — Links to Departments (#4): quick links + cards -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow">Browse</div>
+          <h2 class="title">Shop by Department</h2>
+        </div>
+      </div>
+      <div class="chips" id="chips" style="padding-top:0;margin-bottom:24px">
+        <span class="chip">Flooring</span>
+        <span class="chip">Finishes</span>
+        <span class="chip">Sealers</span>
+        <span class="chip">Weatherization</span>
+        <span class="chip">Kitchen &amp; Bath</span>
+        <span class="chip">Roofing</span>
+        <span class="chip">Adhesives</span>
+      </div>
+      <div class="dept-grid" id="deptGrid">
+        <div class="dept">
+          <img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/Rectangle_6873_2.webp" alt="Finishes" loading="lazy">
+          <div class="dscrim"></div>
+          <div class="dtext">
+            <div class="dn">Finishes</div>
+            <div class="ds">Non-toxic &amp; durable</div>
+          </div>
+        </div>
+        <div class="dept">
+          <img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/Rectangle_6872.webp" alt="Weatherization" loading="lazy">
+          <div class="dscrim"></div>
+          <div class="dtext">
+            <div class="dn">Weatherization</div>
+            <div class="ds">Insulation &amp; sealing</div>
+          </div>
+        </div>
+        <div class="dept">
+          <img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/Rectangle_6873_1.webp" alt="Sealants &amp; Adhesives" loading="lazy">
+          <div class="dscrim"></div>
+          <div class="dtext">
+            <div class="dn">Sealants &amp; Adhesives</div>
+            <div class="ds">Natural &amp; strong</div>
+          </div>
+        </div>
+        <div class="dept">
+          <img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/Rectangle_6874.webp" alt="Roofing" loading="lazy">
+          <div class="dscrim"></div>
+          <div class="dtext">
+            <div class="dn">Roofing</div>
+            <div class="ds">Curbs, caps &amp; more</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS SUMMARY -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow">Verified by Shopper Approved</div>
+          <h2 class="title">Ratings &amp; Reviews</h2>
+        </div><a class="link-more">See all ›</a>
+      </div>
+      <div class="rev-summary">
+        <div class="rs-score">
+          <div class="rs-num">4.8</div>
+          <div class="rs-stars">★★★★★</div>
+          <div class="rs-sub">555 Reviews</div>
+          <div class="rs-sa">✔ Verified by Shopper Approved</div>
+        </div>
+        <div>
+          <div class="bars" id="bars">
+            <div class="bar-row"><span class="bl">5★</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width:87.3%"></div>
+              </div><span class="bc">485</span>
+            </div>
+            <div class="bar-row"><span class="bl">4★</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width:7.62%"></div>
+              </div><span class="bc">42</span>
+            </div>
+            <div class="bar-row"><span class="bl">3★</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width:2.9%"></div>
+              </div><span class="bc">16</span>
+            </div>
+            <div class="bar-row"><span class="bl">2★</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width:0.73%"></div>
+              </div><span class="bc">4</span>
+            </div>
+            <div class="bar-row"><span class="bl">1★</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width:1.45%"></div>
+              </div><span class="bc">8</span>
+            </div>
+          </div>
+          <div class="r95"><b>95%</b> of customers rate us 4 or 5 stars</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEW CARDS -->
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow">In their words</div>
+          <h2 class="title">Loved by customers</h2>
+        </div><a class="link-more">Read all ›</a>
+      </div>
+      <div class="rev-grid" id="revGrid">
+        <div class="rev-card">
+          <div class="rstars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="rt">Keeps my linoleum floor happy</div>
+          <div class="rbody">"So easy to use, and my floor looks just as nice as the day it was installed."</div>
+          <div class="rmeta"><b>Gayle F.</b> &middot; Marmoleum Floor Cleaner</div>
+        </div>
+        <div class="rev-card">
+          <div class="rstars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="rt">Easy, air-tight seal</div>
+          <div class="rbody">"Well constructed and air-tight. Made adding attic insulation far easier than fabricating
+            my own."</div>
+          <div class="rmeta"><b>REM Jr.</b> &middot; Recessed Light Covers</div>
+        </div>
+        <div class="rev-card">
+          <div class="rstars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="rt">Works great on flat roofs</div>
+          <div class="rbody">"Product is working very well on our flat roof — exactly as described."</div>
+          <div class="rmeta"><b>Victor T.</b> &middot; Chemlink Roof Seal Tape</div>
+        </div>
+        <div class="rev-card">
+          <div class="rstars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="rt">Still going strong</div>
+          <div class="rbody">"Stays hot with no issues at all. Overall a great water heater for the price."</div>
+          <div class="rmeta"><b>James S.</b> &middot; EccoTemp L5 Water Heater</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEST SELLERS -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow">Customer Favorites</div>
+          <h2 class="title">Best Sellers</h2>
+        </div>
+        <div class="filter">
+          <button class="filter-btn" id="filterBtn"><span class="fl-pre">Filter by brand:</span> <span
+              id="filterLabel">All Brands</span> <span class="fl-car">▾</span></button>
+          <div class="filter-menu" id="filterMenu">
+            <button data-n="All Brands">All Brands<span class="ct">19</span></button>
+            <button data-n="Duro Design">Duro Design<span class="ct">4</span></button>
+            <button data-n="American Heritage">American Heritage<span class="ct">4</span></button>
+            <button data-n="Forbo Marmoleum">Forbo Marmoleum<span class="ct">4</span></button>
+            <button data-n="Wicanders Cork">Wicanders Cork<span class="ct">0</span></button>
+            <button data-n="Rubio Monocoat">Rubio Monocoat<span class="ct">2</span></button>
+            <button data-n="Sinkology">Sinkology<span class="ct">3</span></button>
+            <button data-n="Caroma">Caroma<span class="ct">2</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="prod-grid" id="prodGrid">
+        <div class="card" data-brand="Duro Design">
+          <div class="pimg"><img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/baltico-samples-1682972.jpg" alt="Glue-Down Cork Tile — Baltico"
+              loading="lazy"></div>
+          <div class="pb">
+            <div class="pbrand">Duro Design</div>
+            <div class="pname">Glue-Down Cork Tile — Baltico</div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(41)</span></div>
+            <div class="prow">
+              <div class="price">$7.74</div>
+              <button class="add" data-c="774" title="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-brand="Duro Design">
+          <div class="pimg"><img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/barriga-samples-7254638.jpg" alt="Glue-Down Cork Tile — Barriga"
+              loading="lazy"></div>
+          <div class="pb">
+            <div class="pbrand">Duro Design</div>
+            <div class="pname">Glue-Down Cork Tile — Barriga</div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(33)</span></div>
+            <div class="prow">
+              <div class="price">$7.74</div>
+              <button class="add" data-c="774" title="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-brand="Duro Design">
+          <div class="pimg"><img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/cleopatra-samples-1581056.jpg" alt="Glue-Down Cork Tile — Cleopatra"
+              loading="lazy"></div>
+          <div class="pb">
+            <div class="pbrand">Duro Design</div>
+            <div class="pname">Glue-Down Cork Tile — Cleopatra</div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(28)</span></div>
+            <div class="prow">
+              <div class="price">$7.74</div>
+              <button class="add" data-c="774" title="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-brand="Duro Design">
+          <div class="pimg"><img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/edipo-samples-7766760.jpg" alt="Glue-Down Cork Tile — Edipo"
+              loading="lazy"></div>
+          <div class="pb">
+            <div class="pbrand">Duro Design</div>
+            <div class="pname">Glue-Down Cork Tile — Edipo</div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(22)</span></div>
+            <div class="prow">
+              <div class="price">$7.74</div>
+              <button class="add" data-c="774" title="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-brand="American Heritage">
+          <div class="pimg"><img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/reclaimed-antique-oak-flooring-3794387.webp"
+              alt="Reclaimed Antique Oak Flooring" loading="lazy"></div>
+          <div class="pb">
+            <div class="pbrand">American Heritage</div>
+            <div class="pname">Reclaimed Antique Oak Flooring</div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(64)</span></div>
+            <div class="prow">
+              <div class="price">$16.00</div>
+              <button class="add" data-c="1600" title="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-brand="American Heritage">
+          <div class="pimg"><img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/reclaimed-kentucky-derby-oak-distressed-black-1710360.webp"
+              alt="Reclaimed Kentucky Derby Oak — Distressed" loading="lazy"></div>
+          <div class="pb">
+            <div class="pbrand">American Heritage</div>
+            <div class="pname">Reclaimed Kentucky Derby Oak — Distressed</div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(37)</span></div>
+            <div class="prow">
+              <div class="price">$9.29</div>
+              <button class="add" data-c="929" title="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-brand="American Heritage">
+          <div class="pimg"><img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/american-heritage-white-oak-clean-face-new-lumber-3113038.avif"
+              alt="White Oak — Clean Face" loading="lazy"></div>
+          <div class="pb">
+            <div class="pbrand">American Heritage</div>
+            <div class="pname">White Oak — Clean Face</div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(19)</span></div>
+            <div class="prow">
+              <div class="price">$11.89</div>
+              <button class="add" data-c="1189" title="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-brand="American Heritage">
+          <div class="pimg"><img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/reclaimed-heartland-hardwood-blend-distressed-9365590.avif"
+              alt="Heartland Hardwood Blend — Distressed" loading="lazy"></div>
+          <div class="pb">
+            <div class="pbrand">American Heritage</div>
+            <div class="pname">Heartland Hardwood Blend — Distressed</div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(15)</span></div>
+            <div class="prow">
+              <div class="price">$10.59</div>
+              <button class="add" data-c="1059" title="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-brand="Forbo Marmoleum">
+          <div class="pimg"><img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/forbo-marmoleum-marbled-real-sheet-6823306.webp"
+              alt="Marmoleum Marbled Real Sheet" loading="lazy"></div>
+          <div class="pb">
+            <div class="pbrand">Forbo Marmoleum</div>
+            <div class="pname">Marmoleum Marbled Real Sheet</div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(58)</span></div>
+            <div class="prow">
+              <div class="price">$33.00</div>
+              <button class="add" data-c="3300" title="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-brand="Forbo Marmoleum">
+          <div class="pimg"><img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/forbo-marmoleum-splash-linoleum-sheet-4476323.jpg"
+              alt="Marmoleum Splash Linoleum Sheet" loading="lazy"></div>
+          <div class="pb">
+            <div class="pbrand">Forbo Marmoleum</div>
+            <div class="pname">Marmoleum Splash Linoleum Sheet</div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(44)</span></div>
+            <div class="prow">
+              <div class="price">$33.99</div>
+              <button class="add" data-c="3399" title="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-brand="Forbo Marmoleum">
+          <div class="pimg"><img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/forbo-marmoleum-solid-piano-sheet-8329975.webp"
+              alt="Marmoleum Solid Piano Sheet" loading="lazy"></div>
+          <div class="pb">
+            <div class="pbrand">Forbo Marmoleum</div>
+            <div class="pname">Marmoleum Solid Piano Sheet</div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(31)</span></div>
+            <div class="prow">
+              <div class="price">$36.63</div>
+              <button class="add" data-c="3663" title="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-brand="Forbo Marmoleum">
+          <div class="pimg"><img
+              src="https://eco-buildingproducts.com/cdn/shop/files/forbo-marmoleum-solid-concrete-sheet-sample-9506011.jpg?width=400"
+              alt="Marmoleum Solid Concrete Sheet" loading="lazy"></div>
+          <div class="pb">
+            <div class="pbrand">Forbo Marmoleum</div>
+            <div class="pname">Marmoleum Solid Concrete Sheet</div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(26)</span></div>
+            <div class="prow">
+              <div class="price">$33.00</div>
+              <button class="add" data-c="3300" title="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-brand="Rubio Monocoat">
+          <div class="pimg"><img
+              src="https://eco-buildingproducts.com/cdn/shop/files/rubio-monocoat-wood-cream-9940919.webp?width=400"
+              alt="Wood Cream" loading="lazy"></div>
+          <div class="pb">
+            <div class="pbrand">Rubio Monocoat</div>
+            <div class="pname">Wood Cream</div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(120)</span></div>
+            <div class="prow">
+              <div class="price">$10.99</div>
+              <button class="add" data-c="1099" title="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-brand="Rubio Monocoat">
+          <div class="pimg"><img
+              src="https://eco-buildingproducts.com/cdn/shop/files/rubio-monocoat-oil-plus-2c-390-ml-4745806.webp?width=400"
+              alt="Oil Plus 2C — 390 ml" loading="lazy"></div>
+          <div class="pb">
+            <div class="pbrand">Rubio Monocoat</div>
+            <div class="pname">Oil Plus 2C — 390 ml</div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(54)</span></div>
+            <div class="prow">
+              <div class="price">$62.99</div>
+              <button class="add" data-c="6299" title="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-brand="Sinkology">
+          <div class="pimg"><img
+              src="https://eco-buildingproducts.com/cdn/shop/files/lange_sink_copy_web.webp?width=400"
+              alt="Lange Copper Farmhouse Apron Sink" loading="lazy"></div>
+          <div class="pb">
+            <div class="pbrand">Sinkology</div>
+            <div class="pname">Lange Copper Farmhouse Apron Sink</div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(31)</span></div>
+            <div class="prow">
+              <div class="price">$639.20</div>
+              <button class="add" data-c="63920" title="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-brand="Sinkology">
+          <div class="pimg"><img
+              src="https://eco-buildingproducts.com/cdn/shop/files/orwell-copper-single-bowl-undermount-kitchen-sink-5583285.jpg?width=400"
+              alt="Orwell Copper Undermount Sink" loading="lazy"></div>
+          <div class="pb">
+            <div class="pbrand">Sinkology</div>
+            <div class="pname">Orwell Copper Undermount Sink</div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(24)</span></div>
+            <div class="prow">
+              <div class="price">$239.20</div>
+              <button class="add" data-c="23920" title="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-brand="Sinkology">
+          <div class="pimg"><img
+              src="https://eco-buildingproducts.com/cdn/shop/files/jackson-fireclay-25-single-bowl-drop-in-kitchen-sink-with-3-holes-5347659.jpg?width=400"
+              alt="Jackson Fireclay 25" Kitchen Sink" loading="lazy"></div>
+          <div class="pb">
+            <div class="pbrand">Sinkology</div>
+            <div class="pname">Jackson Fireclay 25" Kitchen Sink</div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(13)</span></div>
+            <div class="prow">
+              <div class="price">$199.20</div>
+              <button class="add" data-c="19920" title="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-brand="Caroma">
+          <div class="pimg"><img
+              src="https://eco-buildingproducts.com/cdn/shop/files/caroma-sydney-smart-ii-one-piece-dual-flush-toilet-9177497.jpg?width=400"
+              alt="Sydney Smart II Dual-Flush Toilet" loading="lazy"></div>
+          <div class="pb">
+            <div class="pbrand">Caroma</div>
+            <div class="pname">Sydney Smart II Dual-Flush Toilet</div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(47)</span></div>
+            <div class="prow">
+              <div class="price">$653.00</div>
+              <button class="add" data-c="65300" title="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-brand="Caroma">
+          <div class="pimg"><img
+              src="https://eco-buildingproducts.com/cdn/shop/files/caroma-caravelle-smart-2-piece-button-dual-flush-toilet-4368494.jpg?width=400"
+              alt="Caravelle Smart 2-Piece Toilet" loading="lazy"></div>
+          <div class="pb">
+            <div class="pbrand">Caroma</div>
+            <div class="pname">Caravelle Smart 2-Piece Toilet</div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(29)</span></div>
+            <div class="prow">
+              <div class="price">$568.00</div>
+              <button class="add" data-c="56800" title="Add to cart">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOP BY BRAND -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow">Trusted Names</div>
+          <h2 class="title">Shop by Brand</h2>
+        </div>
+        <a class="link-more">All brands ›</a>
+      </div>
+      <div class="brand-grid" id="brandGrid">
+        <div class="brand-card">
+          <div class="bimg"><img src="https://eco-buildingproducts.com/cdn/shop/files/Rectangle_6915.png?width=500"
+              alt="Duro Design" loading="lazy"></div>
+          <div class="bb">
+            <div class="bn">Duro Design</div>
+            <div class="bt">Cork &amp; bamboo</div>
+          </div>
+        </div>
+        <div class="brand-card">
+          <div class="bimg"><img src="https://eco-buildingproducts.com/cdn/shop/files/Rectangle_6916.png?width=500"
+              alt="American Heritage" loading="lazy"></div>
+          <div class="bb">
+            <div class="bn">American Heritage</div>
+            <div class="bt">Reclaimed wood</div>
+          </div>
+        </div>
+        <div class="brand-card">
+          <div class="bimg"><img src="https://eco-buildingproducts.com/cdn/shop/files/Rectangle_6917.png?width=500"
+              alt="Forbo Marmoleum" loading="lazy"></div>
+          <div class="bb">
+            <div class="bn">Forbo Marmoleum</div>
+            <div class="bt">Linoleum flooring</div>
+          </div>
+        </div>
+        <div class="brand-card">
+          <div class="bimg"><img src="https://eco-buildingproducts.com/cdn/shop/files/Rectangle_6918.png?width=500"
+              alt="Wicanders Cork" loading="lazy"></div>
+          <div class="bb">
+            <div class="bn">Wicanders Cork</div>
+            <div class="bt">Cork flooring</div>
+          </div>
+        </div>
+        <div class="brand-card">
+          <div class="bimg"><img src="https://eco-buildingproducts.com/cdn/shop/files/Rectangle_6919.png?width=500"
+              alt="Rubio Monocoat" loading="lazy"></div>
+          <div class="bb">
+            <div class="bn">Rubio Monocoat</div>
+            <div class="bt">Wood finishes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICE BADGES (#8) -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow">More Than Products</div>
+          <h2 class="title">Our Services</h2>
+        </div>
+      </div>
+      <div class="service-badges">
+        <div class="svc"><svg viewBox="0 0 70 70" height="70" width="70" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(-796 -2668)" data-name="Group 45188" id="Group_45188">
+              <rect fill="none" transform="translate(796 2668)" height="70" width="70" data-name="Rectangle 5774"
+                id="Rectangle_5774"></rect>
+              <g transform="translate(802.711 2680.746)" id="noun-fast-shipping-4414634">
+                <path fill="currentColor" transform="translate(6.948 7.826)"
+                  d="M14.13,17.967a5.219,5.219,0,1,0,5.217,5.217A5.22,5.22,0,0,0,14.13,17.967Zm0,7.622a2.405,2.405,0,1,1,2.405-2.405A2.406,2.406,0,0,1,14.13,25.589Z"
+                  data-name="Path 32500" id="Path_32500"></path>
+                <path fill="currentColor" transform="translate(17.419 7.826)"
+                  d="M27.126,17.967a5.219,5.219,0,1,0,5.215,5.217A5.218,5.218,0,0,0,27.126,17.967Zm0,7.622a2.405,2.405,0,1,1,2.405-2.405A2.406,2.406,0,0,1,27.126,25.589Z"
+                  data-name="Path 32501" id="Path_32501"></path>
+                <path fill="currentColor"
+                  d="M55.5,27.377h-.19V23.554a.786.786,0,0,0-.06-.294l-2.918-6.983c-1.266-2.111-2.562-4.005-4.48-4.005h-6.12a4.92,4.92,0,0,0-2.488.7v-2.42a2.3,2.3,0,0,0-2.293-2.3H3.159a.939.939,0,0,0,0,1.878H20.691a.939.939,0,1,1,0,1.878H9.028v.937H6.195a.939.939,0,1,0,0,1.878H17.06a.94.94,0,0,1,0,1.88H9.028v.751h-7.8a.939.939,0,0,0,0,1.878H19.907a.938.938,0,1,1,0,1.876H9.028v1.728h-6.1a.939.939,0,1,0,0,1.878h9.787a.938.938,0,1,1,0,1.876H9.028v2.221a2.3,2.3,0,0,0,2.3,2.3h3.119c0-.067-.018-.126-.018-.193a6.656,6.656,0,0,1,13.312,0c0,.067-.018.126-.022.193h10.2c0-.067-.02-.126-.02-.193a6.657,6.657,0,0,1,13.314,0c0,.067-.018.126-.02.193H55.5a1.533,1.533,0,0,0,1.531-1.531v-.766A1.534,1.534,0,0,0,55.5,27.377ZM41.286,21.738v-5.58H46.64c1.914,0,3.823,5.58,3.823,5.58Z"
+                  data-name="Path 32502" id="Path_32502"></path>
+              </g>
+            </g>
+          </svg>
+          <div class="svc-t">Fast Shipping</div>
+          <div class="svc-s">From warehouses nationwide</div>
+        </div>
+        <div class="svc"><svg viewBox="0 0 70 70" height="70" width="70" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(-136 -2668)" data-name="Group 45185" id="Group_45185">
+              <rect fill="none" transform="translate(136 2668)" height="70" width="70" data-name="Rectangle 5771"
+                id="Rectangle_5771"></rect>
+              <g transform="translate(137.604 2671.869)" id="noun-return-7873188">
+                <path fill="currentColor" transform="translate(-8.366 -9.654)"
+                  d="M62.805,27.932a1.864,1.864,0,0,0-3.188,1.931,21.049,21.049,0,0,1-23.86,31.112l1.849-.89a1.863,1.863,0,0,0-1.616-3.358l-5.822,2.8a1.864,1.864,0,0,0-.808,2.606l3.218,5.6a1.864,1.864,0,1,0,3.235-1.854L35.1,64.648a24.78,24.78,0,0,0,27.7-36.715Z"
+                  data-name="Path 32495" id="Path_32495"></path>
+                <path fill="currentColor" transform="translate(0 0)"
+                  d="M33.2,10a20.988,20.988,0,0,1,5.808.829l-1.849.89a1.863,1.863,0,0,0,.81,3.542,1.842,1.842,0,0,0,.806-.184l5.822-2.8A1.864,1.864,0,0,0,45.4,9.668l-3.218-5.6a1.863,1.863,0,0,0-3.23,1.856l.708,1.234A24.558,24.558,0,0,0,33.2,6.271a24.792,24.792,0,0,0-21.238,37.6,1.863,1.863,0,0,0,3.186-1.933A21.066,21.066,0,0,1,33.2,10Z"
+                  data-name="Path 32496" id="Path_32496"></path>
+              </g>
+            </g>
+          </svg>
+          <div class="svc-t">Easy Returns</div>
+          <div class="svc-s">Hassle-free within 30 days</div>
+        </div>
+        <div class="svc"><svg viewBox="0 0 70 70" height="70" width="70" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(-340 -2668)" data-name="Group 45186" id="Group_45186">
+              <rect fill="none" transform="translate(340 2668)" height="70" width="70" data-name="Rectangle 5772"
+                id="Rectangle_5772"></rect>
+              <path fill="currentColor" transform="translate(347.211 2656.043)"
+                d="M48.924,33.97a11.81,11.81,0,0,0-2.134-5.838l-7.847,9.291-5.148-4.269,7.847-9.228a12.755,12.755,0,0,0-5.713-.942A12.071,12.071,0,0,0,24.943,35.979a12.29,12.29,0,0,0,1,3.892L26.01,40,6.926,62.534A4.891,4.891,0,0,0,5.8,65.987a4.819,4.819,0,0,0,1.632,3.2,4.891,4.891,0,0,0,3.453,1.13,4.819,4.819,0,0,0,3.2-1.632L32.916,46.4l.188.063a12.634,12.634,0,0,0,4.834.565A12.092,12.092,0,0,0,48.924,33.97ZM10.755,66.991a1.637,1.637,0,1,1,1.507-1.758A1.629,1.629,0,0,1,10.755,66.991Z"
+                data-name="Path 32503" id="Path_32503"></path>
+            </g>
+          </svg>
+          <div class="svc-t">Technical Support</div>
+          <div class="svc-s">Expert product help</div>
+        </div>
+        <div class="svc"><svg viewBox="0 0 70 70" height="70" width="70" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(-605 -2668)" data-name="Group 45187" id="Group_45187">
+              <rect fill="none" transform="translate(605 2668)" height="70" width="70" data-name="Rectangle 5773"
+                id="Rectangle_5773"></rect>
+              <g transform="translate(602.298 2666.297)" id="noun-customer-support-7458842">
+                <path fill="currentColor" transform="translate(0 0)"
+                  d="M22.527,32.14V27.883a2.457,2.457,0,0,1,1.419-2.223C24.164,18.358,29.7,12.7,36.715,12.7h2.262A13.225,13.225,0,0,1,51.985,25.592a2.454,2.454,0,0,1,1.667,2.322V33.1a2.455,2.455,0,0,1-2.084,2.421V37.2a2.388,2.388,0,0,1-2.381,2.381H46.776a6.791,6.791,0,0,0,.536-.992h1.875A1.393,1.393,0,0,0,50.576,37.2V35.553H48.9V25.462h2.094A12.241,12.241,0,0,0,38.977,13.7H36.715c-6.389,0-11.44,5.1-11.767,11.737h1.845V34.59H24.967a2.448,2.448,0,0,1-2.441-2.451ZM39.344,21.087a.513.513,0,0,1,.446.308c.03.069,2.748,6.32,8.116,6.687V23.706a6.733,6.733,0,0,0-6.727-6.727H34.512a6.733,6.733,0,0,0-6.727,6.727v3.929c8.027-.228,10.973-6.023,11.1-6.271a.478.478,0,0,1,.456-.278Zm2.927,18.8a1.184,1.184,0,0,1-1.181,1.181H38.084A1.177,1.177,0,0,1,36.9,39.889V38.281A1.177,1.177,0,0,1,38.084,37.1h3.006a1.184,1.184,0,0,1,1.181,1.181v.308h5.04a7.511,7.511,0,0,0,.6-2.917V29.084c-4.812-.288-7.62-4.594-8.622-6.469a14.02,14.02,0,0,1-11.5,6.013v7.045a7.387,7.387,0,0,0,7.382,7.382h5.358a7.357,7.357,0,0,0,6.251-3.473h-4.5Zm-1.181-1.8H38.084a.2.2,0,0,0-.189.189v1.607a.2.2,0,0,0,.189.189h3.006a.2.2,0,0,0,.189-.189V38.281A.2.2,0,0,0,41.091,38.093Zm5.249,6.29h-.665a3.478,3.478,0,0,0-2.49,1.072l-5.338,5.626-5.338-5.626a3.478,3.478,0,0,0-2.49-1.072h-.665A12.665,12.665,0,0,0,16.7,57.034v2.54a.491.491,0,0,0,.5.5H58.493a.491.491,0,0,0,.5-.5v-2.54A12.665,12.665,0,0,0,46.339,44.383Z"
+                  data-name="Path 32499" id="Path_32499"></path>
+              </g>
+            </g>
+          </svg>
+          <div class="svc-t">Customer Service</div>
+          <div class="svc-s">Real people, ready to help</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVERY PURCHASE COUNTS (#9) -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="about">
+        <div>
+          <div class="eyebrow">Giving Back</div>
+          <h2>Every purchase counts.</h2>
+          <p>Eco-Building Products is a family-run business helping homeowners and builders create healthier spaces with
+            sustainably sourced, low-impact materials — and we give back ~2% of gross profits to environmental causes,
+            so every order supports a healthier planet.</p>
+          <button class="btn btn-ghost" style="margin-top:6px">Our impact →</button>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <div class="sn">20 yrs</div>
+            <div class="sl">in business</div>
+          </div>
+          <div class="stat">
+            <div class="sn">~2%</div>
+            <div class="sl">of gross profits given back</div>
+          </div>
+          <div class="stat">
+            <div class="sn">Zero VOC</div>
+            <div class="sl">options available</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AWARDS -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow">Recognized &amp; Trusted</div>
+          <h2 class="title">Awarded &amp; Certified</h2>
+        </div>
+      </div>
+      <div class="awards">
+        <div class="award"><img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/award-1.webp" alt="MI-SBTDC 2010 Best Small Business Award"></div>
+        <div class="award"><img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/aw.webp" alt="Arbor Day Celebration"></div>
+        <div class="award"><img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/award-3.webp" alt="NMEAC"></div>
+        <div class="award"><img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/award-4.webp" alt="Norton Shopping Guarantee"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMOTIONAL PROGRAMS (#11) — three static badges -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow">Save More</div>
+          <h2 class="title">Promotional Programs</h2>
+        </div>
+      </div>
+      <div class="promos">
+        <div class="promo">
+          <img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/promotional-1.webp" alt="Eco-Upgrade Package Deal Program">
+          <div class="promo-label">Rewards Program</div>
+        </div>
+        <div class="promo"><img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/promotional-2.webp" alt="Eco-Upgrade Package Deal Program">
+          <div class="promo-label">Eco-Upgrade Package</div>
+        </div>
+        <div class="promo"><img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/promotional-3.webp"
+            alt="EP3 Environmentally Preferred Purchase Partnership">
+          <div class="promo-label">EP3 Partnership</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER + REWARDS (#12) -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="news">
+        <div>
+          <h3>Join our Newsletter &amp; Rewards</h3>
+          <p>Green building tips &amp; deals — plus earn reward points the moment you sign up.</p>
+        </div>
+        <form onsubmit="return false"><input placeholder="you@email.com"><button class="btn btn-primary">Sign up &amp;
+            earn</button></form>
+      </div>
+    </div>
+  </section>
+
+  <!-- THREE BLOCKS (#13) -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="three-blocks">
+        <a class="tb">
+          <div class="tb-title">Season's Best Sellers</div>
+          <div class="tb-sub">This season's top deals</div>
+        </a>
+        <a class="tb">
+          <div class="tb-title">Terms &amp; Conditions</div>
+          <div class="tb-sub">Policies &amp; guarantees</div>
+        </a>
+        <a class="tb">
+          <div class="tb-title">Impact Statement</div>
+          <div class="tb-sub">Our environmental commitment</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div class="foot-top">
+        <div>
+          <div class="foot-logo"><img src="https://cdn.shopify.com/s/files/1/0843/7897/6562/files/download.png" alt="Eco-Building Products"
+              style="height:62px;background:#fff;padding:9px 13px;border-radius:8px"></div>
+          <div style="margin-top:8px;font-size:13px">☏ 231-399-0700</div>
+        </div>
+        <div class="foot-links" id="footLinks">
+          <a href="#">About</a>
+          <a href="#">Contact</a>
+          <a href="#">Rewards</a>
+          <a href="#">Reviews</a>
+          <a href="#">Shipping &amp; Returns</a>
+          <a href="#">Terms &amp; Conditions</a>
+          <a href="#">Impact Statement</a>
+          <a href="#">Best Deals</a>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>© 2026 Eco-Building Products · Concept mockup</span>
+        <span>Terms &amp; Conditions · Impact Statement · Best Deals</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="reward-launch" title="Rewards Program">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"
+      stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </div>
+  <div class="float-cart" id="floatCart">
+    <span class="fc-i">🛒</span><span class="fc-t">Your cart</span>
+    <span class="fc-c" id="fcCount">0</span><span class="fc-t" id="fcTotal">$0.00</span>
+  </div>
+
+  <script>
+    /* ------------------------------------------------------------------
+       DEMO BEHAVIOUR ONLY — all page content above is static HTML.
+       Re-implement these behaviours natively in the Shopify theme.
+       (hero rotator · brand filter · add-to-cart counter · mobile menu)
+       ------------------------------------------------------------------ */
+    (function () {
+      var track = document.getElementById('slides');
+      var dots = [].slice.call(document.querySelectorAll('.dot'));
+      var total = document.querySelectorAll('.slide').length, active = 0;
+      function go(i) {
+        active = (i + total) % total;
+        track.style.transform = 'translateX(-' + (active * 100) + '%)';
+        dots.forEach(function (d, j) { d.classList.toggle('on', j === active); });
+      }
+      dots.forEach(function (d, i) { d.onclick = function () { go(i); }; });
+      if (total > 1) setInterval(function () { go(active + 1); }, 4800);
+
+      var fb = document.getElementById('filterBtn'),
+        fm = document.getElementById('filterMenu'),
+        fl = document.getElementById('filterLabel');
+      if (fb) fb.onclick = function () { fm.classList.toggle('open'); };
+      if (fm) fm.querySelectorAll('button').forEach(function (b) {
+        b.onclick = function () {
+          var v = b.getAttribute('data-n');
+          fl.textContent = v; fm.classList.remove('open');
+          document.querySelectorAll('#prodGrid .card').forEach(function (c) {
+            c.style.display = (v === 'All Brands' || c.getAttribute('data-brand') === v) ? '' : 'none';
+          });
+        };
+      });
+
+      var count = 0, cents = 0;
+      function money(c) { return '$' + (c / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+      function set(id, v) { var e = document.getElementById(id); if (e) e.textContent = v; }
+      document.querySelectorAll('.add').forEach(function (b) {
+        b.onclick = function () {
+          count++; cents += parseInt(b.getAttribute('data-c'), 10);
+          set('fcCount', count); set('fcTotal', money(cents)); set('hcc', count); set('mcc2', count);
+        };
+      });
+
+      var ham = document.getElementById('hamBtn'), dr = document.getElementById('mdrawer'),
+        msb = document.getElementById('msearchBtn'), sb = document.getElementById('msearchbar');
+      if (ham) ham.onclick = function () { dr.classList.toggle('open'); sb.classList.remove('open'); };
+      if (msb) msb.onclick = function () { sb.classList.toggle('open'); dr.classList.remove('open'); };
+      document.querySelectorAll('#mdrawer a').forEach(function (a) {
+        a.onclick = function () { dr.classList.remove('open'); };
+      });
+    })();
+  </script>
+</body>
+
+</html>

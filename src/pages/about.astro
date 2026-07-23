@@ -1,63 +1,195 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import Testimonials from "../components/Testimonials.astro";
+import Faqcompo from "../components/Faqcompo.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+		/>
+	</head>
+	<body>
+		<Header />
+		
+<main id="top">
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+  <!-- Page hero -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="../index.html">Home</a> <span>/</span> <span style="color:#fff;">About</span></div>
+      <h1 class="fade-up">A family-run NH roofing crew, <em style="font-style:normal;color:#9CC0FF;">on your street already.</em></h1>
+      <p class="lede-page fade-up">Vincenzo's Roofing has spent over a decade putting local crews — not subcontractors — on New Hampshire roofs, backed by written warranties and straight answers.</p>
+    </div>
+  </section>
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+  <!-- Story -->
+  <section class="section">
+    <div class="container story-wrap">
+      <div class="story-media">
+        <div class="photo-frame ratio-4-3">
+          <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80"
+               onerror="imgFallback(this,'about-team')"
+               alt="Vincenzo's Roofing team reviewing a project plan on-site" loading="lazy">
+        </div>
+        <div class="badge-founded"><b>2013</b><span>Founded in NH</span></div>
+      </div>
+      <div class="story-copy">
+        <span class="eyebrow">Our Story</span>
+        <h2 class="sec-head">Started with one ladder<br><span class="accent">and a written promise.</span></h2>
+        <p>Vincenzo's Roofing LLC began as a two-person crew doing repair work around Manchester. The idea was simple: quote it honestly, show up when you say you will, and put the warranty in writing before you leave the driveway.</p>
+        <p>Thirteen years later, that's still the whole business model. We've grown to a full residential and commercial roofing company serving every corner of New Hampshire, but every job is still run by the same in-house crews — no subcontracted labor, no surprise line items.</p>
+        <p>Today Vincenzo's Roofing has completed more than 1,200 roofs across the state, from single-shingle repairs to full commercial re-roofs, and we still answer the emergency line ourselves, 24/7.</p>
+      </div>
+    </div>
+  </section>
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+  <!-- Stats -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="stat-strip">
+         <div class="stat-box reveal"><b>1200+</b><span>Roofs Completed</span></div>
+         <div class="stat-box reveal"><b>25</b><span>Years in Business</span></div>
+        <div class="stat-box reveal"><b>4.9★</b><span>Average Rating</span></div>
+       <div class="stat-box reveal"><b>5</b><span>Year Workmanship Warranty</span></div>
+      </div>
+    </div>
+  </section>
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+  <!-- Values -->
+  <section class="section">
+    <div class="container">
+      <div class="sec-header">
+        <span class="eyebrow">What We Stand For</span>
+        <h2 class="sec-head">Four things we<br><span class="accent">won't compromise on.</span></h2>
+      </div>
+      <div class="values-grid">
+        <div class="value-card reveal">
+          <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9 12h6M9 16h4M13 2H7a2 2 0 00-2 2v16a2 2 0 002 2h10a2 2 0 002-2V8l-6-6z"/></svg></div>
+          <h4>Honest, itemized quotes</h4>
+          <p>Every estimate breaks out materials, labor, and timeline — no vague lump sums.</p>
+        </div>
+        <div class="value-card reveal">
+          <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 21c4-3 7-6.5 7-11a7 7 0 10-14 0c0 4.5 3 8 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg></div>
+          <h4>Local, in-house crews</h4>
+          <p>The people who quote your roof are the people who install it. No subcontracting.</p>
+        </div>
+        <div class="value-card reveal">
+          <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h4>Warranties in writing</h4>
+          <p>A 25-year workmanship warranty, registered before we ever leave the job site.</p>
+        </div>
+        <div class="value-card reveal">
+          <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
+          <h4>Show up, clean up</h4>
+          <p>On-time crews and daily magnetic nail sweeps — not just on the last day of the job.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="section">
+    <div class="container">
+      <div class="sec-header">
+        <span class="eyebrow">Meet The Crew</span>
+        <h2 class="sec-head">The people who'll be<br><span class="accent">on your roof.</span></h2>
+        <p class="sec-sub">A small leadership team backed by full-time, in-house installation crews across New Hampshire.</p>
+      </div>
+      <div class="team-grid">
+        <div class="team-card reveal">
+          <div class="photo-frame ratio-1-1">
+            <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&w=500&q=80" onerror="imgFallback(this,'team1')" alt="Portrait of Vincenzo, founder and owner" loading="lazy">
+          </div>
+          <h4>Vincenzo Marino</h4>
+          <span class="role">Founder &amp; Owner</span>
+          <p>Started the company in 2013 and still walks final inspections on every large project.</p>
+        </div>
+        <div class="team-card reveal">
+          <div class="photo-frame ratio-1-1">
+            <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=500&q=80" onerror="imgFallback(this,'team2')" alt="Portrait of operations manager" loading="lazy">
+          </div>
+          <h4>Sarah Coughlin</h4>
+          <span class="role">Operations Manager</span>
+          <p>Keeps every crew scheduled, every estimate written, and every customer updated.</p>
+        </div>
+        <div class="team-card reveal">
+          <div class="photo-frame ratio-1-1">
+            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=500&q=80" onerror="imgFallback(this,'team3')" alt="Portrait of lead installation foreman" loading="lazy">
+          </div>
+          <h4>Marcus Dubois</h4>
+          <span class="role">Lead Foreman</span>
+          <p>Runs the largest install crew and trains every new hire on our safety and cleanup standards.</p>
+        </div>
+        <div class="team-card reveal">
+          <div class="photo-frame ratio-1-1">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=500&q=80" onerror="imgFallback(this,'team4')" alt="Portrait of insurance claims specialist" loading="lazy">
+          </div>
+          <h4>Renee Ostrowski</h4>
+          <span class="role">Insurance Claims Specialist</span>
+          <p>Meets adjusters on-site and handles the paperwork so storm claims move faster.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="section" style="background:var(--off);">
+    <div class="container">
+      <div class="sec-header">
+        <span class="eyebrow">Milestones</span>
+        <h2 class="sec-head">Thirteen years,<br><span class="accent">one town at a time.</span></h2>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item reveal">
+          <b>2013</b>
+          <h4>Vincenzo's Roofing founded</h4>
+          <p>Started as a two-person repair crew serving Manchester and surrounding towns.</p>
+        </div>
+        <div class="timeline-item reveal">
+          <b>2016</b>
+          <h4>First commercial contracts</h4>
+          <p>Expanded into low-slope and flat commercial roofing for retail and office properties.</p>
+        </div>
+        <div class="timeline-item reveal">
+          <b>2019</b>
+          <h4>Statewide storm response team launched</h4>
+          <p>Built a dedicated 24/7 emergency crew and insurance claims support after a major NH storm season.</p>
+        </div>
+        <div class="timeline-item reveal">
+          <b>2023</b>
+          <h4>1,000th roof completed</h4>
+          <p>Crossed 1,000 residential and commercial roofs completed across New Hampshire.</p>
+        </div>
+        <div class="timeline-item reveal">
+          <b>2026</b>
+          <h4>Still local, still in-house</h4>
+          <p>Now serving 15+ NH communities with the same no-subcontractor promise we started with.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA band -->
+  <section class="cta-band">
+    <div class="cta-inner">
+      <h2>Want to talk to the crew <em>before you book?</em></h2>
+      <div class="btns">
+        <a href="contact.html" class="btn btn-blue">Get Your Free Estimate</a>
+        <a href="tel:+16035550199" class="btn btn-ghost-w">Call Now</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+		<Footer />
+	</body>
+</html>
