@@ -1998,8 +1998,8 @@ footer {
 
 /* ============ Responsive ============ */
 
-@media(max-width:1400px){
-  .section{
+@media(max-width:1400px) {
+  .section {
     padding: 60px 0px;
   }
 }
