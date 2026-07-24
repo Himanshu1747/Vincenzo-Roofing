@@ -1,114 +1,461 @@
 ---
-import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
-import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
-import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import { queryWordPress } from "../../lib/wordpress";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const PAGEDATA = `
+query blogpage {
+  page(id: "/blog", idType: URI) {
+    title
+    content
+  }
+}
+`;
+
+const pageResponse = await queryWordPress(PAGEDATA);
+const pageData = pageResponse?.page;
+
+// Ab sizes array query kar rahe hain — jaise gallery mein hota hai
+const data = await queryWordPress(`
+  query MainBlog {
+    posts(first: 100) {
+      nodes {
+        id
+        title
+        slug
+        excerpt
+        date
+        featuredImage {
+          node {
+            sourceUrl
+            altText
+            mediaDetails {
+              width
+              height
+              sizes {
+                name
+                sourceUrl
+                width
+                height
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`);
+
+const posts = data?.posts?.nodes || [];
+const featuredPost = posts[0];
+const gridPosts = posts.slice(1);
+
+function formatDate(dateString: string) {
+  if (!dateString) return "";
+  return new Date(dateString).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+function cleanExcerpt(excerpt: string) {
+  if (!excerpt) return "";
+  return excerpt.replace(/<[^>]*>?/gm, "").trim();
+}
+
+// sizes array me se "large" dhoondo, nahi mile to original sourceUrl pe fallback karo
+function getImageUrl(imgNode: any, fallback: string) {
+  if (!imgNode) return fallback;
+  const sizes = imgNode.mediaDetails?.sizes || [];
+  const large = sizes.find((s: any) => s.name === "large");
+  return large?.sourceUrl || imgNode.sourceUrl || fallback;
+}
+
+// Sabhi available sizes se srcset bana do (jitni sizes utni entries)
+function getImageSrcSet(imgNode: any) {
+  const sizes = imgNode?.mediaDetails?.sizes || [];
+  if (!sizes.length) return undefined;
+  return sizes
+    .filter((s: any) => s.sourceUrl && s.width)
+    .map((s: any) => `${s.sourceUrl} ${s.width}w`)
+    .join(", ");
+}
+
+function getImageDimensions(imgNode: any, fallback: { width: number; height: number }) {
+  const sizes = imgNode?.mediaDetails?.sizes || [];
+  const large = sizes.find((s: any) => s.name === "large");
+  if (large?.width && large?.height) {
+    return { width: large.width, height: large.height };
+  }
+  if (imgNode?.mediaDetails?.width && imgNode?.mediaDetails?.height) {
+    return { width: imgNode.mediaDetails.width, height: imgNode.mediaDetails.height };
+  }
+  return fallback;
+}
+
+const FEATURED_FALLBACK = { width: 1200, height: 800 };
+const GRID_FALLBACK = { width: 800, height: 600 };
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <link rel="preconnect" href="https://staging2.vincenzoroofing.com" crossorigin />
+    <link rel="dns-prefetch" href="https://staging2.vincenzoroofing.com" />
+  </head>
+  <body>
+    <Header />
+
+    <main id="top">
+      <section class="page-hero">
+        <div class="container">
+          <div class="breadcrumb">
+            <a href="/">Home</a>
+            <span>/</span>
+            <span>Blog &amp; Resources</span>
+          </div>
+          {pageData && <Fragment set:html={pageData.content} />}
+        </div>
+      </section>
+
+      <section class="section" style="background: var(--off);">
+        <div class="container">
+          {featuredPost && (() => {
+            const node = featuredPost.featuredImage?.node;
+            const dims = getImageDimensions(node, FEATURED_FALLBACK);
+            return (
+              <article
+                class="featured-article-card"
+                onclick={`window.location.href='/blog/${featuredPost.slug}'`}
+                style="cursor: pointer;"
+              >
+                <div class="featured-img">
+                  <img
+                    src={getImageUrl(node, "https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/image-1-1.webp")}
+                    srcset={getImageSrcSet(node)}
+                    sizes="(max-width: 1024px) 100vw, 55vw"
+                    width={dims.width}
+                    height={dims.height}
+                    alt={node?.altText || featuredPost.title}
+                    loading="eager"
+                    fetchpriority="high"
+                    decoding="async"
+                  />
+                </div>
+                <div class="featured-body">
+                  <div class="meta-tag">
+                    <span class="category">Featured Guide</span>
+                    <span class="read-time">Latest Article</span>
+                  </div>
+                  <h2>
+                    <a href={`/blog/${featuredPost.slug}`}>{featuredPost.title}</a>
+                  </h2>
+                  <p>{cleanExcerpt(featuredPost.excerpt)}</p>
+                  <div class="blog-footer" style="border: none; padding-bottom: 10px;">
+                    <a href={`/blog/${featuredPost.slug}`} class="read-more-link">Read Article</a>
+                  </div>
+                  <div class="author-strip">
+                    <div class="author-info">
+                      <span>Published {formatDate(featuredPost.date)}</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            );
+          })()}
+
+          <div class="blog-grid" id="blog-grid">
+            {gridPosts.map((post, index) => {
+              const node = post.featuredImage?.node;
+              const dims = getImageDimensions(node, GRID_FALLBACK);
+              return (
+                <article
+                  class="blog-card"
+                  onclick={`window.location.href='/blog/${post.slug}'`}
+                  style="cursor: pointer;"
+                >
+                  <div class="blog-media">
+                    <span class="blog-cat-badge">Article</span>
+                    <img
+                      src={getImageUrl(node, "https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Best-Roofing-in-North-Hampton-NH-1-1.webp")}
+                      srcset={getImageSrcSet(node)}
+                      sizes="(max-width: 720px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      width={dims.width}
+                      height={dims.height}
+                      alt={node?.altText || post.title}
+                      loading={index < 3 ? "eager" : "lazy"}
+                      fetchpriority={index < 3 ? "high" : "auto"}
+                      decoding="async"
+                    />
+                  </div>
+                  <div class="blog-content">
+                    <span class="blog-date">{formatDate(post.date)}</span>
+                    <h3>
+                      <a href={`/blog/${post.slug}`}>{post.title}</a>
+                    </h3>
+                    <p>{cleanExcerpt(post.excerpt)}</p>
+                    <div class="blog-footer">
+                      <a href={`/blog/${post.slug}`} class="read-more-link">Read Article</a>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-band">
+        <div class="cta-inner">
+          <h2>Ready for a roof that&rsquo;s <em>built for here?</em></h2>
+          <div class="btns">
+            <a class="btn btn-blue" href="/contact">Get Your Free Estimate</a>
+            <a class="btn btn-ghost-w" href="tel:+16035550199">Call Now</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+
+    <style>
+      .featured-article-card {
+        background: var(--white);
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--sh-md);
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 0;
+        margin-bottom: 50px;
+        transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+      }
+      .featured-article-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--sh-lg);
+      }
+      .featured-img {
+        position: relative;
+        min-height: 340px;
+        background: var(--deep);
+      }
+      .featured-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .featured-body {
+        padding: 44px 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .meta-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-family: "Montserrat", sans-serif;
+        font-size: 11.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--blue);
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+      }
+      .meta-tag .category {
+        background: var(--blue-pale);
+        padding: 4px 12px;
+        border-radius: 100px;
+      }
+      .meta-tag .read-time {
+        color: var(--grey-light);
+      }
+      .featured-body h2 {
+        font-size: clamp(22px, 2.5vw, 30px);
+        line-height: 1.25;
+        margin-bottom: 16px;
+        transition: color 0.2s;
+      }
+      .featured-body h2 a:hover {
+        color: var(--blue);
+      }
+      .featured-body p {
+        color: var(--grey);
+        font-size: 15px;
+        margin-bottom: 24px;
+        line-height: 1.65;
+      }
+      .author-strip {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+      }
+      .author-info span {
+        font-size: 12px;
+        color: var(--grey-light);
+      }
+      .blog-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+        margin-bottom: 60px;
+      }
+      .blog-card {
+        background: var(--white);
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s;
+      }
+      .blog-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--sh-md);
+        border-color: transparent;
+      }
+      .blog-media {
+        position: relative;
+        height: 300px;
+        background: var(--off);
+        overflow: hidden;
+      }
+      .blog-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.5s var(--ease);
+      }
+      .blog-card:hover .blog-media img {
+        transform: scale(1.05);
+      }
+      .blog-cat-badge {
+        font-family: "Montserrat", sans-serif;
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        background: rgba(7, 31, 69, 0.85);
+        backdrop-filter: blur(8px);
+        color: var(--white);
+        font-size: 10.5px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 5px 12px;
+        border-radius: 100px;
+      }
+      .blog-content {
+        padding: 26px 24px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+      .blog-date {
+        font-size: 12px;
+        color: var(--grey-light);
+        margin-bottom: 10px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 600;
+      }
+      .blog-content h3 {
+        font-size: 18px;
+        line-height: 1.35;
+        margin-bottom: 12px;
+        font-weight: 700;
+      }
+      .blog-content h3 a:hover {
+        color: var(--blue);
+      }
+      .blog-content p {
+        color: var(--grey);
+        font-size: 14px;
+        line-height: 1.6;
+        flex: 1;
+        margin-bottom: 20px;
+      }
+      .blog-footer {
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .read-more-link {
+        font-family: "Montserrat", sans-serif;
+        font-size: 12.5px;
+        font-weight: 700;
+        color: var(--blue);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .read-more-link::after {
+        content: "→";
+        transition: transform 0.25s var(--ease);
+      }
+      .blog-card:hover .read-more-link::after {
+        transform: translateX(4px);
+      }
+      .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin-top: 20px;
+      }
+      .pg-btn {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: 1px solid var(--line);
+        background: var(--white);
+        color: var(--ink);
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+        font-size: 13.5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+      .pg-btn:hover {
+        border-color: var(--blue);
+        color: var(--blue);
+      }
+      .pg-btn.active {
+        background: var(--blue);
+        color: var(--white);
+        border-color: var(--blue);
+      }
+      @media (max-width: 1024px) {
+        .featured-article-card {
+          grid-template-columns: 1fr;
+        }
+        .featured-img {
+          min-height: 260px;
+        }
+        .blog-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .featured-body{
+          padding: 15px;
+        }
+      }
+      @media (max-width: 720px) {
+        .blog-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </body>
 </html>

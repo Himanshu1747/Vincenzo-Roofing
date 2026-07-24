@@ -2703,6 +2703,9 @@ footer {
   opacity: 1;
   transform: translateY(0);
 }
+.page-hero .container h1, .page-hero .container p {
+    max-width: 750px;
+}
 
 @media (max-width: 720px) {
   .gallery-masonry {
