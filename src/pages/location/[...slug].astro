@@ -1,0 +1,360 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import { queryWordPress } from "../../lib/wordpress";
+
+export async function getStaticPaths() {
+    const LOCATION_QUERY = `
+    query locationall {
+      locationpost {
+        nodes {
+          slug
+          title
+          excerpt
+          content
+          featuredImage {
+            node {
+              sourceUrl
+              altText
+            }
+          }
+        }
+      }
+    }
+  `;
+
+    const data = await queryWordPress(LOCATION_QUERY);
+    const posts = data?.locationpost?.nodes || [];
+
+    return posts.map((post) => ({
+        params: { slug: post.slug },
+        props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead
+            title={post?.title}
+            description={post?.excerpt || "Location details"}
+        />
+            <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css"
+    />
+    </head>
+    <body>
+        <Header />
+
+        <main id="top">
+            <section class="page-hero">
+                <div class="container">
+                    <div class="breadcrumb">
+                        <a href="/">Home</a>
+                        <span>/</span>
+                        <a href="/location" style="color:#fff;">Locations</a>
+                        <span>/</span>
+                        <span style="color:#9CC0FF;">{post?.title}</span>
+                    </div>
+                    <h1 class="fade-up">{post?.title}</h1>
+                </div>
+            </section>
+
+            <section class="contanrt-data section">
+                <div class="container">
+                    <div class="all-mydata">
+                        <h2>Gutters &amp; Siding</h2>
+                        <p>
+                            Protect your home from water damage and improve its
+                            curb appeal with our professional gutter and siding
+                            services. We install seamless gutters, perform
+                            reliable gutter repairs, and provide quality siding
+                            solutions designed to keep your home’s exterior
+                            looking its best year-round.
+                        </p>
+                        <p>
+                            Whether you’re replacing an aging roof or upgrading
+                            your home’s exterior, our team ensures every
+                            component works together for a clean, polished
+                            finish. Properly installed gutters help direct
+                            rainwater away from your foundation, while durable
+                            siding adds an extra layer of protection against the
+                            elements.
+                        </p>
+                        <h3>Our Gutters &amp; Siding Services Include:</h3>
+                        <ul>
+                            <li>Seamless gutter installation</li>
+                            <li>Gutter repair and replacement</li>
+                            <li>Downspout installation and repair</li>
+                            <li>Vinyl and fiber cement siding installation</li>
+                            <li>Siding repair and replacement</li>
+                            <li>Exterior trim and finishing work</li>
+                            <li>
+                                Complete exterior upgrades with roofing projects
+                            </li>
+                        </ul>
+                        <p>
+                            We use high-quality materials and proven
+                            installation techniques to deliver lasting
+                            performance and a seamless appearance. Whether you
+                            need a minor repair or a complete exterior
+                            renovation, our team is committed to providing
+                            reliable workmanship and exceptional service.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <section class="gallery-sec section">
+                <div class="container">
+                    <div class="center-data">
+                        <h3>Cedar/Wood Fence Gallery</h3>
+                        <p>
+                            Explore our collection of custom cedar and wood
+                            fence installations, showcasing quality
+                            craftsmanship, natural beauty, and durable designs
+                            that enhance the privacy and curb appeal of every
+                            property.
+                        </p>
+                    </div>
+                    <div class="gallery-grids">
+                        <div class="gallery-image">
+                            <a
+                                href="https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Best-Roofing-in-North-Hampton-NH-1.webp"
+                                class="glightbox"
+                                data-gallery="fence-gallery"
+                            >
+                                <img
+                                    src="https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Best-Roofing-in-North-Hampton-NH-1-1024x768.webp"
+                                    srcset="https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Best-Roofing-in-North-Hampton-NH-1-300x225.webp 300w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Best-Roofing-in-North-Hampton-NH-1-1024x768.webp 1024w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Best-Roofing-in-North-Hampton-NH-1-150x150.webp 150w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Best-Roofing-in-North-Hampton-NH-1-768x576.webp 768w"
+                                    sizes="(max-width: 767px) 50vw, (max-width: 1199px) 33vw, 25vw"
+                                    alt="Gutters & Siding"
+                                    loading="eager"
+                                    decoding="async"
+                                    width="388"
+                                    height="305"
+                                />
+                            </a>
+                        </div>
+                        <div class="gallery-image">
+                            <a
+                                href="https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/DJI_20241125133841_0008_D1.webp"
+                                class="glightbox"
+                                data-gallery="fence-gallery"
+                            >
+                                <img
+                                    src="https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/DJI_20241125133841_0008_D1-1024x768.webp"
+                                    srcset="https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/DJI_20241125133841_0008_D1-300x225.webp 300w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/DJI_20241125133841_0008_D1-1024x768.webp 1024w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/DJI_20241125133841_0008_D1-150x150.webp 150w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/DJI_20241125133841_0008_D1-768x576.webp 768w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/DJI_20241125133841_0008_D1-1536x1152.webp 1536w"
+                                    sizes="(max-width: 767px) 50vw, (max-width: 1199px) 33vw, 25vw"
+                                    alt="Gutters & Siding"
+                                    loading="lazy"
+                                    decoding="async"
+                                    width="388"
+                                    height="305"
+                                />
+                            </a>
+                        </div>
+                        <div class="gallery-image">
+                            <a
+                                href="https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/DJI_20241127115818_0022_D.webp"
+                                class="glightbox"
+                                data-gallery="fence-gallery"
+                            >
+                                <img
+                                    src="https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/DJI_20241127115818_0022_D-1024x768.webp"
+                                    srcset="https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/DJI_20241127115818_0022_D-300x225.webp 300w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/DJI_20241127115818_0022_D-1024x768.webp 1024w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/DJI_20241127115818_0022_D-150x150.webp 150w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/DJI_20241127115818_0022_D-768x576.webp 768w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/DJI_20241127115818_0022_D-1536x1152.webp 1536w"
+                                    sizes="(max-width: 767px) 50vw, (max-width: 1199px) 33vw, 25vw"
+                                    alt="Gutters & Siding"
+                                    loading="lazy"
+                                    decoding="async"
+                                    width="388"
+                                    height="305"
+                                />
+                            </a>
+                        </div>
+                        <div class="gallery-image">
+                            <a
+                                href="https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/metal-roofing-nh.webp"
+                                class="glightbox"
+                                data-gallery="fence-gallery"
+                            >
+                                <img
+                                    src="https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/metal-roofing-nh-1024x768.webp"
+                                    srcset="https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/metal-roofing-nh-300x225.webp 300w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/metal-roofing-nh-1024x768.webp 1024w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/metal-roofing-nh-150x150.webp 150w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/metal-roofing-nh-768x576.webp 768w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/metal-roofing-nh-1536x1152.webp 1536w"
+                                    sizes="(max-width: 767px) 50vw, (max-width: 1199px) 33vw, 25vw"
+                                    alt="Gutters & Siding"
+                                    loading="lazy"
+                                    decoding="async"
+                                    width="388"
+                                    height="305"
+                                />
+                            </a>
+                        </div>
+                        <div class="gallery-image">
+                            <a
+                                href="https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Trusted-Roofing-Siding-Contractor-Expert.webp"
+                                class="glightbox"
+                                data-gallery="fence-gallery"
+                            >
+                                <img
+                                    src="https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Trusted-Roofing-Siding-Contractor-Expert-1024x768.webp"
+                                    srcset="https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Trusted-Roofing-Siding-Contractor-Expert-300x225.webp 300w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Trusted-Roofing-Siding-Contractor-Expert-1024x768.webp 1024w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Trusted-Roofing-Siding-Contractor-Expert-150x150.webp 150w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Trusted-Roofing-Siding-Contractor-Expert-768x576.webp 768w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Trusted-Roofing-Siding-Contractor-Expert-1536x1152.webp 1536w"
+                                    sizes="(max-width: 767px) 50vw, (max-width: 1199px) 33vw, 25vw"
+                                    alt="Gutters & Siding"
+                                    loading="lazy"
+                                    decoding="async"
+                                    width="388"
+                                    height="305"
+                                />
+                            </a>
+                        </div>
+                        <div class="gallery-image">
+                            <a
+                                href="https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Trusted-Roofing-Siding-Contractor.webp"
+                                class="glightbox"
+                                data-gallery="fence-gallery"
+                            >
+                                <img
+                                    src="https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Trusted-Roofing-Siding-Contractor-1024x768.webp"
+                                    srcset="https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Trusted-Roofing-Siding-Contractor-300x225.webp 300w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Trusted-Roofing-Siding-Contractor-1024x768.webp 1024w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Trusted-Roofing-Siding-Contractor-150x150.webp 150w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Trusted-Roofing-Siding-Contractor-768x576.webp 768w, https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Trusted-Roofing-Siding-Contractor-1536x1152.webp 1536w"
+                                    sizes="(max-width: 767px) 50vw, (max-width: 1199px) 33vw, 25vw"
+                                    alt="Gutters & Siding"
+                                    loading="lazy"
+                                    decoding="async"
+                                    width="388"
+                                    height="305"
+                                />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <Footer />
+        <style>
+            .all-mydata li {
+                list-style: disc;
+            }
+
+            .center-data {
+                max-width: 991px;
+                width: 100%;
+                margin: 0 auto;
+                text-align: center;
+            }
+
+            .center-data .fs-40 {
+                font-weight: 700;
+            }
+
+            .gallery-grids {
+                display: grid;
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                gap: 10px;
+                padding-top: 70px;
+            }
+
+            .gallery-image {
+                max-width: 388px;
+                width: 100%;
+                height: 305px;
+                margin: 0 auto;
+                overflow: hidden;
+                border-radius: 10px;
+            }
+
+            .gallery-image a {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+
+            .gallery-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+            }
+
+            .gallery-grids .gallery-image:nth-child(1) {
+                grid-column: span 2;
+                grid-row: span 2;
+                max-width: 100%;
+                width: 100%;
+                height: 626px;
+            }
+
+            section.gallery-sec {
+                background: var(--off);
+            }
+
+            @media (max-width: 1600px) {
+                .gallery-grids {
+                    padding-top: 50px;
+                }
+            }
+
+            @media (max-width: 1400px) {
+                .gallery-grids {
+                    padding-top: 30px;
+                }
+            }
+
+            @media (max-width: 1199px) {
+                .gallery-grids {
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                }
+            }
+
+            @media (max-width: 991px) {
+                .gallery-grids .gallery-image:nth-child(1) {
+                    grid-column: span 1;
+                    grid-row: span 1;
+                }
+
+                .gallery-image,
+                .gallery-grids .gallery-image:nth-child(1) {
+                    max-width: 388px;
+                    width: 100%;
+                    height: 215px;
+                    margin: 0 auto;
+                }
+            }
+
+            @media (max-width: 767px) {
+                .gallery-sec {
+                    padding: 30px 0;
+                }
+
+                .gallery-grids {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
+            }
+        </style>
+          <script
+      is:inline
+      src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"
+      defer></script>
+
+    <script is:inline>
+      function initGallery() {
+        if (typeof GLightbox === "function") {
+          const lightbox = GLightbox({
+            selector: ".glightbox",
+            touchNavigation: true,
+            loop: true,
+          });
+        } else {
+          setTimeout(initGallery, 100);
+        }
+      }
+      window.addEventListener("load", initGallery);
+      document.addEventListener("astro:page-load", initGallery);
+    </script>
+    </body>
+</html>

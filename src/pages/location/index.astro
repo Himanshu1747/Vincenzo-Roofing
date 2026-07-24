@@ -1,0 +1,106 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import { queryWordPress } from "../../lib/wordpress";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+const LOCATIONPAGE=`
+query locationpage {
+  page(id: "/location", idType: URI) {
+    title
+    content
+    locationPage{
+      ctaLocation
+    }
+  }
+}
+`
+const pagedata = await queryWordPress(LOCATIONPAGE);
+const responsedata = pagedata?.page || {};
+const LOCATIONALL = `
+query locationall {
+  locationpost {
+    nodes {
+      slug
+      title
+      excerpt
+      content
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+          mediaDetails {
+            sizes {
+              name
+              sourceUrl
+              width
+              height
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`;
+
+const postdata = await queryWordPress(LOCATIONALL);
+const postrespons = postdata?.locationpost?.nodes || [];
+
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+
+    <main id="top">
+      <section class="page-hero">
+        <div class="container">
+          <div class="breadcrumb">
+            <a href="/">Home</a>
+            <span>/</span>
+            <span style="color:#fff;">Location</span>
+          </div>
+            <Fragment  set:html={responsedata?.content || "error"}/>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="gallery-masonry">
+            {
+              postrespons?.map((postitems) => (
+                <a
+                  href={`/location/${postitems.slug}`}
+                  class="photo-frame"
+                  data-cat="residential"
+                >
+                  <img
+                    src={postitems?.featuredImage?.node?.sourceUrl || "/placeholder.jpg"}
+                    alt={postitems?.title}
+                    width="434"
+                    height="289"
+                    loading="lazy"
+                  />
+                  <div class="g-cap">{postitems?.title}</div>
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-band">
+        <div class="cta-inner">
+          <Fragment set:html={responsedata?.locationPage?.ctaLocation || "errror"} /> 
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
