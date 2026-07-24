@@ -5,6 +5,10 @@ import Header from "../../components/Header.astro";
 import { queryWordPress } from "../../lib/wordpress";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 
+// NOTE: no "first" limit here, so this pulls every service (title, slug,
+// featured image, icon, intro) in one query. Fine if the service count is
+// small and stable — add a "first: N" (like the homepage does) if this
+// list is likely to grow a lot.
 const SERVICEDATA = `
 query AllServices {
   services {
@@ -34,11 +38,7 @@ query AllServices {
 }
 `;
 
-const pagedata = await queryWordPress(SERVICEDATA);
-const responsedata = pagedata?.services?.nodes || [];
-
 const SERVIMAINPAGE = `
-
 query servicedata {
   page(id: "/service", idType: URI) {
     title
@@ -48,9 +48,17 @@ servicePage{
 }
   }
 }
-
 `;
-const mainpag = await queryWordPress(SERVIMAINPAGE);
+
+// SERVICEDATA and SERVIMAINPAGE are independent queries — fire them in
+// parallel instead of one after another so the page only waits as long
+// as the slower of the two, not the sum of both.
+const [pagedata, mainpag] = await Promise.all([
+  queryWordPress(SERVICEDATA),
+  queryWordPress(SERVIMAINPAGE),
+]);
+
+const responsedata = pagedata?.services?.nodes || [];
 const respopage = mainpag?.page;
 ---
 

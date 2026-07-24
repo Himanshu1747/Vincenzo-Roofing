@@ -8,7 +8,34 @@ import Contactform from "../components/Contactform.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import { queryWordPress } from "../lib/wordpress";
 import Contact from "./contact.astro";
+const LOCATIONALL = `
+query locationall {
+  locationpost (first: 3) {
+    nodes {
+      slug
+      title
+      content
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+          mediaDetails {
+            sizes {
+              name
+              sourceUrl
+              width
+              height
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`;
 
+const postdata = await queryWordPress(LOCATIONALL);
+const postrespons = postdata?.locationpost?.nodes || [];
 const HOMEPAGE = `
 query homepagedata {
   page(id: "/", idType: URI) {
@@ -117,6 +144,8 @@ const servicesData = pagedata?.services?.nodes || [];
                                 width="615"
                                 height="460"
                                 fetchpriority="high"
+                                loading="eager"
+                                decoding="async"
                             />
                         </div>
                         <div class="hero-float warranty">
@@ -230,6 +259,7 @@ const servicesData = pagedata?.services?.nodes || [];
                                                 width="24"
                                                 height="24"
                                                 loading="lazy"
+                                                decoding="async"
                                             />
                                         </div>
                                         <Fragment
@@ -254,6 +284,7 @@ const servicesData = pagedata?.services?.nodes || [];
                                     ?.node?.mediaItemUrl || "error"}
                                 alt="Why Vincenzo’s"
                                 loading="lazy"
+                                decoding="async"
                                 width="617"
                                 height="462"
                             />
@@ -286,6 +317,7 @@ const servicesData = pagedata?.services?.nodes || [];
                                                     height="20"
                                                     width="20"
                                                     loading="lazy"
+                                                    decoding="async"
                                                 />
                                             </div>
                                             <div>
@@ -347,37 +379,30 @@ const servicesData = pagedata?.services?.nodes || [];
                             >
                         </h2>
                     </div>
-                    <div class="ba-grid">
-                        <div class="ba-card reveal">
-                            <div class="ba-media">
-                                <img src="/image-5.png" alt="" />
-                            </div>
-                            <div class="ba-body">
-                                <h4>Asphalt Shingle Replacement</h4><p>
-                                    Manchester, NH — full tear-off and re-roof
-                                </p>
-                            </div>
-                        </div>
-                        <div class="ba-card reveal">
-                            <div class="ba-media">
-                                <img src="/image-4.png" alt="" />
-                            </div>
-                            <div class="ba-body">
-                                <h4>Storm Damage Restoration</h4><p>
-                                    Nashua, NH — wind damage, insurance-assisted
-                                </p>
-                            </div>
-                        </div>
-                        <div class="ba-card reveal">
-                            <div class="ba-media">
-                                <img src="/image-3.png" alt="" />
-                            </div>
-                            <div class="ba-body">
-                                <h4>Standing-Seam Metal Roof</h4><p>
-                                    Portsmouth, NH — commercial install
-                                </p>
-                            </div>
-                        </div>
+                    <div class="gallery-masonry">
+                        {
+                            postrespons?.map((postitems) => (
+                                <a
+                                    href={`/location/${postitems.slug}`}
+                                    class="photo-frame"
+                                    data-cat="residential"
+                                >
+                                    <img
+                                        src={
+                                            postitems?.featuredImage?.node
+                                                ?.sourceUrl ||
+                                            "/placeholder.jpg"
+                                        }
+                                        alt={postitems?.title}
+                                        width="434"
+                                        height="289"
+                                        loading="lazy"
+                                        decoding="async"
+                                    />
+                                    <div class="g-cap">{postitems?.title}</div>
+                                </a>
+                            ))
+                        }
                     </div>
                     <p class="note">
                         Illustrative placeholders — swap in real project
@@ -530,6 +555,18 @@ const servicesData = pagedata?.services?.nodes || [];
         <Footer />
         <script>
             document.addEventListener("DOMContentLoaded", () => {
+                // Any images injected from WordPress rich text (set:html blocks
+                // like whatWeDoContent, whyChooseContent, etc.) skip our manual
+                // loading="lazy" attributes entirely. Catch them here so they
+                // don't all fight for bandwidth on initial load.
+                const contentImages = document.querySelectorAll(
+                    "main img:not([loading])",
+                );
+                contentImages.forEach((img) => {
+                    img.setAttribute("loading", "lazy");
+                    img.setAttribute("decoding", "async");
+                });
+
                 const marquee = document.getElementById("marquee");
                 const marqueeWrap = document.querySelector(".marquee-wrap");
 
@@ -542,27 +579,82 @@ const servicesData = pagedata?.services?.nodes || [];
                 marquee.appendChild(content.cloneNode(true));
                 marquee.appendChild(content.cloneNode(true));
 
+                // Promote to its own compositor layer so the transform is
+                // handled on the GPU instead of triggering paint/layout.
+                marquee.style.willChange = "transform";
+
                 let xPos = 0;
-                // TWEAK THIS NUMBER TO CHANGE SPEED (higher = faster)
-                const speed = 0.5;
-                let isHovered = false;
+                // TWEAK THIS NUMBER TO CHANGE SPEED (pixels per second)
+                const speedPerSecond = 30;
+                let isPaused = false;
+                let isVisible = true;
+                let contentWidth = 0;
+                let lastTimestamp = null;
+                let rafId = null;
+
+                // Measure width ONCE (and again on resize, debounced) instead
+                // of reading offsetWidth every animation frame — that was
+                // forcing a synchronous layout recalculation ~60x/sec and was
+                // the main cause of jank/slowness.
+                const measure = () => {
+                    contentWidth = content.offsetWidth;
+                };
+                measure();
+
+                let resizeTimer;
+                window.addEventListener("resize", () => {
+                    clearTimeout(resizeTimer);
+                    resizeTimer = setTimeout(measure, 150);
+                });
 
                 // Pause on hover
                 marqueeWrap.addEventListener(
                     "mouseenter",
-                    () => (isHovered = true),
+                    () => (isPaused = true),
                 );
-                marqueeWrap.addEventListener(
-                    "mouseleave",
-                    () => (isHovered = false),
+                marqueeWrap.addEventListener("mouseleave", () => {
+                    isPaused = false;
+                    lastTimestamp = null;
+                });
+
+                // Fully stop the rAF loop when the marquee scrolls off-screen
+                // instead of animating an invisible element forever.
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            isVisible = entry.isIntersecting;
+                            if (isVisible && rafId === null) {
+                                lastTimestamp = null;
+                                rafId = requestAnimationFrame(animate);
+                            }
+                        });
+                    },
+                    { threshold: 0 },
                 );
+                observer.observe(marqueeWrap);
 
-                function animate() {
-                    if (!isHovered) {
-                        // Get the width of ONE original p tag
-                        const contentWidth = content.offsetWidth;
+                // Pause when the browser tab isn't active (saves battery/CPU)
+                document.addEventListener("visibilitychange", () => {
+                    if (document.hidden) {
+                        isPaused = true;
+                    } else {
+                        isPaused = false;
+                        lastTimestamp = null;
+                    }
+                });
 
-                        xPos -= speed;
+                function animate(timestamp) {
+                    if (!isVisible) {
+                        rafId = null;
+                        return;
+                    }
+
+                    if (!isPaused) {
+                        if (lastTimestamp === null) lastTimestamp = timestamp;
+                        const delta = (timestamp - lastTimestamp) / 1000;
+                        lastTimestamp = timestamp;
+
+                        xPos -= speedPerSecond * delta;
 
                         // Instantly snap back to 0 when one full p tag has scrolled by
                         if (Math.abs(xPos) >= contentWidth) {
@@ -570,12 +662,14 @@ const servicesData = pagedata?.services?.nodes || [];
                         }
 
                         marquee.style.transform = `translate3d(${xPos}px, 0, 0)`;
+                    } else {
+                        lastTimestamp = null;
                     }
 
-                    requestAnimationFrame(animate);
+                    rafId = requestAnimationFrame(animate);
                 }
 
-                animate();
+                rafId = requestAnimationFrame(animate);
             });
         </script>
     </body>
