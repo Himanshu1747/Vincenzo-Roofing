@@ -72,20 +72,20 @@ const logoHeight = data?.siteLogo?.mediaDetails?.height || "auto";
         </div>
     </div>
     <div class="nav-wrap">
-         <div class="header-logo">
+        <div class="header-logo">
             <a href="/" class="logo" aria-label={`${logoAlt} home`}>
-            <!-- Render the dynamic logo here -->
-            <img 
-                src={logoUrl} 
-                alt={logoAlt} 
-                width="100" 
-                height={logoHeight} 
-                fetchpriority="high"
-                loading="eager"
-                decoding="sync"
-            />
-        </a>
-         </div>
+                <!-- Render the dynamic logo here -->
+                <img
+                    src={logoUrl}
+                    alt={logoAlt}
+                    width="100"
+                    height={logoHeight}
+                    fetchpriority="high"
+                    loading="eager"
+                    decoding="sync"
+                />
+            </a>
+        </div>
         <nav class="primary" aria-label="Primary">
             {
                 topLevelItems.map((item: any) => {
@@ -176,22 +176,27 @@ const logoHeight = data?.siteLogo?.mediaDetails?.height || "auto";
             if (hasChildren) {
                 return (
                     <div class="mp-link-group">
-                        <a
-                            href={item.uri !== "#" ? item.uri : ""}
-                            class="mp-toggle"
-                            aria-expanded="false"
-                        >
-                            <span>{item.label}</span>
-                            <svg
-                                class="mp-chevron"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2.4"
+                        <div class="data-dropdowns">
+                            <a
+                                href={item.uri !== "#" ? item.uri : ""}
+                                class="mp-toggle"
+                                aria-expanded="false"
                             >
-                                <path d="M6 9l6 6 6-6" />
-                            </svg>
-                        </a>
+                                <span>{item.label}</span>
+                            </a>
+                            <div class="dropdown-opens">
+                                <svg
+                                    class="mp-chevron"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2.4"
+                                >
+                                    <path d="M6 9l6 6 6-6" />
+                                </svg>
+                            </div>
+                        </div>
+
                         <div class="mp-submenu">
                             {item.childItems.nodes
                                 .sort((a: any, b: any) => a.order - b.order)
@@ -230,23 +235,39 @@ const logoHeight = data?.siteLogo?.mediaDetails?.height || "auto";
     </div>
 </div>
 
+<style>
+    .mp-link-group a {
+        max-width: fit-content;
+        width: 100%;
+    }
+    .data-dropdowns {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .mp-link-group .mp-submenu a {
+    max-width: 100% !important;
+    width: 100%;
+    display: block;
+}
+</style>
+
 <script>
     /* ---------- Highly Optimized Vanilla JS ---------- */
-    // Using standard Astro <script> tag allows Astro to bundle and defer load it, 
-    // stopping it from blocking the logo rendering on initial page load.
-
     const hdr = document.getElementById("siteHeader");
     const btn = document.getElementById("menuToggle");
     const panel = document.getElementById("mobilePanel");
 
     /* ---------- Header shadow on scroll ---------- */
     if (hdr) {
-        const onScroll = () => hdr.classList.toggle("scrolled", window.scrollY > 8);
+        const onScroll = () =>
+            hdr.classList.toggle("scrolled", window.scrollY > 8);
         onScroll();
         window.addEventListener("scroll", onScroll, { passive: true });
     }
 
-    /* ---------- Global Event Delegation (Replaces multiple loops) ---------- */
+    /* ---------- Global Event Delegation ---------- */
     document.addEventListener("click", (e) => {
         const target = e.target as HTMLElement;
 
@@ -268,16 +289,28 @@ const logoHeight = data?.siteLogo?.mediaDetails?.height || "auto";
             return;
         }
 
-        // 3. Mobile Accordions
+        // 3. Mobile Accordions - Handles clicks on both .dropdown-opens AND .mp-toggle
+        const dropdownOpens = target.closest(".dropdown-opens");
         const mpToggle = target.closest(".mp-toggle");
-        if (mpToggle) {
-            const href = mpToggle.getAttribute("href");
-            if (!href || href === "#") e.preventDefault();
-            
-            const submenu = mpToggle.nextElementSibling;
-            if (submenu && submenu.classList.contains("mp-submenu")) {
-                const isOpen = submenu.classList.toggle("open");
-                mpToggle.setAttribute("aria-expanded", String(isOpen));
+
+        if (dropdownOpens || mpToggle) {
+            const parentGroup = target.closest(".mp-link-group");
+            if (parentGroup) {
+                const toggleBtn = parentGroup.querySelector(".mp-toggle");
+                const submenu = parentGroup.querySelector(".mp-submenu");
+
+                // Prevent standard link behavior if it's an anchor tag with '#' or if clicking the icon trigger
+                if (mpToggle) {
+                    const href = mpToggle.getAttribute("href");
+                    if (!href || href === "#") e.preventDefault();
+                } else if (dropdownOpens) {
+                    e.preventDefault();
+                }
+
+                if (submenu && submenu.classList.contains("mp-submenu")) {
+                    const isOpen = submenu.classList.toggle("open");
+                    toggleBtn?.setAttribute("aria-expanded", String(isOpen));
+                }
             }
             return;
         }

@@ -6,8 +6,8 @@ import { queryWordPress } from "../../lib/wordpress";
 
 export async function getStaticPaths() {
   const QUERY = `
-    query getServiceSlugs {
-      services(first: 100) {
+    query AllServices {
+      services {
         nodes {
           slug
         }
@@ -25,16 +25,33 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params;
 
+// Pruned query: only fetching fields rendered on this page
 const SINGLE_SERVICE_QUERY = `
   query getServiceBySlug($id: ID!) {
     service(id: $id, idType: SLUG) {
       title
       content
-      excerpt
       featuredImage {
         node {
           sourceUrl
           altText
+        }
+      }
+      servicespost {
+        galleryContent
+        galleryImages {
+          nodes {
+            sourceUrl
+            altText
+            mediaDetails {
+              sizes {
+                name
+                sourceUrl
+                width
+                height
+              }
+            }
+          }
         }
       }
     }
@@ -47,18 +64,36 @@ const service = data?.service;
 if (!service) {
   return Astro.redirect("/404");
 }
+
+// Extract gallery data safely
+const galleryContent = service?.servicespost?.galleryContent;
+const galleryImages = service?.servicespost?.galleryImages?.nodes || [];
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={service.title} description={service.excerpt || service.title} />
+    <BaseHead
+      title={service.title}
+      description={service.title}
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css"
+    />
   </head>
   <body>
     <Header />
 
     <main id="top">
       <section class="page-hero">
+        <img
+          src={service.featuredImage?.node?.sourceUrl ||
+            "https://admin.greenmountainfencecompany.com/wp-content/uploads/2026/02/Wood-driveway-gates.webp"}
+          alt={service.featuredImage?.node?.altText || service.title}
+          class="overlays-image"
+          decoding="async"
+        />
         <div class="container">
           <div class="breadcrumb">
             <a href="/">Home</a>
@@ -67,32 +102,195 @@ if (!service) {
             <span>/</span>
             <span style="color:#fff;">{service.title}</span>
           </div>
-          <h1 class="fade-up" set:html={service.title} />
+          <h1 class="fade-up">{service.title}</h1>
         </div>
       </section>
 
-      <section class="section">
+      <section class="contanrt-data section">
         <div class="container">
-          {
-            service.featuredImage?.node?.sourceUrl && (
-              <div class="photo-frame ratio-4-3 reveal" style="margin-bottom: 2rem;">
-                <img
-                  src={service.featuredImage.node.sourceUrl}
-                  alt={service.featuredImage.node.altText || service.title}
-                />
-              </div>
-            )
-          }
-
-          <div class="svc-detail-copy reveal" set:html={service.content} />
-
-          <div style="margin-top: 32px;">
-            <a href="/contact" class="btn btn-blue">Get a Quote for {service.title}</a>
-          </div>
+          <div
+            class="all-mydata"
+            set:html={service?.content || "No content available."}
+          />
         </div>
       </section>
+
+      {/* Render gallery section only if content or images exist */}
+      {
+        (galleryContent || galleryImages.length > 0) && (
+          <section class="gallery-sec section">
+            <div class="container">
+              {galleryContent && (
+                <div class="center-data" set:html={galleryContent} />
+              )}
+
+              <div class="gallery-grids">
+                {galleryImages.map((galleryitems, index) => {
+                  const sizes = galleryitems?.mediaDetails?.sizes || [];
+                  
+                  // Priority: 'large' -> 'medium_large' -> 'medium' -> 'thumbnail' -> Original sourceUrl
+                  const largeSize = sizes.find((s) => s.name === "large")?.sourceUrl;
+                  const medLargeSize = sizes.find((s) => s.name === "medium_large")?.sourceUrl;
+                  const mediumSize = sizes.find((s) => s.name === "medium")?.sourceUrl;
+                  const thumbSize = sizes.find((s) => s.name === "thumbnail")?.sourceUrl;
+
+                  const displayImageSrc = largeSize || medLargeSize || mediumSize || thumbSize || galleryitems?.sourceUrl;
+
+                  // Build responsive srcset string
+                  const srcSetString = sizes
+                    .map((s) => `${s.sourceUrl} ${s.width}w`)
+                    .join(", ");
+
+                  return (
+                    <div class="gallery-image">
+                      <a
+                        href={galleryitems?.sourceUrl}
+                        class="glightbox"
+                        data-gallery="fence-gallery"
+                      >
+                        <img 
+                          src={displayImageSrc} 
+                          srcset={srcSetString || undefined}
+                          sizes="(max-width: 767px) 50vw, (max-width: 1199px) 33vw, 25vw"
+                          alt={galleryitems?.altText || service.title} 
+                          loading={index === 0 ? "eager" : "lazy"}
+                          decoding="async"
+                          width="388"
+                          height="305"
+                        />
+                      </a>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        )
+      }
     </main>
 
     <Footer />
+
+    <style>
+      .all-mydata li {
+        list-style: disc;
+      }
+
+      .center-data {
+        max-width: 991px;
+        width: 100%;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .center-data .fs-40 {
+        font-weight: 700;
+      }
+
+      .gallery-grids {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        padding-top: 70px;
+      }
+
+      .gallery-image {
+        max-width: 388px;
+        width: 100%;
+        height: 305px;
+        margin: 0 auto;
+        overflow: hidden;
+        border-radius: 10px;
+      }
+
+      .gallery-image a {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      .gallery-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+
+      .gallery-grids .gallery-image:nth-child(1) {
+        grid-column: span 2;
+        grid-row: span 2;
+        max-width: 100%;
+        width: 100%;
+        height: 626px;
+      }
+
+      section.gallery-sec {
+        background: var(--off);
+      }
+
+      @media (max-width: 1600px) {
+        .gallery-grids {
+          padding-top: 50px;
+        }
+      }
+
+      @media (max-width: 1400px) {
+        .gallery-grids {
+          padding-top: 30px;
+        }
+      }
+
+      @media (max-width: 1199px) {
+        .gallery-grids {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 991px) {
+        .gallery-grids .gallery-image:nth-child(1) {
+          grid-column: span 1;
+          grid-row: span 1;
+        }
+
+        .gallery-image,
+        .gallery-grids .gallery-image:nth-child(1) {
+          max-width: 388px;
+          width: 100%;
+          height: 215px;
+          margin: 0 auto;
+        }
+      }
+
+      @media (max-width: 767px) {
+        .gallery-sec {
+          padding: 30px 0;
+        }
+
+        .gallery-grids {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    </style>
+
+    <script
+      is:inline
+      src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"
+      defer></script>
+
+    <script is:inline>
+      function initGallery() {
+        if (typeof GLightbox === "function") {
+          const lightbox = GLightbox({
+            selector: ".glightbox",
+            touchNavigation: true,
+            loop: true,
+          });
+        } else {
+          setTimeout(initGallery, 100);
+        }
+      }
+      window.addEventListener("load", initGallery);
+      document.addEventListener("astro:page-load", initGallery);
+    </script>
   </body>
 </html>

@@ -6,19 +6,52 @@ import { queryWordPress } from "../../lib/wordpress";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 
 const SERVICEDATA = `
-query allservices {
-  services(first: 50) {
+query AllServices {
+  services {
     nodes {
-      slug
       title
-      excerpt
-      content
+      slug
+
+      # Featured Image query
+      featuredImage {
+        node {
+          sourceUrl
+        }
+      }
+
+      # Custom ACF/Field Group
+      servicespost {
+        iconImage {
+          node {
+            mediaItemUrl
+          }
+        }
+
+        shortIntro
+      }
     }
   }
 }
 `;
+
 const pagedata = await queryWordPress(SERVICEDATA);
 const responsedata = pagedata?.services?.nodes || [];
+
+const SERVIMAINPAGE = `
+
+query servicedata {
+  page(id: "/service", idType: URI) {
+    title
+    content
+servicePage{
+  ctaContents
+}
+  }
+}
+
+`;
+const mainpag = await queryWordPress(SERVIMAINPAGE);
+const respopage = mainpag?.page;
 ---
 
 <!doctype html>
@@ -37,22 +70,7 @@ const responsedata = pagedata?.services?.nodes || [];
             <span>/</span>
             <span style="color:#fff;">Services</span>
           </div>
-          <h1 class="fade-up">
-            Every roofing service, <em style="font-style:normal;color:#9CC0FF;"
-              >one accountable crew.</em
-            >
-          </h1>
-          <p class="lede-page fade-up">
-            From a single missing shingle to a full commercial re-roof, the same
-            licensed NH team handles it start to finish — no subcontracted
-            labor, ever.
-          </p>
-          <div class="hero-ctas" style="margin-top:28px;">
-            <a href="/contact" class="btn btn-blue">Get a Free Estimate</a>
-            <a href="tel:+16035550199" class="btn btn-ghost-w"
-              >Call (603) 555-0199</a
-            >
-          </div>
+          <Fragment set:html={respopage?.content || "error"} />
         </div>
       </section>
 
@@ -60,30 +78,40 @@ const responsedata = pagedata?.services?.nodes || [];
       <section class="section">
         <div class="container">
           {
-            responsedata.map((servotems) => (
+            responsedata.map((servotems, index) => (
               <div class="svc-detail-row" id={servotems.slug}>
                 <div class="photo-frame ratio-4-3 reveal">
                   <img
-                    src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
+                    src={
+                      servotems?.featuredImage?.node?.sourceUrl ||
+                      "https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/photo-1600585154340-be6161a56a0c.webp"
+                    }
                     alt={servotems.title}
-                    loading="lazy"
+                    width="644"
+                    height="483"
+                    loading={index === 0 ? "eager" : "lazy"}
+                    decoding="async"
+                    fetchpriority={index === 0 ? "high" : "auto"}
                   />
                 </div>
                 <div class="svc-detail-copy reveal">
-                  <div class="svc-icon">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.8"
-                    >
-                      <path d="M3 11l9-7 9 7" />
-                      <path d="M5 10v10h14V10" />
-                    </svg>
-                  </div>
-                  <h3 set:html={servotems.title} />
-                  <div set:html={servotems.excerpt || servotems.content} />
-                  
+                  {servotems?.servicespost?.iconImage?.node?.mediaItemUrl && (
+                    <div class="svc-icon">
+                      <img
+                        src={servotems.servicespost.iconImage.node.mediaItemUrl}
+                        alt={servotems.title}
+                        width="23"
+                        height="23"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  )}
+                  <h3>{servotems.title}</h3>
+                  {servotems?.servicespost?.shortIntro && (
+                    <div set:html={servotems.servicespost.shortIntro} />
+                  )}
+
                   <a href={`/service/${servotems.slug}`} class="btn btn-blue">
                     View Details
                   </a>
@@ -96,13 +124,10 @@ const responsedata = pagedata?.services?.nodes || [];
 
       <!-- CTA band -->
       <section class="cta-band">
-        <div class="cta-inner">
-          <h2>Not sure which service <em>you need?</em></h2>
-          <div class="btns">
-            <a href="/contact" class="btn btn-blue">Get a Free Inspection</a>
-            <a href="tel:+16035550199" class="btn btn-ghost-w">Call Now</a>
-          </div>
-        </div>
+        <div
+          class="cta-inner"
+          set:html={respopage?.servicePage?.ctaContents || "error"}
+        />
       </section>
     </main>
 

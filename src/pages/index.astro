@@ -75,6 +75,13 @@ query homepagedata {
       title
       excerpt
       content
+       servicespost {
+        iconImage {
+          node {
+            mediaItemUrl
+          }
+        }
+      }
     }
   }
 }
@@ -107,8 +114,8 @@ const servicesData = pagedata?.services?.nodes || [];
                                 src={responsedata?.featuredImage?.node
                                     ?.mediaItemUrl || "error"}
                                 alt="Vincenzo’s Roofing"
-                                width="625"
-                                height="473"
+                                width="615"
+                                height="460"
                                 fetchpriority="high"
                             />
                         </div>
@@ -128,15 +135,13 @@ const servicesData = pagedata?.services?.nodes || [];
                                 class="warnaty-box"
                                 set:html={responsedata?.homepage
                                     ?.imageWaranty || "error"}
-                            >
-                            </div>
+                            />
                         </div>
                         <div
                             class="hero-float review"
                             set:html={responsedata?.homepage?.imageReview ||
                                 "error"}
-                        >
-                        </div>
+                        />
                     </div>
                 </div>
             </section>
@@ -162,24 +167,37 @@ const servicesData = pagedata?.services?.nodes || [];
                     <div class="svc-grid">
                         {
                             servicesData.map((service, index) => (
-                                <div class={`svc-card ${index < 2 ? 'feature reveal' : 'reveal'}`}>
-                                    <span class="svc-num">{String(index + 1).padStart(2, '0')}</span>
+                                <div
+                                    class={`svc-card ${index < 2 ? "feature reveal" : "reveal"}`}
+                                >
+                                    <span class="svc-num">
+                                        {String(index + 1).padStart(2, "0")}
+                                    </span>
                                     <div class="svc-icon">
-                                        <svg
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="1.8"
-                                        >
-                                            <path d="M3 11l9-7 9 7"></path>
-                                            <path d="M5 10v10h14V10"></path>
-                                        </svg>
+                                        <img
+                                            src={
+                                                service?.servicespost?.iconImage
+                                                    ?.node?.mediaItemUrl
+                                            }
+                                            width="23"
+                                            height="23"
+                                            loading="lazy"
+                                            decoding="async"
+                                            alt={service.title}
+                                        />
                                     </div>
-                                    <h3 set:html={service.title} />
-                                    <div set:html={service.excerpt || service.content} />
-                                    <a class="svc-arrow" href={`/service/${service.slug}`}
-                                        >Explore Now</a
+                                    <h3>{service.title}</h3>
+                                    <div
+                                        set:html={
+                                            service.excerpt || service.content
+                                        }
+                                    />
+                                    <a
+                                        class="svc-arrow"
+                                        href={`/service/${service.slug}`}
                                     >
+                                        Explore Now
+                                    </a>
                                 </div>
                             ))
                         }
@@ -409,19 +427,30 @@ const servicesData = pagedata?.services?.nodes || [];
                                     (locationitems) => (
                                         <a
                                             class="area-chip"
-                                            title={locationitems?.areaName || "error"}
-                                            href={locationitems?.areaPageLinks?.url || "error"}
+                                            title={
+                                                locationitems?.areaName ||
+                                                "error"
+                                            }
+                                            href={
+                                                locationitems?.areaPageLinks
+                                                    ?.url || "error"
+                                            }
                                         >
-                                        {locationitems?.areaName || "error"}
+                                            {locationitems?.areaName || "error"}
                                         </a>
                                     ),
                                 )
                             }
                         </div>
                         <a
-                            href={responsedata?.homepage?.exploreAllAreas?.url || "error"}
+                            href={responsedata?.homepage?.exploreAllAreas
+                                ?.url || "error"}
                             class="btn btn-blue"
-                            style="margin-top: 25px;">{responsedata?.homepage?.exploreAllAreas?.title || "error"}</a
+                            style="margin-top: 25px;"
+                            >{
+                                responsedata?.homepage?.exploreAllAreas
+                                    ?.title || "error"
+                            }</a
                         >
                     </div>
                     <div class="map-frame reveal">
