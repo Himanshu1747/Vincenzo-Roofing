@@ -14,11 +14,7 @@ query blogpage {
 }
 `;
 
-const pageResponse = await queryWordPress(PAGEDATA);
-const pageData = pageResponse?.page;
-
-// Ab sizes array query kar rahe hain — jaise gallery mein hota hai
-const data = await queryWordPress(`
+const MAINBLOG = `
   query MainBlog {
     posts(first: 100) {
       nodes {
@@ -46,8 +42,17 @@ const data = await queryWordPress(`
       }
     }
   }
-`);
+`;
 
+// PERF: these two queries are independent — fire them together instead of
+// awaiting one after the other. Cuts the WordPress round-trip time roughly
+// in half on every request.
+const [pageResponse, data] = await Promise.all([
+  queryWordPress(PAGEDATA),
+  queryWordPress(MAINBLOG),
+]);
+
+const pageData = pageResponse?.page;
 const posts = data?.posts?.nodes || [];
 const featuredPost = posts[0];
 const gridPosts = posts.slice(1);
@@ -98,6 +103,40 @@ function getImageDimensions(imgNode: any, fallback: { width: number; height: num
 
 const FEATURED_FALLBACK = { width: 1200, height: 800 };
 const GRID_FALLBACK = { width: 800, height: 600 };
+const GRID_IMG_FALLBACK_URL =
+  "https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Best-Roofing-in-North-Hampton-NH-1-1.webp";
+
+// PERF: this is the big one. The old version rendered every one of the
+// (up to 99) grid posts into the initial HTML — full markup + a multi-size
+// srcset per image — on every single page load. That's a huge amount of
+// DOM and simultaneous image requests for a first paint.
+// We still fetch all posts in one WordPress call (no extra network cost),
+// but only render the first batch immediately. The rest are serialized as
+// plain JSON (already in memory, no extra fetch) and appended in batches
+// by the "Load More" button below — reusing your existing .btn.btn-blue
+// and .pagination styles, no new CSS.
+const INITIAL_COUNT = 9;
+const visibleGridPosts = gridPosts.slice(0, INITIAL_COUNT);
+const deferredGridPosts = gridPosts.slice(INITIAL_COUNT);
+
+// Pre-shape the deferred posts into exactly the strings the template needs,
+// so the client-side script has zero WP-shape logic to reimplement.
+const deferredPayload = deferredGridPosts.map((post) => {
+  const node = post.featuredImage?.node;
+  const dims = getImageDimensions(node, GRID_FALLBACK);
+  return {
+    slug: post.slug,
+    title: post.title,
+    excerpt: cleanExcerpt(post.excerpt),
+    date: formatDate(post.date),
+    imgSrc: getImageUrl(node, GRID_IMG_FALLBACK_URL),
+    imgSrcSet: getImageSrcSet(node) || "",
+    imgWidth: dims.width,
+    imgHeight: dims.height,
+    imgAlt: node?.altText || post.title,
+  };
+});
+const deferredJson = JSON.stringify(deferredPayload).replace(/</g, "\\u003c");
 ---
 
 <!doctype html>
@@ -169,7 +208,7 @@ const GRID_FALLBACK = { width: 800, height: 600 };
           })()}
 
           <div class="blog-grid" id="blog-grid">
-            {gridPosts.map((post, index) => {
+            {visibleGridPosts.map((post, index) => {
               const node = post.featuredImage?.node;
               const dims = getImageDimensions(node, GRID_FALLBACK);
               return (
@@ -181,7 +220,7 @@ const GRID_FALLBACK = { width: 800, height: 600 };
                   <div class="blog-media">
                     <span class="blog-cat-badge">Article</span>
                     <img
-                      src={getImageUrl(node, "https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Best-Roofing-in-North-Hampton-NH-1-1.webp")}
+                      src={getImageUrl(node, GRID_IMG_FALLBACK_URL)}
                       srcset={getImageSrcSet(node)}
                       sizes="(max-width: 720px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       width={dims.width}
@@ -206,6 +245,25 @@ const GRID_FALLBACK = { width: 800, height: 600 };
               );
             })}
           </div>
+
+          {deferredGridPosts.length > 0 && (
+            <div class="pagination" id="load-more-wrap">
+              <button
+                type="button"
+                id="load-more-btn"
+                class="btn btn-blue"
+                data-batch-size="9"
+              >
+                Load More Articles
+              </button>
+            </div>
+          )}
+
+          <script
+            type="application/json"
+            id="more-posts-data"
+            set:html={deferredJson}
+          />
         </div>
       </section>
 
@@ -221,6 +279,83 @@ const GRID_FALLBACK = { width: 800, height: 600 };
     </main>
 
     <Footer />
+
+    <script>
+      // Progressive rendering for the remaining blog posts. All data is
+      // already embedded in the page (no extra network request) — this
+      // just avoids paying the DOM/parse/image-request cost for posts
+      // nobody has scrolled to yet.
+      document.addEventListener("DOMContentLoaded", () => {
+        const dataEl = document.getElementById("more-posts-data");
+        const grid = document.getElementById("blog-grid");
+        const btn = document.getElementById("load-more-btn");
+        const wrap = document.getElementById("load-more-wrap");
+        if (!dataEl || !grid || !btn || !wrap) return;
+
+        let remaining = [];
+        try {
+          remaining = JSON.parse(dataEl.textContent || "[]");
+        } catch {
+          remaining = [];
+        }
+
+        const batchSize = parseInt(btn.dataset.batchSize || "9", 10);
+
+        function escapeHtml(str) {
+          const div = document.createElement("div");
+          div.textContent = str ?? "";
+          return div.innerHTML;
+        }
+
+        function renderBatch() {
+          const batch = remaining.splice(0, batchSize);
+          const frag = document.createDocumentFragment();
+
+          batch.forEach((post) => {
+            const article = document.createElement("article");
+            article.className = "blog-card";
+            article.style.cursor = "pointer";
+            article.addEventListener("click", () => {
+              window.location.href = `/blog/${post.slug}`;
+            });
+
+            article.innerHTML = `
+              <div class="blog-media">
+                <span class="blog-cat-badge">Article</span>
+                <img
+                  src="${escapeHtml(post.imgSrc)}"
+                  ${post.imgSrcSet ? `srcset="${escapeHtml(post.imgSrcSet)}"` : ""}
+                  sizes="(max-width: 720px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  width="${post.imgWidth}"
+                  height="${post.imgHeight}"
+                  alt="${escapeHtml(post.imgAlt)}"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="blog-content">
+                <span class="blog-date">${escapeHtml(post.date)}</span>
+                <h3><a href="/blog/${encodeURIComponent(post.slug)}">${escapeHtml(post.title)}</a></h3>
+                <p>${escapeHtml(post.excerpt)}</p>
+                <div class="blog-footer">
+                  <a href="/blog/${encodeURIComponent(post.slug)}" class="read-more-link">Read Article</a>
+                </div>
+              </div>
+            `;
+
+            frag.appendChild(article);
+          });
+
+          grid.appendChild(frag);
+
+          if (remaining.length === 0) {
+            wrap.remove();
+          }
+        }
+
+        btn.addEventListener("click", renderBatch);
+      });
+    </script>
 
     <style>
       .featured-article-card {

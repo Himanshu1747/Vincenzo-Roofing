@@ -8,6 +8,7 @@ import Contactform from "../components/Contactform.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import { queryWordPress } from "../lib/wordpress";
 import Contact from "./contact.astro";
+
 const LOCATIONALL = `
 query locationall {
   locationpost (first: 3) {
@@ -34,8 +35,6 @@ query locationall {
 }
 `;
 
-const postdata = await queryWordPress(LOCATIONALL);
-const postrespons = postdata?.locationpost?.nodes || [];
 const HOMEPAGE = `
 query homepagedata {
   page(id: "/", idType: URI) {
@@ -50,6 +49,7 @@ query homepagedata {
     homepage {
       imageWaranty
       imageReview
+      
       slidingText
       whatWeDoContent
       whyChooseContent
@@ -75,6 +75,16 @@ query homepagedata {
           mediaItemUrl
         }
       }
+        localExpertisContents
+        expertiseGrids{
+        expertiseIcon{
+         node{
+           mediaItemUrl
+         }
+        }
+         expertiseData
+        }
+        recentProjectsContent
       imageContent
       howWorkContent
       howWorkGrid {
@@ -84,6 +94,7 @@ query homepagedata {
       faqHomeContents
       finalCtaData
       serviceAreaContent
+      testimonialContents
       allAreas{
         areaPageLinks{
           url
@@ -114,9 +125,31 @@ query homepagedata {
 }
 `;
 
-const pagedata = await queryWordPress(HOMEPAGE);
+// PERF: these two queries don't depend on each other, so fire them together
+// instead of awaiting one after the other. This is usually the single
+// biggest win on a WordPress-backed Astro page — you were paying for two
+// sequential network round-trips on every request/build.
+const [postdata, pagedata] = await Promise.all([
+    queryWordPress(LOCATIONALL),
+    queryWordPress(HOMEPAGE),
+]);
+
+const postrespons = postdata?.locationpost?.nodes || [];
 const responsedata = pagedata?.page || {};
 const servicesData = pagedata?.services?.nodes || [];
+
+// PERF: build a srcset from the WP-generated image sizes you were already
+// fetching (mediaDetails.sizes) but never using. Without this, every
+// gallery card was downloading the full-resolution original even though
+// it renders at 434x289 — on a typical WP media library that's often
+// 3-10x more bytes than needed, on every single card, on every visit.
+function buildSrcSet(sizes) {
+    if (!sizes || !sizes.length) return undefined;
+    return sizes
+        .filter((s) => s?.sourceUrl && s?.width)
+        .map((s) => `${s.sourceUrl} ${s.width}w`)
+        .join(", ");
+}
 ---
 
 <!doctype html>
@@ -233,7 +266,35 @@ const servicesData = pagedata?.services?.nodes || [];
                     </div>
                 </div>
             </section>
-
+            <section class="section weather-section" id="nh-weather">
+                <div class="container">
+                    <div
+                        class="sec-header"
+                        set:html={responsedata?.homepage
+                            ?.localExpertisContents || "error"}
+                    />
+                    <div class="weather-grid">
+                        {
+                            responsedata?.homepage?.expertiseGrids.map((items)=>(
+                                <div class="weather-card reveal">
+                            <div class="weather-icon">
+                                <img
+                                    src={items?.expertiseIcon?.node?.mediaItemUrl || "error"}
+                                    alt=""
+                                    height="23"
+                                    width="23"
+                                    loading="lazy"
+                                />
+                            </div>
+                             <Fragment set:html={items?.expertiseData || "error"}/>
+                        </div>
+                            ))
+                        }
+                        
+                        
+                    </div>
+                </div>
+            </section>
             <!-- Why Choose Us (Unique Layout) -->
             <section class="section" id="why-choose-us">
                 <div class="container">
@@ -342,7 +403,7 @@ const servicesData = pagedata?.services?.nodes || [];
                 <div class="container">
                     <div
                         class="sec-header"
-                        set:html={responsedata?.homepage?.whyVincenzoContent ||
+                        set:html={responsedata?.homepage?.howWorkContent ||
                             "error"}
                     />
                     <div class="process-grid">
@@ -371,56 +432,61 @@ const servicesData = pagedata?.services?.nodes || [];
             <!-- Gallery -->
             <section class="section" id="gallery">
                 <div class="container">
-                    <div class="sec-header">
-                        <span class="eyebrow">Recent Work</span>
-                        <h2 class="sec-head">
-                            Real roofs, <span class="accent"
-                                >across the state.</span
-                            >
-                        </h2>
-                    </div>
+                    <div
+                        class="sec-header"
+                        set:html={responsedata?.homepage
+                            ?.recentProjectsContent || "error"}
+                    />
                     <div class="gallery-masonry">
                         {
-                            postrespons?.map((postitems) => (
-                                <a
-                                    href={`/location/${postitems.slug}`}
-                                    class="photo-frame"
-                                    data-cat="residential"
-                                >
-                                    <img
-                                        src={
-                                            postitems?.featuredImage?.node
-                                                ?.sourceUrl ||
-                                            "/placeholder.jpg"
-                                        }
-                                        alt={postitems?.title}
-                                        width="434"
-                                        height="289"
-                                        loading="lazy"
-                                        decoding="async"
-                                    />
-                                    <div class="g-cap">{postitems?.title}</div>
-                                </a>
-                            ))
+                            postrespons?.map((postitems) => {
+                                const sizes =
+                                    postitems?.featuredImage?.node
+                                        ?.mediaDetails?.sizes;
+                                const srcset = buildSrcSet(sizes);
+                                return (
+                                    <a
+                                        href={`/location/${postitems.slug}`}
+                                        class="photo-frame"
+                                        data-cat="residential"
+                                    >
+                                        <img
+                                            src={
+                                                postitems?.featuredImage?.node
+                                                    ?.sourceUrl ||
+                                                "/placeholder.jpg"
+                                            }
+                                            srcset={srcset}
+                                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 434px"
+                                            alt={postitems?.title}
+                                            width="434"
+                                            height="289"
+                                            loading="lazy"
+                                            decoding="async"
+                                        />
+                                        <div class="g-cap">
+                                            {postitems?.title}
+                                        </div>
+                                    </a>
+                                );
+                            })
                         }
                     </div>
-                    <p class="note">
+                    <!-- <p class="note">
                         Illustrative placeholders — swap in real project
                         photography before launch.
-                    </p>
+                    </p> -->
                 </div>
             </section>
 
             <!-- Testimonials -->
             <section class="section testi">
                 <div class="container">
-                    <div class="sec-header">
-                        <span class="eyebrow">Reviews</span>
-                        <h2 class="sec-head">What NH homeowners say.</h2>
-                        <a class="svc-arrow" href="/gutter-installation/"
-                            >View All testimonials</a
-                        >
-                    </div>
+                    <div
+                        class="sec-header"
+                        set:html={responsedata?.homepage?.testimonialContents ||
+                            "error"}
+                    />
                     <Testimonials />
                     <p class="note">
                         Placeholder testimonials for layout — replace with
@@ -532,7 +598,7 @@ const servicesData = pagedata?.services?.nodes || [];
                 <div class="container">
                     <div
                         class="sec-header"
-                        style="text-align:center;"
+                        style="text-align:center; margin:0 auto 40px;"
                         set:html={responsedata?.homepage?.faqHomeContents ||
                             "error"}
                     />

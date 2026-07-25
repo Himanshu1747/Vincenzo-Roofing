@@ -122,8 +122,7 @@ function cleanExcerpt(excerpt: string) {
 					<h1>
 						{post.title}
 					</h1>
-					<Fragment  set:html={post.excerpt}/>
-					
+					<Fragment set:html={post.excerpt} />
 				</div>
 			</section>
 
@@ -151,7 +150,6 @@ function cleanExcerpt(excerpt: string) {
 					</div>
 
 					<!-- Author Bio Box -->
-					
 				</article>
 
 				<!-- Sidebar -->
@@ -198,7 +196,7 @@ function cleanExcerpt(excerpt: string) {
 			</div>
 
 			<!-- Related Articles Grid Section -->
-			{
+			<!-- {
 				relatedPosts.length > 0 && (
 					<section class="related-section">
 						<div class="container">
@@ -244,7 +242,7 @@ function cleanExcerpt(excerpt: string) {
 						</div>
 					</section>
 				)
-			}
+			} -->
 		</main>
 
 		<Footer />
@@ -325,6 +323,7 @@ function cleanExcerpt(excerpt: string) {
 			/* Article Grid Layout & Body Typography */
 			.article-layout {
 				display: grid;
+				align-items: start;
 				grid-template-columns: 1fr 340px;
 				gap: 52px;
 				padding: 60px 15px 80px;
@@ -471,6 +470,8 @@ function cleanExcerpt(excerpt: string) {
 				display: flex;
 				flex-direction: column;
 				gap: 32px;
+				position: sticky;
+				top: 10%;
 			}
 
 			.sidebar-widget {
@@ -617,6 +618,9 @@ function cleanExcerpt(excerpt: string) {
 				}
 				.related-grid {
 					grid-template-columns: repeat(2, 1fr);
+				}
+				.sidebar {
+					position: static;
 				}
 			}
 
