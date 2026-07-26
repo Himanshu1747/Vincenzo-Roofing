@@ -511,7 +511,21 @@ nav.primary a:hover {
   position: relative;
   z-index: 200;
 }
-
+.hero-trust span {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #9CC0FF;
+    letter-spacing: .04em;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+.hero-trust span::before {
+    content: "✓";
+    color: var(--blue-soft);
+    font-weight: 700;
+}
 .mobile-panel {
   position: fixed;
   top: 0;

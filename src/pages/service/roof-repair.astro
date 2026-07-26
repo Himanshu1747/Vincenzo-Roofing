@@ -1,0 +1,1279 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import { queryWordPress } from "../../lib/wordpress";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    </head>
+    <body>
+        <Header />
+
+        <main id="top">
+            <section class="page-hero">
+                <div class="container">
+                    <div class="breadcrumb">
+                        <a href="../index.html">Home</a>
+                        <span>/</span>
+                        <span style="color:#fff;">About</span>
+                    </div>
+                    <h1 class="fade-up">Roof Repair in <em
+                            style="font-style:normal;color:#9CC0FF;"
+                            >New Hampshire</em
+                        >
+                    </h1>
+                    <p class="lede-page fade-up">Most roofs do not need replacing — they need one thing fixed properly. We find where the water is actually getting in, repair it so it holds, and tell you honestly if a repair is not the right call.</p>
+                    <div class="hero-ctas">
+                        <a href="/contact/" class="btn btn-blue"
+                            >Get a Free Estimate</a
+                        >
+                        <a href="tel:+16035027080" class="btn btn-ghost-w"
+                            >Call (603) 502-7080</a
+                        >
+                    </div>
+                </div>
+            </section>
+         <section class="section">
+    <div class="container narrow">
+      <span class="eyebrow">What We Do</span>
+      <h2>Repairs That Fix the Cause, Not the Symptom</h2>
+      <p class="lead">Water rarely enters a roof where the stain appears on your ceiling. It travels along rafters and
+        sheathing before it drops, sometimes several feet from the actual failure.</p>
+      <p>That is why patching the visible spot so often fails. We trace the leak back to its source first — the lifted
+        flashing, the split boot, the nail that backed out — and repair that. It takes longer than slapping sealant on a
+        ceiling stain, and it is the reason our repairs hold.</p>
+      <p>Vincenzo's Roofing repairs residential and commercial roofs across New Hampshire from our base in Seabrook.
+        Every repair is quoted in writing before we start, and warrantied in writing when we finish.</p>
+    </div>
+  </section>
+
+  <!-- ============ COMMON PROBLEMS ============ -->
+  <section class="section alt">
+    <div class="container">
+      <div class="narrow" style="text-align:center;margin-bottom:36px">
+        <span class="eyebrow">What We Fix</span>
+        <h2>Common Roof Problems We Repair</h2>
+        <p class="lead">Most of what we get called out for falls into one of these. If yours is not listed, it is still
+          worth a call — we have seen a lot of roofs.</p>
+      </div>
+      <div class="probs">
+        <div class="prob"><span class="n">01</span>
+          <div>
+            <h3>Roof leaks</h3>
+            <p>Ceiling stains, damp attic insulation, or drips during heavy rain. We trace it back to the entry point
+              rather than sealing where it shows.</p>
+          </div>
+        </div>
+        <div class="prob"><span class="n">02</span>
+          <div>
+            <h3>Failed flashing</h3>
+            <p>Chimneys, skylights, walls, and valleys. Flashing is where most roofs actually fail, and it is the most
+              commonly botched repair.</p>
+          </div>
+        </div>
+        <div class="prob"><span class="n">03</span>
+          <div>
+            <h3>Missing or blown-off shingles</h3>
+            <p>Wind damage leaves the underlayment exposed. Left alone through one New Hampshire winter it becomes a
+              much larger job.</p>
+          </div>
+        </div>
+        <div class="prob"><span class="n">04</span>
+          <div>
+            <h3>Cracked pipe boots</h3>
+            <p>The rubber collar around plumbing vents dries and splits after about a decade. A cheap part, and a very
+              common leak source.</p>
+          </div>
+        </div>
+        <div class="prob"><span class="n">05</span>
+          <div>
+            <h3>Ice dam damage</h3>
+            <p>Meltwater backing up under shingles lifts and loosens them. We repair the damage and address the
+              ventilation causing it.</p>
+          </div>
+        </div>
+        <div class="prob"><span class="n">06</span>
+          <div>
+            <h3>Storm and impact damage</h3>
+            <p>Fallen limbs, hail bruising, and wind-lifted sections — documented properly if you are filing an
+              insurance claim.</p>
+          </div>
+        </div>
+        <div class="prob"><span class="n">07</span>
+          <div>
+            <h3>Sagging or rotted decking</h3>
+            <p>Soft spots underfoot mean water has reached the sheathing. We cut out the damaged section and rebuild it
+              properly.</p>
+          </div>
+        </div>
+        <div class="prob"><span class="n">08</span>
+          <div>
+            <h3>Ridge vent and ventilation issues</h3>
+            <p>Poor airflow cooks shingles from beneath and drives ice dams in winter. Often the real cause behind
+              repeat problems.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REPAIR VS REPLACE ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="narrow" style="text-align:center;margin-bottom:36px">
+        <span class="eyebrow">Honest Advice</span>
+        <h2>Should You Repair or Replace?</h2>
+        <p class="lead">We will tell you when a repair is throwing good money after bad — and equally, when your roof
+          has years left and a salesman is overselling you.</p>
+      </div>
+      <div class="compare">
+        <div class="col repair">
+          <div class="head">A repair usually makes sense when…</div>
+          <ul>
+            <li>The roof is under fifteen years old</li>
+            <li>Damage is isolated to one area</li>
+            <li>There is a single, traceable leak</li>
+            <li>Shingles are otherwise flat and intact</li>
+            <li>The problem is flashing, not the field of the roof</li>
+            <li>Storm damage hit one section only</li>
+          </ul>
+        </div>
+        <div class="col replace">
+          <div class="head">Replacement is the better spend when…</div>
+          <ul>
+            <li>The roof is past twenty years</li>
+            <li>Leaks are appearing in several separate places</li>
+            <li>Granules are filling the gutters</li>
+            <li>Shingles are curling or cracking across the roof</li>
+            <li>The deck is sagging or spongy underfoot</li>
+            <li>You have already repaired it two or three times</li>
+          </ul>
+        </div>
+      </div>
+      <p style="text-align:center;margin-top:30px;color:var(--grey)">Still unsure? A <a href="/service/roof-inspection/"
+          style="color:var(--blue);font-weight:500">free roof inspection</a> gives you a written answer — or read more
+        about <a href="/service/roof-replacement/" style="color:var(--blue);font-weight:500">full roof replacement</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ WHAT'S INCLUDED ============ -->
+  <section class="section alt">
+    <div class="container narrow">
+      <span class="eyebrow">Scope of Work</span>
+      <h2>What's Included in Every Repair</h2>
+      <p>Whether the job is a single pipe boot or a rebuilt chimney flashing, the same standards apply.</p>
+      <ul class="checks">
+        <li>Full roof inspection, not just the reported area</li>
+        <li>Leak traced to its actual source before work starts</li>
+        <li>Photo documentation of the problem and the fix</li>
+        <li>Written quote before any work begins</li>
+        <li>Matching materials wherever the existing roof allows</li>
+        <li>Proper flashing and sealing, not surface patching</li>
+        <li>Magnetic nail sweep and full debris removal</li>
+        <li>Written warranty on the repaired area</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ COST ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="cost-band">
+        <span class="eyebrow" style="color:#9CC0FF">Straight Pricing</span>
+        <h2>How Much Does a Roof Repair Cost in New Hampshire?</h2>
+        <div class="cost-figure">$350 – $2,500</div>
+        <p>That covers the large majority of repairs we do. A few blown-off shingles or a cracked pipe boot sits near
+          the bottom. A rebuilt chimney flashing, a repaired valley, or replacing water-damaged decking sits at the top.
+          You get the number in writing before we start.</p>
+        <ul class="cost-drivers">
+          <li><b>What failed —</b> a pipe boot is a different job from a chimney flashing</li>
+          <li><b>Access and pitch —</b> steep or hard-to-reach roofs take longer to work safely</li>
+          <li><b>Hidden damage —</b> rotted decking found underneath adds material and labour</li>
+          <li><b>Material matching —</b> discontinued shingles can be harder to source</li>
+          <li><b>Extent —</b> one area versus several spots across the roof</li>
+          <li><b>Urgency —</b> emergency and after-hours call-outs are priced separately</li>
+        </ul>
+        <div style="margin-top:30px"><a href="/contact/" class="btn btn-blue"
+            style="background:#fff;color:var(--blue);box-shadow:none">Get a Written Repair Quote</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROCESS ============ -->
+  <section class="section alt">
+    <div class="container">
+      <div class="narrow" style="text-align:center;margin-bottom:36px">
+        <span class="eyebrow">How It Works</span>
+        <h2>Your Roof Repair, Step by Step</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="n">Step 01</span>
+          <h3>Free inspection</h3>
+          <p>We get on the roof, find the actual source, and photograph everything so you can see it for yourself.</p>
+        </div>
+        <div class="step"><span class="n">Step 02</span>
+          <h3>Written quote</h3>
+          <p>A clear price for the repair, plus an honest opinion on whether repair or replacement is the better spend.
+          </p>
+        </div>
+        <div class="step"><span class="n">Step 03</span>
+          <h3>The repair</h3>
+          <p>Most repairs are done in a single visit. We fix the cause, not the symptom, and clean the site before
+            leaving.</p>
+        </div>
+        <div class="step"><span class="n">Step 04</span>
+          <h3>Warranty &amp; proof</h3>
+          <p>You get after photos and a written warranty on the repaired area. If that leak returns, so do we.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NH WEATHER ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="narrow" style="margin-bottom:36px">
+        <span class="eyebrow">Local Expertise</span>
+        <h2>Why New Hampshire Roofs Fail</h2>
+        <p class="lead">The repairs we get called out for here are not the ones a roofer in a milder climate sees.
+          Knowing the local failure patterns is half of finding the leak.</p>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Ice dams at the eaves</h3>
+          <p>Warm attic air melts snow mid-roof; it refreezes at the cold eave and backs water up under the shingles.
+            The repair is only half the job — the ventilation causing it needs addressing too.</p>
+        </div>
+        <div class="card">
+          <h3>Salt corrosion on the Seacoast</h3>
+          <p>Near the water, salt eats through fasteners, flashing, and drip edge years earlier than inland. We see
+            failures in Seabrook and Hampton that simply do not happen in Concord.</p>
+        </div>
+        <div class="card">
+          <h3>Wind-lifted shingles</h3>
+          <p>Exposed coastal and hilltop properties lose shingles to gusts, especially where the original nailing
+            pattern was rushed. Repairs here need the correct fastener placement, not just replacement tabs.</p>
+        </div>
+        <div class="card">
+          <h3>Freeze-thaw on flashing</h3>
+          <p>Repeated expansion and contraction works sealant loose around chimneys and skylights. It is the most common
+            leak we trace in older New Hampshire homes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RECENT WORK ============ -->
+  <section class="section alt">
+    <div class="container">
+      <div class="narrow" style="text-align:center;margin-bottom:36px">
+        <span class="eyebrow">Recent Repairs</span>
+        <h2>Repairs Across New Hampshire</h2>
+        <p class="lead">Every photo below is our own crew's work. Replace these placeholders with real project images
+          before launch.</p>
+      </div>
+      <div class="gal">
+        <figure>
+          <!-- IMAGE SLOT: <img src="/images/roof-repair-seabrook-nh.jpg" alt="Repaired chimney flashing on a home in Seabrook NH" width="800" height="600" loading="lazy"> -->
+          <div class="ph">REPLACE WITH REAL PROJECT PHOTO</div>
+          <figcaption><b>Seabrook, NH</b>Chimney flashing rebuilt after a persistent leak</figcaption>
+        </figure>
+        <figure>
+          <!-- IMAGE SLOT: <img src="/images/roof-repair-hampton-nh.jpg" alt="Wind damaged shingles replaced on a Hampton NH home" width="800" height="600" loading="lazy"> -->
+          <div class="ph">REPLACE WITH REAL PROJECT PHOTO</div>
+          <figcaption><b>Hampton, NH</b>Wind-lifted shingle section replaced and resealed</figcaption>
+        </figure>
+        <figure>
+          <!-- IMAGE SLOT: <img src="/images/roof-repair-exeter-nh.jpg" alt="Ice dam damage repaired at the eaves of a home in Exeter NH" width="800" height="600" loading="lazy"> -->
+          <div class="ph">REPLACE WITH REAL PROJECT PHOTO</div>
+          <figcaption><b>Exeter, NH</b>Ice dam damage repaired with ventilation corrected</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section">
+    <div class="container narrow">
+      <div style="text-align:center;margin-bottom:36px">
+        <span class="eyebrow">FAQ</span>
+        <h2>Roof Repair Questions</h2>
+      </div>
+
+      <div class="faq-item open">
+        <h3><button class="faq-q">How much does a roof repair cost in New Hampshire?<span class="p"></span></button>
+        </h3>
+        <div class="faq-a">
+          <p>Most roof repairs in New Hampshire fall between $350 and $2,500. A handful of blown-off shingles or a
+            single pipe boot sits at the low end. Rebuilding a chimney flashing, repairing a valley, or replacing
+            water-damaged decking sits at the upper end. We quote the repair in writing before starting.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <h3><button class="faq-q">How quickly can you come out?<span class="p"></span></button></h3>
+        <div class="faq-a">
+          <p>Most non-urgent repairs are inspected within a few days and completed within the week. Seacoast towns near
+            our Seabrook base are often same-week. Active leaks and storm damage jump the queue and are handled through
+            our 24/7 emergency response with same-day tarping.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <h3><button class="faq-q">Should I repair my roof or replace it?<span class="p"></span></button></h3>
+        <div class="faq-a">
+          <p>Isolated damage on a roof under fifteen years old is almost always worth repairing. Widespread granule
+            loss, leaks in several separate places, or a roof past twenty years usually means replacement is the better
+            spend. Our free inspection gives you that answer in writing, including when the answer is that your roof
+            still has years left.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <h3><button class="faq-q">Will my insurance cover a roof repair?<span class="p"></span></button></h3>
+        <div class="faq-a">
+          <p>Sudden damage from wind, hail, or a fallen limb is usually covered. Gradual wear, age, and deferred
+            maintenance generally are not. We photograph everything, document the cause, and meet your adjuster on site
+            so the claim is assessed on evidence rather than guesswork.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <h3><button class="faq-q">Can you repair a roof in winter?<span class="p"></span></button></h3>
+        <div class="faq-a">
+          <p>Yes. We repair roofs year-round in New Hampshire. Cold weather changes how shingles seal, so some permanent
+            repairs are staged: we make the roof watertight immediately, then complete the finish work once temperatures
+            allow. We will explain clearly which applies to your repair.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <h3><button class="faq-q">Do you guarantee your roof repairs?<span class="p"></span></button></h3>
+        <div class="faq-a">
+          <p>Yes. Every repair is warrantied in writing. If the same leak returns in the area we repaired, we come back
+            and make it right at no charge. That is also why we insist on finding the actual source of the water rather
+            than patching where the stain appears.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICE AREAS ============ -->
+  <section class="section alt">
+    <div class="container">
+      <div class="narrow" style="margin-bottom:10px">
+        <span class="eyebrow">Where We Work</span>
+        <h2>Roof Repair Across New Hampshire</h2>
+        <p class="lead">We are based in Seabrook, so Seacoast towns often see us the same week. From there our crews run
+          statewide.</p>
+      </div>
+
+      <div class="tier-label">Seacoast — fastest response</div>
+      <div class="chips">
+        <!-- Switch each <span> to <a href="/location/seabrook-nh/"> once that city page is live -->
+        <span class="chip pri">Seabrook</span><span class="chip pri">Hampton</span><span class="chip pri">Hampton
+          Falls</span>
+        <span class="chip pri">North Hampton</span><span class="chip pri">Rye</span><span class="chip pri">Exeter</span>
+        <span class="chip pri">Stratham</span><span class="chip pri">Portsmouth</span><span
+          class="chip pri">Dover</span><span class="chip pri">Rochester</span>
+      </div>
+
+      <div class="tier-label">Statewide</div>
+      <div class="chips">
+        <span class="chip">Manchester</span><span class="chip">Nashua</span><span class="chip">Concord</span>
+        <span class="chip">Derry</span><span class="chip">Londonderry</span><span class="chip">Salem</span>
+        <span class="chip">Bedford</span><span class="chip">Merrimack</span><span class="chip">Hudson</span><span
+          class="chip">Keene</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RELATED ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="narrow" style="text-align:center;margin-bottom:36px">
+        <span class="eyebrow">Related Services</span>
+        <h2>Other Roofing Services</h2>
+      </div>
+      <div class="rel">
+        <a href="/service/roof-replacement/">
+          <h3>Roof Replacement</h3>
+          <p>Full tear-off and rebuild when repairs stop being worth the money.</p><span class="go">View replacement
+            →</span>
+        </a>
+        <a href="/service/roof-inspection/">
+          <h3>Roof Inspection</h3>
+          <p>Free, photo-documented condition report with a written answer.</p><span class="go">Book an inspection
+            →</span>
+        </a>
+        <a href="/service/storm-emergency-response/">
+          <h3>Storm &amp; Emergency</h3>
+          <p>24/7 response with same-day tarping and insurance documentation.</p><span class="go">Get emergency help
+            →</span>
+        </a>
+        <a href="/service/gutter-installation-repair/">
+          <h3>Gutters</h3>
+          <p>Seamless gutters sized to carry a New Hampshire spring melt.</p><span class="go">View gutters →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+        <h2>Get Your Roof Looked At — Free</h2>
+        <p>We find the source, quote the repair in writing, and tell you honestly if a repair is not the right call.
+          Most homeowners hear back within one business hour.</p>
+        <div class="cta-btns">
+          <a href="/contact/" class="btn btn-blue" style="background:#fff;color:var(--blue);box-shadow:none">Book a Free
+            Inspection</a>
+          <a href="tel:+16035027080" class="btn btn-ghost-w">Call (603) 502-7080</a>
+        </div>
+      </div>
+    </div>
+  </section>
+        </main>
+
+        <Footer />
+        <style>
+            
+            h1,
+            h2,
+            h3,
+            h4 {
+                font-family: "Montserrat", sans-serif;
+                font-weight: 700;
+                /* color: var(--ink); */
+                letter-spacing: -0.02em;
+                line-height: 1.2;
+            }
+
+            h2 {
+                font-size: clamp(25px, 3.4vw, 34px);
+                margin-bottom: 18px;
+            }
+
+            h3 {
+                font-size: 19px;
+                font-weight: 600;
+                margin-bottom: 8px;
+            }
+
+            p {
+                margin-bottom: 16px;
+            }
+
+            p:last-child {
+                margin-bottom: 0;
+            }
+
+            .section {
+                padding: 76px 0;
+            }
+
+            .eyebrow {
+                font-family: "Montserrat", sans-serif;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                font-weight: 700;
+                font-size: 11.5px;
+                letter-spacing: 0.16em;
+                text-transform: uppercase;
+                color: var(--blue);
+                margin-bottom: 16px;
+            }
+
+            .eyebrow::before {
+                content: "";
+                width: 7px;
+                height: 7px;
+                background: var(--blue);
+                clip-path: polygon(50% 0, 100% 100%, 0 100%);
+            }
+
+            .lead {
+                font-size: 17px;
+                color: var(--grey);
+            }
+
+            .btn {
+                font-family: "Montserrat", sans-serif;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 9px;
+                font-weight: 700;
+                font-size: 13.5px;
+                padding: 15px 27px;
+                border-radius: 100px;
+                min-height: 50px;
+                transition:
+                    transform 0.25s var(--ease),
+                    box-shadow 0.25s var(--ease);
+            }
+
+            .btn-blue {
+                background: linear-gradient(
+                    180deg,
+                    var(--blue-bright),
+                    var(--blue)
+                );
+                color: #fff;
+                box-shadow: var(--sh-blue);
+            }
+
+            .btn-blue:hover {
+                transform: translateY(-2px);
+            }
+
+            .btn-ghost-w {
+                border: 1.5px solid rgba(255, 255, 255, 0.35);
+                color: #fff;
+            }
+
+            .btn-ghost-w:hover {
+                border-color: #fff;
+                background: rgba(255, 255, 255, 0.08);
+            }
+
+            /* Hero */
+            .hero {
+                background: linear-gradient(
+                    155deg,
+                    #061b3e,
+                    var(--deep) 45%,
+                    var(--deep-2)
+                );
+                color: #fff;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .hero::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(
+                    ellipse 60% 55% at 80% 10%,
+                    rgba(26, 95, 208, 0.5),
+                    transparent 62%
+                );
+            }
+
+            .hero-grid {
+                position: absolute;
+                inset: 0;
+                background-image:
+                    linear-gradient(
+                        rgba(255, 255, 255, 0.03) 1px,
+                        transparent 1px
+                    ),
+                    linear-gradient(
+                        90deg,
+                        rgba(255, 255, 255, 0.03) 1px,
+                        transparent 1px
+                    );
+                background-size: 56px 56px;
+                mask-image: radial-gradient(
+                    ellipse 90% 80% at 60% 20%,
+                    #000,
+                    transparent 78%
+                );
+            }
+
+            .hero-inner {
+                position: relative;
+                z-index: 2;
+                padding: 72px 0 76px;
+                max-width: 720px;
+            }
+
+            .hero h1 {
+                color: #fff;
+                font-size: clamp(30px, 4.4vw, 48px);
+                margin-bottom: 20px;
+                line-height: 1.14;
+            }
+
+            .hero p {
+                color: #c6d4ec;
+                font-size: 17px;
+                max-width: 600px;
+                margin-bottom: 32px;
+            }
+
+            .hero-ctas {
+                display: flex;
+                gap: 13px;
+                flex-wrap: wrap;
+                margin-bottom: 34px;
+            }
+
+            .hero-trust {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px 26px;
+                border-top: 1px solid rgba(255, 255, 255, 0.12);
+                padding-top: 24px;
+            }
+
+            .hero-trust span {
+                font-family: "Montserrat", sans-serif;
+                font-size: 12px;
+                font-weight: 600;
+                color: #9cc0ff;
+                letter-spacing: 0.04em;
+                display: flex;
+                align-items: center;
+                gap: 7px;
+            }
+
+            .hero-trust span::before {
+                content: "✓";
+                color: var(--blue-soft);
+                font-weight: 700;
+            }
+
+            /* Urgent banner */
+            .urgent {
+                background: var(--blue);
+                color: #fff;
+                padding: 18px 0;
+            }
+
+            .urgent .container {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 18px;
+                flex-wrap: wrap;
+            }
+
+            .urgent p {
+                margin: 0;
+                font-size: 15px;
+                font-weight: 500;
+            }
+
+            .urgent a {
+                font-family: "Montserrat", sans-serif;
+                font-weight: 700;
+                font-size: 13.5px;
+                background: #fff;
+                color: var(--blue);
+                padding: 12px 24px;
+                border-radius: 100px;
+                white-space: nowrap;
+            }
+
+            /* Breadcrumb */
+            .crumb {
+                background: var(--off);
+                border-bottom: 1px solid var(--line);
+                padding: 14px 0;
+                font-size: 13px;
+                color: var(--grey);
+            }
+
+            .crumb a:hover {
+                color: var(--blue);
+            }
+
+            .crumb span {
+                margin: 0 8px;
+                color: var(--grey-light);
+            }
+
+            .alt {
+                background: var(--off);
+            }
+
+            .grid-2 {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 22px;
+            }
+
+            .grid-3 {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 22px;
+            }
+
+            .card {
+                background: #fff;
+                border: 1px solid var(--line);
+                border-radius: var(--r-lg);
+                padding: 30px 26px;
+            }
+
+            .card.pale {
+                background: var(--blue-pale);
+                border-color: #c9daf5;
+            }
+
+            .card p {
+                color: var(--grey);
+                font-size: 14.5px;
+            }
+
+            /* Problems grid */
+            .probs {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 14px;
+                margin-top: 8px;
+            }
+
+            .prob {
+                display: flex;
+                gap: 14px;
+                padding: 20px 22px;
+                background: #fff;
+                border: 1px solid var(--line);
+                border-radius: var(--r-md);
+            }
+
+            .prob .n {
+                font-family: "Montserrat", sans-serif;
+                font-weight: 700;
+                font-size: 13px;
+                color: var(--blue);
+                flex-shrink: 0;
+                padding-top: 2px;
+            }
+
+            .prob h3 {
+                font-size: 16px;
+                margin-bottom: 4px;
+            }
+
+            .prob p {
+                font-size: 14px;
+                color: var(--grey);
+            }
+
+            .checks {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px 28px;
+                margin-top: 24px;
+            }
+
+            .checks li {
+                display: flex;
+                gap: 12px;
+                font-size: 15px;
+                align-items: flex-start;
+            }
+
+            .checks li::before {
+                content: "";
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background: var(--blue-pale);
+                flex-shrink: 0;
+                margin-top: 3px;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230D47A1' stroke-width='3'%3E%3Cpath d='M4 12l5 5L20 6'/%3E%3C/svg%3E");
+                background-size: 12px;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+
+            /* Cost */
+            .cost-band {
+                background: var(--deep);
+                color: #fff;
+                border-radius: var(--r-lg);
+                padding: 44px;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .cost-band::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(
+                    ellipse 55% 70% at 88% 15%,
+                    rgba(26, 95, 208, 0.45),
+                    transparent 62%
+                );
+            }
+
+            .cost-band > * {
+                position: relative;
+            }
+
+            .cost-band h2 {
+                color: #fff;
+            }
+
+            .cost-figure {
+                font-family: "Montserrat", sans-serif;
+                font-weight: 700;
+                font-size: clamp(34px, 5vw, 52px);
+                color: #9cc0ff;
+                line-height: 1.1;
+                margin: 6px 0 14px;
+                letter-spacing: -0.03em;
+            }
+
+            .cost-band p {
+                color: #c6d4ec;
+            }
+
+            .cost-drivers {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px 26px;
+                margin-top: 26px;
+                padding-top: 26px;
+                border-top: 1px solid rgba(255, 255, 255, 0.14);
+            }
+
+            .cost-drivers li {
+                font-size: 14.5px;
+                color: #c6d4ec;
+                display: flex;
+                gap: 11px;
+            }
+
+            .cost-drivers li b {
+                color: #fff;
+                font-weight: 500;
+            }
+
+            /* Steps */
+            .steps {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 18px;
+                margin-top: 8px;
+            }
+
+            .step {
+                background: #fff;
+                border: 1px solid var(--line);
+                border-radius: var(--r-md);
+                padding: 26px 22px;
+            }
+
+            .step .n {
+                font-family: "Montserrat", sans-serif;
+                font-size: 12px;
+                font-weight: 700;
+                color: var(--blue);
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                display: block;
+                margin-bottom: 26px;
+            }
+
+            .step h3 {
+                font-size: 16px;
+                margin-bottom: 6px;
+            }
+
+            .step p {
+                font-size: 13.5px;
+                color: var(--grey);
+            }
+
+            /* Repair vs replace table */
+            .compare {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 22px;
+                margin-top: 8px;
+            }
+
+            .compare .col {
+                border: 1px solid var(--line);
+                border-radius: var(--r-lg);
+                overflow: hidden;
+                background: #fff;
+            }
+
+            .compare .head {
+                padding: 22px 26px;
+                font-family: "Montserrat", sans-serif;
+                font-weight: 700;
+                font-size: 17px;
+            }
+
+            .compare .col.repair .head {
+                background: var(--blue-pale);
+                color: var(--blue);
+            }
+
+            .compare .col.replace .head {
+                background: var(--deep);
+                color: #fff;
+            }
+
+            .compare ul {
+                padding: 22px 26px;
+            }
+
+            .compare li {
+                font-size: 14.5px;
+                color: var(--grey);
+                padding: 9px 0 9px 22px;
+                position: relative;
+                border-bottom: 1px solid var(--line);
+            }
+
+            .compare li:last-child {
+                border-bottom: none;
+            }
+
+            .compare li::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 17px;
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: var(--blue-soft);
+            }
+
+            /* Gallery */
+            .gal {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+
+            .gal figure {
+                border: 1px solid var(--line);
+                border-radius: var(--r-lg);
+                overflow: hidden;
+                background: #fff;
+            }
+
+            .gal .ph {
+                aspect-ratio: 4/3;
+                background: linear-gradient(150deg, var(--deep), var(--deep-2));
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #4a7fd4;
+                font-size: 12px;
+                font-family: "Montserrat", sans-serif;
+                font-weight: 600;
+                letter-spacing: 0.08em;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .gal figcaption {
+                padding: 16px 20px;
+                font-size: 13.5px;
+                color: var(--grey);
+            }
+
+            .gal figcaption b {
+                display: block;
+                font-family: "Montserrat", sans-serif;
+                font-weight: 600;
+                font-size: 15px;
+                color: var(--ink);
+                margin-bottom: 2px;
+            }
+
+            /* FAQ */
+            .faq-item {
+                border: 1px solid var(--line);
+                border-radius: var(--r-md);
+                margin-bottom: 12px;
+                background: #fff;
+                overflow: hidden;
+            }
+
+            .faq-q {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 20px;
+                padding: 20px 24px;
+                text-align: left;
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-family: "Montserrat", sans-serif;
+                font-size: 16px;
+                font-weight: 600;
+                color: var(--ink);
+            }
+
+            .faq-q .p {
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                background: var(--blue-pale);
+                position: relative;
+                flex-shrink: 0;
+                transition:
+                    transform 0.28s var(--ease),
+                    background 0.28s;
+            }
+
+            .faq-q .p::before,
+            .faq-q .p::after {
+                content: "";
+                position: absolute;
+                background: var(--blue);
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                transition: background 0.28s;
+            }
+
+            .faq-q .p::before {
+                width: 11px;
+                height: 2px;
+            }
+
+            .faq-q .p::after {
+                width: 2px;
+                height: 11px;
+            }
+
+            .faq-item.open .p {
+                transform: rotate(45deg);
+                background: var(--blue);
+            }
+
+            .faq-item.open .p::before,
+            .faq-item.open .p::after {
+                background: #fff;
+            }
+
+            .faq-a {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.35s var(--ease);
+            }
+
+            .faq-item.open .faq-a {
+                max-height: 360px;
+            }
+
+            .faq-a p {
+                padding: 0 24px 22px;
+                color: var(--grey);
+                font-size: 14.5px;
+            }
+
+            /* Areas */
+            .chips {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 9px;
+                margin-top: 18px;
+            }
+
+            .chip {
+                font-family: "Montserrat", sans-serif;
+                font-size: 13px;
+                font-weight: 600;
+                padding: 10px 18px;
+                border-radius: 100px;
+                border: 1px solid var(--line);
+                background: #fff;
+                color: var(--ink);
+            }
+
+            .chip.pri {
+                background: var(--blue-pale);
+                border-color: #c9daf5;
+                color: var(--blue);
+            }
+
+            .tier-label {
+                font-family: "Montserrat", sans-serif;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--blue);
+                margin: 26px 0 0;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .tier-label::after {
+                content: "";
+                flex: 1;
+                height: 1px;
+                background: var(--line);
+            }
+
+            /* Related */
+            .rel {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 18px;
+            }
+
+            .rel a {
+                background: #fff;
+                border: 1px solid var(--line);
+                border-radius: var(--r-md);
+                padding: 24px 22px;
+                transition:
+                    transform 0.25s var(--ease),
+                    box-shadow 0.25s var(--ease);
+            }
+
+            .rel a:hover {
+                transform: translateY(-4px);
+                box-shadow: var(--sh-md);
+            }
+
+            .rel h3 {
+                font-size: 16px;
+                margin-bottom: 5px;
+            }
+
+            .rel p {
+                font-size: 13.5px;
+                color: var(--grey);
+            }
+
+            .rel .go {
+                font-family: "Montserrat", sans-serif;
+                font-size: 12.5px;
+                font-weight: 700;
+                color: var(--blue);
+                margin-top: 12px;
+                display: block;
+            }
+
+            /* CTA */
+            .cta {
+                background: linear-gradient(
+                    140deg,
+                    var(--blue-bright),
+                    var(--blue) 45%,
+                    #082a5c
+                );
+                color: #fff;
+                border-radius: 26px;
+                padding: 60px 48px;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .cta::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(
+                    ellipse 55% 70% at 85% 20%,
+                    rgba(255, 255, 255, 0.15),
+                    transparent 62%
+                );
+            }
+
+            .cta > * {
+                position: relative;
+            }
+
+            .cta h2 {
+                color: #fff;
+            }
+
+            .cta p {
+                color: rgba(255, 255, 255, 0.85);
+                max-width: 520px;
+                margin: 0 auto 28px;
+            }
+
+            .cta-btns {
+                display: flex;
+                gap: 13px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            @media (max-width: 900px) {
+                .grid-3,
+                .rel {
+                    grid-template-columns: 1fr 1fr;
+                }
+
+                .steps {
+                    grid-template-columns: 1fr 1fr;
+                }
+
+                .gal {
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
+
+            @media (max-width: 640px) {
+                .section {
+                    padding: 52px 0;
+                }
+
+                .container {
+                    padding: 0 20px;
+                }
+
+                .grid-2,
+                .grid-3,
+                .probs,
+                .checks,
+                .rel,
+                .steps,
+                .gal,
+                .cost-drivers,
+                .compare {
+                    grid-template-columns: 1fr;
+                }
+
+                .hero-inner {
+                    padding: 52px 0 56px;
+                }
+
+                .hero-ctas .btn {
+                    flex: 1 1 100%;
+                }
+
+                .cost-band {
+                    padding: 30px 24px;
+                }
+
+                .cta {
+                    padding: 44px 26px;
+                    border-radius: 20px;
+                }
+
+                .card {
+                    padding: 24px 22px;
+                }
+
+                .urgent .container {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+
+                .urgent a {
+                    width: 100%;
+                    text-align: center;
+                }
+            }
+        </style>
+    </body>
+</html>

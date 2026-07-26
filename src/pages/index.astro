@@ -79,10 +79,10 @@ query homepagedata {
         expertiseGrids{
         expertiseIcon{
          node{
-           mediaItemUrl
+            mediaItemUrl
          }
         }
-         expertiseData
+          expertiseData
         }
         recentProjectsContent
       imageContent
@@ -136,7 +136,31 @@ const [postdata, pagedata] = await Promise.all([
 
 const postrespons = postdata?.locationpost?.nodes || [];
 const responsedata = pagedata?.page || {};
-const servicesData = pagedata?.services?.nodes || [];
+const rawServices = pagedata?.services?.nodes || [];
+
+// Target custom ordering based on desired service sequence
+const desiredOrder = [
+  "roof-replacement",
+  "roof-repair",
+  "storm-emergency-response",
+  "roof-inspection",
+  "asphalt-shingle-roofing",
+  "metal-roofing",
+  "commercial-flat-roofing",
+  "siding-installation-replacement",
+  "gutters-siding",
+];
+
+// Sort nodes according to the custom array sequence above
+const servicesData = rawServices.sort((a, b) => {
+  const indexA = desiredOrder.indexOf(a.slug);
+  const indexB = desiredOrder.indexOf(b.slug);
+  
+  const rankA = indexA === -1 ? 999 : indexA;
+  const rankB = indexB === -1 ? 999 : indexB;
+  
+  return rankA - rankB;
+});
 
 // PERF: build a srcset from the WP-generated image sizes you were already
 // fetching (mediaDetails.sizes) but never using. Without this, every

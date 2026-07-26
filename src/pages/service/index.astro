@@ -43,9 +43,9 @@ query servicedata {
   page(id: "/service", idType: URI) {
     title
     content
-servicePage{
-  ctaContents
-}
+    servicePage {
+      ctaContents
+    }
   }
 }
 `;
@@ -58,8 +58,32 @@ const [pagedata, mainpag] = await Promise.all([
   queryWordPress(SERVIMAINPAGE),
 ]);
 
-const responsedata = pagedata?.services?.nodes || [];
+const rawServices = pagedata?.services?.nodes || [];
 const respopage = mainpag?.page;
+
+// Desired order by slug matching your required sequence:
+const desiredOrder = [
+  "roof-replacement",
+  "roof-repair",
+  "storm-emergency-response",
+  "roof-inspection",
+  "asphalt-shingle-roofing",
+  "metal-roofing",
+  "commercial-flat-roofing",
+  "siding-installation-replacement",
+  "gutters-siding",
+];
+
+// Sort nodes according to the custom array sequence above
+const responsedata = rawServices.sort((a, b) => {
+  const indexA = desiredOrder.indexOf(a.slug);
+  const indexB = desiredOrder.indexOf(b.slug);
+  
+  const rankA = indexA === -1 ? 999 : indexA;
+  const rankB = indexB === -1 ? 999 : indexB;
+  
+  return rankA - rankB;
+});
 ---
 
 <!doctype html>

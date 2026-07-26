@@ -1,0 +1,1655 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import { queryWordPress } from "../../lib/wordpress";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    </head>
+    <body>
+        <Header />
+
+        <main id="top">
+            <section class="page-hero">
+                <div class="container">
+                    <div class="breadcrumb">
+                        <a href="../index.html">Home</a>
+                        <span>/</span>
+                        <span style="color:#fff;">About</span>
+                    </div>
+                    <h1 class="fade-up">Metal Roofing in  <em
+                            style="font-style:normal;color:#9CC0FF;"
+                            >New Hampshire</em>
+                    </h1>
+                    <p class="lede-page fade-up">Standing-seam metal sheds snow before it becomes an ice dam and shrugs off coastal salt air that eats through lesser materials. Installed properly, it is the last roof most homeowners ever buy. </p>
+                    <div class="hero-ctas">
+        <a href="/contact/" class="btn btn-blue">Get a Free Estimate</a>
+        <a href="tel:+16035027080" class="btn btn-ghost-w">Call (603) 502-7080</a>
+      </div>
+                </div>
+            </section>
+            <section class="section">
+                <div class="container narrow">
+                    <span class="eyebrow">What We Do</span>
+                    <h2>A Roof That Outlives Two Asphalt Ones</h2>
+                    <p class="lead">
+                        Metal costs more up front. That is the honest starting
+                        point, and it is why most homeowners rule it out before
+                        they have done the arithmetic.
+                    </p>
+                    <p>
+                        A metal roof in New Hampshire typically lasts forty
+                        years or more. Architectural asphalt reaches the end of
+                        its service life somewhere around twenty-five. If you
+                        are staying in the house long term, you are choosing
+                        between buying one metal roof or buying two asphalt
+                        roofs — and the second one will cost considerably more
+                        than today's price.
+                    </p>
+                    <p>
+                        Beyond longevity, metal earns its place here for a
+                        specific local reason: it sheds snow. Smooth
+                        standing-seam panels let accumulation slide off before
+                        it can melt, run to the cold eave, and refreeze into the
+                        ice dams that cause so much winter damage across the
+                        state.
+                    </p>
+                    <p>
+                        Metal is also unforgiving of poor installation. Panel
+                        expansion, concealed clip placement, and flashing detail
+                        all have to be right, which is why our metal work is
+                        handled by crews trained specifically on these systems
+                        rather than shingle crews doing something unfamiliar.
+                    </p>
+                </div>
+            </section>
+
+            <!-- ============ METAL VS ASPHALT ============ -->
+            <section class="section alt">
+                <div class="container">
+                    <div
+                        class="narrow"
+                        style="text-align:center;margin-bottom:38px"
+                    >
+                        <span class="eyebrow">Comparison</span>
+                        <h2>Metal vs. Asphalt Shingles</h2>
+                        <p class="lead">
+                            The two materials that cover almost every New
+                            Hampshire home. Here is the honest side-by-side.
+                        </p>
+                    </div>
+                    <div class="cmp">
+                        <div class="cmp-row head">
+                            <div>&nbsp;</div>
+                            <div class="metal">Standing-seam metal</div>
+                            <div>Architectural asphalt</div>
+                        </div>
+                        <div class="cmp-row">
+                            <div class="lbl">Service life</div>
+                            <div class="metal">40–70 years</div>
+                            <div class="asph">20–25 years</div>
+                        </div>
+                        <div class="cmp-row">
+                            <div class="lbl">Up-front cost</div>
+                            <div class="metal">$18,000–$45,000</div>
+                            <div class="asph">$8,000–$22,000</div>
+                        </div>
+                        <div class="cmp-row">
+                            <div class="lbl">Snow shedding</div>
+                            <div class="metal">
+                                Excellent — sheds before ice dams form
+                            </div>
+                            <div class="asph">
+                                Poor — snow sits and melts in place
+                            </div>
+                        </div>
+                        <div class="cmp-row">
+                            <div class="lbl">Coastal salt air</div>
+                            <div class="metal">
+                                Strong with coastal-grade finish
+                            </div>
+                            <div class="asph">
+                                Moderate — fasteners corrode first
+                            </div>
+                        </div>
+                        <div class="cmp-row">
+                            <div class="lbl">Wind resistance</div>
+                            <div class="metal">
+                                Very high — concealed clip system
+                            </div>
+                            <div class="asph">
+                                Good with correct nailing and rating
+                            </div>
+                        </div>
+                        <div class="cmp-row">
+                            <div class="lbl">Maintenance</div>
+                            <div class="metal">
+                                Minimal — occasional fastener check
+                            </div>
+                            <div class="asph">
+                                Periodic repairs as shingles age
+                            </div>
+                        </div>
+                        <div class="cmp-row">
+                            <div class="lbl">Fire rating</div>
+                            <div class="metal">Non-combustible</div>
+                            <div class="asph">
+                                Class A when installed to spec
+                            </div>
+                        </div>
+                        <div class="cmp-row">
+                            <div class="lbl">Best suited to</div>
+                            <div class="metal">
+                                Long-term owners, exposed or coastal sites
+                            </div>
+                            <div class="asph">
+                                Shorter horizons, tighter budgets
+                            </div>
+                        </div>
+                    </div>
+                    <p
+                        style="text-align:center;margin-top:28px;color:var(--grey)"
+                    >
+                        Leaning asphalt? That is often the right call — see
+                        <a
+                            href="/service/asphalt-shingle-roofing/"
+                            style="color:var(--blue);font-weight:500"
+                            >asphalt shingle roofing</a
+                        > or read about <a
+                            href="/service/roof-replacement/"
+                            style="color:var(--blue);font-weight:500"
+                            >full roof replacement</a
+                        >.
+                    </p>
+                </div>
+            </section>
+
+            <!-- ============ SYSTEM TYPES ============ -->
+            <section class="section">
+                <div class="container">
+                    <div
+                        class="narrow"
+                        style="text-align:center;margin-bottom:38px"
+                    >
+                        <span class="eyebrow">Systems We Install</span>
+                        <h2>Types of Metal Roofing</h2>
+                        <p class="lead">
+                            Not all metal roofs are the same product. The panel
+                            profile matters as much as the material.
+                        </p>
+                    </div>
+                    <div class="sys">
+                        <div class="s">
+                            <div class="top">
+                                <span class="tag">Recommended</span>
+                                <h3>Standing seam</h3>
+                                <p>
+                                    Vertical panels joined by raised,
+                                    concealed-fastener seams
+                                </p>
+                            </div>
+                            <div class="body">
+                                <ul>
+                                    <li>
+                                        No exposed fasteners to loosen or leak
+                                        over time
+                                    </li>
+                                    <li>
+                                        Panels float on clips, allowing thermal
+                                        expansion
+                                    </li>
+                                    <li>
+                                        Smoothest profile — best snow shedding
+                                        of any system
+                                    </li>
+                                    <li>
+                                        Clean, architectural appearance on
+                                        modern and traditional homes
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="foot">
+                                <b>Service life:</b> 40–70 years
+                            </div>
+                        </div>
+                        <div class="s">
+                            <div class="top">
+                                <span class="tag">Traditional look</span>
+                                <h3>Metal shingles &amp; tiles</h3>
+                                <p>
+                                    Stamped panels that mimic slate, shake, or
+                                    shingle profiles
+                                </p>
+                            </div>
+                            <div class="body">
+                                <ul>
+                                    <li>
+                                        Metal durability with a conventional
+                                        roof appearance
+                                    </li>
+                                    <li>
+                                        Suits historic homes and neighbourhood
+                                        design guidelines
+                                    </li>
+                                    <li>
+                                        Lighter than the slate or tile it
+                                        imitates
+                                    </li>
+                                    <li>
+                                        Works well on complex rooflines with
+                                        many angles
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="foot">
+                                <b>Service life:</b> 40–50 years
+                            </div>
+                        </div>
+                        <div class="s">
+                            <div class="top">
+                                <span class="tag">Budget option</span>
+                                <h3>Exposed fastener panels</h3>
+                                <p>
+                                    Corrugated or ribbed panels screwed directly
+                                    through the face
+                                </p>
+                            </div>
+                            <div class="body">
+                                <ul>
+                                    <li>
+                                        Lowest installed cost of the metal
+                                        options
+                                    </li>
+                                    <li>
+                                        Well suited to barns, garages, and
+                                        outbuildings
+                                    </li>
+                                    <li>
+                                        Faster installation on simple, open roof
+                                        shapes
+                                    </li>
+                                    <li>
+                                        Gaskets need periodic checking as they
+                                        age
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="foot">
+                                <b>Service life:</b> 25–40 years
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============ BENEFITS ============ -->
+            <section class="section alt">
+                <div class="container">
+                    <div
+                        class="narrow"
+                        style="text-align:center;margin-bottom:36px"
+                    >
+                        <span class="eyebrow">Why Metal Here</span>
+                        <h2>What Metal Does Well in New Hampshire</h2>
+                    </div>
+                    <div class="ben">
+                        <div class="b">
+                            <span class="n">01</span>
+                            <div>
+                                <h3>Sheds snow before ice dams form</h3>
+                                <p>
+                                    Smooth panels release accumulation rather
+                                    than letting it melt, run to the cold eave,
+                                    and refreeze under the roof edge.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="b">
+                            <span class="n">02</span>
+                            <div>
+                                <h3>Holds up to coastal salt air</h3>
+                                <p>
+                                    With a coastal-grade coating system, metal
+                                    resists the salt corrosion that shortens
+                                    roof life across the Seacoast.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="b">
+                            <span class="n">03</span>
+                            <div>
+                                <h3>Very high wind resistance</h3>
+                                <p>
+                                    Concealed clips lock panels down along their
+                                    full length, with no individual tabs for
+                                    gusts to lift and peel back.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="b">
+                            <span class="n">04</span>
+                            <div>
+                                <h3>Reflects summer heat</h3>
+                                <p>
+                                    Reflective finishes cut attic heat gain,
+                                    which lowers cooling load and eases the
+                                    strain on upper-floor comfort.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="b">
+                            <span class="n">05</span>
+                            <div>
+                                <h3>Non-combustible</h3>
+                                <p>
+                                    Metal will not ignite from embers, and some
+                                    insurers offer a premium reduction for a
+                                    metal roof — worth asking yours.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="b">
+                            <span class="n">06</span>
+                            <div>
+                                <h3>Almost no maintenance</h3>
+                                <p>
+                                    Beyond an occasional fastener and sealant
+                                    check at penetrations, a standing-seam roof
+                                    asks very little of you.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============ MYTHS ============ -->
+            <section class="section">
+                <div class="container">
+                    <div
+                        class="narrow"
+                        style="text-align:center;margin-bottom:38px"
+                    >
+                        <span class="eyebrow">Straight Answers</span>
+                        <h2>Four Things People Get Wrong About Metal Roofs</h2>
+                        <p class="lead">
+                            These come up on nearly every estimate. Here is the
+                            accurate answer to each.
+                        </p>
+                    </div>
+                    <div class="grid-2">
+                        <div class="myth">
+                            <span class="m">The concern</span>
+                            <h3>"Metal roofs are loud in the rain."</h3>
+                            <span class="t">The reality</span>
+                            <p>
+                                The noise people remember is bare metal over an
+                                open barn. A residential metal roof sits on
+                                solid decking with underlayment, above insulated
+                                attic space. Rain sound is comparable to
+                                asphalt, and most homeowners notice no
+                                difference at all.
+                            </p>
+                        </div>
+                        <div class="myth">
+                            <span class="m">The concern</span>
+                            <h3>"Metal attracts lightning."</h3>
+                            <span class="t">The reality</span>
+                            <p>
+                                It does not. Metal neither attracts lightning
+                                nor makes a strike more likely. If lightning
+                                does hit, metal is the safer material — it is
+                                non-combustible and disperses the energy rather
+                                than igniting.
+                            </p>
+                        </div>
+                        <div class="myth">
+                            <span class="m">The concern</span>
+                            <h3>"It will dent in a hailstorm."</h3>
+                            <span class="t">The reality</span>
+                            <p>
+                                Standing-seam panels in a suitable gauge handle
+                                typical New Hampshire hail without functional
+                                damage. Very large hail can leave cosmetic
+                                dimples on lighter gauges, but watertightness is
+                                unaffected. Heavier gauge and textured finishes
+                                reduce visible marking.
+                            </p>
+                        </div>
+                        <div class="myth">
+                            <span class="m">The concern</span>
+                            <h3>"It will rust out."</h3>
+                            <span class="t">The reality</span>
+                            <p>
+                                Modern panels are galvanised or Galvalume-coated
+                                and finished with a baked paint system. Rust is
+                                a problem of bare or damaged steel. On the
+                                Seacoast we specify coastal-grade coatings and
+                                fasteners for exactly this reason.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============ SCOPE ============ -->
+            <section class="section alt">
+                <div class="container narrow">
+                    <span class="eyebrow">Scope of Work</span>
+                    <h2>What's Included in a Metal Roof Installation</h2>
+                    <p>
+                        Metal is far less forgiving of installation shortcuts
+                        than asphalt. Everything below is standard on our metal
+                        projects.
+                    </p>
+                    <ul class="checks">
+                        <li>
+                            Complete tear-off and deck inspection before panels
+                            go on
+                        </li>
+                        <li>Rotted or delaminated sheathing replaced</li>
+                        <li>
+                            High-temperature synthetic underlayment rated for
+                            metal
+                        </li>
+                        <li>
+                            Ice-and-water shield at eaves, valleys, and
+                            penetrations
+                        </li>
+                        <li>
+                            Panels cut and formed to your roof's exact
+                            dimensions
+                        </li>
+                        <li>
+                            Concealed clip system allowing thermal expansion
+                        </li>
+                        <li>
+                            Custom-bent flashing at walls, chimneys, and
+                            skylights
+                        </li>
+                        <li>
+                            Snow guards above entrances, walkways, and driveways
+                        </li>
+                        <li>Ridge venting integrated into the panel system</li>
+                        <li>
+                            Coastal-grade fasteners and finishes on Seacoast
+                            properties
+                        </li>
+                        <li>Daily magnetic cleanup and full debris removal</li>
+                        <li>
+                            Manufacturer finish warranty plus our workmanship
+                            warranty
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- ============ COST ============ -->
+            <section class="section">
+                <div class="container">
+                    <div class="cost-band">
+                        <span class="eyebrow" style="color:#9CC0FF"
+                            >Straight Pricing</span
+                        >
+                        <h2>
+                            How Much Does a Metal Roof Cost in New Hampshire?
+                        </h2>
+                        <div class="cost-figure">$18,000 – $45,000</div>
+                        <p>
+                            Roughly two to three times architectural asphalt,
+                            and we would rather you see that now than after an
+                            hour-long sales visit. Spread across a forty-year
+                            service life against asphalt's twenty-five, the cost
+                            per year of service usually lands lower — which is
+                            the number that actually matters if you are staying
+                            put.
+                        </p>
+                        <ul class="cost-drivers">
+                            <li>
+                                <b>Panel system —</b> standing seam, metal shingle,
+                                or exposed fastener
+                            </li>
+                            <li>
+                                <b>Gauge and finish —</b> heavier steel and coastal
+                                coatings cost more
+                            </li>
+                            <li>
+                                <b>Roof complexity —</b> dormers, valleys, and hips
+                                mean more custom flashing
+                            </li>
+                            <li>
+                                <b>Size and pitch —</b> square footage plus how steep
+                                it is to work safely
+                            </li>
+                            <li>
+                                <b>Tear-off —</b> removing and disposing of the existing
+                                roof
+                            </li>
+                            <li>
+                                <b>Snow guards —</b> placement above doors, walkways,
+                                and driveways
+                            </li>
+                        </ul>
+                        <div style="margin-top:30px">
+                            <a
+                                href="/contact/"
+                                class="btn btn-blue"
+                                style="background:#fff;color:var(--blue);box-shadow:none"
+                                >Get Your Itemized Estimate</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============ PROCESS ============ -->
+            <section class="section alt">
+                <div class="container">
+                    <div
+                        class="narrow"
+                        style="text-align:center;margin-bottom:36px"
+                    >
+                        <span class="eyebrow">How It Works</span>
+                        <h2>Your Metal Roof, Step by Step</h2>
+                    </div>
+                    <div class="steps">
+                        <div class="step">
+                            <span class="n">Step 01</span>
+                            <h3>Free inspection</h3>
+                            <p>
+                                We assess the roof, check the deck and
+                                structure, and talk through whether metal is
+                                genuinely the right call for your home.
+                            </p>
+                        </div>
+                        <div class="step">
+                            <span class="n">Step 02</span>
+                            <h3>Profile &amp; colour</h3>
+                            <p>
+                                You choose panel profile, gauge, and finish. On
+                                coastal jobs we recommend the coating system
+                                suited to salt exposure.
+                            </p>
+                        </div>
+                        <div class="step">
+                            <span class="n">Step 03</span>
+                            <h3>Written estimate</h3>
+                            <p>
+                                Itemized pricing with materials, labour, permit,
+                                and timeline. Panels are then ordered to your
+                                roof's measurements.
+                            </p>
+                        </div>
+                        <div class="step">
+                            <span class="n">Step 04</span>
+                            <h3>Tear-off &amp; install</h3>
+                            <p>
+                                Deck exposed and repaired, underlayment laid,
+                                then panels set with concealed clips and
+                                custom-bent flashing.
+                            </p>
+                        </div>
+                        <div class="step">
+                            <span class="n">Step 05</span>
+                            <h3>Final walkthrough</h3>
+                            <p>
+                                We walk the finished roof with you, confirm snow
+                                guard placement, and register your warranty
+                                before leaving.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============ NH WEATHER ============ -->
+            <section class="section">
+                <div class="container">
+                    <div class="narrow" style="margin-bottom:36px">
+                        <span class="eyebrow">Local Expertise</span>
+                        <h2>Specifying Metal for New Hampshire</h2>
+                        <p class="lead">
+                            The same panel performs very differently in Seabrook
+                            than it does in Keene. These are the details that
+                            decide whether a metal roof reaches forty years or
+                            thirty.
+                        </p>
+                    </div>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h3>Coastal coating systems</h3>
+                            <p>
+                                Within a few miles of the water, standard
+                                finishes and fasteners corrode early. On
+                                Seacoast homes we specify coastal-grade coatings
+                                and stainless or coated fasteners as standard,
+                                not as an upsell.
+                            </p>
+                        </div>
+                        <div class="card">
+                            <h3>Snow guards, placed deliberately</h3>
+                            <p>
+                                Metal sheds snow — which is the point, and also
+                                the hazard. Guards go above entrances, walkways,
+                                driveways, and anywhere a sudden release could
+                                damage landscaping or a parked car.
+                            </p>
+                        </div>
+                        <div class="card">
+                            <h3>Thermal movement</h3>
+                            <p>
+                                Panels expand and contract measurably between a
+                                February night and an August afternoon.
+                                Concealed clips let them move; fastening them
+                                rigidly is how you get oil-canning, stressed
+                                seams, and eventual leaks.
+                            </p>
+                        </div>
+                        <div class="card">
+                            <h3>Ventilation still matters</h3>
+                            <p>
+                                Metal reduces ice dams but does not replace a
+                                balanced attic. Ridge and intake venting stay
+                                part of the specification, because trapped warm
+                                air causes problems under any roofing material.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============ RECENT WORK ============ -->
+           
+
+          
+
+            <!-- ============ SERVICE AREAS ============ -->
+            <section class="section alt">
+                <div class="container">
+                    <div class="narrow" style="margin-bottom:10px">
+                        <span class="eyebrow">Where We Work</span>
+                        <h2>Metal Roofing Across New Hampshire</h2>
+                        <p class="lead">
+                            We are based in Seabrook, so Seacoast homes often
+                            see us fastest — and coastal properties are where
+                            metal's corrosion resistance matters most.
+                        </p>
+                    </div>
+
+                    <div class="tier-label">Seacoast — fastest response</div>
+                    <div class="chips">
+                        <!-- Switch each <span> to <a href="/location/seabrook-nh/"> once that city page is live -->
+                        <span class="chip pri">Seabrook</span><span
+                            class="chip pri">Hampton</span
+                        ><span class="chip pri">Hampton Falls</span>
+                        <span class="chip pri">North Hampton</span><span
+                            class="chip pri">Rye</span
+                        ><span class="chip pri">Exeter</span>
+                        <span class="chip pri">Stratham</span><span
+                            class="chip pri">Portsmouth</span
+                        ><span class="chip pri">Dover</span><span
+                            class="chip pri">Rochester</span
+                        >
+                    </div>
+
+                    <div class="tier-label">Statewide</div>
+                    <div class="chips">
+                        <span class="chip">Manchester</span><span class="chip"
+                            >Nashua</span
+                        ><span class="chip">Concord</span>
+                        <span class="chip">Derry</span><span class="chip"
+                            >Londonderry</span
+                        ><span class="chip">Salem</span>
+                        <span class="chip">Bedford</span><span class="chip"
+                            >Merrimack</span
+                        ><span class="chip">Hudson</span><span class="chip"
+                            >Keene</span
+                        >
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <Footer />
+        <style>
+            
+            h2 {
+                font-size: clamp(25px, 3.4vw, 34px);
+                margin-bottom: 18px;
+            }
+
+            h3 {
+                font-size: 19px;
+                font-weight: 600;
+                margin-bottom: 8px;
+            }
+
+            p {
+                margin-bottom: 16px;
+            }
+
+            p:last-child {
+                margin-bottom: 0;
+            }
+
+            .section {
+                padding: 76px 0;
+            }
+
+            .eyebrow {
+                font-family: "Montserrat", sans-serif;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                font-weight: 700;
+                font-size: 11.5px;
+                letter-spacing: 0.16em;
+                text-transform: uppercase;
+                color: var(--blue);
+                margin-bottom: 16px;
+            }
+
+            .eyebrow::before {
+                content: "";
+                width: 7px;
+                height: 7px;
+                background: var(--blue);
+                clip-path: polygon(50% 0, 100% 100%, 0 100%);
+            }
+
+            .lead {
+                font-size: 17px;
+                color: var(--grey);
+            }
+
+            .btn {
+                font-family: "Montserrat", sans-serif;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 9px;
+                font-weight: 700;
+                font-size: 13.5px;
+                padding: 15px 27px;
+                border-radius: 100px;
+                min-height: 50px;
+                transition:
+                    transform 0.25s var(--ease),
+                    box-shadow 0.25s var(--ease);
+            }
+
+            .btn-blue {
+                background: linear-gradient(
+                    180deg,
+                    var(--blue-bright),
+                    var(--blue)
+                );
+                color: #fff;
+                box-shadow: var(--sh-blue);
+            }
+
+            .btn-blue:hover {
+                transform: translateY(-2px);
+            }
+
+            .btn-ghost-w {
+                border: 1.5px solid rgba(255, 255, 255, 0.35);
+                color: #fff;
+            }
+
+            .btn-ghost-w:hover {
+                border-color: #fff;
+                background: rgba(255, 255, 255, 0.08);
+            }
+
+            .hero {
+                background: linear-gradient(
+                    155deg,
+                    #061b3e,
+                    var(--deep) 45%,
+                    var(--deep-2)
+                );
+                color: #fff;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .hero::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(
+                    ellipse 60% 55% at 80% 10%,
+                    rgba(26, 95, 208, 0.5),
+                    transparent 62%
+                );
+            }
+
+            .hero-grid {
+                position: absolute;
+                inset: 0;
+                background-image:
+                    linear-gradient(
+                        rgba(255, 255, 255, 0.03) 1px,
+                        transparent 1px
+                    ),
+                    linear-gradient(
+                        90deg,
+                        rgba(255, 255, 255, 0.03) 1px,
+                        transparent 1px
+                    );
+                background-size: 56px 56px;
+                mask-image: radial-gradient(
+                    ellipse 90% 80% at 60% 20%,
+                    #000,
+                    transparent 78%
+                );
+            }
+
+            .hero-inner {
+                position: relative;
+                z-index: 2;
+                padding: 72px 0 76px;
+                max-width: 720px;
+            }
+
+            .hero h1 {
+                color: #fff;
+                font-size: clamp(30px, 4.4vw, 48px);
+                margin-bottom: 20px;
+                line-height: 1.14;
+            }
+
+            .hero p {
+                color: #c6d4ec;
+                font-size: 17px;
+                max-width: 600px;
+                margin-bottom: 32px;
+            }
+
+            .hero-ctas {
+                display: flex;
+                gap: 13px;
+                flex-wrap: wrap;
+                margin-bottom: 34px;
+            }
+
+            .hero-trust {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px 26px;
+                border-top: 1px solid rgba(255, 255, 255, 0.12);
+                padding-top: 24px;
+            }
+
+            .hero-trust span {
+                font-family: "Montserrat", sans-serif;
+                font-size: 12px;
+                font-weight: 600;
+                color: #9cc0ff;
+                letter-spacing: 0.04em;
+                display: flex;
+                align-items: center;
+                gap: 7px;
+            }
+
+            .hero-trust span::before {
+                content: "✓";
+                color: var(--blue-soft);
+                font-weight: 700;
+            }
+
+            .crumb {
+                background: var(--off);
+                border-bottom: 1px solid var(--line);
+                padding: 14px 0;
+                font-size: 13px;
+                color: var(--grey);
+            }
+
+            .crumb a:hover {
+                color: var(--blue);
+            }
+
+            .crumb span {
+                margin: 0 8px;
+                color: var(--grey-light);
+            }
+
+            .alt {
+                background: var(--off);
+            }
+
+            .grid-2 {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 22px;
+            }
+
+            .grid-3 {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 22px;
+            }
+
+            .card {
+                background: #fff;
+                border: 1px solid var(--line);
+                border-radius: var(--r-lg);
+                padding: 30px 26px;
+            }
+
+            .card.pale {
+                background: var(--blue-pale);
+                border-color: #c9daf5;
+            }
+
+            .card p {
+                color: var(--grey);
+                font-size: 14.5px;
+            }
+
+            /* Comparison table */
+            .cmp {
+                border: 1px solid var(--line);
+                border-radius: var(--r-lg);
+                overflow: hidden;
+                background: #fff;
+            }
+
+            .cmp-row {
+                display: grid;
+                grid-template-columns: 1.1fr 1fr 1fr;
+                border-bottom: 1px solid var(--line);
+            }
+
+            .cmp-row:last-child {
+                border-bottom: none;
+            }
+
+            .cmp-row.head {
+                background: var(--deep);
+                color: #fff;
+            }
+
+            .cmp-row.head div {
+                font-family: "Montserrat", sans-serif;
+                font-weight: 700;
+                font-size: 14px;
+                padding: 18px 22px;
+            }
+
+            .cmp-row.head .metal {
+                background: var(--blue);
+                position: relative;
+            }
+
+            .cmp-row > div {
+                padding: 16px 22px;
+                font-size: 14.5px;
+                color: var(--grey);
+                border-right: 1px solid var(--line);
+                display: flex;
+                align-items: center;
+            }
+
+            .cmp-row > div:last-child {
+                border-right: none;
+            }
+
+            .cmp-row .lbl {
+                font-family: "Montserrat", sans-serif;
+                font-weight: 600;
+                color: var(--ink);
+                font-size: 14px;
+                background: var(--off);
+            }
+
+            .cmp-row .metal {
+                background: rgba(13, 71, 161, 0.04);
+                color: var(--ink);
+                font-weight: 500;
+            }
+
+            /* System types */
+            .sys {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 22px;
+            }
+
+            .sys .s {
+                background: #fff;
+                border: 1px solid var(--line);
+                border-radius: var(--r-lg);
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .sys .top {
+                padding: 24px 26px 20px;
+                border-bottom: 1px solid var(--line);
+            }
+
+            .sys .tag {
+                font-family: "Montserrat", sans-serif;
+                font-size: 10.5px;
+                font-weight: 700;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--blue);
+                background: var(--blue-pale);
+                padding: 5px 12px;
+                border-radius: 100px;
+                display: inline-block;
+                margin-bottom: 12px;
+            }
+
+            .sys h3 {
+                font-size: 19px;
+                margin-bottom: 6px;
+            }
+
+            .sys .top p {
+                font-size: 14px;
+                color: var(--grey);
+                margin: 0;
+            }
+
+            .sys .body {
+                padding: 22px 26px;
+                flex: 1;
+            }
+
+            .sys .body li {
+                font-size: 14px;
+                color: var(--grey);
+                padding: 7px 0 7px 20px;
+                position: relative;
+            }
+
+            .sys .body li::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 15px;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--blue-soft);
+            }
+
+            .sys .foot {
+                padding: 16px 26px;
+                background: var(--off);
+                font-size: 13px;
+                color: var(--grey);
+            }
+
+            .sys .foot b {
+                font-family: "Montserrat", sans-serif;
+                color: var(--ink);
+                font-weight: 600;
+            }
+
+            /* Myths */
+            .myth {
+                background: #fff;
+                border: 1px solid var(--line);
+                border-radius: var(--r-lg);
+                padding: 28px 26px;
+            }
+
+            .myth .m {
+                font-family: "Montserrat", sans-serif;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: #b04a4a;
+                margin-bottom: 10px;
+                display: block;
+            }
+
+            .myth h3 {
+                font-size: 17px;
+                margin-bottom: 12px;
+            }
+
+            .myth .t {
+                font-family: "Montserrat", sans-serif;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--blue);
+                margin-bottom: 8px;
+                display: block;
+                padding-top: 14px;
+                border-top: 1px solid var(--line);
+            }
+
+            .myth p {
+                font-size: 14.5px;
+                color: var(--grey);
+                margin: 0;
+            }
+
+            /* Benefits */
+            .ben {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 14px;
+            }
+
+            .b {
+                display: flex;
+                gap: 14px;
+                padding: 20px 22px;
+                background: #fff;
+                border: 1px solid var(--line);
+                border-radius: var(--r-md);
+            }
+
+            .b .n {
+                font-family: "Montserrat", sans-serif;
+                font-weight: 700;
+                font-size: 13px;
+                color: var(--blue);
+                flex-shrink: 0;
+                padding-top: 2px;
+            }
+
+            .b h3 {
+                font-size: 16px;
+                margin-bottom: 4px;
+            }
+
+            .b p {
+                font-size: 14px;
+                color: var(--grey);
+            }
+
+            .checks {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px 28px;
+                margin-top: 24px;
+            }
+
+            .checks li {
+                display: flex;
+                gap: 12px;
+                font-size: 15px;
+                align-items: flex-start;
+            }
+
+            .checks li::before {
+                content: "";
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background: var(--blue-pale);
+                flex-shrink: 0;
+                margin-top: 3px;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230D47A1' stroke-width='3'%3E%3Cpath d='M4 12l5 5L20 6'/%3E%3C/svg%3E");
+                background-size: 12px;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+
+            .cost-band {
+                background: var(--deep);
+                color: #fff;
+                border-radius: var(--r-lg);
+                padding: 44px;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .cost-band::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(
+                    ellipse 55% 70% at 88% 15%,
+                    rgba(26, 95, 208, 0.45),
+                    transparent 62%
+                );
+            }
+
+            .cost-band > * {
+                position: relative;
+            }
+
+            .cost-band h2 {
+                color: #fff;
+            }
+
+            .cost-figure {
+                font-family: "Montserrat", sans-serif;
+                font-weight: 700;
+                font-size: clamp(32px, 4.8vw, 50px);
+                color: #9cc0ff;
+                line-height: 1.1;
+                margin: 6px 0 14px;
+                letter-spacing: -0.03em;
+            }
+
+            .cost-band p {
+                color: #c6d4ec;
+            }
+
+            .cost-drivers {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px 26px;
+                margin-top: 26px;
+                padding-top: 26px;
+                border-top: 1px solid rgba(255, 255, 255, 0.14);
+            }
+
+            .cost-drivers li {
+                font-size: 14.5px;
+                color: #c6d4ec;
+                display: flex;
+                gap: 11px;
+            }
+
+            .cost-drivers li b {
+                color: #fff;
+                font-weight: 500;
+            }
+
+            .steps {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                gap: 18px;
+            }
+
+            .step {
+                background: #fff;
+                border: 1px solid var(--line);
+                border-radius: var(--r-md);
+                padding: 26px 22px;
+            }
+
+            .step .n {
+                font-family: "Montserrat", sans-serif;
+                font-size: 12px;
+                font-weight: 700;
+                color: var(--blue);
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                display: block;
+                margin-bottom: 26px;
+            }
+
+            .step h3 {
+                font-size: 15.5px;
+                margin-bottom: 6px;
+            }
+
+            .step p {
+                font-size: 13.5px;
+                color: var(--grey);
+            }
+
+            .gal {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+
+            .gal figure {
+                border: 1px solid var(--line);
+                border-radius: var(--r-lg);
+                overflow: hidden;
+                background: #fff;
+            }
+
+            .gal .ph {
+                aspect-ratio: 4/3;
+                background: linear-gradient(150deg, var(--deep), var(--deep-2));
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #4a7fd4;
+                font-size: 12px;
+                font-family: "Montserrat", sans-serif;
+                font-weight: 600;
+                letter-spacing: 0.08em;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .gal figcaption {
+                padding: 16px 20px;
+                font-size: 13.5px;
+                color: var(--grey);
+            }
+
+            .gal figcaption b {
+                display: block;
+                font-family: "Montserrat", sans-serif;
+                font-weight: 600;
+                font-size: 15px;
+                color: var(--ink);
+                margin-bottom: 2px;
+            }
+
+            .faq-item {
+                border: 1px solid var(--line);
+                border-radius: var(--r-md);
+                margin-bottom: 12px;
+                background: #fff;
+                overflow: hidden;
+            }
+
+            .faq-q {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 20px;
+                padding: 20px 24px;
+                text-align: left;
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-family: "Montserrat", sans-serif;
+                font-size: 16px;
+                font-weight: 600;
+                color: var(--ink);
+            }
+
+            .faq-q .p {
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                background: var(--blue-pale);
+                position: relative;
+                flex-shrink: 0;
+                transition:
+                    transform 0.28s var(--ease),
+                    background 0.28s;
+            }
+
+            .faq-q .p::before,
+            .faq-q .p::after {
+                content: "";
+                position: absolute;
+                background: var(--blue);
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                transition: background 0.28s;
+            }
+
+            .faq-q .p::before {
+                width: 11px;
+                height: 2px;
+            }
+
+            .faq-q .p::after {
+                width: 2px;
+                height: 11px;
+            }
+
+            .faq-item.open .p {
+                transform: rotate(45deg);
+                background: var(--blue);
+            }
+
+            .faq-item.open .p::before,
+            .faq-item.open .p::after {
+                background: #fff;
+            }
+
+            .faq-a {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.35s var(--ease);
+            }
+
+            .faq-item.open .faq-a {
+                max-height: 400px;
+            }
+
+            .faq-a p {
+                padding: 0 24px 22px;
+                color: var(--grey);
+                font-size: 14.5px;
+            }
+
+            .chips {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 9px;
+                margin-top: 18px;
+            }
+
+            .chip {
+                font-family: "Montserrat", sans-serif;
+                font-size: 13px;
+                font-weight: 600;
+                padding: 10px 18px;
+                border-radius: 100px;
+                border: 1px solid var(--line);
+                background: #fff;
+                color: var(--ink);
+            }
+
+            .chip.pri {
+                background: var(--blue-pale);
+                border-color: #c9daf5;
+                color: var(--blue);
+            }
+
+            .tier-label {
+                font-family: "Montserrat", sans-serif;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--blue);
+                margin: 26px 0 0;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .tier-label::after {
+                content: "";
+                flex: 1;
+                height: 1px;
+                background: var(--line);
+            }
+
+            .rel {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 18px;
+            }
+
+            .rel a {
+                background: #fff;
+                border: 1px solid var(--line);
+                border-radius: var(--r-md);
+                padding: 24px 22px;
+                transition:
+                    transform 0.25s var(--ease),
+                    box-shadow 0.25s var(--ease);
+            }
+
+            .rel a:hover {
+                transform: translateY(-4px);
+                box-shadow: var(--sh-md);
+            }
+
+            .rel h3 {
+                font-size: 16px;
+                margin-bottom: 5px;
+            }
+
+            .rel p {
+                font-size: 13.5px;
+                color: var(--grey);
+            }
+
+            .rel .go {
+                font-family: "Montserrat", sans-serif;
+                font-size: 12.5px;
+                font-weight: 700;
+                color: var(--blue);
+                margin-top: 12px;
+                display: block;
+            }
+
+            .cta {
+                background: linear-gradient(
+                    140deg,
+                    var(--blue-bright),
+                    var(--blue) 45%,
+                    #082a5c
+                );
+                color: #fff;
+                border-radius: 26px;
+                padding: 60px 48px;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .cta::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(
+                    ellipse 55% 70% at 85% 20%,
+                    rgba(255, 255, 255, 0.15),
+                    transparent 62%
+                );
+            }
+
+            .cta > * {
+                position: relative;
+            }
+
+            .cta h2 {
+                color: #fff;
+            }
+
+            .cta p {
+                color: rgba(255, 255, 255, 0.85);
+                max-width: 540px;
+                margin: 0 auto 28px;
+            }
+
+            .cta-btns {
+                display: flex;
+                gap: 13px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            @media (max-width: 900px) {
+                .sys,
+                .grid-3,
+                .rel {
+                    grid-template-columns: 1fr 1fr;
+                }
+
+                .steps {
+                    grid-template-columns: 1fr 1fr;
+                }
+
+                .gal {
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
+
+            @media (max-width: 640px) {
+                .section {
+                    padding: 52px 0;
+                }
+
+              
+
+                .grid-2,
+                .grid-3,
+                .sys,
+                .ben,
+                .checks,
+                .rel,
+                .steps,
+                .gal,
+                .cost-drivers {
+                    grid-template-columns: 1fr;
+                }
+
+                .hero-inner {
+                    padding: 52px 0 56px;
+                }
+
+                .hero-ctas .btn {
+                    flex: 1 1 100%;
+                }
+
+                .cost-band {
+                    padding: 30px 24px;
+                }
+
+                .cta {
+                    padding: 44px 26px;
+                    border-radius: 20px;
+                }
+
+                .card {
+                    padding: 24px 22px;
+                }
+
+                .cmp-row {
+                    grid-template-columns: 1fr;
+                }
+
+                .cmp-row > div {
+                    border-right: none;
+                    border-bottom: 1px solid var(--line);
+                }
+
+                .cmp-row > div:last-child {
+                    border-bottom: none;
+                }
+
+                .cmp-row.head {
+                    display: none;
+                }
+
+                .cmp-row .lbl {
+                    font-size: 13px;
+                    text-transform: uppercase;
+                    letter-spacing: 0.06em;
+                    color: var(--blue);
+                }
+
+                .cmp-row .metal::before {
+                    content: "Metal: ";
+                    font-weight: 600;
+                    color: var(--blue);
+                }
+
+                .cmp-row .asph::before {
+                    content: "Asphalt: ";
+                    font-weight: 600;
+                    color: var(--grey-light);
+                }
+            }
+        </style>
+    </body>
+</html>

@@ -1,0 +1,1398 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import { queryWordPress } from "../../lib/wordpress";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    </head>
+    <body>
+        <Header />
+
+        <main id="top">
+            <section class="page-hero">
+                <div class="container">
+                    <div class="breadcrumb">
+                        <a href="../index.html">Home</a>
+                        <span>/</span>
+                        <span style="color:#fff;">About</span>
+                    </div>
+                    <h1 class="fade-up">Commercial & Flat Roofing in  <em
+                            style="font-style:normal;color:#9CC0FF;"
+                            >New Hampshire</em
+                        >
+                    </h1>
+                    <p class="lede-page fade-up">
+                        Standing-seam metal sheds snow before it becomes an ice
+                        dam and shrugs off coastal salt air that eats through
+                        lesser materials. Installed properly, it is the last
+                        roof most homeowners ever buy.
+                    </p>
+                    <div class="hero-ctas">
+                        <a href="/contact/" class="btn btn-blue"
+                            >Get a Free Estimate</a
+                        >
+                        <a href="tel:+16035027080" class="btn btn-ghost-w"
+                            >Call (603) 502-7080</a
+                        >
+                    </div>
+                </div>
+            </section>
+          <!-- ============ INTRO ============ -->
+  <section class="section">
+    <div class="container narrow">
+      <span class="eyebrow">What We Do</span>
+      <h2>Low-Slope Roofing Built Around Your Operations</h2>
+      <p class="lead">A commercial roof is an operating asset, not just a building component. When it fails you are
+        dealing with tenant complaints, damaged inventory, and a capital expense you did not plan for this quarter.</p>
+      <p>Vincenzo's Roofing installs, repairs, restores, and maintains low-slope and flat roofing systems for commercial
+        properties across New Hampshire. We work with owner-operators, property managers, and investors — from a single
+        storefront on the Seacoast to multi-building portfolios inland.</p>
+      <p>The practical difference on our jobs is scheduling. We section the roof so only part is ever open, stage
+        material to keep entrances and parking clear, and work evenings or weekends where the building allows. Most of
+        our commercial clients stay fully operational throughout.</p>
+    </div>
+  </section>
+
+  <!-- ============ ROOFING SYSTEMS ============ -->
+  <section class="section alt">
+    <div class="container">
+      <div class="narrow" style="text-align:center;margin-bottom:38px">
+        <span class="eyebrow">Systems We Install</span>
+        <h2>Choosing the Right Membrane</h2>
+        <p class="lead">Three systems cover almost every commercial roof in New Hampshire. The right one depends on your
+          building's cooling load, foot traffic, budget horizon, and what is up there already.</p>
+      </div>
+      <div class="sys">
+        <div class="s">
+          <div class="top">
+            <span class="tag">Most popular</span>
+            <h3>TPO</h3>
+            <p>White thermoplastic membrane with heat-welded seams</p>
+          </div>
+          <div class="body">
+            <ul>
+              <li>Reflects sunlight and lowers summer cooling costs</li>
+              <li>Heat-welded seams — no adhesive joints to fail</li>
+              <li>Strong resistance to punctures and chemical exposure</li>
+              <li>Best value for buildings with heavy air conditioning demand</li>
+            </ul>
+          </div>
+          <div class="foot"><b>Service life:</b> 20–30 years</div>
+        </div>
+        <div class="s">
+          <div class="top">
+            <span class="tag">Best value</span>
+            <h3>EPDM</h3>
+            <p>Black synthetic rubber membrane, fully adhered or ballasted</p>
+          </div>
+          <div class="body">
+            <ul>
+              <li>Handles New Hampshire freeze-thaw cycles exceptionally well</li>
+              <li>Lower installed cost than TPO on most buildings</li>
+              <li>Simple to repair and patch over its service life</li>
+              <li>Dark surface helps shed snow load in winter</li>
+            </ul>
+          </div>
+          <div class="foot"><b>Service life:</b> 20–30 years</div>
+        </div>
+        <div class="s">
+          <div class="top">
+            <span class="tag">Heavy duty</span>
+            <h3>Modified bitumen</h3>
+            <p>Multi-ply asphalt system, torch or cold-adhesive applied</p>
+          </div>
+          <div class="body">
+            <ul>
+              <li>Multiple layers give redundancy against punctures</li>
+              <li>Handles rooftop foot traffic and service access well</li>
+              <li>Good choice where equipment is regularly serviced</li>
+              <li>Proven performance on older existing substrates</li>
+            </ul>
+          </div>
+          <div class="foot"><b>Service life:</b> 15–25 years</div>
+        </div>
+      </div>
+      <div class="card pale" style="margin-top:22px">
+        <h3>Not sure which applies to your building?</h3>
+        <p>That is what the site survey is for. We measure, check what is already installed, core-sample if the
+          insulation may be wet, and give you a written recommendation with per-square-foot pricing for each viable
+          option — not one number and a signature line.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROPERTY TYPES ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="narrow" style="text-align:center;margin-bottom:36px">
+        <span class="eyebrow">Who We Work With</span>
+        <h2>Properties We Roof</h2>
+      </div>
+      <div class="props">
+        <div class="prop"><span class="n">01</span>
+          <div>
+            <h3>Retail &amp; storefronts</h3>
+            <p>Strip plazas, standalone stores, and restaurants where closing for a day is not an option.</p>
+          </div>
+        </div>
+        <div class="prop"><span class="n">02</span>
+          <div>
+            <h3>Office buildings</h3>
+            <p>Single and multi-tenant offices, with work staged outside core business hours.</p>
+          </div>
+        </div>
+        <div class="prop"><span class="n">03</span>
+          <div>
+            <h3>Multi-unit residential</h3>
+            <p>Apartment buildings and condo associations, including phased work across multiple structures.</p>
+          </div>
+        </div>
+        <div class="prop"><span class="n">04</span>
+          <div>
+            <h3>Industrial &amp; warehouse</h3>
+            <p>Large-span roofs with rooftop mechanical equipment and heavy drainage requirements.</p>
+          </div>
+        </div>
+        <div class="prop"><span class="n">05</span>
+          <div>
+            <h3>Medical &amp; professional</h3>
+            <p>Clinics and practices where noise, dust, and access disruption need careful management.</p>
+          </div>
+        </div>
+        <div class="prop"><span class="n">06</span>
+          <div>
+            <h3>Municipal &amp; institutional</h3>
+            <p>Public buildings and facilities, with documentation suited to procurement requirements.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WARNING SIGNS ============ -->
+  <section class="section alt">
+    <div class="container">
+      <div class="narrow" style="text-align:center;margin-bottom:36px">
+        <span class="eyebrow">Assessment</span>
+        <h2>Signs Your Flat Roof Needs Attention</h2>
+        <p class="lead">Flat roofs rarely fail suddenly. They give warning for months, usually somewhere nobody is
+          looking.</p>
+      </div>
+      <div class="warn">
+        <div class="w"><span class="n">01</span>
+          <div>
+            <h3>Water ponding after rain</h3>
+            <p>Standing water more than 48 hours after rainfall accelerates membrane breakdown and adds serious weight
+              to the structure.</p>
+          </div>
+        </div>
+        <div class="w"><span class="n">02</span>
+          <div>
+            <h3>Seams lifting or separating</h3>
+            <p>Open seams are the most common entry point on any membrane roof, and the easiest failure to catch early.
+            </p>
+          </div>
+        </div>
+        <div class="w"><span class="n">03</span>
+          <div>
+            <h3>Blisters and bubbling</h3>
+            <p>Trapped moisture or air beneath the membrane. Left alone, blisters rupture and open a direct path for
+              water.</p>
+          </div>
+        </div>
+        <div class="w"><span class="n">04</span>
+          <div>
+            <h3>Interior ceiling stains</h3>
+            <p>By the time a tenant reports a stain, water has usually been travelling through the insulation for some
+              time.</p>
+          </div>
+        </div>
+        <div class="w"><span class="n">05</span>
+          <div>
+            <h3>Failing flashing at penetrations</h3>
+            <p>HVAC curbs, vents, and drains are where most commercial leaks begin — anywhere the membrane has been cut.
+            </p>
+          </div>
+        </div>
+        <div class="w"><span class="n">06</span>
+          <div>
+            <h3>Rising energy costs</h3>
+            <p>Wet insulation loses most of its R-value. An unexplained jump in heating or cooling spend often starts at
+              the roof.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCOPE ============ -->
+  <section class="section">
+    <div class="container narrow">
+      <span class="eyebrow">Scope of Work</span>
+      <h2>What's Included in a Commercial Re-Roof</h2>
+      <p>Every commercial project we quote includes the following as standard. Where a competitor's per-square-foot
+        number comes in lower, this list is usually where the difference sits.</p>
+      <ul class="checks">
+        <li>Full site survey with measurements and photo documentation</li>
+        <li>Core sampling to check for wet insulation below the membrane</li>
+        <li>Tear-off and disposal of failed existing layers</li>
+        <li>Deck inspection and repair where substrate has deteriorated</li>
+        <li>New insulation to current R-value requirements</li>
+        <li>Tapered insulation to correct drainage and eliminate ponding</li>
+        <li>Membrane installed to manufacturer specification for warranty</li>
+        <li>New flashing at all curbs, penetrations, and parapet walls</li>
+        <li>Drain, scupper, and gutter integration checked and cleared</li>
+        <li>Daily site cleanup with access and parking kept clear</li>
+        <li>Manufacturer system warranty plus our workmanship warranty</li>
+        <li>Close-out documentation for your records and insurers</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ COST ============ -->
+  <section class="section alt">
+    <div class="container">
+      <div class="cost-band">
+        <span class="eyebrow" style="color:#9CC0FF">Straight Pricing</span>
+        <h2>How Much Does Commercial Roofing Cost in New Hampshire?</h2>
+        <div class="cost-figure">$6 – $14 per sq ft</div>
+        <p>Commercial roofing is quoted per square foot rather than as a flat job price. EPDM sits at the lower end, TPO
+          in the middle, and fully adhered systems with new insulation and tapered drainage at the upper end. You get a
+          written per-square-foot breakdown after the site survey, with each option priced separately.</p>
+        <ul class="cost-drivers">
+          <li><b>Membrane system —</b> EPDM, TPO, or modified bitumen</li>
+          <li><b>Existing layers —</b> tear-off versus overlay where code permits</li>
+          <li><b>Insulation —</b> new R-value and whether tapered drainage is needed</li>
+          <li><b>Penetrations —</b> HVAC curbs, vents, and skylights all add flashing work</li>
+          <li><b>Roof access —</b> crane or hoist requirements on taller buildings</li>
+          <li><b>Scheduling —</b> after-hours or phased work to keep you operating</li>
+        </ul>
+        <div style="margin-top:30px"><a href="/contact/" class="btn btn-blue"
+            style="background:#fff;color:var(--blue);box-shadow:none">Request a Site Survey</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROCESS ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="narrow" style="text-align:center;margin-bottom:36px">
+        <span class="eyebrow">How It Works</span>
+        <h2>Your Commercial Project, Step by Step</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="n">Step 01</span>
+          <h3>Site survey</h3>
+          <p>We measure the roof, inspect existing conditions, core-sample for wet insulation, and photograph
+            everything.</p>
+        </div>
+        <div class="step"><span class="n">Step 02</span>
+          <h3>Written proposal</h3>
+          <p>Per-square-foot pricing for each viable system, with scope, timeline, and warranty terms in writing.</p>
+        </div>
+        <div class="step"><span class="n">Step 03</span>
+          <h3>Schedule &amp; notify</h3>
+          <p>We agree phasing around your hours, pull permits, and give you notice to circulate to tenants and staff.
+          </p>
+        </div>
+        <div class="step"><span class="n">Step 04</span>
+          <h3>Phased install</h3>
+          <p>Only part of the roof is open at a time. Access stays clear and the building stays watertight overnight.
+          </p>
+        </div>
+        <div class="step"><span class="n">Step 05</span>
+          <h3>Close-out</h3>
+          <p>Final walkthrough, warranty registration, and a documentation pack for your records and insurers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MAINTENANCE PROGRAM ============ -->
+  <section class="section alt">
+    <div class="container">
+      <div class="maint">
+        <span class="eyebrow" style="color:#BFD6FA">Ongoing Care</span>
+        <h2>Commercial Roof Maintenance Programs</h2>
+        <p>The cheapest commercial roof is the one that reaches its full service life. Most manufacturer warranties also
+          require documented maintenance to stay valid — a detail that catches out a lot of building owners at claim
+          time.</p>
+        <div class="maint-grid">
+          <div>
+            <h3>Twice-yearly inspections</h3>
+            <p>Spring and autumn visits, plus call-outs after major storm events.</p>
+          </div>
+          <div>
+            <h3>Drain &amp; scupper clearing</h3>
+            <p>The single highest-value maintenance task on any flat roof.</p>
+          </div>
+          <div>
+            <h3>Seam &amp; flashing checks</h3>
+            <p>Small separations sealed before they become interior leaks.</p>
+          </div>
+          <div>
+            <h3>Written condition reports</h3>
+            <p>Photographed findings you can file for warranty and budgeting.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NH WEATHER ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="narrow" style="margin-bottom:36px">
+        <span class="eyebrow">Local Expertise</span>
+        <h2>What New Hampshire Does to a Flat Roof</h2>
+        <p class="lead">Low-slope roofs face problems here that simply do not exist in milder climates. Specifying for
+          them is the difference between twenty years and twelve.</p>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Snow load and drift</h3>
+          <p>Flat roofs hold snow rather than shedding it, and drifting piles it against parapets and mechanical units.
+            Structural capacity and drainage both have to account for a heavy February, not an average one.</p>
+        </div>
+        <div class="card">
+          <h3>Freeze-thaw on seams</h3>
+          <p>Repeated expansion and contraction works at every seam and flashing joint. Heat-welded TPO seams and
+            properly detailed EPDM terminations hold up far better than adhesive-only assemblies.</p>
+        </div>
+        <div class="card">
+          <h3>Ponding and spring melt</h3>
+          <p>A fast thaw dumps weeks of accumulated snow into the drainage system at once. Undersized or blocked drains
+            turn that into standing water — which is how most flat roof failures actually begin.</p>
+        </div>
+        <div class="card">
+          <h3>Coastal salt exposure</h3>
+          <p>On Seacoast properties, salt corrodes fasteners, edge metal, and rooftop equipment supports years ahead of
+            schedule. We specify corrosion-resistant components on coastal commercial work as standard.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RECENT WORK ============ -->
+  <section class="section alt">
+    <div class="container">
+      <div class="narrow" style="text-align:center;margin-bottom:36px">
+        <span class="eyebrow">Recent Projects</span>
+        <h2>Commercial Roofs Across New Hampshire</h2>
+        <p class="lead">Every photo below is our own crew's work. Replace these placeholders with real project images
+          before launch.</p>
+      </div>
+      <div class="gal">
+        <figure>
+          <!-- IMAGE SLOT: <img src="/images/commercial-tpo-portsmouth-nh.jpg" alt="TPO membrane roof installed on a retail building in Portsmouth NH" width="800" height="600" loading="lazy"> -->
+          <div class="ph">REPLACE WITH REAL PROJECT PHOTO</div>
+          <figcaption><b>Portsmouth, NH</b>TPO membrane re-roof on a retail plaza</figcaption>
+        </figure>
+        <figure>
+          <!-- IMAGE SLOT: <img src="/images/commercial-epdm-dover-nh.jpg" alt="EPDM flat roof replacement on a multi-unit building in Dover NH" width="800" height="600" loading="lazy"> -->
+          <div class="ph">REPLACE WITH REAL PROJECT PHOTO</div>
+          <figcaption><b>Dover, NH</b>EPDM replacement on a multi-unit property</figcaption>
+        </figure>
+        <figure>
+          <!-- IMAGE SLOT: <img src="/images/commercial-flat-roof-seabrook-nh.jpg" alt="Flat roof with tapered insulation and new drainage in Seabrook NH" width="800" height="600" loading="lazy"> -->
+          <div class="ph">REPLACE WITH REAL PROJECT PHOTO</div>
+          <figcaption><b>Seabrook, NH</b>Tapered insulation added to correct ponding</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section">
+    <div class="container narrow">
+      <div style="text-align:center;margin-bottom:36px">
+        <span class="eyebrow">FAQ</span>
+        <h2>Commercial Roofing Questions</h2>
+      </div>
+
+      <div class="faq-item open">
+        <h3><button class="faq-q">How much does a commercial flat roof cost in New Hampshire?<span
+              class="p"></span></button></h3>
+        <div class="faq-a">
+          <p>Commercial roofing in New Hampshire is generally quoted per square foot, typically between $6 and $14
+            installed. EPDM sits at the lower end, TPO in the middle, and fully adhered systems with new insulation and
+            tapered drainage at the upper end. Tear-off of existing layers, roof access, and rooftop equipment all
+            affect the final number. We provide a written per-square-foot breakdown after a site survey.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <h3><button class="faq-q">Will my business have to close during the work?<span class="p"></span></button></h3>
+        <div class="faq-a">
+          <p>In almost all cases, no. We stage commercial work around your operating hours, section the roof so only
+            part is open at a time, and can work evenings or weekends where the building allows. Tenants and staff are
+            notified in advance, and we keep entrances and parking access clear throughout.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <h3><button class="faq-q">What is the difference between TPO and EPDM?<span class="p"></span></button></h3>
+        <div class="faq-a">
+          <p>EPDM is a black rubber membrane that is durable, cost-effective, and handles New Hampshire freeze-thaw
+            cycles well. TPO is a white thermoplastic membrane with heat-welded seams that reflects sunlight and lowers
+            summer cooling loads. TPO usually costs slightly more up front. For buildings with significant air
+            conditioning demand, TPO often pays that back.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <h3><button class="faq-q">Can a flat roof be restored instead of replaced?<span class="p"></span></button></h3>
+        <div class="faq-a">
+          <p>Often, yes. If the membrane is intact and the insulation underneath is dry, a coating or restoration system
+            can extend service life by ten to fifteen years at a fraction of replacement cost. If moisture has reached
+            the insulation, restoration only traps it. We core-sample before recommending restoration so the decision is
+            based on evidence.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <h3><button class="faq-q">Why does water pond on my flat roof?<span class="p"></span></button></h3>
+        <div class="faq-a">
+          <p>Flat roofs are built with a slight slope toward drains. Ponding usually means blocked drains or scuppers, a
+            compressed or sagging insulation layer, or inadequate original slope. Water standing longer than 48 hours
+            after rain accelerates membrane failure and adds significant weight. Tapered insulation during re-roofing
+            corrects the underlying slope problem.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <h3><button class="faq-q">Do you offer maintenance programs?<span class="p"></span></button></h3>
+        <div class="faq-a">
+          <p>Yes. We offer scheduled maintenance for property managers and building owners, typically twice a year plus
+            after major storms. Each visit includes drain clearing, seam and flashing inspection, and a written
+            condition report with photographs. Most manufacturer warranties require documented maintenance to stay
+            valid.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICE AREAS ============ -->
+  <section class="section alt">
+    <div class="container">
+      <div class="narrow" style="margin-bottom:10px">
+        <span class="eyebrow">Where We Work</span>
+        <h2>Commercial Roofing Across New Hampshire</h2>
+        <p class="lead">We are based in Seabrook, so Seacoast properties often see us fastest. From there our crews run
+          statewide, including multi-site portfolios.</p>
+      </div>
+
+      <div class="tier-label">Seacoast — fastest response</div>
+      <div class="chips">
+        <!-- Switch each <span> to <a href="/location/seabrook-nh/"> once that city page is live -->
+        <span class="chip pri">Seabrook</span><span class="chip pri">Hampton</span><span class="chip pri">Hampton
+          Falls</span>
+        <span class="chip pri">North Hampton</span><span class="chip pri">Rye</span><span class="chip pri">Exeter</span>
+        <span class="chip pri">Stratham</span><span class="chip pri">Portsmouth</span><span
+          class="chip pri">Dover</span><span class="chip pri">Rochester</span>
+      </div>
+
+      <div class="tier-label">Statewide</div>
+      <div class="chips">
+        <span class="chip">Manchester</span><span class="chip">Nashua</span><span class="chip">Concord</span>
+        <span class="chip">Derry</span><span class="chip">Londonderry</span><span class="chip">Salem</span>
+        <span class="chip">Bedford</span><span class="chip">Merrimack</span><span class="chip">Hudson</span><span
+          class="chip">Keene</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RELATED ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="narrow" style="text-align:center;margin-bottom:36px">
+        <span class="eyebrow">Related Services</span>
+        <h2>Other Roofing Services</h2>
+      </div>
+      <div class="rel">
+        <a href="/service/roof-repair/">
+          <h3>Roof Repair</h3>
+          <p>Leaks and flashing failures traced to the actual source before repair.</p><span class="go">View roof repair
+            →</span>
+        </a>
+        <a href="/service/roof-inspection/">
+          <h3>Roof Inspection</h3>
+          <p>Photo-documented condition reports for budgeting and due diligence.</p><span class="go">Book an inspection
+            →</span>
+        </a>
+        <a href="/service/storm-emergency-response/">
+          <h3>Storm &amp; Emergency</h3>
+          <p>24/7 response with same-day tarping and insurance documentation.</p><span class="go">Get emergency help
+            →</span>
+        </a>
+        <a href="/service/metal-roofing/">
+          <h3>Metal Roofing</h3>
+          <p>Standing-seam systems for low-slope and architectural applications.</p><span class="go">Explore metal
+            →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+        </main>
+
+        <Footer />
+      <style>
+    
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      /* color: var(--ink); */
+      letter-spacing: -.02em;
+      line-height: 1.2
+    }
+
+    h2 {
+      font-size: clamp(25px, 3.4vw, 34px);
+      margin-bottom: 18px
+    }
+
+    h3 {
+      font-size: 19px;
+      font-weight: 600;
+      margin-bottom: 8px
+    }
+
+    p {
+      margin-bottom: 16px
+    }
+
+    p:last-child {
+      margin-bottom: 0
+    }
+
+    .section {
+      padding: 76px 0
+    }
+
+    .eyebrow {
+      font-family: 'Montserrat', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 11.5px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 16px
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      background: var(--blue);
+      clip-path: polygon(50% 0, 100% 100%, 0 100%)
+    }
+
+    .lead {
+      font-size: 17px;
+      color: var(--grey)
+    }
+
+    .btn {
+      font-family: 'Montserrat', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      font-weight: 700;
+      font-size: 13.5px;
+      padding: 15px 27px;
+      border-radius: 100px;
+      min-height: 50px;
+      transition: transform .25s var(--ease), box-shadow .25s var(--ease)
+    }
+
+    .btn-blue {
+      background: linear-gradient(180deg, var(--blue-bright), var(--blue));
+      color: #fff;
+      box-shadow: var(--sh-blue)
+    }
+
+    .btn-blue:hover {
+      transform: translateY(-2px)
+    }
+
+    .btn-ghost-w {
+      border: 1.5px solid rgba(255, 255, 255, .35);
+      color: #fff
+    }
+
+    .btn-ghost-w:hover {
+      border-color: #fff;
+      background: rgba(255, 255, 255, .08)
+    }
+
+    .hero {
+      background: linear-gradient(155deg, #061B3E, var(--deep) 45%, var(--deep-2));
+      color: #fff;
+      position: relative;
+      overflow: hidden
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 55% at 80% 10%, rgba(26, 95, 208, .5), transparent 62%)
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255, 255, 255, .03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .03) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse 90% 80% at 60% 20%, #000, transparent 78%)
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      padding: 72px 0 76px;
+      max-width: 730px
+    }
+
+    .hero h1 {
+      color: #fff;
+      font-size: clamp(29px, 4.2vw, 46px);
+      margin-bottom: 20px;
+      line-height: 1.14
+    }
+
+    .hero p {
+      color: #C6D4EC;
+      font-size: 17px;
+      max-width: 610px;
+      margin-bottom: 32px
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 13px;
+      flex-wrap: wrap;
+      margin-bottom: 34px
+    }
+
+    .hero-trust {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 26px;
+      border-top: 1px solid rgba(255, 255, 255, .12);
+      padding-top: 24px
+    }
+
+    .hero-trust span {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: #9CC0FF;
+      letter-spacing: .04em;
+      display: flex;
+      align-items: center;
+      gap: 7px
+    }
+
+    .hero-trust span::before {
+      content: "✓";
+      color: var(--blue-soft);
+      font-weight: 700
+    }
+
+    .crumb {
+      background: var(--off);
+      border-bottom: 1px solid var(--line);
+      padding: 14px 0;
+      font-size: 13px;
+      color: var(--grey)
+    }
+
+    .crumb a:hover {
+      color: var(--blue)
+    }
+
+    .crumb span {
+      margin: 0 8px;
+      color: var(--grey-light)
+    }
+
+    .alt {
+      background: var(--off)
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      padding: 30px 26px
+    }
+
+    .card.pale {
+      background: var(--blue-pale);
+      border-color: #C9DAF5
+    }
+
+    .card p {
+      color: var(--grey);
+      font-size: 14.5px
+    }
+
+    /* Systems */
+    .sys {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px
+    }
+
+    .sys .s {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column
+    }
+
+    .sys .top {
+      padding: 24px 26px 20px;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .sys .tag {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      background: var(--blue-pale);
+      padding: 5px 12px;
+      border-radius: 100px;
+      display: inline-block;
+      margin-bottom: 12px
+    }
+
+    .sys h3 {
+      font-size: 20px;
+      margin-bottom: 6px
+    }
+
+    .sys .top p {
+      font-size: 14px;
+      color: var(--grey);
+      margin: 0
+    }
+
+    .sys .body {
+      padding: 22px 26px;
+      flex: 1
+    }
+
+    .sys .body li {
+      font-size: 14px;
+      color: var(--grey);
+      padding: 7px 0 7px 20px;
+      position: relative
+    }
+
+    .sys .body li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 15px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--blue-soft)
+    }
+
+    .sys .foot {
+      padding: 16px 26px;
+      background: var(--off);
+      font-size: 13px;
+      color: var(--grey)
+    }
+
+    .sys .foot b {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--ink);
+      font-weight: 600
+    }
+
+    /* Property types */
+    .props {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px
+    }
+
+    .prop {
+      display: flex;
+      gap: 14px;
+      padding: 20px 22px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      align-items: flex-start
+    }
+
+    .prop .n {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 12.5px;
+      color: var(--blue);
+      flex-shrink: 0;
+      padding-top: 3px
+    }
+
+    .prop h3 {
+      font-size: 15.5px;
+      margin-bottom: 3px
+    }
+
+    .prop p {
+      font-size: 13.5px;
+      color: var(--grey)
+    }
+
+    /* Warning signs */
+    .warn {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px
+    }
+
+    .w {
+      display: flex;
+      gap: 14px;
+      padding: 20px 22px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--r-md)
+    }
+
+    .w .n {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--blue);
+      flex-shrink: 0;
+      padding-top: 2px
+    }
+
+    .w h3 {
+      font-size: 16px;
+      margin-bottom: 4px
+    }
+
+    .w p {
+      font-size: 14px;
+      color: var(--grey)
+    }
+
+    .checks {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 28px;
+      margin-top: 24px
+    }
+
+    .checks li {
+      display: flex;
+      gap: 12px;
+      font-size: 15px;
+      align-items: flex-start
+    }
+
+    .checks li::before {
+      content: "";
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--blue-pale);
+      flex-shrink: 0;
+      margin-top: 3px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230D47A1' stroke-width='3'%3E%3Cpath d='M4 12l5 5L20 6'/%3E%3C/svg%3E");
+      background-size: 12px;
+      background-position: center;
+      background-repeat: no-repeat
+    }
+
+    .cost-band {
+      background: var(--deep);
+      color: #fff;
+      border-radius: var(--r-lg);
+      padding: 44px;
+      position: relative;
+      overflow: hidden
+    }
+
+    .cost-band::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 55% 70% at 88% 15%, rgba(26, 95, 208, .45), transparent 62%)
+    }
+
+    .cost-band>* {
+      position: relative
+    }
+
+    .cost-band h2 {
+      color: #fff
+    }
+
+    .cost-figure {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: clamp(30px, 4.4vw, 46px);
+      color: #9CC0FF;
+      line-height: 1.1;
+      margin: 6px 0 14px;
+      letter-spacing: -.03em
+    }
+
+    .cost-band p {
+      color: #C6D4EC
+    }
+
+    .cost-drivers {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px 26px;
+      margin-top: 26px;
+      padding-top: 26px;
+      border-top: 1px solid rgba(255, 255, 255, .14)
+    }
+
+    .cost-drivers li {
+      font-size: 14.5px;
+      color: #C6D4EC;
+      display: flex;
+      gap: 11px
+    }
+
+    .cost-drivers li b {
+      color: #fff;
+      font-weight: 500
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 18px
+    }
+
+    .step {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      padding: 26px 22px
+    }
+
+    .step .n {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 26px
+    }
+
+    .step h3 {
+      font-size: 15.5px;
+      margin-bottom: 6px
+    }
+
+    .step p {
+      font-size: 13.5px;
+      color: var(--grey)
+    }
+
+    /* Maintenance band */
+    .maint {
+      background: linear-gradient(140deg, var(--blue-bright), var(--blue) 50%, #082A5C);
+      color: #fff;
+      border-radius: 26px;
+      padding: 52px 46px;
+      position: relative;
+      overflow: hidden
+    }
+
+    .maint::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 55% 70% at 88% 18%, rgba(255, 255, 255, .16), transparent 62%)
+    }
+
+    .maint>* {
+      position: relative
+    }
+
+    .maint h2 {
+      color: #fff
+    }
+
+    .maint>p {
+      color: rgba(255, 255, 255, .86);
+      max-width: 620px
+    }
+
+    .maint-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 32px;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, .2)
+    }
+
+    .maint-grid h3 {
+      color: #fff;
+      font-size: 15.5px;
+      margin-bottom: 5px
+    }
+
+    .maint-grid p {
+      color: rgba(255, 255, 255, .8);
+      font-size: 13.5px;
+      margin: 0
+    }
+
+    .gal {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px
+    }
+
+    .gal figure {
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      background: #fff
+    }
+
+    .gal .ph {
+      aspect-ratio: 4/3;
+      background: linear-gradient(150deg, var(--deep), var(--deep-2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4A7FD4;
+      font-size: 12px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-align: center;
+      padding: 20px
+    }
+
+    .gal figcaption {
+      padding: 16px 20px;
+      font-size: 13.5px;
+      color: var(--grey)
+    }
+
+    .gal figcaption b {
+      display: block;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--ink);
+      margin-bottom: 2px
+    }
+
+    .faq-item {
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      margin-bottom: 12px;
+      background: #fff;
+      overflow: hidden
+    }
+
+    .faq-q {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 24px;
+      text-align: left;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink)
+    }
+
+    .faq-q .p {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--blue-pale);
+      position: relative;
+      flex-shrink: 0;
+      transition: transform .28s var(--ease), background .28s
+    }
+
+    .faq-q .p::before,
+    .faq-q .p::after {
+      content: "";
+      position: absolute;
+      background: var(--blue);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: background .28s
+    }
+
+    .faq-q .p::before {
+      width: 11px;
+      height: 2px
+    }
+
+    .faq-q .p::after {
+      width: 2px;
+      height: 11px
+    }
+
+    .faq-item.open .p {
+      transform: rotate(45deg);
+      background: var(--blue)
+    }
+
+    .faq-item.open .p::before,
+    .faq-item.open .p::after {
+      background: #fff
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .35s var(--ease)
+    }
+
+    .faq-item.open .faq-a {
+      max-height: 400px
+    }
+
+    .faq-a p {
+      padding: 0 24px 22px;
+      color: var(--grey);
+      font-size: 14.5px
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 18px
+    }
+
+    .chip {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 100px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink)
+    }
+
+    .chip.pri {
+      background: var(--blue-pale);
+      border-color: #C9DAF5;
+      color: var(--blue)
+    }
+
+    .tier-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin: 26px 0 0;
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .tier-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line)
+    }
+
+    .rel {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px
+    }
+
+    .rel a {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      padding: 24px 22px;
+      transition: transform .25s var(--ease), box-shadow .25s var(--ease)
+    }
+
+    .rel a:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--sh-md)
+    }
+
+    .rel h3 {
+      font-size: 16px;
+      margin-bottom: 5px
+    }
+
+    .rel p {
+      font-size: 13.5px;
+      color: var(--grey)
+    }
+
+    .rel .go {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--blue);
+      margin-top: 12px;
+      display: block
+    }
+
+    .cta {
+      background: linear-gradient(140deg, var(--blue-bright), var(--blue) 45%, #082A5C);
+      color: #fff;
+      border-radius: 26px;
+      padding: 60px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden
+    }
+
+    .cta::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 55% 70% at 85% 20%, rgba(255, 255, 255, .15), transparent 62%)
+    }
+
+    .cta>* {
+      position: relative
+    }
+
+    .cta h2 {
+      color: #fff
+    }
+
+    .cta p {
+      color: rgba(255, 255, 255, .85);
+      max-width: 540px;
+      margin: 0 auto 28px
+    }
+
+    .cta-btns {
+      display: flex;
+      gap: 13px;
+      justify-content: center;
+      flex-wrap: wrap
+    }
+
+    @media(max-width:900px) {
+
+      .sys,
+      .props,
+      .grid-3,
+      .rel,
+      .maint-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .steps {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .gal {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    @media(max-width:640px) {
+      .section {
+        padding: 52px 0
+      }
+
+      .container {
+        padding: 0 20px
+      }
+
+      .grid-2,
+      .grid-3,
+      .sys,
+      .props,
+      .warn,
+      .checks,
+      .rel,
+      .steps,
+      .gal,
+      .cost-drivers,
+      .maint-grid {
+        grid-template-columns: 1fr
+      }
+
+      .hero-inner {
+        padding: 52px 0 56px
+      }
+
+      .hero-ctas .btn {
+        flex: 1 1 100%
+      }
+
+      .cost-band,
+      .maint {
+        padding: 30px 24px;
+        border-radius: 18px
+      }
+
+      .cta {
+        padding: 44px 26px;
+        border-radius: 20px
+      }
+
+      .card {
+        padding: 24px 22px
+      }
+    }
+  </style>
+    </body>
+</html>
