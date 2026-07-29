@@ -1,0 +1,9 @@
+import { r as createComponent } from "./consts_ST8RfIaD.mjs";
+import { f as renderTemplate, g as maybeRenderHead } from "./server_CKpIG7MF.mjs";
+import "./Header_D7NLG8g5.mjs";
+//#region src/components/Relatedservice.astro
+var $$Relatedservice = createComponent(($$result, $$props, $$slots) => {
+	return renderTemplate`${maybeRenderHead($$result)}<section class="section alt" data-astro-cid-6rh7o4z3><div class="container" data-astro-cid-6rh7o4z3><div class="narrow" style="text-align:center;margin-bottom:36px" data-astro-cid-6rh7o4z3><span class="eyebrow" data-astro-cid-6rh7o4z3>Related Services</span><h2 data-astro-cid-6rh7o4z3>Other Roofing Services</h2></div><div class="rel" data-astro-cid-6rh7o4z3><a href="/service/roof-replacement/" data-astro-cid-6rh7o4z3><h3 data-astro-cid-6rh7o4z3>Roof Replacement</h3><p data-astro-cid-6rh7o4z3>The full process — tear-off, timeline, permits, and what to expect.</p><span class="go" data-astro-cid-6rh7o4z3>View replacement →</span></a><a href="/service/metal-roofing/" data-astro-cid-6rh7o4z3><h3 data-astro-cid-6rh7o4z3>Metal Roofing</h3><p data-astro-cid-6rh7o4z3>The other main option — longer life, better snow shedding, higher cost.</p><span class="go" data-astro-cid-6rh7o4z3>Compare metal →</span></a><a href="/service/roof-repair/" data-astro-cid-6rh7o4z3><h3 data-astro-cid-6rh7o4z3>Roof Repair</h3><p data-astro-cid-6rh7o4z3>Leaks and lifted shingles traced to the actual source before repair.</p><span class="go" data-astro-cid-6rh7o4z3>View roof repair →</span></a><a href="/service/roof-inspection/" data-astro-cid-6rh7o4z3><h3 data-astro-cid-6rh7o4z3>Roof Inspection</h3><p data-astro-cid-6rh7o4z3>Free, photo-documented condition report before you decide anything.</p><span class="go" data-astro-cid-6rh7o4z3>Book an inspection →</span></a></div></div></section>`;
+}, "/home/claude/roofing_check/roofing/src/components/Relatedservice.astro", void 0);
+//#endregion
+export { $$Relatedservice as t };

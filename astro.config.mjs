@@ -3,15 +3,24 @@
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import node from '@astrojs/node';
+import vercel from '@astrojs/vercel';
+import netlify from '@astrojs/netlify';
 import { defineConfig, fontProviders } from 'astro/config';
+
+// Pick the right adapter automatically depending on where the build is running.
+// Vercel sets process.env.VERCEL, Netlify sets process.env.NETLIFY during their builds.
+// Locally (or on any other host) it falls back to the standalone Node server.
+function getAdapter() {
+	if (process.env.VERCEL) return vercel();
+	if (process.env.NETLIFY) return netlify();
+	return node({ mode: 'standalone' });
+}
 
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://example.com',
 	output: 'static', // pages are static by default
-	adapter: node({
-		mode: 'standalone',
-	}),
+	adapter: getAdapter(),
 	integrations: [mdx(), sitemap()],
 	fonts: [
 		{
