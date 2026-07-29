@@ -11,7 +11,7 @@ import Contact from "./contact.astro";
 
 const LOCATIONALL = `
 query locationall {
-  locationpost (first: 3) {
+  locationpost(first: 3) {
     nodes {
       slug
       title
@@ -49,7 +49,6 @@ query homepagedata {
     homepage {
       imageWaranty
       imageReview
-      
       slidingText
       whatWeDoContent
       whyChooseContent
@@ -75,16 +74,16 @@ query homepagedata {
           mediaItemUrl
         }
       }
-        localExpertisContents
-        expertiseGrids{
+      localExpertisContents
+      expertiseGrids{
         expertiseIcon{
-         node{
+          node{
             mediaItemUrl
-         }
+          }
         }
-          expertiseData
-        }
-        recentProjectsContent
+        expertiseData
+      }
+      recentProjectsContent
       imageContent
       howWorkContent
       howWorkGrid {
@@ -105,19 +104,17 @@ query homepagedata {
         url
         title
       }
-    }
-  }
-  services(first: 5) {
-    nodes {
-      slug
-      title
-      excerpt
-      content
-       servicespost {
-        iconImage {
-          node {
+      whatWeDoGrids{
+        whatIconImage{
+          node{
             mediaItemUrl
           }
+        }
+        serviceName
+        serviceIntro
+        serviceLink{
+          url
+          title
         }
       }
     }
@@ -140,26 +137,26 @@ const rawServices = pagedata?.services?.nodes || [];
 
 // Target custom ordering based on desired service sequence
 const desiredOrder = [
-  "roof-replacement",
-  "roof-repair",
-  "storm-emergency-response",
-  "roof-inspection",
-  "asphalt-shingle-roofing",
-  "metal-roofing",
-  "commercial-flat-roofing",
-  "siding-installation-replacement",
-  "gutters-siding",
+    "roof-replacement",
+    "roof-repair",
+    "storm-emergency-response",
+    "roof-inspection",
+    "asphalt-shingle-roofing",
+    "metal-roofing",
+    "commercial-flat-roofing",
+    "siding-installation-replacement",
+    "gutters-siding",
 ];
 
 // Sort nodes according to the custom array sequence above
 const servicesData = rawServices.sort((a, b) => {
-  const indexA = desiredOrder.indexOf(a.slug);
-  const indexB = desiredOrder.indexOf(b.slug);
-  
-  const rankA = indexA === -1 ? 999 : indexA;
-  const rankB = indexB === -1 ? 999 : indexB;
-  
-  return rankA - rankB;
+    const indexA = desiredOrder.indexOf(a.slug);
+    const indexB = desiredOrder.indexOf(b.slug);
+
+    const rankA = indexA === -1 ? 999 : indexA;
+    const rankB = indexB === -1 ? 999 : indexB;
+
+    return rankA - rankB;
 });
 
 // PERF: build a srcset from the WP-generated image sizes you were already
@@ -252,40 +249,31 @@ function buildSrcSet(sizes) {
                     />
                     <div class="svc-grid">
                         {
-                            servicesData.map((service, index) => (
-                                <div
-                                    class={`svc-card ${index < 2 ? "feature reveal" : "reveal"}`}
-                                >
-                                    <span class="svc-num">
-                                        {String(index + 1).padStart(2, "0")}
-                                    </span>
-                                    <div class="svc-icon">
-                                        <img
-                                            src={
-                                                service?.servicespost?.iconImage
-                                                    ?.node?.mediaItemUrl
-                                            }
-                                            width="23"
-                                            height="23"
-                                            loading="lazy"
-                                            decoding="async"
-                                            alt={service.title}
-                                        />
+                            responsedata?.homepage?.whatWeDoGrids?.map(
+                                (svcItem, index) => (
+                                    <div class={`svc-card ${index < 2 ? 'feature ' : ''}reveal`}>
+                                        <span class="svc-num">{String(index + 1).padStart(2, "0")}</span>
+                                        <div class="svc-icon">
+                                            <img
+                                                src={svcItem?.whatIconImage?.node?.mediaItemUrl || "error"}
+                                                width="23"
+                                                height="23"
+                                                loading="lazy"
+                                                decoding="async"
+                                                alt={svcItem?.serviceName || "Service"}
+                                            />
+                                        </div>
+                                        <h3>{svcItem?.serviceName || "error"}</h3>
+                                        <div set:html={svcItem?.serviceIntro || "error"} />
+                                        <a
+                                            class="svc-arrow"
+                                            href={svcItem?.serviceLink?.url || "#"}
+                                        >
+                                            {svcItem?.serviceLink?.title || "Explore Now"}
+                                        </a>
                                     </div>
-                                    <h3>{service.title}</h3>
-                                    <div
-                                        set:html={
-                                            service.excerpt || service.content
-                                        }
-                                    />
-                                    <a
-                                        class="svc-arrow"
-                                        href={`/service/${service.slug}`}
-                                    >
-                                        Explore Now
-                                    </a>
-                                </div>
-                            ))
+                                )
+                            )
                         }
                     </div>
                 </div>
@@ -299,23 +287,31 @@ function buildSrcSet(sizes) {
                     />
                     <div class="weather-grid">
                         {
-                            responsedata?.homepage?.expertiseGrids.map((items)=>(
-                                <div class="weather-card reveal">
-                            <div class="weather-icon">
-                                <img
-                                    src={items?.expertiseIcon?.node?.mediaItemUrl || "error"}
-                                    alt=""
-                                    height="23"
-                                    width="23"
-                                    loading="lazy"
-                                />
-                            </div>
-                             <Fragment set:html={items?.expertiseData || "error"}/>
-                        </div>
-                            ))
+                            responsedata?.homepage?.expertiseGrids.map(
+                                (items) => (
+                                    <div class="weather-card reveal">
+                                        <div class="weather-icon">
+                                            <img
+                                                src={
+                                                    items?.expertiseIcon?.node
+                                                        ?.mediaItemUrl ||
+                                                    "error"
+                                                }
+                                                alt=""
+                                                height="23"
+                                                width="23"
+                                                loading="lazy"
+                                            />
+                                        </div>
+                                        <Fragment
+                                            set:html={
+                                                items?.expertiseData || "error"
+                                            }
+                                        />
+                                    </div>
+                                ),
+                            )
                         }
-                        
-                        
                     </div>
                 </div>
             </section>
@@ -465,15 +461,20 @@ function buildSrcSet(sizes) {
                         {
                             postrespons?.map((postitems) => {
                                 const sizes =
-                                    postitems?.featuredImage?.node
-                                        ?.mediaDetails?.sizes;
+                                    postitems?.featuredImage?.node?.mediaDetails
+                                        ?.sizes;
                                 const srcset = buildSrcSet(sizes);
                                 return (
                                     <a
-                                        href={`/location/${postitems.slug}`}
+                                        href="javascript:void(0)"
                                         class="photo-frame"
                                         data-cat="residential"
                                     >
+                                    {/* <a
+                                        href={`/location/${postitems.slug}`}
+                                        class="photo-frame"
+                                        data-cat="residential"
+                                    > */}
                                         <img
                                             src={
                                                 postitems?.featuredImage?.node
@@ -504,7 +505,7 @@ function buildSrcSet(sizes) {
             </section>
 
             <!-- Testimonials -->
-            <section class="section testi">
+            <!-- <section class="section testi">
                 <div class="container">
                     <div
                         class="sec-header"
@@ -517,7 +518,7 @@ function buildSrcSet(sizes) {
                         verified Google reviews before launch.
                     </p>
                 </div>
-            </section>
+            </section> -->
 
             <section class="emergency">
                 <div

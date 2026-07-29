@@ -8,45 +8,52 @@ import Relatedservice from "../../components/Relatedservice.astro";
 
 const PAGEJSON = `
 query homepagedata {
-  page(id: "/roof-replacement", idType: URI) {
+  page(id: "/gutters-decks", idType: URI) {
     title
     content
-    roofReplacement {
-      whatWeContent
-      repairReplaceContent
-      repairReplaceList {
-        aboutRepairReplace
+    guttersDecks{
+      whatWeDoContent
+      partOneContent
+      assessmentContent
+      assessmentGrids{
+        assessmentGridData
       }
-      repairReplaceLastData
-      scopeWorkContent
-      scopeLists{
+      optionsContent
+      optionsGrids{
+        optionsGridData
+      }
+      optionsLastData
+      scopeContent
+      scopeList{
         listName
       }
-      optionContent
-      optionGrids{
-        optionData
+      straightPricingContent
+      partTwoContent
+      whatWeBuildContent
+      whatWeBuildGrids{
+        whatWeBuildGridData
       }
-      lastOptionData
-      straightPriceContent
-      howItWorkContent
-      howworkGrids{
-        howWorkData
+      materialsContent
+      materialsGrid{
+        materialData
       }
+      scopeOfWorkSecondContent
+      scopeOfWorkSecondList{
+        scopeOfWorkSecondListName
+      }
+      straightPricingSecondSecContent
       localExpertiseContent
-      localExpertiseGrid{
-        localExpertiseData
-      }
-      whyVincContent
-      whyVincGrids{
-        vincGridData
+      localExpertiseGrids{
+        localExpertiseGridContent
       }
       faqContent
       faqList{
-        faqQuestion
-        faqAnswer
+        faqTitle
+        faqAnswers
       }
-      ctaData
+      finalCtaConatent
     }
+
   }
 }
 `;
@@ -63,119 +70,137 @@ const alldata = pagedata?.page;
     <Header />
 
     <main id="top">
+      <!-- ============ HERO ============ -->
       <section class="page-hero">
         <div class="container">
           <div class="breadcrumb">
             <a href="../index.html">Home</a>
             <span>/</span>
-            <span style="color:#fff;">Roof Replacement</span>
+            <span style="color:#fff;">Gutters & Decks</span>
           </div>
           <Fragment set:html={alldata?.content || "error"} />
         </div>
       </section>
+
       <!-- ============ INTRO ============ -->
       <section class="section">
         <div
           class="container narrow"
-          set:html={alldata?.roofReplacement?.whatWeContent || "error"}
+          set:html={alldata?.guttersDecks?.whatWeDoContent || "error"}
         />
       </section>
 
-      <!-- ============ SIGNS ============ -->
-      <section class="section alt">
+      <!-- ============================================================
+     PART ONE: GUTTERS
+============================================================= -->
+      <section class="svc-open" id="gutters">
+        <div class="container">
+          <Fragment
+            set:html={alldata?.guttersDecks?.partOneContent || "error"}
+          />
+        </div>
+      </section>
+
+      <!-- Gutter signs -->
+      <section class="section">
         <div class="container">
           <div
             class="narrow"
             style="text-align:center;margin-bottom:36px"
-            set:html={alldata?.roofReplacement?.repairReplaceContent || "error"}
+            set:html={alldata?.guttersDecks?.assessmentContent || "error"}
           />
           <div class="signs">
             {
-              alldata?.roofReplacement?.repairReplaceList.map(
-                (roofreplitems, index) => (
-                  <div class="sign">
+              alldata?.guttersDecks?.assessmentGrids?.map(
+                (griditems, index) => (
+                  <div class="sg">
                     <span class="n">{String(index + 1).padStart(2, "0")}</span>
-                    <div
-                      set:html={roofreplitems?.aboutRepairReplace || "error"}
-                    />
+                    <div set:html={griditems?.assessmentGridData || "error"} />
                   </div>
                 ),
               )
             }
           </div>
-          <div
-            set:html={alldata?.roofReplacement?.repairReplaceLastData ||
-              "error"}
-          />
         </div>
       </section>
 
-      <!-- ============ WHAT'S INCLUDED ============ -->
-      <section class="section">
-        <div class="container narrow">
-          <Fragment
-            set:html={alldata?.roofReplacement?.scopeWorkContent || "error"}
-          />
-          <ul class="checks" style="margin-top: 20px;">
-            {
-              alldata?.roofReplacement?.scopeLists.map((scopeitems) => (
-                <li>{scopeitems?.listName || "error"}</li>
-              ))
-            }
-          </ul>
-        </div>
-      </section>
-
-      <!-- ============ MATERIALS ============ -->
+      <!-- Gutter options -->
       <section class="section alt">
         <div class="container">
           <div
             class="narrow"
-            style="text-align:center;margin-bottom:36px"
-            set:html={alldata?.roofReplacement?.optionContent || "error"}
+            style="text-align:center;margin-bottom:38px"
+            set:html={alldata?.guttersDecks?.optionsContent || "error"}
           />
-          <div class="grid-2">
+          <div class="sys">
             {
-              alldata?.roofReplacement?.optionGrids.map((mapitems) => (
-                <div class="card" set:html={mapitems?.optionData || "error"} />
+              alldata?.guttersDecks?.optionsGrids?.map((optitems, index) => (
+                <div
+                  class={`s ${index === 1 ? "feat" : ""}`}
+                  set:html={optitems?.optionsGridData || "error"}
+                />
               ))
             }
           </div>
           <div
             class="card pale"
             style="margin-top:22px"
-            set:html={alldata?.roofReplacement?.lastOptionData || "error"}
+            set:html={alldata?.guttersDecks?.optionsLastData || "error"}
           />
         </div>
       </section>
 
-      <!-- ============ COST ============ -->
+      <!-- Gutter scope + cost -->
       <section class="section">
+        <div class="container narrow">
+          <Fragment set:html={alldata?.guttersDecks?.scopeContent || "error"} />
+          <ul class="checks">
+            {
+              alldata?.guttersDecks?.scopeList?.map((scopeitems) => (
+                <li set:html={scopeitems?.listName || "error"} />
+              ))
+            }
+          </ul>
+        </div>
+      </section>
+
+      <section class="section alt">
         <div class="container">
           <div
             class="cost-band"
-            set:html={alldata?.roofReplacement?.straightPriceContent || "error"}
+            set:html={alldata?.guttersDecks?.straightPricingContent || "error"}
           />
         </div>
       </section>
 
-      <!-- ============ PROCESS ============ -->
-      <section class="section alt">
+      <!-- ============================================================
+     PART TWO: DECKS
+============================================================= -->
+      <section class="svc-open" id="decks">
+        <div class="container">
+          <Fragment
+            set:html={alldata?.guttersDecks?.partTwoContent || "error"}
+          />
+        </div>
+      </section>
+
+      <!-- Deck services -->
+      <section class="section">
         <div class="container">
           <div
             class="narrow"
             style="text-align:center;margin-bottom:36px"
-            set:html={alldata?.roofReplacement?.howItWorkContent || "error"}
+            set:html={alldata?.guttersDecks?.whatWeBuildContent || "error"}
           />
-          <div class="steps">
+          <div class="signs">
             {
-              alldata?.roofReplacement?.howworkGrids.map(
-                (roofrelitems, index) => (
-                  <div class="step">
-                    <span class="n">
-                      Step {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <Fragment set:html={roofrelitems?.howWorkData || "error"} />
+              alldata?.guttersDecks?.whatWeBuildGrids?.map(
+                (builditems, index) => (
+                  <div class="sg">
+                    <span class="n">{String(index + 1).padStart(2, "0")}</span>
+                    <div
+                      set:html={builditems?.whatWeBuildGridData || "error"}
+                    />
                   </div>
                 ),
               )
@@ -184,50 +209,76 @@ const alldata = pagedata?.page;
         </div>
       </section>
 
-      <!-- ============ NH WEATHER ============ -->
+      <!-- Decking materials -->
+      <section class="section alt">
+        <div class="container">
+          <div
+            class="narrow"
+            style="text-align:center;margin-bottom:38px"
+            set:html={alldata?.guttersDecks?.materialsContent || "error"}
+          />
+          <div class="sys">
+            {
+              alldata?.guttersDecks?.materialsGrid?.map(
+                (materialitems, index) => (
+                  <div
+                    class={`s ${index === 1 ? "feat" : ""}`}
+                    set:html={materialitems?.materialData || "error"}
+                  />
+                ),
+              )
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- Deck build standards -->
+      <section class="section">
+        <div class="container narrow">
+          <Fragment
+            set:html={alldata?.guttersDecks?.scopeOfWorkSecondContent ||
+              "error"}
+          />
+          <ul class="checks">
+            {
+              alldata?.guttersDecks?.scopeOfWorkSecondList?.map((scopetwo) => (
+                <li set:html={scopetwo?.scopeOfWorkSecondListName || "error"} />
+              ))
+            }
+          </ul>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="container">
+          <div
+            class="cost-band"
+            set:html={alldata?.guttersDecks?.straightPricingSecondSecContent ||
+              "error"}
+          />
+        </div>
+      </section>
+
+      <!-- ============ NH CONDITIONS ============ -->
       <section class="section">
         <div class="container">
           <div
             class="narrow"
             style="margin-bottom:36px"
-            set:html={alldata?.roofReplacement?.localExpertiseContent ||
-              "error"}
+            set:html={alldata?.guttersDecks?.localExpertiseContent || "error"}
           />
           <div class="grid-2">
             {
-              alldata?.roofReplacement?.localExpertiseGrid.map((rooflists) => (
+              alldata?.guttersDecks?.localExpertiseGrids?.map((localitems) => (
                 <div
                   class="card"
-                  set:html={rooflists?.localExpertiseData || "error"}
+                  set:html={localitems?.localExpertiseGridContent || "error"}
                 />
               ))
             }
           </div>
         </div>
       </section>
-
-      <!-- ============ WHY US ============ -->
-      <section class="section alt">
-        <div class="container">
-          <div
-            class="narrow"
-            style="text-align:center;margin-bottom:36px"
-            set:html={alldata?.roofReplacement?.whyVincContent || "error"}
-          />
-          <div class="grid-2">
-            {
-              alldata?.roofReplacement?.whyVincGrids.map((whyitems) => (
-                <div
-                  class="card"
-                  set:html={whyitems?.vincGridData || "error"}
-                />
-              ))
-            }
-          </div>
-        </div>
-      </section>
-
-      <!-- ============ RECENT WORK ============ -->
 
       <!-- ============ FAQ ============ -->
       <section class="section">
@@ -235,23 +286,20 @@ const alldata = pagedata?.page;
           <div
             class="sec-header"
             style="text-align:center; margin:0 auto 40px;"
-            set:html={alldata?.roofReplacement?.faqContent || "error"}
+            set:html={alldata?.guttersDecks?.faqContent || "error"}
           />
           <div class="faq-list">
             {
-              alldata?.roofReplacement?.faqList.map((faqitems) => (
+              alldata?.guttersDecks?.faqList?.map((faqitems) => (
                 <div class="faq-item">
-                  <>
-                    <button class="faq-q">
-                      <>
-                        <span>{faqitems?.faqQuestion || "error"} </span>
-                        <span class="plus" />
-                      </>
-                    </button>
-                    <div class="faq-a" set:html={faqitems?.faqAnswer || "error"}>
-                     
-                    </div>
-                  </>
+                  <button class="faq-q">
+                    <span>{faqitems?.faqTitle || "error"}</span>
+                    <span class="plus" />
+                  </button>
+                  <div
+                    class="faq-a"
+                    set:html={faqitems?.faqAnswers || "error"}
+                  />
                 </div>
               ))
             }
@@ -259,57 +307,103 @@ const alldata = pagedata?.page;
         </div>
       </section>
 
-      <!-- ============ SERVICE AREAS ============ -->
-
       <!-- ============ RELATED SERVICES ============ -->
-      <Relatedservice/>
+      <Relatedservice />
 
       <!-- ============ FINAL CTA ============ -->
       <section class="cta-band">
         <div class="cta-inner">
-          <div class="center-ctas" set:html={alldata?.roofReplacement?.ctaData || "error"}>
-           
-          </div>
+          <div
+            class="center-ctas"
+            set:html={alldata?.guttersDecks?.finalCtaConatent || "error"}
+          />
         </div>
       </section>
     </main>
 
     <Footer />
     <style is:global>
+      :root {
+        --blue: #0d47a1;
+        --blue-bright: #1a5fd0;
+        --blue-soft: #4a7fd4;
+        --blue-pale: #eaf0fa;
+        --deep: #071f45;
+        --deep-2: #0a2e6b;
+        --ink: #111111;
+        --white: #ffffff;
+        --off: #f6f7f9;
+        --grey: #54575c;
+        --grey-light: #8a8d92;
+        --line: #e6e8ec;
+        --r-lg: 22px;
+        --r-md: 16px;
+        --sh-md:
+          0 4px 10px rgba(17, 17, 17, 0.05), 0 16px 40px rgba(17, 17, 17, 0.1);
+        --sh-blue: 0 8px 24px rgba(13, 71, 161, 0.32);
+        --ease: cubic-bezier(0.22, 0.61, 0.21, 1);
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      section[id] {
+        scroll-margin-top: 20px;
+      }
+      body {
+        font-family: "Roboto", sans-serif;
+        font-weight: 400;
+        color: var(--ink);
+        background: var(--white);
+        line-height: 1.7;
+        font-size: 15.5px;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      ul {
+        list-style: none;
+      }
+
       h1,
       h2,
       h3,
       h4 {
         font-family: "Montserrat", sans-serif;
         font-weight: 700;
-        /* color: var(--ink); */
+        color: var(--ink);
         letter-spacing: -0.02em;
         line-height: 1.2;
       }
-
       h2 {
         font-size: clamp(25px, 3.4vw, 34px);
         margin-bottom: 18px;
       }
-
       h3 {
         font-size: 19px;
         font-weight: 600;
         margin-bottom: 8px;
       }
-
       p {
         margin-bottom: 16px;
       }
-
       p:last-child {
         margin-bottom: 0;
       }
-
       .section {
         padding: 76px 0;
       }
-
       .eyebrow {
         font-family: "Montserrat", sans-serif;
         display: inline-flex;
@@ -322,7 +416,6 @@ const alldata = pagedata?.page;
         color: var(--blue);
         margin-bottom: 16px;
       }
-
       .eyebrow::before {
         content: "";
         width: 7px;
@@ -330,12 +423,10 @@ const alldata = pagedata?.page;
         background: var(--blue);
         clip-path: polygon(50% 0, 100% 100%, 0 100%);
       }
-
       .lead {
         font-size: 17px;
         color: var(--grey);
       }
-
       .btn {
         font-family: "Montserrat", sans-serif;
         display: inline-flex;
@@ -351,37 +442,23 @@ const alldata = pagedata?.page;
           transform 0.25s var(--ease),
           box-shadow 0.25s var(--ease);
       }
-
       .btn-blue {
         background: linear-gradient(180deg, var(--blue-bright), var(--blue));
         color: #fff;
         box-shadow: var(--sh-blue);
       }
-
       .btn-blue:hover {
         transform: translateY(-2px);
       }
-
       .btn-ghost-w {
         border: 1.5px solid rgba(255, 255, 255, 0.35);
         color: #fff;
       }
-
       .btn-ghost-w:hover {
         border-color: #fff;
         background: rgba(255, 255, 255, 0.08);
       }
 
-      .btn-ghost {
-        border: 1.5px solid var(--line);
-        color: var(--ink);
-      }
-
-      .btn-ghost:hover {
-        border-color: var(--ink);
-      }
-
-      /* Hero */
       .hero {
         background: linear-gradient(
           155deg,
@@ -393,7 +470,6 @@ const alldata = pagedata?.page;
         position: relative;
         overflow: hidden;
       }
-
       .hero::before {
         content: "";
         position: absolute;
@@ -404,7 +480,6 @@ const alldata = pagedata?.page;
           transparent 62%
         );
       }
-
       .hero-grid {
         position: absolute;
         inset: 0;
@@ -418,35 +493,30 @@ const alldata = pagedata?.page;
           transparent 78%
         );
       }
-
       .hero-inner {
         position: relative;
         z-index: 2;
         padding: 72px 0 76px;
-        max-width: 720px;
+        max-width: 730px;
       }
-
       .hero h1 {
         color: #fff;
-        font-size: clamp(30px, 4.4vw, 48px);
+        font-size: clamp(30px, 4.3vw, 47px);
         margin-bottom: 20px;
         line-height: 1.14;
       }
-
       .hero p {
         color: #c6d4ec;
         font-size: 17px;
-        max-width: 600px;
+        max-width: 610px;
         margin-bottom: 32px;
       }
-
       .hero-ctas {
         display: flex;
         gap: 13px;
         flex-wrap: wrap;
         margin-bottom: 34px;
       }
-
       .hero-trust {
         display: flex;
         flex-wrap: wrap;
@@ -454,7 +524,6 @@ const alldata = pagedata?.page;
         border-top: 1px solid rgba(255, 255, 255, 0.12);
         padding-top: 24px;
       }
-
       .hero-trust span {
         font-family: "Montserrat", sans-serif;
         font-size: 12px;
@@ -465,14 +534,12 @@ const alldata = pagedata?.page;
         align-items: center;
         gap: 7px;
       }
-
       .hero-trust span::before {
         content: "✓";
         color: var(--blue-soft);
         font-weight: 700;
       }
 
-      /* Breadcrumb */
       .crumb {
         background: var(--off);
         border-bottom: 1px solid var(--line);
@@ -480,63 +547,167 @@ const alldata = pagedata?.page;
         font-size: 13px;
         color: var(--grey);
       }
-
       .crumb a:hover {
         color: var(--blue);
       }
-
       .crumb span {
         margin: 0 8px;
         color: var(--grey-light);
       }
 
-      /* Generic blocks */
+      .svc-open {
+        background: var(--deep);
+        color: #fff;
+        padding: 52px 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .svc-open::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 55% 75% at 88% 20%,
+          rgba(26, 95, 208, 0.45),
+          transparent 62%
+        );
+      }
+      .svc-open .container {
+        position: relative;
+      }
+      .svc-open .num {
+        font-family: "Montserrat", sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #9cc0ff;
+        display: block;
+        margin-bottom: 12px;
+      }
+      .svc-open h2 {
+        color: #fff;
+        margin-bottom: 12px;
+      }
+      .svc-open p {
+        color: #c6d4ec;
+        max-width: 640px;
+        margin: 0;
+      }
+
       .alt {
         background: var(--off);
       }
-
       .grid-2 {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 22px;
       }
-
       .grid-3 {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 22px;
       }
-
       .card {
         background: #fff;
         border: 1px solid var(--line);
         border-radius: var(--r-lg);
         padding: 30px 26px;
       }
-
       .card.pale {
         background: var(--blue-pale);
         border-color: #c9daf5;
       }
-
-      .card h3 {
-        color: var(--ink);
-      }
-
       .card p {
         color: var(--grey);
         font-size: 14.5px;
       }
 
-      /* Signs list */
+      .sys {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+      }
+      .sys .s {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      .sys .s:first-child {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.08);
+      }
+      .sys .top {
+        padding: 24px 26px 20px;
+        border-bottom: 1px solid var(--line);
+      }
+      .sys .tag {
+        font-family: "Montserrat", sans-serif;
+        font-size: 10.5px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--blue);
+        background: var(--blue-pale);
+        padding: 5px 12px;
+        border-radius: 100px;
+        display: inline-block;
+        margin-bottom: 12px;
+      }
+      .sys .s.feat .tag {
+        background: var(--blue);
+        color: #fff;
+      }
+      .sys h3 {
+        font-size: 19px;
+        margin-bottom: 6px;
+      }
+      .sys .top p {
+        font-size: 14px;
+        color: var(--grey);
+        margin: 0;
+      }
+      .sys .body {
+        padding: 22px 26px;
+        flex: 1;
+      }
+      .sys .body li {
+        font-size: 14px;
+        color: var(--grey);
+        padding: 7px 0 7px 20px;
+        position: relative;
+      }
+      .sys .body li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 15px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--blue-soft);
+      }
+      .sys .foot {
+        padding: 16px 26px;
+        background: var(--off);
+        font-size: 13px;
+        color: var(--grey);
+      }
+      .sys .foot b {
+        font-family: "Montserrat", sans-serif;
+        color: var(--ink);
+        font-weight: 600;
+      }
+
       .signs {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 14px;
-        margin-top: 8px;
       }
-
-      .sign {
+      .sg {
         display: flex;
         gap: 14px;
         padding: 20px 22px;
@@ -544,8 +715,7 @@ const alldata = pagedata?.page;
         border: 1px solid var(--line);
         border-radius: var(--r-md);
       }
-
-      .sign .n {
+      .sg .n {
         font-family: "Montserrat", sans-serif;
         font-weight: 700;
         font-size: 13px;
@@ -553,32 +723,27 @@ const alldata = pagedata?.page;
         flex-shrink: 0;
         padding-top: 2px;
       }
-
-      .sign h3 {
+      .sg h3 {
         font-size: 16px;
         margin-bottom: 4px;
       }
-
-      .sign p {
+      .sg p {
         font-size: 14px;
         color: var(--grey);
       }
 
-      /* Checklist */
       .checks {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 12px 28px;
         margin-top: 24px;
       }
-
       .checks li {
         display: flex;
         gap: 12px;
         font-size: 15px;
         align-items: flex-start;
       }
-
       .checks li::before {
         content: "";
         width: 20px;
@@ -593,16 +758,14 @@ const alldata = pagedata?.page;
         background-repeat: no-repeat;
       }
 
-      /* Cost */
       .cost-band {
         background: var(--deep);
         color: #fff;
         border-radius: var(--r-lg);
-        padding: 44px;
+        padding: 42px;
         position: relative;
         overflow: hidden;
       }
-
       .cost-band::before {
         content: "";
         position: absolute;
@@ -613,29 +776,24 @@ const alldata = pagedata?.page;
           transparent 62%
         );
       }
-
       .cost-band > * {
         position: relative;
       }
-
       .cost-band h2 {
         color: #fff;
       }
-
       .cost-figure {
         font-family: "Montserrat", sans-serif;
         font-weight: 700;
-        font-size: clamp(34px, 5vw, 52px);
+        font-size: clamp(29px, 4.3vw, 44px);
         color: #9cc0ff;
         line-height: 1.1;
         margin: 6px 0 14px;
         letter-spacing: -0.03em;
       }
-
       .cost-band p {
         color: #c6d4ec;
       }
-
       .cost-drivers {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -644,100 +802,17 @@ const alldata = pagedata?.page;
         padding-top: 26px;
         border-top: 1px solid rgba(255, 255, 255, 0.14);
       }
-
       .cost-drivers li {
         font-size: 14.5px;
         color: #c6d4ec;
         display: flex;
         gap: 11px;
       }
-
       .cost-drivers li b {
         color: #fff;
         font-weight: 500;
       }
 
-      /* Steps */
-      .steps {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 18px;
-        margin-top: 8px;
-      }
-
-      .step {
-        background: #fff;
-        border: 1px solid var(--line);
-        border-radius: var(--r-md);
-        padding: 26px 22px;
-      }
-
-      .step .n {
-        font-family: "Montserrat", sans-serif;
-        font-size: 12px;
-        font-weight: 700;
-        color: var(--blue);
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        display: block;
-        margin-bottom: 26px;
-      }
-
-      .step h3 {
-        font-size: 16px;
-        margin-bottom: 6px;
-      }
-
-      .step p {
-        font-size: 13.5px;
-        color: var(--grey);
-      }
-
-      /* Gallery */
-      .gal {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-      }
-
-      .gal figure {
-        border: 1px solid var(--line);
-        border-radius: var(--r-lg);
-        overflow: hidden;
-        background: #fff;
-      }
-
-      .gal .ph {
-        aspect-ratio: 4/3;
-        background: linear-gradient(150deg, var(--deep), var(--deep-2));
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #4a7fd4;
-        font-size: 12px;
-        font-family: "Montserrat", sans-serif;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        text-align: center;
-        padding: 20px;
-      }
-
-      .gal figcaption {
-        padding: 16px 20px;
-        font-size: 13.5px;
-        color: var(--grey);
-      }
-
-      .gal figcaption b {
-        display: block;
-        font-family: "Montserrat", sans-serif;
-        font-weight: 600;
-        font-size: 15px;
-        color: var(--ink);
-        margin-bottom: 2px;
-      }
-
-      /* FAQ */
       .faq-item {
         border: 1px solid var(--line);
         border-radius: var(--r-md);
@@ -745,7 +820,6 @@ const alldata = pagedata?.page;
         background: #fff;
         overflow: hidden;
       }
-
       .faq-q {
         width: 100%;
         display: flex;
@@ -762,8 +836,7 @@ const alldata = pagedata?.page;
         font-weight: 600;
         color: var(--ink);
       }
-
-      .faq-q .p {
+      .faq-q .plus {
         width: 28px;
         height: 28px;
         border-radius: 50%;
@@ -774,9 +847,8 @@ const alldata = pagedata?.page;
           transform 0.28s var(--ease),
           background 0.28s;
       }
-
-      .faq-q .p::before,
-      .faq-q .p::after {
+      .faq-q .plus::before,
+      .faq-q .plus::after {
         content: "";
         position: absolute;
         background: var(--blue);
@@ -785,258 +857,88 @@ const alldata = pagedata?.page;
         transform: translate(-50%, -50%);
         transition: background 0.28s;
       }
-
-      .faq-q .p::before {
+      .faq-q .plus::before {
         width: 11px;
         height: 2px;
       }
-
-      .faq-q .p::after {
+      .faq-q .plus::after {
         width: 2px;
         height: 11px;
       }
-
-      .faq-item.open .p {
+      .faq-item.open .plus {
         transform: rotate(45deg);
         background: var(--blue);
       }
-
-      .faq-item.open .p::before,
-      .faq-item.open .p::after {
+      .faq-item.open .plus::before,
+      .faq-item.open .plus::after {
         background: #fff;
       }
-
       .faq-a {
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.35s var(--ease);
       }
-
       .faq-item.open .faq-a {
-        max-height: 340px;
+        max-height: 420px;
       }
-
       .faq-a p {
         padding: 0 24px 22px;
         color: var(--grey);
         font-size: 14.5px;
       }
 
-      /* Areas */
-      .chips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 9px;
-        margin-top: 18px;
-      }
-
-      .chip {
-        font-family: "Montserrat", sans-serif;
-        font-size: 13px;
-        font-weight: 600;
-        padding: 10px 18px;
-        border-radius: 100px;
-        border: 1px solid var(--line);
-        background: #fff;
-        color: var(--ink);
-      }
-
-      .chip.pri {
-        background: var(--blue-pale);
-        border-color: #c9daf5;
-        color: var(--blue);
-      }
-
-      .tier-label {
-        font-family: "Montserrat", sans-serif;
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--blue);
-        margin: 26px 0 0;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .tier-label::after {
-        content: "";
-        flex: 1;
-        height: 1px;
-        background: var(--line);
-      }
-
-      /* Related */
-      .rel {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 18px;
-      }
-
-      .rel a {
-        background: #fff;
-        border: 1px solid var(--line);
-        border-radius: var(--r-md);
-        padding: 24px 22px;
-        transition:
-          transform 0.25s var(--ease),
-          box-shadow 0.25s var(--ease);
-      }
-
-      .rel a:hover {
-        transform: translateY(-4px);
-        box-shadow: var(--sh-md);
-      }
-
-      .rel h3 {
-        font-size: 16px;
-        margin-bottom: 5px;
-      }
-
-      .rel p {
-        font-size: 13.5px;
-        color: var(--grey);
-      }
-
-      .rel .go {
-        font-family: "Montserrat", sans-serif;
-        font-size: 12.5px;
-        font-weight: 700;
-        color: var(--blue);
-        margin-top: 12px;
-        display: block;
-      }
-
-      /* Final CTA */
-      .cta {
-        background: linear-gradient(
-          140deg,
-          var(--blue-bright),
-          var(--blue) 45%,
-          #082a5c
-        );
-        color: #fff;
-        border-radius: 26px;
-        padding: 60px 48px;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .cta::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(
-          ellipse 55% 70% at 85% 20%,
-          rgba(255, 255, 255, 0.15),
-          transparent 62%
-        );
-      }
-
-      .cta > * {
-        position: relative;
-      }
-
-      .cta h2 {
-        color: #fff;
-      }
-
-      .cta p {
-        color: rgba(255, 255, 255, 0.85);
-        max-width: 520px;
-        margin: 0 auto 28px;
-      }
-
-      .cta-btns {
-        display: flex;
-        gap: 13px;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-
-      .cta .btn-blue {
-        background: #fff;
-        color: var(--blue);
-        box-shadow: none;
-      }
-
       @media (max-width: 900px) {
-        .grid-3,
-        .rel {
-          grid-template-columns: 1fr 1fr;
-        }
-
-        .steps {
-          grid-template-columns: 1fr 1fr;
-        }
-
-        .gal {
+        .sys,
+        .grid-3 {
           grid-template-columns: 1fr 1fr;
         }
       }
-
       @media (max-width: 640px) {
         .section {
           padding: 52px 0;
         }
-
         .container {
           padding: 0 20px;
         }
-
         .grid-2,
         .grid-3,
+        .sys,
         .signs,
         .checks,
-        .rel,
-        .steps,
-        .gal,
         .cost-drivers {
           grid-template-columns: 1fr;
         }
-
         .hero-inner {
           padding: 52px 0 56px;
         }
-
         .hero-ctas .btn {
           flex: 1 1 100%;
         }
-
         .cost-band {
-          padding: 30px 24px;
+          padding: 28px 22px;
         }
-
-        .cta {
-          padding: 44px 26px;
-          border-radius: 20px;
-        }
-
         .card {
           padding: 24px 22px;
+        }
+        .svc-open {
+          padding: 38px 0;
         }
       }
     </style>
     <script is:inline>
       document.addEventListener("DOMContentLoaded", () => {
-        // Select all FAQ question buttons
         const faqButtons = document.querySelectorAll(".faq-q");
 
         faqButtons.forEach((button) => {
           button.addEventListener("click", () => {
-            // Find the parent item of the clicked button
             const currentItem = button.closest(".faq-item");
 
-            // Optional: Close all other open FAQ items
             document.querySelectorAll(".faq-item").forEach((item) => {
               if (item !== currentItem) {
                 item.classList.remove("open");
               }
             });
 
-            // Toggle the 'open' class on the clicked item
             currentItem.classList.toggle("open");
           });
         });

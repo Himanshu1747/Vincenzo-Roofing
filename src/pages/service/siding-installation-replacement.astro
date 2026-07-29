@@ -5,46 +5,48 @@ import Header from "../../components/Header.astro";
 import { queryWordPress } from "../../lib/wordpress";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 import Relatedservice from "../../components/Relatedservice.astro";
+
 const PAGEJSON = `
 query homepagedata {
-  page(id: "/metal-roofing", idType: URI) {
+  page(id: "/siding-installation-replacement", idType: URI) {
     title
     content
-    metalRoofing{
+    sidingInstallationReplacement{
       whatWeDoContent
-      compresiionContent
-      compressionTable
-      installContent
-      installcontentGrid{
-        installDataaGrid
+      assessmentContent
+      assessmentGrids{
+        assessmentGridContent
       }
-      whyMetalContent
-      whyMetalGrid{
-        whymetalLists
+      materialsContent
+      materialsGrids{
+        materialsTopBodyContent
+        bottomBodyContent
       }
-      straightAnswerContent
-      straightanswerLists{
-        aswerListsss
+      materialsLastContent
+      underTheSurfaceContent
+      scopeOfWorkContent
+      scopeWorkList{
+        scopeListName
       }
-      scopeworkData
-      scopeLists{
-        scopelistName
+      straightPricingContent
+      howItWorksContent
+      howItWorksGrids{
+        howItWorksStepContent
       }
-      traightPricingContent
-      howWorkContent
-      stephowWork{
-        workContentHow
+      worthConsideringContent
+      worthConsideringGrids{
+        worthConsideringGridContent
       }
-      expertiseContent
-      expertiseGrid{
-        expertiseData
+      localExpertiseContent
+      localExpertiseGrid{
+        localExpertiseGridContent
       }
       faqContent
       faqList{
         faqTitle
         faqAnswer
       }
-      ctaContent
+      finalCtaContent
     }
 
   }
@@ -63,138 +65,101 @@ const alldata = pagedata?.page;
         <Header />
 
         <main id="top">
+            <!-- ============ HERO ============ -->
             <section class="page-hero">
                 <div class="container">
                     <div class="breadcrumb">
-                        <a href="../index.html">Home</a>
-                        <span>/</span>
-                        <span style="color:#fff;">metal-roofing</span>
+                        <a href="../index.html">Home</a><span>/</span><span
+                            style="color:#fff;"
+                            > Siding Installation & Replacement</span
+                        >
                     </div>
+
                     <Fragment set:html={alldata?.content || "error"} />
                 </div>
             </section>
+
+            <!-- ============ INTRO ============ -->
             <section class="section">
                 <div
                     class="container narrow"
-                    set:html={alldata?.metalRoofing?.whatWeDoContent || "error"}
+                    set:html={alldata?.sidingInstallationReplacement?.whatWeDoContent || "error"}
                 />
             </section>
 
-            <!-- ============ METAL VS ASPHALT ============ -->
-            <section class="section alt">
-                <div class="container">
-                    <div
-                        class="narrow"
-                        style="text-align:center;margin-bottom:38px"
-                        set:html={alldata?.metalRoofing?.compresiionContent ||
-                            "error"}
-                    />
-                    <div
-                        class="cmp"
-                        set:html={alldata?.metalRoofing?.compressionTable ||
-                            "error"}
-                    />
-                </div>
-            </section>
-
-            <!-- ============ SYSTEM TYPES ============ -->
-            <section class="section">
-                <div class="container">
-                    <div
-                        class="narrow"
-                        style="text-align:center;margin-bottom:38px"
-                        set:html={alldata?.metalRoofing?.installContent ||
-                            "error"}
-                    />
-                    <div class="sys">
-                        {
-                            alldata?.metalRoofing?.installcontentGrid.map(
-                                (items) => (
-                                    <div
-                                        class="s"
-                                        set:html={
-                                            items?.installDataaGrid || "error"
-                                        }
-                                    />
-                                ),
-                            )
-                        }
-                    </div>
-                </div>
-            </section>
-
-            <!-- ============ BENEFITS ============ -->
+            <!-- ============ SIGNS ============ -->
             <section class="section alt">
                 <div class="container">
                     <div
                         class="narrow"
                         style="text-align:center;margin-bottom:36px"
-                        set:html={alldata?.metalRoofing?.whyMetalContent ||
-                            "error"}
+                        set:html={alldata?.sidingInstallationReplacement?.assessmentContent || "error"}
                     />
-                    <div class="ben">
+                    <div class="signs">
                         {
-                            alldata?.metalRoofing?.whyMetalGrid?.map(
-                                (metalitems, index) => (
-                                    <div class="b" key={index}>
-                                        <span class="n">
-                                            {String(index + 1).padStart(2, "0")}
-                                        </span>
-                                        <div
-                                            set:html={
-                                                metalitems?.whymetalLists ||
-                                                "error"
-                                            }
-                                        />
+                            alldata?.sidingInstallationReplacement?.assessmentGrids?.map(
+                                (signitems, index) => (
+                                    <div class="sg">
+                                        <span class="n">{String(index + 1).padStart(2, "0")}</span>
+                                        <div set:html={signitems?.assessmentGridContent || "error"} />
                                     </div>
-                                ),
+                                )
                             )
                         }
                     </div>
                 </div>
             </section>
 
-            <!-- ============ MYTHS ============ -->
+            <!-- ============ MATERIALS ============ -->
             <section class="section">
                 <div class="container">
                     <div
                         class="narrow"
                         style="text-align:center;margin-bottom:38px"
-                        set:html={alldata?.metalRoofing
-                            ?.straightAnswerContent || "error"}
+                        set:html={alldata?.sidingInstallationReplacement?.materialsContent || "error"}
                     />
-                    <div class="grid-2">
+                    <div class="sys">
                         {
-                            alldata?.metalRoofing?.straightanswerLists.map(
-                                (answlist) => (
-                                    <div
-                                        class="myth"
-                                        set:html={
-                                            answlist?.aswerListsss || "error"
-                                        }
-                                    />
-                                ),
+                            alldata?.sidingInstallationReplacement?.materialsGrids?.map(
+                                (matitems, index) => (
+                                    <div class={`s ${index === 0 ? "feat" : ""}`}>
+                                        <div set:html={matitems?.materialsTopBodyContent || "error"} />
+                                        <div set:html={matitems?.bottomBodyContent || "error"} />
+                                    </div>
+                                )
                             )
                         }
                     </div>
+                    <div
+                        class="card pale"
+                        style="margin-top:22px"
+                        set:html={alldata?.sidingInstallationReplacement?.materialsLastContent || "error"}
+                    />
+                </div>
+            </section>
+
+            <!-- ============ WALL LAYERS ============ -->
+            <section class="section alt">
+                <div class="container">
+                    <div
+                        class="layers"
+                        set:html={alldata?.sidingInstallationReplacement?.underTheSurfaceContent || "error"}
+                    />
                 </div>
             </section>
 
             <!-- ============ SCOPE ============ -->
-            <section class="section alt">
+            <section class="section">
                 <div class="container narrow">
                     <Fragment
-                        set:html={alldata?.metalRoofing?.scopeworkData ||
-                            "error"}
+                        set:html={alldata?.sidingInstallationReplacement?.scopeOfWorkContent || "error"}
                     />
                     <ul class="checks">
                         {
-                            alldata?.metalRoofing?.scopeLists?.map(
-                                (scopelistss, index) => (
-                                    <li key={index}>
-                                        {scopelistss?.scopelistName || "error"}
-                                    </li>
-                                ),
+                            alldata?.sidingInstallationReplacement?.scopeWorkList?.map(
+                                (scopeitems) => (
+                                    <li set:html={scopeitems?.scopeListName || "error"} />
+                                )
                             )
                         }
                     </ul>
@@ -202,42 +167,55 @@ const alldata = pagedata?.page;
             </section>
 
             <!-- ============ COST ============ -->
-            <section class="section">
+            <section class="section alt">
                 <div class="container">
                     <div
                         class="cost-band"
-                        set:html={alldata?.metalRoofing
-                            ?.traightPricingContent || "error"}
+                        set:html={alldata?.sidingInstallationReplacement?.straightPricingContent || "error"}
                     />
                 </div>
             </section>
 
             <!-- ============ PROCESS ============ -->
-            <section class="section alt">
+            <section class="section">
                 <div class="container">
                     <div
                         class="narrow"
                         style="text-align:center;margin-bottom:36px"
-                        set:html={alldata?.metalRoofing?.howWorkContent ||
-                            "error"}
+                        set:html={alldata?.sidingInstallationReplacement?.howItWorksContent || "error"}
                     />
                     <div class="steps">
                         {
-                            alldata?.metalRoofing?.stephowWork?.map(
+                            alldata?.sidingInstallationReplacement?.howItWorksGrids?.map(
                                 (stepitems, index) => (
-                                    <div class="step" key={index}>
-                                        <span class="n">
-                                            Step{" "}
-                                            {String(index + 1).padStart(2, "0")}
-                                        </span>
-                                        <Fragment
-                                            set:html={
-                                                stepitems?.workContentHow ||
-                                                "error"
-                                            }
-                                        />
+                                    <div class="step">
+                                        <span class="n">Step {String(index + 1).padStart(2, "0")}</span>
+                                        <Fragment set:html={stepitems?.howItWorksStepContent || "error"} />
                                     </div>
-                                ),
+                                )
+                            )
+                        }
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============ ROOF AND SIDING TOGETHER ============ -->
+            <section class="section alt">
+                <div class="container">
+                    <div
+                        class="narrow"
+                        style="text-align:center;margin-bottom:32px"
+                        set:html={alldata?.sidingInstallationReplacement?.worthConsideringContent || "error"}
+                    />
+                    <div class="grid-2">
+                        {
+                            alldata?.sidingInstallationReplacement?.worthConsideringGrids?.map(
+                                (worthitems, index) => (
+                                    <div
+                                        class={`card ${index === 0 ? "pale" : ""}`}
+                                        set:html={worthitems?.worthConsideringGridContent || "error"}
+                                    />
+                                )
                             )
                         }
                     </div>
@@ -250,72 +228,66 @@ const alldata = pagedata?.page;
                     <div
                         class="narrow"
                         style="margin-bottom:36px"
-                        set:html={alldata?.metalRoofing?.expertiseContent ||
-                            "error"}
+                        set:html={alldata?.sidingInstallationReplacement?.localExpertiseContent || "error"}
                     />
                     <div class="grid-2">
                         {
-                            alldata?.metalRoofing?.expertiseGrid.map(
-                                (expitems) => (
+                            alldata?.sidingInstallationReplacement?.localExpertiseGrid?.map(
+                                (localitems) => (
                                     <div
                                         class="card"
-                                        set:html={
-                                            expitems?.expertiseData || "error"
-                                        }
+                                        set:html={localitems?.localExpertiseGridContent || "error"}
                                     />
-                                ),
+                                )
                             )
                         }
                     </div>
                 </div>
             </section>
-            <section class="section" style="background: #fff;">
+
+            <!-- ============ RECENT WORK ============ -->
+          
+
+            <!-- ============ FAQ ============ -->
+            <section class="section">
                 <div class="container">
                     <div
                         class="sec-header"
                         style="text-align:center; margin:0 auto 40px;"
-                        set:html={alldata?.metalRoofing?.faqContent || "error"}
+                        set:html={alldata?.sidingInstallationReplacement?.faqContent || "error"}
                     />
-
                     <div class="faq-list">
                         {
-                            alldata?.metalRoofing?.faqList.map((faqitems) => (
-                                <div class="faq-item">
-                                    <>
+                            alldata?.sidingInstallationReplacement?.faqList?.map(
+                                (faqitems) => (
+                                    <div class="faq-item">
                                         <button class="faq-q">
-                                            <>
-                                                <span>
-                                                    {faqitems?.faqTitle ||
-                                                        "error"}{" "}
-                                                </span>
-                                                <span class="plus" />
-                                            </>
+                                            <span>{faqitems?.faqTitle || "error"}</span>
+                                            <span class="plus" />
                                         </button>
                                         <div
                                             class="faq-a"
-                                            set:html={
-                                                faqitems?.faqAnswer || "error"
-                                            }
-                                        >
-                                            {" "}
-                                        </div>
-                                    </>
-                                </div>
-                            ))
+                                            set:html={faqitems?.faqAnswer || "error"}
+                                        />
+                                    </div>
+                                )
+                            )
                         }
                     </div>
                 </div>
             </section>
-            <!-- ============ RECENT WORK ============ -->
-            <div style="background: #f6f7f9;">
-                <Relatedservice />
-            </div>
 
+            <!-- ============ SERVICE AREAS ============ -->
+
+            <!-- ============ RELATED ============ -->
+            <Relatedservice />
+
+            <!-- ============ FINAL CTA ============ -->
             <section class="cta-band">
                 <div class="cta-inner">
                     <div
                         class="center-ctas"
-                        set:html={alldata?.metalRoofing?.ctaContent || "error"}
+                        set:html={alldata?.sidingInstallationReplacement?.finalCtaContent || "error"}
                     />
                 </div>
             </section>
@@ -323,29 +295,85 @@ const alldata = pagedata?.page;
 
         <Footer />
         <style is:global>
+            :root {
+                --blue: #0d47a1;
+                --blue-bright: #1a5fd0;
+                --blue-soft: #4a7fd4;
+                --blue-pale: #eaf0fa;
+                --deep: #071f45;
+                --deep-2: #0a2e6b;
+                --ink: #111111;
+                --white: #ffffff;
+                --off: #f6f7f9;
+                --grey: #54575c;
+                --grey-light: #8a8d92;
+                --line: #e6e8ec;
+                --r-lg: 22px;
+                --r-md: 16px;
+                --sh-md:
+                    0 4px 10px rgba(17, 17, 17, 0.05),
+                    0 16px 40px rgba(17, 17, 17, 0.1);
+                --sh-blue: 0 8px 24px rgba(13, 71, 161, 0.32);
+                --ease: cubic-bezier(0.22, 0.61, 0.21, 1);
+            }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+            body {
+                font-family: "Roboto", sans-serif;
+                font-weight: 400;
+                color: var(--ink);
+                background: var(--white);
+                line-height: 1.7;
+                font-size: 15.5px;
+                -webkit-font-smoothing: antialiased;
+                overflow-x: hidden;
+            }
+            img {
+                max-width: 100%;
+                display: block;
+            }
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+            ul {
+                list-style: none;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4 {
+                font-family: "Montserrat", sans-serif;
+                font-weight: 700;
+                color: var(--ink);
+                letter-spacing: -0.02em;
+                line-height: 1.2;
+            }
             h2 {
                 font-size: clamp(25px, 3.4vw, 34px);
                 margin-bottom: 18px;
             }
-
             h3 {
                 font-size: 19px;
                 font-weight: 600;
                 margin-bottom: 8px;
             }
-
             p {
                 margin-bottom: 16px;
             }
-
             p:last-child {
                 margin-bottom: 0;
             }
-
             .section {
                 padding: 76px 0;
             }
-
             .eyebrow {
                 font-family: "Montserrat", sans-serif;
                 display: inline-flex;
@@ -358,7 +386,6 @@ const alldata = pagedata?.page;
                 color: var(--blue);
                 margin-bottom: 16px;
             }
-
             .eyebrow::before {
                 content: "";
                 width: 7px;
@@ -366,12 +393,10 @@ const alldata = pagedata?.page;
                 background: var(--blue);
                 clip-path: polygon(50% 0, 100% 100%, 0 100%);
             }
-
             .lead {
                 font-size: 17px;
                 color: var(--grey);
             }
-
             .btn {
                 font-family: "Montserrat", sans-serif;
                 display: inline-flex;
@@ -387,7 +412,6 @@ const alldata = pagedata?.page;
                     transform 0.25s var(--ease),
                     box-shadow 0.25s var(--ease);
             }
-
             .btn-blue {
                 background: linear-gradient(
                     180deg,
@@ -397,16 +421,13 @@ const alldata = pagedata?.page;
                 color: #fff;
                 box-shadow: var(--sh-blue);
             }
-
             .btn-blue:hover {
                 transform: translateY(-2px);
             }
-
             .btn-ghost-w {
                 border: 1.5px solid rgba(255, 255, 255, 0.35);
                 color: #fff;
             }
-
             .btn-ghost-w:hover {
                 border-color: #fff;
                 background: rgba(255, 255, 255, 0.08);
@@ -423,7 +444,6 @@ const alldata = pagedata?.page;
                 position: relative;
                 overflow: hidden;
             }
-
             .hero::before {
                 content: "";
                 position: absolute;
@@ -434,7 +454,6 @@ const alldata = pagedata?.page;
                     transparent 62%
                 );
             }
-
             .hero-grid {
                 position: absolute;
                 inset: 0;
@@ -455,35 +474,30 @@ const alldata = pagedata?.page;
                     transparent 78%
                 );
             }
-
             .hero-inner {
                 position: relative;
                 z-index: 2;
                 padding: 72px 0 76px;
-                max-width: 720px;
+                max-width: 730px;
             }
-
             .hero h1 {
                 color: #fff;
-                font-size: clamp(30px, 4.4vw, 48px);
+                font-size: clamp(28px, 4.1vw, 45px);
                 margin-bottom: 20px;
                 line-height: 1.14;
             }
-
             .hero p {
                 color: #c6d4ec;
                 font-size: 17px;
-                max-width: 600px;
+                max-width: 610px;
                 margin-bottom: 32px;
             }
-
             .hero-ctas {
                 display: flex;
                 gap: 13px;
                 flex-wrap: wrap;
                 margin-bottom: 34px;
             }
-
             .hero-trust {
                 display: flex;
                 flex-wrap: wrap;
@@ -491,7 +505,6 @@ const alldata = pagedata?.page;
                 border-top: 1px solid rgba(255, 255, 255, 0.12);
                 padding-top: 24px;
             }
-
             .hero-trust span {
                 font-family: "Montserrat", sans-serif;
                 font-size: 12px;
@@ -502,7 +515,6 @@ const alldata = pagedata?.page;
                 align-items: center;
                 gap: 7px;
             }
-
             .hero-trust span::before {
                 content: "✓";
                 color: var(--blue-soft);
@@ -516,11 +528,9 @@ const alldata = pagedata?.page;
                 font-size: 13px;
                 color: var(--grey);
             }
-
             .crumb a:hover {
                 color: var(--blue);
             }
-
             .crumb span {
                 margin: 0 8px;
                 color: var(--grey-light);
@@ -529,108 +539,37 @@ const alldata = pagedata?.page;
             .alt {
                 background: var(--off);
             }
-
             .grid-2 {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 gap: 22px;
             }
-
             .grid-3 {
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
                 gap: 22px;
             }
-
             .card {
                 background: #fff;
                 border: 1px solid var(--line);
                 border-radius: var(--r-lg);
                 padding: 30px 26px;
             }
-
             .card.pale {
                 background: var(--blue-pale);
                 border-color: #c9daf5;
             }
-
             .card p {
                 color: var(--grey);
                 font-size: 14.5px;
             }
 
-            /* Comparison table */
-            .cmp {
-                border: 1px solid var(--line);
-                border-radius: var(--r-lg);
-                overflow: hidden;
-                background: #fff;
-            }
-
-            .cmp-row {
-                display: grid;
-                grid-template-columns: 1.1fr 1fr 1fr;
-                border-bottom: 1px solid var(--line);
-            }
-
-            .cmp-row:last-child {
-                border-bottom: none;
-            }
-
-            .cmp-row.head {
-                background: var(--deep);
-                color: #fff;
-            }
-
-            .cmp-row.head div {
-                font-family: "Montserrat", sans-serif;
-                font-weight: 700;
-                font-size: 14px;
-                padding: 18px 22px;
-            }
-
-            .cmp-row.head .metal {
-                background: var(--blue);
-                position: relative;
-                color: #fff;
-            }
-
-            .cmp-row > div {
-                padding: 16px 22px;
-                font-size: 14.5px;
-                color: var(--grey);
-                border-right: 1px solid var(--line);
-                display: flex;
-                align-items: center;
-            }
-
-            .cmp-row > div:last-child {
-                border-right: none;
-            }
-            .cmp-row.head div {
-                color: #fff !important;
-            }
-            .cmp-row .lbl {
-                font-family: "Montserrat", sans-serif;
-                font-weight: 600;
-                color: var(--ink);
-                font-size: 14px;
-                background: var(--off);
-            }
-
-            .cmp-row .metal {
-                background: rgba(13, 71, 161, 0.04);
-                color: var(--ink);
-                font-weight: 500;
-            }
-
-            /* System types */
+            /* Material cards */
             .sys {
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
                 gap: 22px;
             }
-
             .sys .s {
                 background: #fff;
                 border: 1px solid var(--line);
@@ -639,12 +578,14 @@ const alldata = pagedata?.page;
                 display: flex;
                 flex-direction: column;
             }
-
+            .sys .s.feat {
+                border-color: var(--blue);
+                box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.08);
+            }
             .sys .top {
                 padding: 24px 26px 20px;
                 border-bottom: 1px solid var(--line);
             }
-
             .sys .tag {
                 font-family: "Montserrat", sans-serif;
                 font-size: 10.5px;
@@ -658,30 +599,29 @@ const alldata = pagedata?.page;
                 display: inline-block;
                 margin-bottom: 12px;
             }
-
+            .sys .s.feat .tag {
+                background: var(--blue);
+                color: #fff;
+            }
             .sys h3 {
                 font-size: 19px;
                 margin-bottom: 6px;
             }
-
             .sys .top p {
                 font-size: 14px;
                 color: var(--grey);
                 margin: 0;
             }
-
             .sys .body {
                 padding: 22px 26px;
                 flex: 1;
             }
-
             .sys .body li {
                 font-size: 14px;
                 color: var(--grey);
                 padding: 7px 0 7px 20px;
                 position: relative;
             }
-
             .sys .body li::before {
                 content: "";
                 position: absolute;
@@ -692,71 +632,25 @@ const alldata = pagedata?.page;
                 border-radius: 50%;
                 background: var(--blue-soft);
             }
-
             .sys .foot {
                 padding: 16px 26px;
                 background: var(--off);
                 font-size: 13px;
                 color: var(--grey);
             }
-
             .sys .foot b {
                 font-family: "Montserrat", sans-serif;
                 color: var(--ink);
                 font-weight: 600;
             }
 
-            /* Myths */
-            .myth {
-                background: #fff;
-                border: 1px solid var(--line);
-                border-radius: var(--r-lg);
-                padding: 28px 26px;
-            }
-
-            .myth .m {
-                font-family: "Montserrat", sans-serif;
-                font-size: 11px;
-                font-weight: 700;
-                letter-spacing: 0.12em;
-                text-transform: uppercase;
-                color: #b04a4a;
-                margin-bottom: 10px;
-                display: block;
-            }
-
-            .myth h3 {
-                font-size: 17px;
-                margin-bottom: 12px;
-            }
-
-            .myth .t {
-                font-family: "Montserrat", sans-serif;
-                font-size: 11px;
-                font-weight: 700;
-                letter-spacing: 0.12em;
-                text-transform: uppercase;
-                color: var(--blue);
-                margin-bottom: 8px;
-                display: block;
-                padding-top: 14px;
-                border-top: 1px solid var(--line);
-            }
-
-            .myth p {
-                font-size: 14.5px;
-                color: var(--grey);
-                margin: 0;
-            }
-
-            /* Benefits */
-            .ben {
+            /* Signs */
+            .signs {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 gap: 14px;
             }
-
-            .b {
+            .sg {
                 display: flex;
                 gap: 14px;
                 padding: 20px 22px;
@@ -764,8 +658,7 @@ const alldata = pagedata?.page;
                 border: 1px solid var(--line);
                 border-radius: var(--r-md);
             }
-
-            .b .n {
+            .sg .n {
                 font-family: "Montserrat", sans-serif;
                 font-weight: 700;
                 font-size: 13px;
@@ -773,13 +666,11 @@ const alldata = pagedata?.page;
                 flex-shrink: 0;
                 padding-top: 2px;
             }
-
-            .b h3 {
+            .sg h3 {
                 font-size: 16px;
                 margin-bottom: 4px;
             }
-
-            .b p {
+            .sg p {
                 font-size: 14px;
                 color: var(--grey);
             }
@@ -790,14 +681,12 @@ const alldata = pagedata?.page;
                 gap: 12px 28px;
                 margin-top: 24px;
             }
-
             .checks li {
                 display: flex;
                 gap: 12px;
                 font-size: 15px;
                 align-items: flex-start;
             }
-
             .checks li::before {
                 content: "";
                 width: 20px;
@@ -812,6 +701,62 @@ const alldata = pagedata?.page;
                 background-repeat: no-repeat;
             }
 
+            /* Layers explainer */
+            .layers {
+                background: var(--deep);
+                border-radius: 26px;
+                padding: 46px;
+                color: #fff;
+                position: relative;
+                overflow: hidden;
+            }
+            .layers::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(
+                    ellipse 55% 70% at 90% 12%,
+                    rgba(26, 95, 208, 0.45),
+                    transparent 62%
+                );
+            }
+            .layers > * {
+                position: relative;
+            }
+            .layers h2 {
+                color: #fff;
+            }
+            .layers > p {
+                color: #c6d4ec;
+                max-width: 640px;
+            }
+            .layer-list {
+                margin-top: 32px;
+            }
+            .layer {
+                display: grid;
+                grid-template-columns: 130px 1fr;
+                gap: 24px;
+                padding: 20px 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+            }
+            .layer:last-child {
+                border-bottom: none;
+            }
+            .layer .lname {
+                font-family: "Montserrat", sans-serif;
+                font-weight: 700;
+                font-size: 13px;
+                color: #9cc0ff;
+                letter-spacing: 0.04em;
+                padding-top: 2px;
+            }
+            .layer p {
+                color: #c6d4ec;
+                font-size: 14.5px;
+                margin: 0;
+            }
+
             .cost-band {
                 background: var(--deep);
                 color: #fff;
@@ -820,7 +765,6 @@ const alldata = pagedata?.page;
                 position: relative;
                 overflow: hidden;
             }
-
             .cost-band::before {
                 content: "";
                 position: absolute;
@@ -831,29 +775,24 @@ const alldata = pagedata?.page;
                     transparent 62%
                 );
             }
-
             .cost-band > * {
                 position: relative;
             }
-
             .cost-band h2 {
                 color: #fff;
             }
-
             .cost-figure {
                 font-family: "Montserrat", sans-serif;
                 font-weight: 700;
-                font-size: clamp(32px, 4.8vw, 50px);
+                font-size: clamp(30px, 4.6vw, 48px);
                 color: #9cc0ff;
                 line-height: 1.1;
                 margin: 6px 0 14px;
                 letter-spacing: -0.03em;
             }
-
             .cost-band p {
                 color: #c6d4ec;
             }
-
             .cost-drivers {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
@@ -862,14 +801,12 @@ const alldata = pagedata?.page;
                 padding-top: 26px;
                 border-top: 1px solid rgba(255, 255, 255, 0.14);
             }
-
             .cost-drivers li {
                 font-size: 14.5px;
                 color: #c6d4ec;
                 display: flex;
                 gap: 11px;
             }
-
             .cost-drivers li b {
                 color: #fff;
                 font-weight: 500;
@@ -880,14 +817,12 @@ const alldata = pagedata?.page;
                 grid-template-columns: repeat(5, 1fr);
                 gap: 18px;
             }
-
             .step {
                 background: #fff;
                 border: 1px solid var(--line);
                 border-radius: var(--r-md);
                 padding: 26px 22px;
             }
-
             .step .n {
                 font-family: "Montserrat", sans-serif;
                 font-size: 12px;
@@ -898,58 +833,13 @@ const alldata = pagedata?.page;
                 display: block;
                 margin-bottom: 26px;
             }
-
             .step h3 {
                 font-size: 15.5px;
                 margin-bottom: 6px;
             }
-
             .step p {
                 font-size: 13.5px;
                 color: var(--grey);
-            }
-
-            .gal {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 20px;
-            }
-
-            .gal figure {
-                border: 1px solid var(--line);
-                border-radius: var(--r-lg);
-                overflow: hidden;
-                background: #fff;
-            }
-
-            .gal .ph {
-                aspect-ratio: 4/3;
-                background: linear-gradient(150deg, var(--deep), var(--deep-2));
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: #4a7fd4;
-                font-size: 12px;
-                font-family: "Montserrat", sans-serif;
-                font-weight: 600;
-                letter-spacing: 0.08em;
-                text-align: center;
-                padding: 20px;
-            }
-
-            .gal figcaption {
-                padding: 16px 20px;
-                font-size: 13.5px;
-                color: var(--grey);
-            }
-
-            .gal figcaption b {
-                display: block;
-                font-family: "Montserrat", sans-serif;
-                font-weight: 600;
-                font-size: 15px;
-                color: var(--ink);
-                margin-bottom: 2px;
             }
 
             .faq-item {
@@ -959,7 +849,6 @@ const alldata = pagedata?.page;
                 background: #fff;
                 overflow: hidden;
             }
-
             .faq-q {
                 width: 100%;
                 display: flex;
@@ -976,8 +865,7 @@ const alldata = pagedata?.page;
                 font-weight: 600;
                 color: var(--ink);
             }
-
-            .faq-q .p {
+            .faq-q .plus {
                 width: 28px;
                 height: 28px;
                 border-radius: 50%;
@@ -988,9 +876,8 @@ const alldata = pagedata?.page;
                     transform 0.28s var(--ease),
                     background 0.28s;
             }
-
-            .faq-q .p::before,
-            .faq-q .p::after {
+            .faq-q .plus::before,
+            .faq-q .plus::after {
                 content: "";
                 position: absolute;
                 background: var(--blue);
@@ -999,262 +886,80 @@ const alldata = pagedata?.page;
                 transform: translate(-50%, -50%);
                 transition: background 0.28s;
             }
-
-            .faq-q .p::before {
+            .faq-q .plus::before {
                 width: 11px;
                 height: 2px;
             }
-
-            .faq-q .p::after {
+            .faq-q .plus::after {
                 width: 2px;
                 height: 11px;
             }
-
-            .faq-item.open .p {
+            .faq-item.open .plus {
                 transform: rotate(45deg);
                 background: var(--blue);
             }
-
-            .faq-item.open .p::before,
-            .faq-item.open .p::after {
+            .faq-item.open .plus::before,
+            .faq-item.open .plus::after {
                 background: #fff;
             }
-
             .faq-a {
                 max-height: 0;
                 overflow: hidden;
                 transition: max-height 0.35s var(--ease);
             }
-
             .faq-item.open .faq-a {
-                max-height: 400px;
+                max-height: 420px;
             }
-
             .faq-a p {
                 padding: 0 24px 22px;
                 color: var(--grey);
                 font-size: 14.5px;
             }
 
-            .chips {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 9px;
-                margin-top: 18px;
-            }
-
-            .chip {
-                font-family: "Montserrat", sans-serif;
-                font-size: 13px;
-                font-weight: 600;
-                padding: 10px 18px;
-                border-radius: 100px;
-                border: 1px solid var(--line);
-                background: #fff;
-                color: var(--ink);
-            }
-
-            .chip.pri {
-                background: var(--blue-pale);
-                border-color: #c9daf5;
-                color: var(--blue);
-            }
-
-            .tier-label {
-                font-family: "Montserrat", sans-serif;
-                font-size: 11px;
-                font-weight: 700;
-                letter-spacing: 0.12em;
-                text-transform: uppercase;
-                color: var(--blue);
-                margin: 26px 0 0;
-                display: flex;
-                align-items: center;
-                gap: 12px;
-            }
-
-            .tier-label::after {
-                content: "";
-                flex: 1;
-                height: 1px;
-                background: var(--line);
-            }
-
-            .rel {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                gap: 18px;
-            }
-
-            .rel a {
-                background: #fff;
-                border: 1px solid var(--line);
-                border-radius: var(--r-md);
-                padding: 24px 22px;
-                transition:
-                    transform 0.25s var(--ease),
-                    box-shadow 0.25s var(--ease);
-            }
-
-            .rel a:hover {
-                transform: translateY(-4px);
-                box-shadow: var(--sh-md);
-            }
-
-            .rel h3 {
-                font-size: 16px;
-                margin-bottom: 5px;
-            }
-
-            .rel p {
-                font-size: 13.5px;
-                color: var(--grey);
-            }
-
-            .rel .go {
-                font-family: "Montserrat", sans-serif;
-                font-size: 12.5px;
-                font-weight: 700;
-                color: var(--blue);
-                margin-top: 12px;
-                display: block;
-            }
-
-            .cta {
-                background: linear-gradient(
-                    140deg,
-                    var(--blue-bright),
-                    var(--blue) 45%,
-                    #082a5c
-                );
-                color: #fff;
-                border-radius: 26px;
-                padding: 60px 48px;
-                text-align: center;
-                position: relative;
-                overflow: hidden;
-            }
-
-            .cta::before {
-                content: "";
-                position: absolute;
-                inset: 0;
-                background: radial-gradient(
-                    ellipse 55% 70% at 85% 20%,
-                    rgba(255, 255, 255, 0.15),
-                    transparent 62%
-                );
-            }
-
-            .cta > * {
-                position: relative;
-            }
-
-            .cta h2 {
-                color: #fff;
-            }
-
-            .cta p {
-                color: rgba(255, 255, 255, 0.85);
-                max-width: 540px;
-                margin: 0 auto 28px;
-            }
-
-            .cta-btns {
-                display: flex;
-                gap: 13px;
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-
             @media (max-width: 900px) {
                 .sys,
-                .grid-3,
-                .rel {
+                .grid-3 {
                     grid-template-columns: 1fr 1fr;
                 }
-
                 .steps {
                     grid-template-columns: 1fr 1fr;
                 }
-
-                .gal {
-                    grid-template-columns: 1fr 1fr;
-                }
             }
-
             @media (max-width: 640px) {
                 .section {
                     padding: 52px 0;
                 }
-
+                .container {
+                    padding: 0 20px;
+                }
                 .grid-2,
                 .grid-3,
                 .sys,
-                .ben,
+                .signs,
                 .checks,
-                .rel,
                 .steps,
-                .gal,
                 .cost-drivers {
                     grid-template-columns: 1fr;
                 }
-
                 .hero-inner {
                     padding: 52px 0 56px;
                 }
-
                 .hero-ctas .btn {
                     flex: 1 1 100%;
                 }
-
                 .cost-band {
                     padding: 30px 24px;
                 }
-
-                .cta {
-                    padding: 44px 26px;
+                .layers {
+                    padding: 32px 24px;
                     border-radius: 20px;
                 }
-
+                .layer {
+                    grid-template-columns: 1fr;
+                    gap: 6px;
+                }
                 .card {
                     padding: 24px 22px;
-                }
-
-                .cmp-row {
-                    grid-template-columns: 1fr;
-                }
-
-                .cmp-row > div {
-                    border-right: none;
-                    border-bottom: 1px solid var(--line);
-                }
-
-                .cmp-row > div:last-child {
-                    border-bottom: none;
-                }
-
-                .cmp-row.head {
-                    display: none;
-                }
-
-                .cmp-row .lbl {
-                    font-size: 13px;
-                    text-transform: uppercase;
-                    letter-spacing: 0.06em;
-                    color: var(--blue);
-                }
-
-                .cmp-row .metal::before {
-                    content: "Metal: ";
-                    font-weight: 600;
-                    color: var(--blue);
-                }
-
-                .cmp-row .asph::before {
-                    content: "Asphalt: ";
-                    font-weight: 600;
-                    color: var(--grey-light);
                 }
             }
         </style>

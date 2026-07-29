@@ -2,8 +2,57 @@
 import BaseHead from "../../components/BaseHead.astro";
 import Footer from "../../components/Footer.astro";
 import Header from "../../components/Header.astro";
+import Relatedservice from "../../components/Relatedservice.astro";
 import { queryWordPress } from "../../lib/wordpress";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+
+
+const PAGEJSON = `
+query homepagedata {
+  page(id: "/asphalt-shingle-roofing", idType: URI) {
+    title
+    content
+    asphaltShingleRoofing {
+      introData
+      shingleContents
+      shingleGrids {
+        shingleGridContents
+      }
+      windContent
+      windGrids {
+        windGridData
+      }
+      windlastastquote
+      lifespanContent
+      lifespanGrid {
+        lifespangridData
+      }
+      scopeContent
+      scopeList{
+        listData
+      }
+      straightPriceContent
+      consideringContent
+      consideringGrid{
+        consideringGridData
+      }
+      expertiesContent
+      expertiseGrid{
+        expertiseGridData
+      }
+      faqContent
+      faqgrids{
+      faqTitle
+        faqAnswer
+    }
+        ctaContent
+    }
+  }
+}
+`;
+const pagedata = await queryWordPress(PAGEJSON);
+const alldata = pagedata?.page;
+// console.log("alldataalldata", alldata);
 ---
 
 <!doctype html>
@@ -22,175 +71,38 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
                         <span>/</span>
                         <span style="color:#fff;">Asphalt Shingle Roofing</span>
                     </div>
-                    <h1 class="fade-up">
-                        Asphalt Shingle Roofing in <em
-                            style="font-style:normal;color:#9CC0FF;"
-                            >New Hampshire</em
-                        >
-                    </h1>
-                    <p class="lede-page fade-up">
-                        Asphalt covers most New Hampshire homes for good reason
-                        — strong value, a wide colour range, and a proven
-                        service life. What separates a twenty-year roof from a
-                        twelve-year one is the grade you pick and how it goes
-                        on.
-                    </p>
-                    <div class="hero-ctas">
-                        <a href="/contact/" class="btn btn-blue"
-                            >Get a Free Estimate</a
-                        >
-                        <a href="tel:+16035027080" class="btn btn-ghost-w"
-                            >Call (603) 502-7080</a
-                        >
-                    </div>
+                    <Fragment set:html={alldata?.content || "error"} />
                 </div>
             </section>
             <section class="section">
-                <div class="container narrow">
-                    <span class="eyebrow">The Material</span>
-                    <h2>The Workhorse of New Hampshire Roofs</h2>
-                    <p>
-                        Roughly four out of five homes in this state wear
-                        asphalt shingles. They are affordable, they come in
-                        every colour a neighbourhood association could ask for,
-                        and installed properly they will see you through two
-                        decades of New England weather.
-                    </p>
-                    <p>
-                        Where homeowners get caught out is assuming all asphalt
-                        is the same. There is a meaningful gap between a
-                        builder-grade three-tab shingle and a laminated
-                        architectural shingle rated for 150 mph winds — in
-                        appearance, in lifespan, and in how it behaves during a
-                        February nor'easter.
-                    </p>
-                    <p>
-                        The other half of the equation is installation. Nailing
-                        pattern, starter strip, ice-and-water shield placement,
-                        and attic ventilation determine whether a shingle
-                        reaches its rated life or falls well short of it. Most
-                        roofs that fail early were not defective — they were
-                        fitted badly.
-                    </p>
-                    <p>
-                        This page covers the material itself: grades, wind
-                        ratings, lifespan, and pricing. If you want the process
-                        of getting a roof replaced, that is on our <a
-                            href="/service/roof-replacement/"
-                            style="color:var(--blue);font-weight:500"
-                            >roof replacement page</a
-                        >.
-                    </p>
-                </div>
+                <div
+                    class="container narrow"
+                    set:html={alldata?.asphaltShingleRoofing?.introData ||
+                        "error"}
+                />
             </section>
             <section class="section alt">
                 <div class="container">
                     <div
                         class="narrow"
                         style="text-align:center;margin-bottom:38px"
-                    >
-                        <span class="eyebrow">Shingle Grades</span>
-                        <h2>Three Grades, Three Very Different Roofs</h2>
-                        <p class="lead">
-                            Every asphalt quote you receive will sit in one of
-                            these categories. Knowing which is how you compare
-                            two numbers fairly.
-                        </p>
-                    </div>
+                        set:html={alldata?.asphaltShingleRoofing
+                            ?.shingleContents || "error"}
+                    />
                     <div class="sys">
-                        <div class="s">
-                            <div class="top">
-                                <span class="tag">Budget</span>
-                                <h3>3-tab shingles</h3>
-                                <p>Single flat layer with cut-out tabs</p>
-                            </div>
-                            <div class="body">
-                                <ul>
-                                    <li>
-                                        Lowest cost per square of any shingle
-                                    </li>
-                                    <li>
-                                        Flat, uniform appearance with no shadow
-                                        line
-                                    </li>
-                                    <li>
-                                        Lighter weight and lower wind resistance
-                                    </li>
-                                    <li>
-                                        Best suited to sheds, garages, and
-                                        rental turnovers
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="foot">
-                                <b>Service life in NH:</b> 15–20 years
-                            </div>
-                        </div>
-                        <div class="s feat">
-                            <div class="top">
-                                <span class="tag">Recommended</span>
-                                <h3>Architectural shingles</h3>
-                                <p>
-                                    Multiple laminated layers, dimensional
-                                    profile
-                                </p>
-                            </div>
-                            <div class="body">
-                                <ul>
-                                    <li>
-                                        Thicker and heavier — significantly
-                                        better wind performance
-                                    </li>
-                                    <li>
-                                        Shadowed, textured look that suits most
-                                        NH homes
-                                    </li>
-                                    <li>
-                                        Available in wind ratings up to 150 mph
-                                    </li>
-                                    <li>
-                                        The standard choice on the large
-                                        majority of our jobs
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="foot">
-                                <b>Service life in NH:</b> 20–25 years
-                            </div>
-                        </div>
-                        <div class="s">
-                            <div class="top">
-                                <span class="tag">Premium</span>
-                                <h3>Designer shingles</h3>
-                                <p>
-                                    Heavyweight laminated, slate or shake
-                                    profiles
-                                </p>
-                            </div>
-                            <div class="body">
-                                <ul>
-                                    <li>
-                                        Mimics slate or cedar shake at a
-                                        fraction of the weight
-                                    </li>
-                                    <li>
-                                        Heaviest asphalt product with the
-                                        longest rated life
-                                    </li>
-                                    <li>
-                                        Suits historic homes and high-value
-                                        properties
-                                    </li>
-                                    <li>
-                                        Approaches metal on cost — worth
-                                        comparing both
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="foot">
-                                <b>Service life in NH:</b> 25–30 years
-                            </div>
-                        </div>
+                        {
+                            alldata?.asphaltShingleRoofing?.shingleGrids.map(
+                                (itemssh) => (
+                                    <div
+                                        class="s"
+                                        set:html={
+                                            itemssh?.shingleGridContents ||
+                                            "error"
+                                        }
+                                    />
+                                ),
+                            )
+                        }
                     </div>
                 </div>
             </section>
@@ -199,60 +111,29 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
                     <div
                         class="narrow"
                         style="text-align:center;margin-bottom:36px"
-                    >
-                        <span class="eyebrow">Wind Performance</span>
-                        <h2>What Wind Rating Do You Actually Need?</h2>
-                        <p class="lead">
-                            Shingles are tested to ASTM standards and sold in
-                            wind classes. On the Seacoast this matters far more
-                            than it does inland, and it is the spec most quotes
-                            leave out entirely.
-                        </p>
-                    </div>
+                        set:html={alldata?.asphaltShingleRoofing?.windContent ||
+                            "error"}
+                    />
                     <div class="wind">
-                        <div class="wr">
-                            <span class="cls">Class D</span>
-                            <div class="mph">90 <span>mph</span></div>
-                            <p>
-                                Basic rating found on most three-tab products.
-                                We do not specify this for primary residences
-                                anywhere in New Hampshire.
-                            </p>
-                        </div>
-                        <div class="wr">
-                            <span class="cls">Class G</span>
-                            <div class="mph">120 <span>mph</span></div>
-                            <p>
-                                Solid choice for sheltered inland homes.
-                                Standard on most quality architectural shingle
-                                lines.
-                            </p>
-                        </div>
-                        <div class="wr rec">
-                            <span class="cls">Class H — our Seacoast spec</span>
-                            <div class="mph">150 <span>mph</span></div>
-                            <p>
-                                What we recommend for coastal and exposed
-                                hilltop sites. The upgrade cost is small
-                                relative to replacing wind-lifted sections.
-                            </p>
-                        </div>
+                        {
+                            alldata?.asphaltShingleRoofing?.windGrids.map(
+                                (winditems) => (
+                                    <div
+                                        class="wr"
+                                        set:html={
+                                            winditems?.windGridData || "error"
+                                        }
+                                    />
+                                ),
+                            )
+                        }
                     </div>
-                    <div class="card pale" style="margin-top:24px">
-                        <h3>
-                            The rating only counts if the install matches it
-                        </h3>
-                        <p>
-                            A 150 mph shingle nailed in the wrong place performs
-                            like a 90 mph shingle, and the manufacturer's wind
-                            warranty will not cover it. High-wind ratings
-                            require a specific nail count, precise placement in
-                            the nailing zone, and a proper starter strip along
-                            both eaves and rakes. This is the single most common
-                            corner cut in roofing, and it is invisible once the
-                            roof is finished.
-                        </p>
-                    </div>
+                    <div
+                        class="card"
+                        style="margin-top:24px"
+                        set:html={alldata?.asphaltShingleRoofing
+                            ?.windlastastquote || "error"}
+                    />
                 </div>
             </section>
             <section class="section alt">
@@ -260,112 +141,56 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
                     <div
                         class="narrow"
                         style="text-align:center;margin-bottom:36px"
-                    >
-                        <span class="eyebrow">Lifespan</span>
-                        <h2>What Decides How Long Your Shingles Last</h2>
-                        <p class="lead">
-                            Two identical roofs on the same street can differ by
-                            eight years. These are the reasons why.
-                        </p>
-                    </div>
+                        set:html={alldata?.asphaltShingleRoofing
+                            ?.lifespanContent || "error"}
+                    />
                     <div class="fac">
-                        <div class="f">
-                            <span class="n">01</span><div>
-                                <h3>Attic ventilation</h3><p>
-                                    The biggest single factor, and the most
-                                    overlooked. Trapped heat cooks shingles from
-                                    underneath and can strip years off a roof's
-                                    life.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="f">
-                            <span class="n">02</span><div>
-                                <h3>Nailing accuracy</h3><p>
-                                    Nails placed too high, too low, overdriven,
-                                    or too few. Each one is a future lifted tab
-                                    and a voided wind warranty.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="f">
-                            <span class="n">03</span><div>
-                                <h3>Sun exposure</h3><p>
-                                    South and west-facing slopes age faster. It
-                                    is normal to see one side of a roof wear
-                                    noticeably ahead of the other.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="f">
-                            <span class="n">04</span><div>
-                                <h3>Ice damming</h3><p>
-                                    Water backing up under shingles at the eaves
-                                    lifts and loosens them. Ice-and-water shield
-                                    is the defence, ventilation is the cure.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="f">
-                            <span class="n">05</span><div>
-                                <h3>Overhanging trees</h3><p>
-                                    Shade holds moisture and encourages moss and
-                                    algae; falling limbs bruise granules.
-                                    Trimming back pays for itself.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="f">
-                            <span class="n">06</span><div>
-                                <h3>Coastal salt air</h3><p>
-                                    Near the water, salt corrodes fasteners and
-                                    flashing well before the shingles themselves
-                                    are worn out.
-                                </p>
-                            </div>
-                        </div>
+                        {
+                            alldata?.asphaltShingleRoofing?.lifespanGrid?.map(
+                                (lifitems, i) => (
+                                    <div class="f">
+                                        <span class="n">
+                                            {String(i + 1).padStart(2, "0")}
+                                        </span>
+                                        <div>
+                                            <Fragment
+                                                set:html={
+                                                    lifitems?.lifespangridData ||
+                                                    "error"
+                                                }
+                                            />
+                                        </div>
+                                    </div>
+                                ),
+                            )
+                        }
                     </div>
                 </div>
             </section>
             <section class="section">
                 <div class="container narrow">
-                    <span class="eyebrow">Scope of Work</span>
-                    <h2>What's Included in an Asphalt Shingle Install</h2>
-                    <p>
-                        The items below are standard on every asphalt roof we
-                        install. When a quote comes in noticeably cheaper, this
-                        list is usually where the gap is.
-                    </p>
-                    <ul class="checks">
-                        <li>
-                            Complete tear-off to the deck — we never overlay
-                        </li>
-                        <li>Deck inspection with rotted sheathing replaced</li>
-                        <li>
-                            Ice-and-water shield at eaves, valleys, and
-                            penetrations
-                        </li>
-                        <li>Synthetic underlayment across the full roof</li>
-                        <li>Starter strip at both eaves and rakes</li>
-                        <li>
-                            Manufacturer-specified nailing pattern for the wind
-                            rating
-                        </li>
-                        <li>New drip edge, step flashing, and pipe boots</li>
-                        <li>Ridge cap shingles matched to the field</li>
-                        <li>Ridge vent with balanced intake ventilation</li>
-                        <li>Daily magnetic nail sweeps and debris haul-away</li>
-                        <li>Permit pulled and final inspection handled</li>
-                        <li>
-                            Manufacturer warranty plus our 25-year workmanship
-                            warranty
-                        </li>
+                    <Fragment
+                        set:html={alldata?.asphaltShingleRoofing
+                            ?.scopeContent || "error"}
+                    />
+                    <ul class="checks" style="margin-top: 20px;">
+                        {
+                            alldata?.asphaltShingleRoofing?.scopeList.map(
+                                (scopelist) => (
+                                    <li>{scopelist?.listData || "error"}</li>
+                                ),
+                            )
+                        }
                     </ul>
                 </div>
             </section>
             <section class="section alt">
                 <div class="container">
-                    <div class="cost-band">
+                    <div
+                        class="cost-band"
+                        set:html={alldata?.asphaltShingleRoofing
+                            ?.straightPriceContent || "error"}
+                    >
                         <span class="eyebrow" style="color:#9CC0FF"
                             >Straight Pricing</span
                         >
@@ -421,480 +246,516 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
                     <div
                         class="narrow"
                         style="text-align:center;margin-bottom:32px"
-                    >
-                        <span class="eyebrow">Worth Considering</span>
-                        <h2>Should You Look at Metal Instead?</h2>
-                    </div>
+                        set:html={alldata?.asphaltShingleRoofing
+                            ?.consideringContent || "error"}
+                    />
                     <div class="grid-2">
-                        <div class="card">
-                            <h3>Asphalt is usually right when…</h3>
-                            <p>
-                                You are working to a defined budget, you may
-                                sell within ten to fifteen years, your roof has
-                                a complex shape with many angles, or you want
-                                the widest possible choice of colour and
-                                profile. For most New Hampshire homes,
-                                architectural asphalt is the sensible answer.
-                            </p>
-                        </div>
-                        <div class="card pale">
-                            <h3>Metal is worth pricing when…</h3>
-                            <p>
-                                You intend to stay long term, the property is
-                                coastal or badly exposed, ice dams have been a
-                                recurring problem, or you are already
-                                considering designer shingles — at that price
-                                point metal becomes genuinely competitive over
-                                the life of the roof.
-                            </p>
-                            <p style="margin-top:12px">
-                                <a
-                                    href="/service/metal-roofing/"
-                                    style="color:var(--blue);font-weight:500"
-                                    >Compare metal roofing →</a
-                                >
-                            </p>
-                        </div>
+                        {
+                            alldata?.asphaltShingleRoofing?.consideringGrid.map(
+                                (coitems) => (
+                                    <div
+                                        class="card"
+                                        set:html={
+                                            coitems?.consideringGridData ||
+                                            "error"
+                                        }
+                                    />
+                                ),
+                            )
+                        }
                     </div>
                 </div>
             </section>
             <section class="section alt">
                 <div class="container">
-                    <div class="narrow" style="margin-bottom:36px">
-                        <span class="eyebrow">Local Expertise</span>
-                        <h2>Specifying Asphalt for New Hampshire</h2>
-                        <p class="lead">
-                            The same shingle behaves differently in Seabrook
-                            than in Keene. These are the details we adjust by
-                            location.
-                        </p>
-                    </div>
+                    <div
+                        class="narrow"
+                        style="margin-bottom:36px"
+                        set:html={alldata?.asphaltShingleRoofing
+                            ?.expertiesContent || "error"}
+                    />
                     <div class="grid-2">
-                        <div class="card">
-                            <h3>Higher wind rating near the coast</h3><p>
-                                Seacoast and exposed hilltop properties get
-                                Class H shingles rated to 150 mph as standard.
-                                Inland and sheltered sites are generally well
-                                served by Class G.
-                            </p>
-                        </div>
-                        <div class="card">
-                            <h3>Ice-and-water shield placement</h3><p>
-                                Code sets a minimum at the eaves. On low-pitch
-                                roofs and known ice dam trouble spots we run it
-                                further up the slope and through every valley.
-                            </p>
-                        </div>
-                        <div class="card">
-                            <h3>Corrosion-resistant fasteners</h3><p>
-                                Near the water, standard nails and flashing
-                                corrode years before the shingles wear out.
-                                Coastal jobs get coated or stainless components
-                                as standard.
-                            </p>
-                        </div>
-                        <div class="card">
-                            <h3>Ventilation sized to the attic</h3><p>
-                                Ridge vent alone is not a ventilation system.
-                                Intake at the soffit has to balance the exhaust,
-                                or you get heat build-up in summer and ice dams
-                                in winter.
-                            </p>
-                        </div>
+                        {
+                            alldata?.asphaltShingleRoofing?.expertiseGrid.map(
+                                (itemsexpe) => (
+                                    <div class="card">
+                                        <>
+                                            <Fragment
+                                                set:html={
+                                                    itemsexpe?.expertiseGridData ||
+                                                    "error"
+                                                }
+                                            />
+                                        </>
+                                    </div>
+                                ),
+                            )
+                        }
                     </div>
                 </div>
             </section>
-        </main>
+            <section class="section">
+                <div class="container">
+                    <div
+                        class="sec-header"
+                        style="text-align:center; margin:0 auto 40px;"
+                        set:html={alldata?.asphaltShingleRoofing?.faqContent ||
+                            "error"}
+                    />
+                    <div class="faq-list">
+                        {
+                            alldata?.asphaltShingleRoofing?.faqgrids.map(
+                                (faqitems) => (
+                                    <div class="faq-item">
+                                        <>
+                                            <button class="faq-q">
+                                                <>
+                                                    <span>
+                                                        {faqitems?.faqTitle ||
+                                                            "error"}
+                                                    </span>
+                                                    <span class="plus" />
+                                                </>
+                                            </button>
+                                            <div
+                                                class="faq-a"
+                                                set:html={
+                                                    faqitems?.faqAnswer ||
+                                                    "error"
+                                                }
+                                            />
+                                        </>
+                                    </div>
+                                ),
+                            )
+                        }
+                    </div>
+                </div>
+            </section>
+            <Relatedservice />
+            <section class="cta-band">
+                <div class="cta-inner">
+                    <div class="center-ctas" set:html={alldata?.asphaltShingleRoofing?.ctaContent|| "error"}></div>
+                </div>
+            </section>
+            <Footer />
+            <style is:global>
+                .lead {
+                    font-size: 17px;
+                    color: var(--grey);
+                }
 
-        <Footer />
-        <style>
-            .lead {
-                font-size: 17px;
-                color: var(--grey);
-            }
+                .btn {
+                    font-family: "Montserrat", sans-serif;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 9px;
+                    font-weight: 700;
+                    font-size: 13.5px;
+                    padding: 15px 27px;
+                    border-radius: 100px;
+                    min-height: 50px;
+                    transition:
+                        transform 0.25s var(--ease),
+                        box-shadow 0.25s var(--ease);
+                }
 
-            .btn {
-                font-family: "Montserrat", sans-serif;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                gap: 9px;
-                font-weight: 700;
-                font-size: 13.5px;
-                padding: 15px 27px;
-                border-radius: 100px;
-                min-height: 50px;
-                transition:
-                    transform 0.25s var(--ease),
-                    box-shadow 0.25s var(--ease);
-            }
+                .btn-blue {
+                    background: linear-gradient(
+                        180deg,
+                        var(--blue-bright),
+                        var(--blue)
+                    );
+                    color: #fff;
+                    box-shadow: var(--sh-blue);
+                }
 
-            .btn-blue {
-                background: linear-gradient(
-                    180deg,
-                    var(--blue-bright),
-                    var(--blue)
-                );
-                color: #fff;
-                box-shadow: var(--sh-blue);
-            }
+                .btn-blue:hover {
+                    transform: translateY(-2px);
+                }
+                h3 {
+                    font-size: 19px;
+                    font-weight: 600;
+                    margin-bottom: 8px;
+                }
+                .alt {
+                    background: var(--off);
+                }
 
-            .btn-blue:hover {
-                transform: translateY(-2px);
-            }
-h3 {
-    font-size: 19px;
-    font-weight: 600;
-    margin-bottom: 8px;
-}
-            .alt {
-                background: var(--off);
-            }
-
-            .grid-2 {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 22px;
-            }
-
-            .card {
-                background: #fff;
-                border: 1px solid var(--line);
-                border-radius: var(--r-lg);
-                padding: 30px 26px;
-            }
-
-            .card.pale {
-                background: var(--blue-pale);
-                border-color: #c9daf5;
-            }
-
-            .card p {
-                color: var(--grey);
-                font-size: 14.5px;
-            }
-
-            /* Shingle grades */
-            .sys {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 22px;
-            }
-
-            .sys .s {
-                background: #fff;
-                border: 1px solid var(--line);
-                border-radius: var(--r-lg);
-                overflow: hidden;
-                display: flex;
-                flex-direction: column;
-            }
-
-            .sys .s.feat {
-                border-color: var(--blue);
-                box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.08);
-            }
-
-            .sys .top {
-                padding: 24px 26px 20px;
-                border-bottom: 1px solid var(--line);
-            }
-
-            .sys .tag {
-                font-family: "Montserrat", sans-serif;
-                font-size: 10.5px;
-                font-weight: 700;
-                letter-spacing: 0.12em;
-                text-transform: uppercase;
-                color: var(--blue);
-                background: var(--blue-pale);
-                padding: 5px 12px;
-                border-radius: 100px;
-                display: inline-block;
-                margin-bottom: 12px;
-            }
-
-            .sys .s.feat .tag {
-                background: var(--blue);
-                color: #fff;
-            }
-
-            .sys h3 {
-                font-size: 19px;
-                margin-bottom: 6px;
-            }
-
-            .sys .top p {
-                font-size: 14px;
-                color: var(--grey);
-                margin: 0;
-            }
-
-            .sys .body {
-                padding: 22px 26px;
-                flex: 1;
-            }
-
-            .sys .body li {
-                font-size: 14px;
-                color: var(--grey);
-                padding: 7px 0 7px 20px;
-                position: relative;
-            }
-
-            .sys .body li::before {
-                content: "";
-                position: absolute;
-                left: 0;
-                top: 15px;
-                width: 6px;
-                height: 6px;
-                border-radius: 50%;
-                background: var(--blue-soft);
-            }
-
-            .sys .foot {
-                padding: 16px 26px;
-                background: var(--off);
-                font-size: 13px;
-                color: var(--grey);
-            }
-
-            .sys .foot b {
-                font-family: "Montserrat", sans-serif;
-                color: var(--ink);
-                font-weight: 600;
-            }
-
-            /* Wind rating */
-            .wind {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 20px;
-                margin-top: 8px;
-            }
-
-            .wr {
-                background: #fff;
-                border: 1px solid var(--line);
-                border-radius: var(--r-lg);
-                padding: 28px 26px;
-                text-align: center;
-            }
-
-            .wr.rec {
-                background: var(--deep);
-                border-color: var(--deep);
-                color: #fff;
-            }
-
-            .wr .cls {
-                font-family: "Montserrat", sans-serif;
-                font-size: 11px;
-                font-weight: 700;
-                letter-spacing: 0.14em;
-                text-transform: uppercase;
-                color: var(--blue);
-                margin-bottom: 10px;
-                display: block;
-            }
-
-            .wr.rec .cls {
-                color: #9cc0ff;
-            }
-
-            .wr .mph {
-                font-family: "Montserrat", sans-serif;
-                font-weight: 700;
-                font-size: 34px;
-                color: var(--ink);
-                line-height: 1;
-                letter-spacing: -0.03em;
-            }
-
-            .wr.rec .mph {
-                color: #fff;
-            }
-
-            .wr .mph span {
-                font-size: 15px;
-                font-weight: 600;
-                color: var(--grey);
-            }
-
-            .wr.rec .mph span {
-                color: #9cc0ff;
-            }
-
-            .wr p {
-                font-size: 13.5px;
-                color: var(--grey);
-                margin: 14px 0 0;
-            }
-
-            .wr.rec p {
-                color: #c6d4ec;
-            }
-
-            /* Lifespan factors */
-            .fac {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 14px;
-            }
-
-            .f {
-                display: flex;
-                gap: 14px;
-                padding: 20px 22px;
-                background: #fff;
-                border: 1px solid var(--line);
-                border-radius: var(--r-md);
-            }
-
-            .f .n {
-                font-family: "Montserrat", sans-serif;
-                font-weight: 700;
-                font-size: 13px;
-                color: var(--blue);
-                flex-shrink: 0;
-                padding-top: 2px;
-            }
-
-            .f h3 {
-                font-size: 16px;
-                margin-bottom: 4px;
-            }
-
-            .f p {
-                font-size: 14px;
-                color: var(--grey);
-            }
-
-            .checks {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 12px 28px;
-                margin-top: 24px;
-            }
-
-            .checks li {
-                display: flex;
-                gap: 12px;
-                font-size: 15px;
-                align-items: flex-start;
-            }
-
-            .checks li::before {
-                content: "";
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                background: var(--blue-pale);
-                flex-shrink: 0;
-                margin-top: 3px;
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230D47A1' stroke-width='3'%3E%3Cpath d='M4 12l5 5L20 6'/%3E%3C/svg%3E");
-                background-size: 12px;
-                background-position: center;
-                background-repeat: no-repeat;
-            }
-
-            .cost-band {
-                background: var(--deep);
-                color: #fff;
-                border-radius: var(--r-lg);
-                padding: 44px;
-                position: relative;
-                overflow: hidden;
-            }
-
-            .cost-band::before {
-                content: "";
-                position: absolute;
-                inset: 0;
-                background: radial-gradient(
-                    ellipse 55% 70% at 88% 15%,
-                    rgba(26, 95, 208, 0.45),
-                    transparent 62%
-                );
-            }
-
-            .cost-band > * {
-                position: relative;
-            }
-
-            .cost-band h2 {
-                color: #fff;
-            }
-
-            .cost-figure {
-                font-family: "Montserrat", sans-serif;
-                font-weight: 700;
-                font-size: clamp(32px, 4.8vw, 50px);
-                color: #9cc0ff;
-                line-height: 1.1;
-                margin: 6px 0 14px;
-                letter-spacing: -0.03em;
-            }
-
-            .cost-band p {
-                color: #c6d4ec;
-            }
-
-            .cost-drivers {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px 26px;
-                margin-top: 26px;
-                padding-top: 26px;
-                border-top: 1px solid rgba(255, 255, 255, 0.14);
-            }
-
-            .cost-drivers li {
-                font-size: 14.5px;
-                color: #c6d4ec;
-                display: flex;
-                gap: 11px;
-            }
-
-            .cost-drivers li b {
-                color: #fff;
-                font-weight: 500;
-            }
-
-            @media (max-width: 900px) {
-                .sys,
-                .wind {
+                .grid-2 {
+                    display: grid;
                     grid-template-columns: 1fr 1fr;
-                }
-            }
-
-            @media (max-width: 640px) {
-                .section {
-                    padding: 52px 0;
-                }
-
-                .container {
-                    padding: 0 20px;
-                }
-
-                .grid-2,
-                .sys,
-                .fac,
-                .checks,
-                .cost-drivers,
-                .wind {
-                    grid-template-columns: 1fr;
-                }
-
-                .cost-band {
-                    padding: 30px 24px;
+                    gap: 22px;
                 }
 
                 .card {
-                    padding: 24px 22px;
+                    background: #fff;
+                    border: 1px solid var(--line);
+                    border-radius: var(--r-lg);
+                    padding: 30px 26px;
                 }
-            }
-        </style>
+
+                .grid-2 .card:nth-child(even) {
+                    background: var(--blue-pale);
+                    border-color: #c9daf5;
+                }
+
+                .card p {
+                    color: var(--grey);
+                    font-size: 14.5px;
+                }
+
+                /* Shingle grades */
+                .sys {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 22px;
+                }
+
+                .sys .s {
+                    background: #fff;
+                    border: 1px solid var(--line);
+                    border-radius: var(--r-lg);
+                    overflow: hidden;
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .sys .s:nth-child(even) {
+                    border-color: var(--blue);
+                    box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.08);
+                }
+
+                .sys .top {
+                    padding: 24px 26px 20px;
+                    border-bottom: 1px solid var(--line);
+                }
+
+                .sys .tag {
+                    font-family: "Montserrat", sans-serif;
+                    font-size: 10.5px;
+                    font-weight: 700;
+                    letter-spacing: 0.12em;
+                    text-transform: uppercase;
+                    color: var(--blue);
+                    background: var(--blue-pale);
+                    padding: 5px 12px;
+                    border-radius: 100px;
+                    display: inline-block;
+                    margin-bottom: 12px;
+                }
+
+                .sys .s:nth-child(even) .tag {
+                    background: var(--blue);
+                    color: #fff;
+                }
+
+                .sys h3 {
+                    font-size: 19px;
+                    margin-bottom: 6px;
+                }
+
+                .sys .top p {
+                    font-size: 14px;
+                    color: var(--grey);
+                    margin: 0;
+                }
+
+                .sys .body {
+                    padding: 22px 26px;
+                    flex: 1;
+                }
+
+                .sys .body li {
+                    font-size: 14px;
+                    color: var(--grey);
+                    padding: 7px 0 7px 20px;
+                    position: relative;
+                }
+
+                .sys .body li::before {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    top: 15px;
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 50%;
+                    background: var(--blue-soft);
+                }
+
+                .sys .foot {
+                    padding: 16px 26px;
+                    background: var(--off);
+                    font-size: 13px;
+                    color: var(--grey);
+                }
+
+                .sys .foot b {
+                    font-family: "Montserrat", sans-serif;
+                    color: var(--ink);
+                    font-weight: 600;
+                }
+
+                /* Wind rating */
+                .wind {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 20px;
+                    margin-top: 8px;
+                }
+
+                .wr {
+                    background: #fff;
+                    border: 1px solid var(--line);
+                    border-radius: var(--r-lg);
+                    padding: 28px 26px;
+                    text-align: center;
+                }
+
+                .wind .wr:last-child {
+                    background: var(--deep);
+                    border-color: var(--deep);
+                    color: #fff;
+                }
+
+                .wr .cls {
+                    font-family: "Montserrat", sans-serif;
+                    font-size: 11px;
+                    font-weight: 700;
+                    letter-spacing: 0.14em;
+                    text-transform: uppercase;
+                    color: var(--blue);
+                    margin-bottom: 10px;
+                    display: block;
+                }
+
+                .wind .wr:last-child .cls {
+                    color: #9cc0ff;
+                }
+
+                .wr .mph {
+                    font-family: "Montserrat", sans-serif;
+                    font-weight: 700;
+                    font-size: 34px;
+                    color: var(--ink);
+                    line-height: 1;
+                    letter-spacing: -0.03em;
+                }
+
+                .wind .wr:last-child .mph {
+                    color: #fff;
+                }
+
+                .wr .mph span {
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: var(--grey);
+                }
+
+                .wind .wr:last-child .mph span {
+                    color: #9cc0ff;
+                }
+
+                .wr p {
+                    font-size: 13.5px;
+                    color: var(--grey);
+                    margin: 14px 0 0;
+                }
+
+                .wind .wr:last-child p {
+                    color: #c6d4ec;
+                }
+
+                /* Lifespan factors */
+                .fac {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 14px;
+                }
+
+                .f {
+                    display: flex;
+                    gap: 14px;
+                    padding: 20px 22px;
+                    background: #fff;
+                    border: 1px solid var(--line);
+                    border-radius: var(--r-md);
+                }
+
+                .f .n {
+                    font-family: "Montserrat", sans-serif;
+                    font-weight: 700;
+                    font-size: 13px;
+                    color: var(--blue);
+                    flex-shrink: 0;
+                    padding-top: 2px;
+                }
+
+                .f h3 {
+                    font-size: 16px;
+                    margin-bottom: 4px;
+                }
+
+                .f p {
+                    font-size: 14px;
+                    color: var(--grey);
+                }
+
+                .checks {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 12px 28px;
+                    margin-top: 24px;
+                }
+
+                .checks li {
+                    display: flex;
+                    gap: 12px;
+                    font-size: 15px;
+                    align-items: flex-start;
+                }
+
+                .checks li::before {
+                    content: "";
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    background: var(--blue-pale);
+                    flex-shrink: 0;
+                    margin-top: 3px;
+                    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230D47A1' stroke-width='3'%3E%3Cpath d='M4 12l5 5L20 6'/%3E%3C/svg%3E");
+                    background-size: 12px;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                }
+
+                .cost-band {
+                    background: var(--deep);
+                    color: #fff;
+                    border-radius: var(--r-lg);
+                    padding: 44px;
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .cost-band::before {
+                    content: "";
+                    position: absolute;
+                    inset: 0;
+                    background: radial-gradient(
+                        ellipse 55% 70% at 88% 15%,
+                        rgba(26, 95, 208, 0.45),
+                        transparent 62%
+                    );
+                }
+
+                .cost-band > * {
+                    position: relative;
+                }
+
+                .cost-band h2 {
+                    color: #fff;
+                }
+
+                .cost-figure {
+                    font-family: "Montserrat", sans-serif;
+                    font-weight: 700;
+                    font-size: clamp(32px, 4.8vw, 50px);
+                    color: #9cc0ff;
+                    line-height: 1.1;
+                    margin: 6px 0 14px;
+                    letter-spacing: -0.03em;
+                }
+
+                .cost-band p {
+                    color: #c6d4ec;
+                }
+
+                .cost-drivers {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 12px 26px;
+                    margin-top: 26px;
+                    padding-top: 26px;
+                    border-top: 1px solid rgba(255, 255, 255, 0.14);
+                }
+
+                .cost-drivers li {
+                    font-size: 14.5px;
+                    color: #c6d4ec;
+                    display: flex;
+                    gap: 11px;
+                }
+
+                .cost-drivers li b {
+                    color: #fff;
+                    font-weight: 500;
+                }
+
+                @media (max-width: 900px) {
+                    .sys,
+                    .wind {
+                        grid-template-columns: 1fr 1fr;
+                    }
+                }
+
+                @media (max-width: 640px) {
+                    .section {
+                        padding: 52px 0;
+                    }
+
+                    .container {
+                        padding: 0 20px;
+                    }
+
+                    .grid-2,
+                    .sys,
+                    .fac,
+                    .checks,
+                    .cost-drivers,
+                    .wind {
+                        grid-template-columns: 1fr;
+                    }
+
+                    .cost-band {
+                        padding: 30px 24px;
+                    }
+
+                    .card {
+                        padding: 24px 22px;
+                    }
+                }
+                .hero-ctas {
+                    margin-top: 20px;
+                }
+            </style>
+        </main>
+        <script is:inline>
+            document.addEventListener("DOMContentLoaded", () => {
+                // Select all FAQ question buttons
+                const faqButtons = document.querySelectorAll(".faq-q");
+
+                faqButtons.forEach((button) => {
+                    button.addEventListener("click", () => {
+                        // Find the parent item of the clicked button
+                        const currentItem = button.closest(".faq-item");
+
+                        // Optional: Close all other open FAQ items
+                        document
+                            .querySelectorAll(".faq-item")
+                            .forEach((item) => {
+                                if (item !== currentItem) {
+                                    item.classList.remove("open");
+                                }
+                            });
+
+                        // Toggle the 'open' class on the clicked item
+                        currentItem.classList.toggle("open");
+                    });
+                });
+            });
+        </script>
     </body>
 </html>

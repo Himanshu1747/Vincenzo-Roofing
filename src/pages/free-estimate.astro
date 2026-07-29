@@ -1,0 +1,1456 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import Testimonials from "../components/Testimonials.astro";
+import Faqcompo from "../components/Faqcompo.astro";
+import Contactform from "../components/Contactform.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import { queryWordPress } from "../lib/wordpress";
+import Contact from "./contact.astro";
+
+const PAGEJSON = `
+query homepagedata {
+  page(id: "/free-estimate", idType: URI) {
+    title
+    content
+    freeEstimate {
+      waterComming
+      whatYouGetText
+      whatGetList {
+        listaName
+      }
+      recachOut
+      whatHappenContent
+      whatHappenGrids{
+        whatHappenData
+      }
+      transaparencyContent
+      transaparencyLists{
+        transaparencyListName
+      }
+      howWeWorkContent
+      howWorkGrid{
+        workingStyle
+      }
+      faqContent
+      faqData{
+        faqQuestion
+        faqAnswer
+      }
+      ctaData
+      
+    }
+  }
+}
+`;
+const pagedata = await queryWordPress(PAGEJSON);
+const alldata = pagedata?.page;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    </head>
+    <body>
+        <Header />
+        <main id="top">
+            <section class="top">
+                <div class="top-grid" aria-hidden="true"></div>
+                <div class="container">
+                    <div
+                        class="top-copy"
+                        set:html={alldata?.content || "error"}
+                    />
+
+                    <div class="form-wrap">
+                        <!-- FORM -->
+                        <div class="form-card">
+                            <h2>Request Your Estimate</h2>
+                            <p class="sub">
+                                Most requests get a reply within one business
+                                hour, 7am to 6pm on weekdays.
+                            </p>
+
+                            <!-- NOTE: connect this form to a handler such as Formspree, Web3Forms, or your CRM.
+             A static site will not submit anything without one. Add a success state after submit. -->
+                            <form id="estimateForm" novalidate>
+                                <div
+                                    id="formStatus"
+                                    class="form-status"
+                                    style="display:none;"
+                                >
+                                </div>
+
+                                <div class="row">
+                                    <div class="field">
+                                        <label for="fname">First name</label>
+                                        <input
+                                            id="fname"
+                                            name="fname"
+                                            type="text"
+                                            placeholder="Jane"
+                                            autocomplete="given-name"
+                                            required
+                                        />
+                                        <span class="err" id="err-fname"></span>
+                                    </div>
+                                    <div class="field">
+                                        <label for="lname">Last name</label>
+                                        <input
+                                            id="lname"
+                                            name="lname"
+                                            type="text"
+                                            placeholder="Doe"
+                                            autocomplete="family-name"
+                                            required
+                                        />
+                                        <span class="err" id="err-lname"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="field">
+                                        <label for="phone">Phone</label>
+                                        <input
+                                            id="phone"
+                                            name="phone"
+                                            type="tel"
+                                            placeholder="(603) 555 0100"
+                                            autocomplete="tel"
+                                            required
+                                        />
+                                        <span class="err" id="err-phone"></span>
+                                    </div>
+                                    <div class="field">
+                                        <label for="email">Email</label>
+                                        <input
+                                            id="email"
+                                            name="email"
+                                            type="email"
+                                            placeholder="jane@example.com"
+                                            autocomplete="email"
+                                            required
+                                        />
+                                        <span class="err" id="err-email"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="field full">
+                                        <label for="address"
+                                            >Property address or town</label
+                                        >
+                                        <input
+                                            id="address"
+                                            name="address"
+                                            type="text"
+                                            placeholder="12 Ocean Blvd, Seabrook NH"
+                                            autocomplete="street-address"
+                                            required
+                                        />
+                                        <span class="err" id="err-address"
+                                        ></span>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="field full">
+                                        <label>Property type</label>
+                                        <div class="radio-set">
+                                            <label
+                                                ><input
+                                                    type="radio"
+                                                    name="ptype"
+                                                    value="residential"
+                                                    
+                                                /><span>Residential</span
+                                                ></label
+                                            >
+                                            <label
+                                                ><input
+                                                    type="radio"
+                                                    name="ptype"
+                                                    value="commercial"
+                                                /><span>Commercial</span></label
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="field full">
+                                        <label for="service"
+                                            >What do you need?</label
+                                        >
+                                        <select id="service" name="service">
+                                            <option
+                                                >Not sure, please advise</option
+                                            >
+                                            <option>Roof replacement</option>
+                                            <option>Roof repair</option>
+                                            <option>Free roof inspection</option
+                                            >
+                                            <option>Storm or wind damage</option
+                                            >
+                                            <option
+                                                >Asphalt shingle roofing</option
+                                            >
+                                            <option>Metal roofing</option>
+                                            <option
+                                                >Commercial or flat roofing</option
+                                            >
+                                            <option
+                                                >Siding installation or
+                                                replacement</option
+                                            >
+                                            <option>Gutters</option>
+                                            <option>Decks</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="field full">
+                                        <label>How soon?</label>
+                                        <div class="radio-set">
+                                            <label
+                                                ><input
+                                                    type="radio"
+                                                    name="timing"
+                                                    value="urgent"
+                                                /><span
+                                                    >As soon as possible</span
+                                                ></label
+                                            >
+                                            <label
+                                                ><input
+                                                    type="radio"
+                                                    name="timing"
+                                                    value="soon"
+                                                    
+                                                /><span>Next few months</span
+                                                ></label
+                                            >
+                                            <label
+                                                ><input
+                                                    type="radio"
+                                                    name="timing"
+                                                    value="planning"
+                                                /><span
+                                                    >Just planning ahead</span
+                                                ></label
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="field full">
+                                        <label for="details"
+                                            >Tell us about it <span class="opt"
+                                                >(optional)</span
+                                            ></label
+                                        >
+                                        <textarea
+                                            id="details"
+                                            name="details"
+                                            rows="4"
+                                            placeholder="Roof age, any leaks or stains, what you have noticed, or anything else useful."
+                                        ></textarea>
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-blue btn-lg"
+                                    style="width:100%"
+                                    id="submitBtn"
+                                    >Request My Free Estimate</button
+                                >
+                                <p class="form-note">
+                                    We use your details only to respond to this
+                                    request. We never sell or share them.
+                                </p>
+                            </form>
+                        </div>
+
+                        <!-- SIDEBAR -->
+                        <div class="side">
+                            <div
+                                class="side-card urgent"
+                                set:html={alldata?.freeEstimate?.waterComming ||
+                                    "error"}
+                            />
+
+                            <div class="side-card">
+                                <h3>
+                                    {
+                                        alldata?.freeEstimate?.whatYouGetText ||
+                                            "error"
+                                    }
+                                </h3>
+                                <ul class="side-list">
+                                    {
+                                        alldata?.freeEstimate?.whatGetList.map(
+                                            (freeitems) => (
+                                                <li>
+                                                    {freeitems?.listaName ||
+                                                        "error"}
+                                                </li>
+                                            ),
+                                        )
+                                    }
+                                </ul>
+                            </div>
+
+                            <div
+                                class="side-card"
+                                set:html={alldata?.freeEstimate?.recachOut ||
+                                    "error"}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="container">
+                    <div
+                        class="narrow"
+                        style="text-align:center;margin-bottom:36px"
+                        set:html={alldata?.freeEstimate?.whatHappenContent ||
+                            "error"}
+                    />
+                    <div class="steps">
+                        {
+                            alldata?.freeEstimate?.whatHappenGrids?.map(
+                                (happenitem, index) => {
+                                    const stepNumber = String(
+                                        index + 1,
+                                    ).padStart(2, "0");
+                                    return (
+                                        <div class="step" key={index}>
+                                            <span class="n">
+                                                Step {stepNumber}
+                                            </span>
+                                            <Fragment
+                                                set:html={
+                                                    happenitem?.whatHappenData ||
+                                                    "error"
+                                                }
+                                            />
+                                        </div>
+                                    );
+                                },
+                            )
+                        }
+                    </div>
+                </div>
+            </section>
+
+            <section class="section alt">
+                <div class="container narrow">
+                    <Fragment
+                        set:html={alldata?.freeEstimate?.transaparencyContent ||
+                            "error"}
+                    />
+                    <ul class="checks">
+                        {
+                            alldata?.freeEstimate?.transaparencyLists.map(
+                                (tranitems) => (
+                                    <li>
+                                        {tranitems?.transaparencyListName ||
+                                            "error"}
+                                    </li>
+                                ),
+                            )
+                        }
+                    </ul>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="container">
+                    <div
+                        class="narrow"
+                        style="text-align:center;margin-bottom:32px"
+                        set:html={alldata?.freeEstimate?.howWeWorkContent ||
+                            "error"}
+                    />
+                    <div class="grid-2">
+                        {
+                            alldata?.freeEstimate?.howWorkGrid.map(
+                                (workitems) => (
+                                    <div
+                                        class="card"
+                                        set:html={
+                                            workitems?.workingStyle || "error"
+                                        }
+                                    />
+                                ),
+                            )
+                        }
+                    </div>
+                </div>
+            </section>
+
+            <section class="section alt">
+                <div class="container narrow">
+                    <div
+                        style="text-align:center;margin-bottom:36px"
+                        set:html={alldata?.freeEstimate?.faqContent || "error"}
+                    />
+
+                    <div class="faq-list">
+                        {
+                            alldata?.freeEstimate?.faqData.map((faqlists) => (
+                                <div class="faq-item">
+                                    <>
+                                        <button class="faq-q">
+                                            <>
+                                                <span>{faqlists?.faqQuestion|| "error"}</span>
+                                                <span class="plus" />
+                                            </>
+                                        </button>
+                                        <div class="faq-a" set:html={faqlists?.faqAnswer || "error"}>
+                                            
+                                        </div>
+                                    </>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+            </section>
+
+            <section class="cta-band">
+                <div class="cta-inner">
+                    <div class="center-ctas" set:html={alldata?.freeEstimate?.ctaData || "error"}>
+                       
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <Footer />
+        <style is:global>
+            :root {
+                --blue: #0d47a1;
+                --blue-bright: #1a5fd0;
+                --blue-soft: #4a7fd4;
+                --blue-pale: #eaf0fa;
+                --deep: #071f45;
+                --deep-2: #0a2e6b;
+                --ink: #111111;
+                --white: #ffffff;
+                --off: #f6f7f9;
+                --grey: #54575c;
+                --grey-light: #8a8d92;
+                --line: #e6e8ec;
+                --r-lg: 22px;
+                --r-md: 16px;
+                --sh-md:
+                    0 4px 10px rgba(17, 17, 17, 0.05),
+                    0 16px 40px rgba(17, 17, 17, 0.1);
+                --sh-lg:
+                    0 8px 20px rgba(17, 17, 17, 0.08),
+                    0 32px 80px rgba(17, 17, 17, 0.16);
+                --sh-blue: 0 8px 24px rgba(13, 71, 161, 0.32);
+                --ease: cubic-bezier(0.22, 0.61, 0.21, 1);
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                font-family: "Roboto", sans-serif;
+                font-weight: 400;
+                color: var(--ink);
+                background: var(--white);
+                line-height: 1.7;
+                font-size: 15.5px;
+                -webkit-font-smoothing: antialiased;
+                overflow-x: hidden;
+            }
+
+            img {
+                max-width: 100%;
+                display: block;
+            }
+
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+            ul {
+                list-style: none;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4 {
+                font-family: "Montserrat", sans-serif;
+                font-weight: 700;
+                color: var(--ink);
+                letter-spacing: -0.02em;
+                line-height: 1.2;
+            }
+
+            h2 {
+                font-size: clamp(24px, 3.2vw, 32px);
+                margin-bottom: 18px;
+            }
+
+            h3 {
+                font-size: 18px;
+                font-weight: 600;
+                margin-bottom: 8px;
+            }
+
+            p {
+                margin-bottom: 16px;
+            }
+
+            p:last-child {
+                margin-bottom: 0;
+            }
+
+            .section {
+                padding: 70px 0;
+            }
+
+            .eyebrow {
+                font-family: "Montserrat", sans-serif;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                font-weight: 700;
+                font-size: 11.5px;
+                letter-spacing: 0.16em;
+                text-transform: uppercase;
+                color: var(--blue);
+                margin-bottom: 16px;
+            }
+
+            .eyebrow::before {
+                content: "";
+                width: 7px;
+                height: 7px;
+                background: var(--blue);
+                clip-path: polygon(50% 0, 100% 100%, 0 100%);
+            }
+
+            .lead {
+                font-size: 17px;
+                color: var(--grey);
+            }
+
+            .btn {
+                font-family: "Montserrat", sans-serif;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 9px;
+                font-weight: 700;
+                font-size: 13.5px;
+                padding: 15px 27px;
+                border-radius: 100px;
+                min-height: 50px;
+                transition:
+                    transform 0.25s var(--ease),
+                    box-shadow 0.25s var(--ease);
+            }
+
+            .btn-blue {
+                background: linear-gradient(
+                    180deg,
+                    var(--blue-bright),
+                    var(--blue)
+                );
+                color: #fff;
+                box-shadow: var(--sh-blue);
+            }
+
+            .btn-blue:hover {
+                transform: translateY(-2px);
+            }
+
+            .btn-ghost-w {
+                border: 1.5px solid rgba(255, 255, 255, 0.35);
+                color: #fff;
+            }
+
+            .btn-ghost-w:hover {
+                border-color: #fff;
+                background: rgba(255, 255, 255, 0.08);
+            }
+
+            .btn-lg {
+                font-size: 16px;
+                padding: 18px 32px;
+                min-height: 58px;
+            }
+
+            /* Hero + form */
+            .top {
+                background: linear-gradient(
+                    155deg,
+                    #061b3e,
+                    var(--deep) 45%,
+                    var(--deep-2)
+                );
+                color: #fff;
+                position: relative;
+                overflow: hidden;
+                padding: 60px 0 90px;
+            }
+
+            .top::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(
+                    ellipse 60% 55% at 82% 8%,
+                    rgba(26, 95, 208, 0.5),
+                    transparent 62%
+                );
+            }
+
+            .top-grid {
+                position: absolute;
+                inset: 0;
+                background-image:
+                    linear-gradient(
+                        rgba(255, 255, 255, 0.03) 1px,
+                        transparent 1px
+                    ),
+                    linear-gradient(
+                        90deg,
+                        rgba(255, 255, 255, 0.03) 1px,
+                        transparent 1px
+                    );
+                background-size: 56px 56px;
+                mask-image: radial-gradient(
+                    ellipse 90% 80% at 60% 20%,
+                    #000,
+                    transparent 78%
+                );
+            }
+
+            .top .container {
+                position: relative;
+                z-index: 2;
+            }
+
+            .top-copy {
+                max-width: 640px;
+                margin-bottom: 44px;
+            }
+
+            .free-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 9px;
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.22);
+                border-radius: 100px;
+                padding: 8px 18px;
+                font-family: "Montserrat", sans-serif;
+                font-size: 11.5px;
+                font-weight: 700;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: #fff;
+                margin-bottom: 20px;
+            }
+
+            .top h1 {
+                color: #fff;
+                font-size: clamp(30px, 4.3vw, 47px);
+                margin-bottom: 18px;
+                line-height: 1.14;
+            }
+
+            .top-copy p {
+                color: #c6d4ec;
+                font-size: 17px;
+                margin: 0;
+            }
+
+            .form-wrap {
+                display: grid;
+                grid-template-columns: 1.35fr 0.65fr;
+                gap: 26px;
+                align-items: start;
+            }
+
+            .form-card {
+                background: #fff;
+                border-radius: 26px;
+                padding: 40px;
+                box-shadow: var(--sh-lg);
+            }
+
+            .form-card h2 {
+                font-size: 23px;
+                margin-bottom: 6px;
+            }
+
+            .form-card > p.sub {
+                color: var(--grey);
+                font-size: 14.5px;
+                margin-bottom: 26px;
+            }
+
+            .row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+                margin-bottom: 16px;
+            }
+
+            .field {
+                display: flex;
+                flex-direction: column;
+                gap: 7px;
+            }
+
+            .field.full {
+                grid-column: 1/-1;
+            }
+
+            .field label {
+                font-family: "Montserrat", sans-serif;
+                font-size: 11px;
+                font-weight: 700;
+                color: var(--ink);
+                text-transform: uppercase;
+                letter-spacing: 0.07em;
+            }
+
+            .field label .opt {
+                color: var(--grey-light);
+                font-weight: 600;
+                text-transform: none;
+                letter-spacing: 0;
+            }
+
+            .field input,
+            .field select,
+            .field textarea {
+                border: 1.5px solid var(--line);
+                border-radius: 12px;
+                padding: 14px 16px;
+                font-family: inherit;
+                font-size: 14.5px;
+                color: var(--ink);
+                background: var(--off);
+                transition:
+                    border-color 0.2s,
+                    background 0.2s;
+            }
+
+            .field input:focus,
+            .field select:focus,
+            .field textarea:focus {
+                outline: none;
+                border-color: var(--blue);
+                background: #fff;
+            }
+
+            .radio-set {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+
+            .radio-set label {
+                flex: 1;
+                min-width: 120px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                border: 1.5px solid var(--line);
+                border-radius: 12px;
+                padding: 14px 12px;
+                cursor: pointer;
+                font-family: "Montserrat", sans-serif;
+                font-size: 13px;
+                font-weight: 600;
+                text-transform: none;
+                letter-spacing: 0;
+                color: var(--grey);
+                transition: all 0.2s;
+                background: var(--off);
+            }
+
+            .radio-set input {
+                position: absolute;
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+            .radio-set input:checked + span {
+                color: var(--blue);
+            }
+
+            .radio-set label:has(input:checked) {
+                border-color: var(--blue);
+                background: var(--blue-pale);
+                color: var(--blue);
+            }
+
+            .form-note {
+                font-size: 12.5px;
+                color: var(--grey-light);
+                text-align: center;
+                margin-top: 14px;
+            }
+
+            .side {
+                display: flex;
+                flex-direction: column;
+                gap: 18px;
+            }
+
+            .side-card {
+                background: #fff;
+                border-radius: 22px;
+                padding: 28px 26px;
+                box-shadow: var(--sh-md);
+            }
+
+            .side-card.urgent {
+                background: var(--blue);
+                color: #fff;
+                box-shadow: var(--sh-blue);
+            }
+
+            .side-card.urgent h3 {
+                color: #fff;
+                font-size: 17px;
+            }
+
+            .side-card.urgent p {
+                color: rgba(255, 255, 255, 0.88);
+                font-size: 14px;
+                margin-bottom: 18px;
+            }
+
+            .side-card.urgent a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 9px;
+                background: #fff;
+                color: var(--blue);
+                font-family: "Montserrat", sans-serif;
+                font-weight: 700;
+                font-size: 15px;
+                border-radius: 100px;
+                min-height: 52px;
+            }
+
+            .pulse {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: #4ade80;
+                animation: pulse 1.8s infinite;
+            }
+
+            @keyframes pulse {
+                0%,
+                100% {
+                    opacity: 1;
+                }
+
+                50% {
+                    opacity: 0.3;
+                }
+            }
+
+            .side-card h3 {
+                font-size: 16px;
+                margin-bottom: 14px;
+            }
+
+            .side-list li {
+                display: flex;
+                gap: 11px;
+                font-size: 14px;
+                color: var(--grey);
+                padding: 7px 0;
+                align-items: flex-start;
+            }
+
+            .side-list li::before {
+                content: "";
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                background: var(--blue-pale);
+                flex-shrink: 0;
+                margin-top: 3px;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230D47A1' stroke-width='3.5'%3E%3Cpath d='M4 12l5 5L20 6'/%3E%3C/svg%3E");
+                background-size: 11px;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+
+            .side-row {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                font-size: 14px;
+                color: var(--grey);
+                padding: 8px 0;
+            }
+
+            .side-row b {
+                font-family: "Montserrat", sans-serif;
+                color: var(--ink);
+                font-weight: 600;
+                font-size: 13.5px;
+                display: block;
+            }
+
+            .side-row .ic {
+                width: 36px;
+                height: 36px;
+                border-radius: 10px;
+                background: var(--blue-pale);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                color: var(--blue);
+                font-weight: 700;
+                font-size: 14px;
+            }
+
+            /* Steps */
+            .alt {
+                background: var(--off);
+            }
+
+            .steps {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 18px;
+            }
+
+            .step {
+                background: #fff;
+                border: 1px solid var(--line);
+                border-radius: var(--r-md);
+                padding: 26px 22px;
+            }
+
+            .step .n {
+                font-family: "Montserrat", sans-serif;
+                font-size: 12px;
+                font-weight: 700;
+                color: var(--blue);
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                display: block;
+                margin-bottom: 24px;
+            }
+
+            .step h3 {
+                font-size: 16px;
+                margin-bottom: 6px;
+            }
+
+            .step p {
+                font-size: 13.5px;
+                color: var(--grey);
+            }
+
+            .grid-2 {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 22px;
+            }
+
+            .card {
+                background: #fff;
+                border: 1px solid var(--line);
+                border-radius: var(--r-lg);
+                padding: 30px 26px;
+            }
+
+            .grid-2 .card:last-child {
+                background: var(--blue-pale);
+                border-color: #c9daf5;
+            }
+
+            .card p {
+                color: var(--grey);
+                font-size: 14.5px;
+            }
+
+            .checks {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px 28px;
+                margin-top: 24px;
+            }
+
+            .checks li {
+                display: flex;
+                gap: 12px;
+                font-size: 15px;
+                align-items: flex-start;
+            }
+
+            .checks li::before {
+                content: "";
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background: var(--blue-pale);
+                flex-shrink: 0;
+                margin-top: 3px;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230D47A1' stroke-width='3'%3E%3Cpath d='M4 12l5 5L20 6'/%3E%3C/svg%3E");
+                background-size: 12px;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+
+            .faq-item {
+                border: 1px solid var(--line);
+                border-radius: var(--r-md);
+                margin-bottom: 12px;
+                background: #fff;
+                overflow: hidden;
+            }
+
+            .faq-q {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 20px;
+                padding: 20px 24px;
+                text-align: left;
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-family: "Montserrat", sans-serif;
+                font-size: 16px;
+                font-weight: 600;
+                color: var(--ink);
+            }
+
+            .faq-q .p {
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                background: var(--blue-pale);
+                position: relative;
+                flex-shrink: 0;
+                transition:
+                    transform 0.28s var(--ease),
+                    background 0.28s;
+            }
+
+            .faq-q .p::before,
+            .faq-q .p::after {
+                content: "";
+                position: absolute;
+                background: var(--blue);
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                transition: background 0.28s;
+            }
+
+            .faq-q .p::before {
+                width: 11px;
+                height: 2px;
+            }
+
+            .faq-q .p::after {
+                width: 2px;
+                height: 11px;
+            }
+
+            .faq-item.open .p {
+                transform: rotate(45deg);
+                background: var(--blue);
+            }
+
+            .faq-item.open .p::before,
+            .faq-item.open .p::after {
+                background: #fff;
+            }
+
+            .faq-a {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.35s var(--ease);
+            }
+
+            .faq-item.open .faq-a {
+                max-height: 380px;
+            }
+
+            .faq-a p {
+                padding: 0 24px 22px;
+                color: var(--grey);
+                font-size: 14.5px;
+            }
+
+            .chips {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 9px;
+                margin-top: 18px;
+            }
+
+            .chip {
+                font-family: "Montserrat", sans-serif;
+                font-size: 13px;
+                font-weight: 600;
+                padding: 10px 18px;
+                border-radius: 100px;
+                border: 1px solid var(--line);
+                background: #fff;
+                color: var(--ink);
+            }
+
+            .chip.pri {
+                background: var(--blue-pale);
+                border-color: #c9daf5;
+                color: var(--blue);
+            }
+
+            .tier-label {
+                font-family: "Montserrat", sans-serif;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--blue);
+                margin: 26px 0 0;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .tier-label::after {
+                content: "";
+                flex: 1;
+                height: 1px;
+                background: var(--line);
+            }
+
+            .cta {
+                background: linear-gradient(
+                    140deg,
+                    var(--blue-bright),
+                    var(--blue) 45%,
+                    #082a5c
+                );
+                color: #fff;
+                border-radius: 26px;
+                padding: 56px 46px;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .cta::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(
+                    ellipse 55% 70% at 85% 20%,
+                    rgba(255, 255, 255, 0.15),
+                    transparent 62%
+                );
+            }
+
+            .cta > * {
+                position: relative;
+            }
+
+            .cta h2 {
+                color: #fff;
+            }
+
+            .cta p {
+                color: rgba(255, 255, 255, 0.85);
+                max-width: 520px;
+                margin: 0 auto 26px;
+            }
+
+            .cta-btns {
+                display: flex;
+                gap: 13px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            @media (max-width: 980px) {
+                .form-wrap {
+                    grid-template-columns: 1fr;
+                }
+
+                .side {
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                }
+
+                .side-card {
+                    flex: 1;
+                    min-width: 260px;
+                }
+
+                .steps {
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
+
+            @media (max-width: 640px) {
+                .section {
+                    padding: 52px 0;
+                }
+
+                .container {
+                    padding: 0 20px;
+                }
+
+                .top {
+                    padding: 44px 0 60px;
+                }
+
+                .form-card {
+                    padding: 26px 22px;
+                    border-radius: 20px;
+                }
+
+                .row,
+                .grid-2,
+                .checks,
+                .steps {
+                    grid-template-columns: 1fr;
+                }
+
+                .side {
+                    flex-direction: column;
+                }
+
+                .side-card {
+                    min-width: 0;
+                    padding: 24px 22px;
+                }
+
+                .cta {
+                    padding: 42px 24px;
+                    border-radius: 20px;
+                }
+
+                .card {
+                    padding: 24px 22px;
+                }
+            }
+            .err {
+                color: #d32f2f;
+                font-size: 12.5px;
+                min-height: 16px;
+                display: block;
+            }
+
+            .field input.field-invalid,
+            .field textarea.field-invalid {
+                border-color: #d32f2f !important;
+                background: #fff5f5 !important;
+            }
+
+            .form-status {
+                padding: 14px 18px;
+                border-radius: 12px;
+                font-size: 14px;
+                font-weight: 600;
+                margin-bottom: 18px;
+                text-align: center;
+            }
+
+            .form-status.success {
+                background: #e6f7ec;
+                color: #1b7a3d;
+                border: 1px solid #a9e0bc;
+            }
+
+            .form-status.error {
+                background: #fdecea;
+                color: #b3261e;
+                border: 1px solid #f4bcb6;
+            }
+        </style>
+        <script is:inline>
+            const form = document.getElementById("estimateForm");
+            const statusBox = document.getElementById("formStatus");
+            const submitBtn = document.getElementById("submitBtn");
+
+            function clearErrors() {
+                document
+                    .querySelectorAll(".err")
+                    .forEach((el) => (el.textContent = ""));
+                document
+                    .querySelectorAll(".field input, .field textarea")
+                    .forEach((el) => el.classList.remove("field-invalid"));
+            }
+
+            function showError(fieldId, message) {
+                const errEl = document.getElementById(`err-${fieldId}`);
+                const inputEl = document.getElementById(fieldId);
+                if (errEl) errEl.textContent = message;
+                if (inputEl) inputEl.classList.add("field-invalid");
+            }
+
+            function validateForm(data) {
+                let valid = true;
+
+                if (!data.fname || data.fname.trim().length < 2) {
+                    showError("fname", "Please enter your first name.");
+                    valid = false;
+                }
+                if (!data.lname || data.lname.trim().length < 2) {
+                    showError("lname", "Please enter your last name.");
+                    valid = false;
+                }
+
+                const phoneDigits = (data.phone || "").replace(/\D/g, "");
+                if (!data.phone || phoneDigits.length < 10) {
+                    showError("phone", "Please enter a valid phone number.");
+                    valid = false;
+                }
+
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!data.email || !emailRegex.test(data.email)) {
+                    showError("email", "Please enter a valid email address.");
+                    valid = false;
+                }
+
+                if (!data.address || data.address.trim().length < 5) {
+                    showError(
+                        "address",
+                        "Please enter the property address or town.",
+                    );
+                    valid = false;
+                }
+
+                return valid;
+            }
+
+            function setStatus(message, type) {
+                statusBox.style.display = "block";
+                statusBox.textContent = message;
+                statusBox.className = `form-status ${type}`;
+            }
+
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                clearErrors();
+                statusBox.style.display = "none";
+
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+
+                if (!validateForm(data)) {
+                    setStatus(
+                        "Please fix the highlighted fields above.",
+                        "error",
+                    );
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Sending...";
+
+                try {
+                    const res = await fetch("/api/send-estimate", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(data),
+                    });
+
+                    const result = await res.json();
+
+                    if (result.success) {
+                        setStatus(
+                            "Thanks! Your request has been sent. We'll be in touch within one business hour.",
+                            "success",
+                        );
+                        form.reset();
+                    } else if (result.errors) {
+                        Object.entries(result.errors).forEach(([field, msg]) =>
+                            showError(field, msg),
+                        );
+                        setStatus(
+                            "Please fix the highlighted fields above.",
+                            "error",
+                        );
+                    } else {
+                        setStatus(
+                            result.message ||
+                                "Something went wrong. Please call us instead.",
+                            "error",
+                        );
+                    }
+                } catch (err) {
+                    setStatus(
+                        "Network error. Please try again or call us directly.",
+                        "error",
+                    );
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Request My Free Estimate";
+                }
+            });
+        </script>
+        <script is:inline>
+            document.addEventListener("DOMContentLoaded", () => {
+                // Select all FAQ question buttons
+                const faqButtons = document.querySelectorAll(".faq-q");
+
+                faqButtons.forEach((button) => {
+                    button.addEventListener("click", () => {
+                        // Find the parent item of the clicked button
+                        const currentItem = button.closest(".faq-item");
+
+                        // Optional: Close all other open FAQ items
+                        document
+                            .querySelectorAll(".faq-item")
+                            .forEach((item) => {
+                                if (item !== currentItem) {
+                                    item.classList.remove("open");
+                                }
+                            });
+
+                        // Toggle the 'open' class on the clicked item
+                        currentItem.classList.toggle("open");
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
