@@ -53,31 +53,37 @@ const alldata = pagedata?.page;
             </section>
 
             <!-- ============ CONTACT SECTION ============ -->
-        <Contactform/>
+            <Contactform />
 
             <!-- Emergency / Final CTA -->
-            <section class="emergency">
-                <div
-                    class="container"
-                    set:html={alldata?.contactpage?.finalCtaContent || "error"}
-                />
+           
+            <section class="cta-band">
+                <div class="cta-inner">
+                    <div class="center-ctas" set:html={alldata?.contactpage?.finalCtaContent || "error"}>
+                        
+                    </div>
+                </div>
             </section>
         </main>
 
         <Footer />
 
-
-
-        <style>
+        <style is:global>
             .err {
                 display: block;
-                color: #C0392B;
+                color: #c0392b;
                 font-size: 12px;
                 margin-top: 4px;
                 min-height: 14px;
             }
             .field-invalid {
-                border-color: #C0392B !important;
+                border-color: #c0392b !important;
+            }
+            .cta-inner::before{
+                z-index: -1;
+            }
+            a.btn.btn-white{
+                margin-top: 20px;
             }
             .form-status {
                 padding: 12px 14px;
@@ -86,14 +92,14 @@ const alldata = pagedata?.page;
                 margin-bottom: 16px;
             }
             .form-status.success {
-                background: #E9F7EF;
-                color: #1E7E34;
-                border: 1px solid #C3E6CB;
+                background: #e9f7ef;
+                color: #1e7e34;
+                border: 1px solid #c3e6cb;
             }
             .form-status.error {
-                background: #FDECEA;
-                color: #C0392B;
-                border: 1px solid #F5C6CB;
+                background: #fdecea;
+                color: #c0392b;
+                border: 1px solid #f5c6cb;
             }
         </style>
     </body>
