@@ -11,7 +11,12 @@ query homepagedata {
   page(id: "/gutters-decks", idType: URI) {
     title
     content
-    guttersDecks{
+    seo {
+      canonical
+      cornerstone
+      fullHead
+    }
+        guttersDecks{
       whatWeDoContent
       partOneContent
       assessmentContent
@@ -59,12 +64,18 @@ query homepagedata {
 `;
 const pagedata = await queryWordPress(PAGEJSON);
 const alldata = pagedata?.page;
+const seodata = alldata?.seo || {};
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead
+            useYoast={true}
+            canonical={seodata?.canonical || ""}
+            focuskw={seodata?.focuskw || ""}
+        />
+        {seodata?.fullHead && <Fragment set:html={seodata.fullHead} />}
   </head>
   <body>
     <Header />

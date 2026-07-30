@@ -13,6 +13,11 @@ export async function getStaticPaths() {
           title
           excerpt
           content
+          seo {
+            canonical
+            cornerstone
+            fullHead
+          }
           featuredImage {
             node {
               sourceUrl
@@ -34,15 +39,18 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
+const seodata = post?.seo || {};
 ---
 
 <!doctype html>
 <html lang="en">
     <head>
         <BaseHead
-            title={post?.title}
-            description={post?.excerpt || "Location details"}
+            useYoast={true}
+            canonical={seodata?.canonical || ""}
+            focuskw={seodata?.focuskw || ""}
         />
+        {seodata?.fullHead && <Fragment set:html={seodata.fullHead} />}
             <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css"

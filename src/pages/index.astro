@@ -46,6 +46,11 @@ query homepagedata {
     }
     title
     content
+      seo {
+      canonical
+      cornerstone
+      fullHead
+    }
     homepage {
       imageWaranty
       imageReview
@@ -133,6 +138,7 @@ const [postdata, pagedata] = await Promise.all([
 
 const postrespons = postdata?.locationpost?.nodes || [];
 const responsedata = pagedata?.page || {};
+const seodata = responsedata?.seo || {};
 const rawServices = pagedata?.services?.nodes || [];
 
 // Target custom ordering based on desired service sequence
@@ -176,7 +182,12 @@ function buildSrcSet(sizes) {
 <!doctype html>
 <html lang="en">
     <head>
-        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+       <BaseHead
+            useYoast={true}
+            canonical={seodata?.canonical || ""}
+            focuskw={seodata?.focuskw || ""}
+        />
+        {seodata?.fullHead && <Fragment set:html={seodata.fullHead} />}
     </head>
     <body>
         <Header />

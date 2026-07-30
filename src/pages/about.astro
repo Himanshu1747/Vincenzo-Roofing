@@ -10,7 +10,12 @@ query homepagedata {
   page(id: "/about", idType: URI) {
     title
     content
-    about {
+    seo {
+      canonical
+      cornerstone
+      fullHead
+    }
+        about {
       ourStoryImage {
         node {
           mediaItemUrl
@@ -49,13 +54,19 @@ query homepagedata {
 `;
 const pagedata = await queryWordPress(PAGEJSON);
 const alldata = pagedata?.page;
+const seodata = alldata?.seo || {};
 const aboutData = alldata?.about;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead
+            useYoast={true}
+            canonical={seodata?.canonical || ""}
+            focuskw={seodata?.focuskw || ""}
+        />
+        {seodata?.fullHead && <Fragment set:html={seodata.fullHead} />}
 
   </head>
   <body>

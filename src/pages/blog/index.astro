@@ -10,6 +10,11 @@ query blogpage {
   page(id: "/blog", idType: URI) {
     title
     content
+    seo {
+      canonical
+      cornerstone
+      fullHead
+    }
   }
 }
 `;
@@ -53,6 +58,7 @@ const [pageResponse, data] = await Promise.all([
 ]);
 
 const pageData = pageResponse?.page;
+const seodata = pageData?.seo || {};
 const posts = data?.posts?.nodes || [];
 const featuredPost = posts[0];
 const gridPosts = posts.slice(1);
@@ -142,7 +148,12 @@ const deferredJson = JSON.stringify(deferredPayload).replace(/</g, "\\u003c");
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead
+      useYoast={true}
+      canonical={seodata?.canonical || ""}
+      focuskw={seodata?.focuskw || ""}
+    />
+    {seodata?.fullHead && <Fragment set:html={seodata.fullHead} />}
     <link rel="preconnect" href="https://staging2.vincenzoroofing.com" crossorigin />
     <link rel="dns-prefetch" href="https://staging2.vincenzoroofing.com" />
   </head>
@@ -267,7 +278,7 @@ const deferredJson = JSON.stringify(deferredPayload).replace(/</g, "\\u003c");
         </div>
       </section>
 
-      <section class="cta-band">
+      <!-- <section class="cta-band">
         <div class="cta-inner">
           <h2>Ready for a roof that&rsquo;s <em>built for here?</em></h2>
           <div class="btns">
@@ -275,7 +286,7 @@ const deferredJson = JSON.stringify(deferredPayload).replace(/</g, "\\u003c");
             <a class="btn btn-ghost-w" href="tel:+16035550199">Call Now</a>
           </div>
         </div>
-      </section>
+      </section> -->
     </main>
 
     <Footer />
@@ -548,9 +559,9 @@ const deferredJson = JSON.stringify(deferredPayload).replace(/</g, "\\u003c");
         gap: 8px;
         margin-top: 20px;
       }
-      	section.page-hero h1 {
-				padding-bottom: 15px;
-			}
+        section.page-hero h1 {
+        padding-bottom: 15px;
+      }
       .pg-btn {
         width: 42px;
         height: 42px;

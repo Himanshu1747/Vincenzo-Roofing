@@ -43,6 +43,11 @@ query servicedata {
   page(id: "/service", idType: URI) {
     title
     content
+    seo {
+      canonical
+      cornerstone
+      fullHead
+    }
     servicePage {
       ctaContents
     }
@@ -60,6 +65,7 @@ const [pagedata, mainpag] = await Promise.all([
 
 const rawServices = pagedata?.services?.nodes || [];
 const respopage = mainpag?.page;
+const seodata = respopage?.seo || {};
 
 // Desired order by slug matching your required sequence:
 const desiredOrder = [
@@ -89,7 +95,12 @@ const responsedata = rawServices.sort((a, b) => {
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead
+      useYoast={true}
+      canonical={seodata?.canonical || ""}
+      focuskw={seodata?.focuskw || ""}
+    />
+    {seodata?.fullHead && <Fragment set:html={seodata.fullHead} />}
   </head>
   <body>
     <Header />

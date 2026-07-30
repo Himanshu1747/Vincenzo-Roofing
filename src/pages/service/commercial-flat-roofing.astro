@@ -10,7 +10,12 @@ query homepagedata {
   page(id: "/commercial-flat-roofing", idType: URI) {
     title
     content
-    commercialFlatRoofing{
+    seo {
+      canonical
+      cornerstone
+      fullHead
+    }
+        commercialFlatRoofing{
       whatwedoCeontent
       systemContent
       syestemGrid{
@@ -51,12 +56,18 @@ query homepagedata {
 `;
 const pagedata = await queryWordPress(PAGEJSON);
 const alldata = pagedata?.page;
+const seodata = alldata?.seo || {};
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead
+            useYoast={true}
+            canonical={seodata?.canonical || ""}
+            focuskw={seodata?.focuskw || ""}
+        />
+        {seodata?.fullHead && <Fragment set:html={seodata.fullHead} />}
   </head>
   <body>
     <Header />

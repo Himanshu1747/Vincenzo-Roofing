@@ -10,6 +10,11 @@ query locationpage {
   page(id: "/location", idType: URI) {
     title
     content
+    seo {
+      canonical
+      cornerstone
+      fullHead
+    }
     locationPage{
       ctaLocation
     }
@@ -57,13 +62,19 @@ const [pagedata, postdata] = await Promise.all([
 ]);
 
 const responsedata = pagedata?.page || {};
+const seodata = responsedata?.seo || {};
 const postrespons = postdata?.locationpost?.nodes || [];
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead
+      useYoast={true}
+      canonical={seodata?.canonical || ""}
+      focuskw={seodata?.focuskw || ""}
+    />
+    {seodata?.fullHead && <Fragment set:html={seodata.fullHead} />}
   </head>
   <body>
     <Header />
