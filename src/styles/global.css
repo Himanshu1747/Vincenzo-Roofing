@@ -317,7 +317,7 @@ header.scrolled {
 
 
 .header-logo {
-  max-width: 100px;
+  max-width: 140px;
   width: 100%;
 }
 
@@ -2110,6 +2110,10 @@ footer {
     position: relative;
     top: 0;
   }
+  .header-logo {
+    max-width: 120px;
+
+}
 }
 
 @media (max-width:720px) {
