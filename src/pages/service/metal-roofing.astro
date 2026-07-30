@@ -64,11 +64,12 @@ const alldata = pagedata?.page;
 
         <main id="top">
             <section class="page-hero">
+                  <div class="hero-grid-tex" aria-hidden="true"></div>
                 <div class="container">
                     <div class="breadcrumb">
                         <a href="../index.html">Home</a>
                         <span>/</span>
-                        <span style="color:#fff;">metal-roofing</span>
+                        <span style="color:#fff;">Metal Roofing</span>
                     </div>
                     <Fragment set:html={alldata?.content || "error"} />
                 </div>

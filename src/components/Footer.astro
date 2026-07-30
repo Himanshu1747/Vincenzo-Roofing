@@ -1,63 +1,80 @@
 ---
+import { queryWordPress } from "../lib/wordpress";
 const today = new Date();
+
+const PAGEJSON = `
+query GetFooterData {
+  # 1. Footer Menu Query
+  menu(id: "footer-menu", idType: SLUG) {
+    menuItems(first: 100) {
+      nodes {
+        id
+        label
+        cssClasses
+        url
+        uri
+        parentId
+        target
+        order
+      }
+    }
+  }
+
+  # 2. Header Widget
+  topHeaderWidgetArea
+
+  # 3. Footer Widgets
+  footerLogoWidget
+  footerContactWidget
+  footerMapWidget
+  footerCopyrightWidget
+}
+`;
+
+const pagedata = await queryWordPress(PAGEJSON);
+
+// Extract menu nodes safely (defaults to empty array if missing)
+const menuItems = pagedata?.menu?.menuItems?.nodes || [];
+
+// Extract widget data safely
+const footerLogoWidget = pagedata?.footerLogoWidget || "";
+const footerContactWidget = pagedata?.footerContactWidget || "";
+const footerMapWidget = pagedata?.footerMapWidget || "";
+const footerCopyrightWidget = pagedata?.footerCopyrightWidget || "";
 ---
 
 <!-- Footer -->
 <footer>
   <div class="container footer-grid">
-    <div class="footer-brand">
-      <div class="logo footer">
-        <a href="/">
-          <img src="/logo.png" alt="" width="190" height="109" loading="lazy" />
-        </a>
-      </div>
-      <p>
-        Licensed, insured residential and commercial roofing across New
-        Hampshire. Free estimates, written warranties, 24/7 emergency response.
-      </p>
+    <div class="footer-brand" set:html={footerLogoWidget}>
+      
     </div>
 
+    <!-- Dynamic Menu Column -->
     <div class="footer-col">
       <h5>Company</h5>
       <ul>
-        <li><a href="/about-us/">About Us</a></li>
-        <li><a href="/gallery/">Gallery</a></li>
-        <li><a href="/reviews/">Reviews</a></li>
-        <li><a href="/financing/">Financing</a></li>
-        <li><a href="/service-areas/">Service Areas</a></li>
-        <li><a href="/blog/">Blog</a></li>
-        <li><a href="/faq/">FAQ</a></li>
-        <li><a href="/free-estimate/">Free Estimate</a></li>
+        {menuItems.map((item) => (
+          <li key={item.id} class={item.cssClasses ? item.cssClasses.join(' ') : ''}>
+            <a href={item.uri} target={item.target || '_self'}>
+              {item.label}
+            </a>
+          </li>
+        ))}
       </ul>
     </div>
-    <div class="footer-col">
-      <h5>Contact</h5>
-      <ul>
-        <li><a href="tel:+16035550199">(603) 555-0199</a></li>
-        <li>
-          <a href="mailto:info@vincenzosroofing.com"
-            >info@vincenzosroofing.com</a
-          >
-        </li>
-        <li>Serving all of New Hampshire</li>
-        <li>Mon–Fri 7am–6pm · 24/7 Emergency</li>
-      </ul>
+
+    <div class="footer-col" set:html={footerContactWidget}>
+      
     </div>
+
     <div class="footer-col">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52816169.558200695!2d-161.49265223136007!3d36.102185713814805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2sUnited%20States!5e0!3m2!1sen!2sin!4v1784472204006!5m2!1sen!2sin"
-        width="600"
-        height="250"
-        style="border:0;"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      <div set:html={footerMapWidget}></div>
+      
     </div>
   </div>
-  <div class="container footer-bottom">
-    <span>© 2026 Vincenzo's Roofing LLC. All rights reserved.</span>
-    <span>Licensed &amp; Insured in New Hampshire</span>
-  </div>
+
+ <Fragment set:html={footerCopyrightWidget}/>
 </footer>
 
 <!-- Mobile sticky -->
@@ -81,7 +98,7 @@ const today = new Date();
   </div>
 </div> -->
 
-<style>
+<style is:global>
   .footer-col ul {
     padding: 0;
   }
@@ -95,4 +112,5 @@ const today = new Date();
     padding: 10px;
     border-radius: 10px;
   }
+
 </style>

@@ -357,7 +357,7 @@ const deferredJson = JSON.stringify(deferredPayload).replace(/</g, "\\u003c");
       });
     </script>
 
-    <style>
+    <style is:global>
       .featured-article-card {
         background: var(--white);
         border-radius: var(--r-lg);
@@ -548,6 +548,9 @@ const deferredJson = JSON.stringify(deferredPayload).replace(/</g, "\\u003c");
         gap: 8px;
         margin-top: 20px;
       }
+      	section.page-hero h1 {
+				padding-bottom: 15px;
+			}
       .pg-btn {
         width: 42px;
         height: 42px;
