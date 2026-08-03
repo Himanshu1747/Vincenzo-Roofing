@@ -68,7 +68,8 @@ const seodata = alldata?.seo || {};
         <Header />
         <main id="top">
             <section class="top">
-                  <div class="hero-grid-tex" aria-hidden="true"></div>
+                <div class="container">
+                      <div class="hero-grid-tex" aria-hidden="true"></div>
                 <!-- <div class="top-grid" aria-hidden="true"></div> -->
                 <div class="containner">
                     <div
@@ -102,7 +103,7 @@ const seodata = alldata?.seo || {};
                                             id="fname"
                                             name="fname"
                                             type="text"
-                                            placeholder="Jane"
+                                        
                                             autocomplete="given-name"
                                             required
                                         />
@@ -114,7 +115,7 @@ const seodata = alldata?.seo || {};
                                             id="lname"
                                             name="lname"
                                             type="text"
-                                            placeholder="Doe"
+                                       
                                             autocomplete="family-name"
                                             required
                                         />
@@ -129,7 +130,7 @@ const seodata = alldata?.seo || {};
                                             id="phone"
                                             name="phone"
                                             type="tel"
-                                            placeholder="(603) 555 0100"
+                                           
                                             autocomplete="tel"
                                             required
                                         />
@@ -141,7 +142,7 @@ const seodata = alldata?.seo || {};
                                             id="email"
                                             name="email"
                                             type="email"
-                                            placeholder="jane@example.com"
+                                          
                                             autocomplete="email"
                                             required
                                         />
@@ -158,7 +159,7 @@ const seodata = alldata?.seo || {};
                                             id="address"
                                             name="address"
                                             type="text"
-                                            placeholder="12 Ocean Blvd, Seabrook NH"
+                                          
                                             autocomplete="street-address"
                                             required
                                         />
@@ -324,6 +325,7 @@ const seodata = alldata?.seo || {};
                             />
                         </div>
                     </div>
+                </div>
                 </div>
             </section>
 
@@ -627,8 +629,12 @@ const seodata = alldata?.seo || {};
                 overflow: hidden;
                 padding: 60px 0 90px;
             }
+            .hero-grid-tex{
+                z-index: 1;
+                position: static !important;
+            }
 
-            .top::before {
+            /* .top::before {
                 content: "";
                 position: absolute;
                 inset: 0;
@@ -637,7 +643,8 @@ const seodata = alldata?.seo || {};
                     rgba(26, 95, 208, 0.5),
                     transparent 62%
                 );
-            }
+                z-index: -1;
+            } */
 
             .top-grid {
                 position: absolute;
