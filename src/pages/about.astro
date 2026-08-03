@@ -34,6 +34,7 @@ query homepagedata {
         }
         whatWeStandGridContent
       }
+      materialWorkContent
       meetTheCrewContent
       crewGrids{
         crewImage{
@@ -62,12 +63,11 @@ const aboutData = alldata?.about;
 <html lang="en">
   <head>
     <BaseHead
-            useYoast={true}
-            canonical={seodata?.canonical || ""}
-            focuskw={seodata?.focuskw || ""}
-        />
-        {seodata?.fullHead && <Fragment set:html={seodata.fullHead} />}
-
+      useYoast={true}
+      canonical={seodata?.canonical || ""}
+      focuskw={seodata?.focuskw || ""}
+    />
+    {seodata?.fullHead && <Fragment set:html={seodata.fullHead} />}
   </head>
   <body>
     <Header />
@@ -103,7 +103,11 @@ const aboutData = alldata?.about;
             </div> -->
           </div>
           <div class="story-copy">
-            {aboutData?.ourStoryContent && <Fragment set:html={aboutData.ourStoryContent} />}
+            {
+              aboutData?.ourStoryContent && (
+                <Fragment set:html={aboutData.ourStoryContent} />
+              )
+            }
           </div>
         </div>
       </section>
@@ -112,11 +116,15 @@ const aboutData = alldata?.about;
       <section class="section" style="padding-top:0;">
         <div class="container">
           <div class="stat-strip">
-            {aboutData?.ourStoryGrid?.map((item) => (
-              <div class="stat-box reveal">
-                {item?.gridContent && <Fragment set:html={item.gridContent} />}
-              </div>
-            ))}
+            {
+              aboutData?.ourStoryGrid?.map((item) => (
+                <div class="stat-box reveal">
+                  {item?.gridContent && (
+                    <Fragment set:html={item.gridContent} />
+                  )}
+                </div>
+              ))
+            }
           </div>
         </div>
       </section>
@@ -125,22 +133,40 @@ const aboutData = alldata?.about;
       <section class="section">
         <div class="container">
           <div class="sec-header">
-            {aboutData?.whatWeStandForContent && <Fragment set:html={aboutData.whatWeStandForContent} />}
+            {
+              aboutData?.whatWeStandForContent && (
+                <Fragment set:html={aboutData.whatWeStandForContent} />
+              )
+            }
           </div>
           <div class="values-grid">
-            {aboutData?.whatWeStandGrid?.map((item) => (
-              <div class="value-card reveal">
-                <div class="why-icon">
-                   <img 
-                     src={item?.weStandIcon?.node?.mediaItemUrl || ""} 
-                     alt="image" 
-                     height="21" 
-                     width="21" 
-                   />
+            {
+              aboutData?.whatWeStandGrid?.map((item) => (
+                <div class="value-card reveal">
+                  <div class="why-icon">
+                    <img
+                      src={item?.weStandIcon?.node?.mediaItemUrl || ""}
+                      alt="image"
+                      height="21"
+                      width="21"
+                    />
+                  </div>
+                  {item?.whatWeStandGridContent && (
+                    <Fragment set:html={item.whatWeStandGridContent} />
+                  )}
                 </div>
-                {item?.whatWeStandGridContent && <Fragment set:html={item.whatWeStandGridContent} />}
-              </div>
-            ))}
+              ))
+            }
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <div class="materials-box">
+            <!-- Glow effect element -->
+            <div class="materials-glow"></div>
+
+              <Fragment set:html={aboutData?.materialWorkContent || "error"}/>
           </div>
         </div>
       </section>
@@ -173,14 +199,22 @@ const aboutData = alldata?.about;
       <section class="section" style="background:var(--off);">
         <div class="container">
           <div class="sec-header">
-            {aboutData?.milestonesContent && <Fragment set:html={aboutData.milestonesContent} />}
+            {
+              aboutData?.milestonesContent && (
+                <Fragment set:html={aboutData.milestonesContent} />
+              )
+            }
           </div>
           <div class="timeline">
-            {aboutData?.milestonesGrid?.map((milestone) => (
-              <div class="timeline-item reveal">
-                {milestone?.milestonesGridContent && <Fragment set:html={milestone.milestonesGridContent} />}
-              </div>
-            ))}
+            {
+              aboutData?.milestonesGrid?.map((milestone) => (
+                <div class="timeline-item reveal">
+                  {milestone?.milestonesGridContent && (
+                    <Fragment set:html={milestone.milestonesGridContent} />
+                  )}
+                </div>
+              ))
+            }
           </div>
         </div>
       </section>
@@ -188,11 +222,155 @@ const aboutData = alldata?.about;
       <!-- CTA band -->
       <section class="cta-band">
         <div class="cta-inner">
-          {aboutData?.finalCtaContent && <Fragment set:html={aboutData.finalCtaContent} />}
+          {
+            aboutData?.finalCtaContent && (
+              <Fragment set:html={aboutData.finalCtaContent} />
+            )
+          }
         </div>
       </section>
     </main>
 
     <Footer />
+    <style is:global>
+      /* ============ Products We Install (Materials) ============ */
+      .materials-box {
+        background: linear-gradient(
+          135deg,
+          var(--deep) 0%,
+          #06193b 50%,
+          var(--deep-2) 100%
+        );
+        position: relative;
+        border-radius: 26px; /* Matches your hero-card radius */
+        padding: 56px 64px;
+        color: var(--white);
+        overflow: hidden;
+        box-shadow: var(--sh-lg);
+      }
+
+      /* Recreates the blue radial glow in the top right of the image */
+      .materials-glow {
+        position: absolute;
+        top: -30%;
+        right: -10%;
+        width: 60%;
+        height: 100%;
+        background: radial-gradient(
+          circle,
+          rgba(26, 95, 208, 0.35),
+          transparent 70%
+        );
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .materials-box > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .materials-eyebrow {
+        color: #9cc0ff;
+      }
+
+      .materials-eyebrow::before {
+        background: #9cc0ff;
+      }
+
+      .materials-box h2 {
+        color: var(--white);
+        font-size: clamp(30px, 4vw, 42px);
+        margin: 12px 0 20px;
+        letter-spacing: -0.02em;
+      }
+
+      .materials-box p {
+        color: #c6d4ec;
+        font-size: 16px;
+        max-width: 680px;
+        line-height: 1.65;
+        margin-bottom: 48px;
+      }
+
+      .materials-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        padding-top: 48px;
+      }
+
+      .col-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        color: #9cc0ff;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 24px;
+      }
+
+      .material-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .material-list li {
+        position: relative;
+        padding-left: 20px;
+      }
+
+      /* Custom blue bullet points */
+      .material-list li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 9px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--blue-soft);
+      }
+
+      .m-name {
+        display: block;
+        color: var(--white);
+        font-weight: 600;
+        font-size: 15.5px;
+      }
+
+      .m-desc {
+        display: block;
+        color: #8fa3c4;
+        font-size: 13.5px;
+        margin-top: 4px;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 900px) {
+        .materials-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 48px 30px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .materials-box {
+          padding: 40px 24px;
+          border-radius: 20px;
+        }
+
+        .materials-grid {
+          grid-template-columns: 1fr;
+          padding-top: 36px;
+        }
+
+        .materials-box p {
+          margin-bottom: 36px;
+        }
+      }
+    </style>
   </body>
 </html>
