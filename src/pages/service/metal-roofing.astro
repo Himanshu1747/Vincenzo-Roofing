@@ -83,264 +83,464 @@ const seodata = alldata?.seo || {};
         <Header />
 
         <main id="top">
-            <section class="page-hero">
-                  <div class="hero-grid-tex" aria-hidden="true"></div>
-                <div class="container">
-                    <div class="breadcrumb">
-                        <a href="../index.html">Home</a>
-                        <span>/</span>
-                        <span style="color:#fff;">Metal Roofing</span>
-                    </div>
-                    <Fragment set:html={alldata?.content || "error"} />
-                </div>
-            </section>
-            <section class="section">
-                <div
-                    class="container narrow"
-                    set:html={alldata?.metalRoofing?.whatWeDoContent || "error"}
-                />
-            </section>
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="hero-grid-tex" aria-hidden="true"></div>
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/service/">Home</a><span>/</span><span style="color:#fff;">Metal Roofing</span>
+      </div>
+      <h1 class="fade-up">
+        Metal Roofing in <em style="font-style: normal; color: #9cc0ff;">New Hampshire<br></em>
+      </h1>
+      <p class="lede-page fade-up">
+        Standing-seam metal sheds snow before it becomes an ice dam and shrugs off coastal salt air that eats through lesser materials. Installed properly, it is the last roof most homeowners ever buy.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-blue" href="/contact/">Get a Free Estimate<br></a>
+        <a class="btn btn-ghost-w" href="tel:+16035027080">Call (603) 502-7080</a>
+      </div>
+    </div>
+  </section>
 
-            <!-- ============ METAL VS ASPHALT ============ -->
-            <section class="section alt">
-                <div class="container">
-                    <div
-                        class="narrow"
-                        style="text-align:center;margin-bottom:38px"
-                        set:html={alldata?.metalRoofing?.compresiionContent ||
-                            "error"}
-                    />
-                    <div
-                        class="cmp"
-                        set:html={alldata?.metalRoofing?.compressionTable ||
-                            "error"}
-                    />
-                </div>
-            </section>
+  <!-- Intro -->
+  <section class="section">
+    <div class="container narrow">
+      <p><span class="eyebrow">What We Do</span></p>
+      <h2>A Roof That Outlives Two Asphalt Ones</h2>
+      <p class="lead">Metal costs more up front. That is the honest starting point, and it is why most homeowners rule it out before they have done the arithmetic.</p>
+      <p>A metal roof in New Hampshire typically lasts forty years or more. Architectural asphalt reaches the end of its service life somewhere around twenty-five. If you are staying in the house long term, you are choosing between buying one metal roof or buying two asphalt roofs — and the second one will cost considerably more than today’s price.</p>
+      <p>Beyond longevity, metal earns its place here for a specific local reason: it sheds snow. Smooth standing-seam panels let accumulation slide off before it can melt, run to the cold eave, and refreeze into the ice dams that cause so much winter damage across the state.</p>
+      <p>Metal is also unforgiving of poor installation. Panel expansion, concealed clip placement, and flashing detail all have to be right, which is why our metal work is handled by crews trained specifically on these systems rather than shingle crews doing something unfamiliar.</p>
+    </div>
+  </section>
 
-            <!-- ============ SYSTEM TYPES ============ -->
-            <section class="section">
-                <div class="container">
-                    <div
-                        class="narrow"
-                        style="text-align:center;margin-bottom:38px"
-                        set:html={alldata?.metalRoofing?.installContent ||
-                            "error"}
-                    />
-                    <div class="sys">
-                        {
-                            alldata?.metalRoofing?.installcontentGrid.map(
-                                (items) => (
-                                    <div
-                                        class="s"
-                                        set:html={
-                                            items?.installDataaGrid || "error"
-                                        }
-                                    />
-                                ),
-                            )
-                        }
-                    </div>
-                </div>
-            </section>
+  <!-- Metal vs Asphalt -->
+  <section class="section alt">
+    <div class="container">
+      <div class="narrow" style="text-align:center;margin-bottom:38px">
+        <p><span class="eyebrow">Comparison</span></p>
+        <h2>Metal vs. Asphalt Shingles</h2>
+        <p class="lead">The two materials that cover almost every New Hampshire home. Here is the honest side-by-side.</p>
+      </div>
+      <div class="cmp">
+        <div class="cmp-row head">
+          <div></div>
+          <div class="metal">Standing-seam metal</div>
+          <div>Architectural asphalt</div>
+        </div>
+        <div class="cmp-row">
+          <div class="lbl">Service life</div>
+          <div class="metal">40–70 years</div>
+          <div class="asph">20–25 years</div>
+        </div>
+        <div class="cmp-row">
+          <div class="lbl">Up-front cost</div>
+          <div class="metal">$18,000–$45,000</div>
+          <div class="asph">$8,000–$22,000</div>
+        </div>
+        <div class="cmp-row">
+          <div class="lbl">Snow shedding</div>
+          <div class="metal">Excellent — sheds before ice dams form</div>
+          <div class="asph">Poor — snow sits and melts in place</div>
+        </div>
+        <div class="cmp-row">
+          <div class="lbl">Coastal salt air</div>
+          <div class="metal">Strong with coastal-grade finish</div>
+          <div class="asph">Moderate — fasteners corrode first</div>
+        </div>
+        <div class="cmp-row">
+          <div class="lbl">Wind resistance</div>
+          <div class="metal">Very high — concealed clip system</div>
+          <div class="asph">Good with correct nailing and rating</div>
+        </div>
+        <div class="cmp-row">
+          <div class="lbl">Maintenance</div>
+          <div class="metal">Minimal — occasional fastener check</div>
+          <div class="asph">Periodic repairs as shingles age</div>
+        </div>
+        <div class="cmp-row">
+          <div class="lbl">Fire rating</div>
+          <div class="metal">Non-combustible</div>
+          <div class="asph">Class A when installed to spec</div>
+        </div>
+        <div class="cmp-row">
+          <div class="lbl">Best suited to</div>
+          <div class="metal">Long-term owners, exposed or coastal sites</div>
+          <div class="asph">Shorter horizons, tighter budgets</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            <!-- ============ BENEFITS ============ -->
-            <section class="section alt">
-                <div class="container">
-                    <div
-                        class="narrow"
-                        style="text-align:center;margin-bottom:36px"
-                        set:html={alldata?.metalRoofing?.whyMetalContent ||
-                            "error"}
-                    />
-                    <div class="ben">
-                        {
-                            alldata?.metalRoofing?.whyMetalGrid?.map(
-                                (metalitems, index) => (
-                                    <div class="b" key={index}>
-                                        <span class="n">
-                                            {String(index + 1).padStart(2, "0")}
-                                        </span>
-                                        <div
-                                            set:html={
-                                                metalitems?.whymetalLists ||
-                                                "error"
-                                            }
-                                        />
-                                    </div>
-                                ),
-                            )
-                        }
-                    </div>
-                </div>
-            </section>
+  <!-- System Types -->
+  <section class="section">
+    <div class="container">
+      <div class="narrow" style="text-align:center;margin-bottom:38px">
+        <p><span class="eyebrow">Systems We Install</span></p>
+        <h2>Types of Metal Roofing</h2>
+        <p class="lead">Not all metal roofs are the same product. The panel profile matters as much as the material.</p>
+      </div>
+      <div class="sys">
+        <div class="s">
+          <div class="top">
+            <p><span class="tag">Recommended</span></p>
+            <h3>Standing seam</h3>
+            <p>Vertical panels joined by raised, concealed-fastener seams</p>
+          </div>
+          <div class="body">
+            <ul>
+              <li>No exposed fasteners to loosen or leak over time</li>
+              <li>Panels float on clips, allowing thermal expansion</li>
+              <li>Smoothest profile — best snow shedding of any system</li>
+              <li>Clean, architectural appearance on modern and traditional homes</li>
+            </ul>
+          </div>
+          <div class="foot"><b>Service life:</b> 40–70 years</div>
+        </div>
 
-            <!-- ============ MYTHS ============ -->
-            <section class="section">
-                <div class="container">
-                    <div
-                        class="narrow"
-                        style="text-align:center;margin-bottom:38px"
-                        set:html={alldata?.metalRoofing
-                            ?.straightAnswerContent || "error"}
-                    />
-                    <div class="grid-2">
-                        {
-                            alldata?.metalRoofing?.straightanswerLists.map(
-                                (answlist) => (
-                                    <div
-                                        class="myth"
-                                        set:html={
-                                            answlist?.aswerListsss || "error"
-                                        }
-                                    />
-                                ),
-                            )
-                        }
-                    </div>
-                </div>
-            </section>
+        <div class="s">
+          <div class="top">
+            <p><span class="tag">Traditional look</span></p>
+            <h3>Metal shingles </h3>
+            <p>Stamped panels that mimic slate, shake, or shingle profiles</p>
+          </div>
+          <div class="body">
+            <ul>
+              <li>Metal durability with a conventional roof appearance</li>
+              <li>Suits historic homes and neighbourhood design guidelines</li>
+              <li>Lighter than the slate or tile it imitates</li>
+              <li>Works well on complex rooflines with many angles</li>
+            </ul>
+          </div>
+          <div class="foot"><b>Service life:</b> 40–50 years</div>
+        </div>
 
-            <!-- ============ SCOPE ============ -->
-            <section class="section alt">
-                <div class="container narrow">
-                    <Fragment
-                        set:html={alldata?.metalRoofing?.scopeworkData ||
-                            "error"}
-                    />
-                    <ul class="checks">
-                        {
-                            alldata?.metalRoofing?.scopeLists?.map(
-                                (scopelistss, index) => (
-                                    <li key={index}>
-                                        {scopelistss?.scopelistName || "error"}
-                                    </li>
-                                ),
-                            )
-                        }
-                    </ul>
-                </div>
-            </section>
+        <div class="s">
+          <div class="top">
+            <p><span class="tag">Budget option</span></p>
+            <h3>Exposed fastener panels</h3>
+            <p>Corrugated or ribbed panels screwed directly through the face</p>
+          </div>
+          <div class="body">
+            <ul>
+              <li>Lowest installed cost of the metal options</li>
+              <li>Well suited to barns, garages, and outbuildings</li>
+              <li>Faster installation on simple, open roof shapes</li>
+              <li>Gaskets need periodic checking as they age</li>
+            </ul>
+          </div>
+          <div class="foot"><b>Service life:</b> 25–40 years</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            <!-- ============ COST ============ -->
-            <section class="section">
-                <div class="container">
-                    <div
-                        class="cost-band"
-                        set:html={alldata?.metalRoofing
-                            ?.traightPricingContent || "error"}
-                    />
-                </div>
-            </section>
+  <!-- Benefits -->
+  <section class="section alt">
+    <div class="container">
+      <div class="narrow" style="text-align:center;margin-bottom:36px">
+        <p><span class="eyebrow">Why Metal Here</span></p>
+        <h2>What Metal Does Well in New Hampshire</h2>
+      </div>
+      <div class="ben">
+        <div class="b">
+          <span class="n">01</span>
+          <div>
+            <h3>Sheds snow before ice dams form</h3>
+            <p>Smooth panels release accumulation rather than letting it melt, run to the cold eave, and refreeze under the roof edge.</p>
+          </div>
+        </div>
+        <div class="b">
+          <span class="n">02</span>
+          <div>
+            <h3>Holds up to coastal salt air</h3>
+            <p>With a coastal-grade coating system, metal resists the salt corrosion that shortens roof life across the Seacoast.</p>
+          </div>
+        </div>
+        <div class="b">
+          <span class="n">03</span>
+          <div>
+            <h3>Very high wind resistance</h3>
+            <p>Concealed clips lock panels down along their full length, with no individual tabs for gusts to lift and peel back.</p>
+          </div>
+        </div>
+        <div class="b">
+          <span class="n">04</span>
+          <div>
+            <h3>Reflects summer heat</h3>
+            <p>Reflective finishes cut attic heat gain, which lowers cooling load and eases the strain on upper-floor comfort.</p>
+          </div>
+        </div>
+        <div class="b">
+          <span class="n">05</span>
+          <div>
+            <h3>Non-combustible</h3>
+            <p>Metal will not ignite from embers, and some insurers offer a premium reduction for a metal roof — worth asking yours.</p>
+          </div>
+        </div>
+        <div class="b">
+          <span class="n">06</span>
+          <div>
+            <h3>Almost no maintenance</h3>
+            <p>Beyond an occasional fastener and sealant check at penetrations, a standing-seam roof asks very little of you.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            <!-- ============ PROCESS ============ -->
-            <section class="section alt">
-                <div class="container">
-                    <div
-                        class="narrow"
-                        style="text-align:center;margin-bottom:36px"
-                        set:html={alldata?.metalRoofing?.howWorkContent ||
-                            "error"}
-                    />
-                    <div class="steps">
-                        {
-                            alldata?.metalRoofing?.stephowWork?.map(
-                                (stepitems, index) => (
-                                    <div class="step" key={index}>
-                                        <span class="n">
-                                            Step{" "}
-                                            {String(index + 1).padStart(2, "0")}
-                                        </span>
-                                        <Fragment
-                                            set:html={
-                                                stepitems?.workContentHow ||
-                                                "error"
-                                            }
-                                        />
-                                    </div>
-                                ),
-                            )
-                        }
-                    </div>
-                </div>
-            </section>
+  <!-- Myths -->
+  <section class="section">
+    <div class="container">
+      <div class="narrow" style="text-align:center;margin-bottom:38px">
+        <p><span class="eyebrow">Straight Answers</span></p>
+        <h2>Four Things People Get Wrong About Metal Roofs</h2>
+        <p class="lead">These come up on nearly every estimate. Here is the accurate answer to each.</p>
+      </div>
+      <div class="grid-2">
+        <div class="myth">
+          <p><span class="m">The concern</span></p>
+          <h3>“Metal roofs are loud in the rain.”</h3>
+          <p><span class="t">The reality</span></p>
+          <p>The noise people remember is bare metal over an open barn. A residential metal roof sits on solid decking with underlayment, above insulated attic space. Rain sound is comparable to asphalt, and most homeowners notice no difference at all.</p>
+        </div>
+        <div class="myth">
+          <p><span class="m">The concern</span></p>
+          <h3>“Metal attracts lightning.”</h3>
+          <p><span class="t">The reality</span></p>
+          <p>It does not. Metal neither attracts lightning nor makes a strike more likely. If lightning does hit, metal is the safer material — it is non-combustible and disperses the energy rather than igniting.</p>
+        </div>
+        <div class="myth">
+          <p><span class="m">The concern</span></p>
+          <h3>“It will dent in a hailstorm.”</h3>
+          <p><span class="t">The reality</span></p>
+          <p>Standing-seam panels in a suitable gauge handle typical New Hampshire hail without functional damage. Very large hail can leave cosmetic dimples on lighter gauges, but watertightness is unaffected. Heavier gauge and textured finishes reduce visible marking.</p>
+        </div>
+        <div class="myth">
+          <p><span class="m">The concern</span></p>
+          <h3>“It will rust out.”</h3>
+          <p><span class="t">The reality</span></p>
+          <p>Modern panels are galvanised or Galvalume-coated and finished with a baked paint system. Rust is a problem of bare or damaged steel. On the Seacoast we specify coastal-grade coatings and fasteners for exactly this reason.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            <!-- ============ NH WEATHER ============ -->
-            <section class="section">
-                <div class="container">
-                    <div
-                        class="narrow"
-                        style="margin-bottom:36px"
-                        set:html={alldata?.metalRoofing?.expertiseContent ||
-                            "error"}
-                    />
-                    <div class="grid-2">
-                        {
-                            alldata?.metalRoofing?.expertiseGrid.map(
-                                (expitems) => (
-                                    <div
-                                        class="card"
-                                        set:html={
-                                            expitems?.expertiseData || "error"
-                                        }
-                                    />
-                                ),
-                            )
-                        }
-                    </div>
-                </div>
-            </section>
-            <section class="section" style="background: #fff;">
-                <div class="container">
-                    <div
-                        class="sec-header"
-                        style="text-align:center; margin:0 auto 40px;"
-                        set:html={alldata?.metalRoofing?.faqContent || "error"}
-                    />
+  <!-- Scope -->
+  <section class="section alt">
+    <div class="container narrow">
+      <p><span class="eyebrow">Scope of Work</span></p>
+      <h2>What’s Included in a Metal Roof Installation</h2>
+      <p>Metal is far less forgiving of installation shortcuts than asphalt. Everything below is standard on our metal projects.</p>
+      <ul class="checks">
+        <li>Complete tear-off and deck inspection before panels go on</li>
+        <li>Rotted or delaminated sheathing replaced</li>
+        <li>High-temperature synthetic underlayment rated for metal</li>
+        <li>Ice-and-water shield at eaves, valleys, and penetrations</li>
+        <li>Panels cut and formed to your roof's exact dimensions</li>
+        <li>Concealed clip system allowing thermal expansion</li>
+        <li>Custom-bent flashing at walls, chimneys, and skylights</li>
+        <li>Snow guards above entrances, walkways, and driveways</li>
+        <li>Ridge venting integrated into the panel system</li>
+        <li>Coastal-grade fasteners and finishes on Seacoast properties</li>
+        <li>Daily magnetic cleanup and full debris removal</li>
+        <li>Manufacturer finish warranty plus our workmanship warranty</li>
+      </ul>
+    </div>
+  </section>
 
-                    <div class="faq-list">
-                        {
-                            alldata?.metalRoofing?.faqList.map((faqitems) => (
-                                <div class="faq-item">
-                                    <>
-                                        <button class="faq-q">
-                                            <>
-                                                <span>
-                                                    {faqitems?.faqTitle ||
-                                                        "error"}{" "}
-                                                </span>
-                                                <span class="plus" />
-                                            </>
-                                        </button>
-                                        <div
-                                            class="faq-a"
-                                            set:html={
-                                                faqitems?.faqAnswer || "error"
-                                            }
-                                        >
-                                            {" "}
-                                        </div>
-                                    </>
-                                </div>
-                            ))
-                        }
-                    </div>
-                </div>
-            </section>
-            <!-- ============ RECENT WORK ============ -->
-            <div style="background: #f6f7f9;">
-                <Relatedservice />
-            </div>
+  <!-- Cost -->
+  <section class="section">
+    <div class="container">
+      <div class="cost-band">
+        <p><span class="eyebrow" style="color: #9cc0ff;">Straight Pricing</span></p>
+        <h2>How Much Does a Metal Roof Cost in New Hampshire?</h2>
+        <div class="cost-figure">$18,000–$45,000 to $18000-$75,000</div>
+        <p>Roughly two to three times architectural asphalt, and we would rather you see that now than after an hour-long sales visit. Spread across a forty-year service life against asphalt’s twenty-five, the cost per year of service usually lands lower — which is the number that actually matters if you are staying put.</p>
+        <ul class="cost-drivers">
+          <li><b>Panel system —</b> standing seam, metal shingle, or exposed fastener</li>
+          <li><b>Gauge and finish —</b> heavier steel and coastal coatings cost more</li>
+          <li><b>Roof complexity —</b> dormers, valleys, and hips mean more custom flashing</li>
+          <li><b>Size and pitch —</b> square footage plus how steep it is to work safely</li>
+          <li><b>Tear-off —</b> removing and disposing of the existing roof</li>
+          <li><b>Snow guards —</b> placement above doors, walkways, and driveways</li>
+        </ul>
+        <div style="margin-top: 30px;">
+          <a class="btn btn-blue" style="background: #fff; color: var(--blue); box-shadow: none;" href="/contact/">Get Your Itemized Estimate</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            <section class="cta-band">
-                <div class="cta-inner">
-                    <div
-                        class="center-ctas"
-                        set:html={alldata?.metalRoofing?.ctaContent || "error"}
-                    />
-                </div>
-            </section>
-        </main>
+  <!-- Process -->
+  <section class="section alt">
+    <div class="container">
+      <div class="narrow" style="text-align:center;margin-bottom:36px">
+        <p><span class="eyebrow">How It Works</span></p>
+        <h2>Your Metal Roof, Step by Step</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="n">Step 01</span>
+          <h3>Free inspection</h3>
+          <p>We assess the roof, check the deck and structure, and talk through whether metal is genuinely the right call for your home.</p>
+        </div>
+        <div class="step">
+          <span class="n">Step 02</span>
+          <h3>Profile &amp; colour</h3>
+          <p>You choose panel profile, gauge, and finish. On coastal jobs we recommend the coating system suited to salt exposure.</p>
+        </div>
+        <div class="step">
+          <span class="n">Step 03</span>
+          <h3>Written estimate</h3>
+          <p>Itemized pricing with materials, labour, permit, and timeline. Panels are then ordered to your roof’s measurements.</p>
+        </div>
+        <div class="step">
+          <span class="n">Step 04</span>
+          <h3>Tear-off &amp; install</h3>
+          <p>Deck exposed and repaired, underlayment laid, then panels set with concealed clips and custom-bent flashing.</p>
+        </div>
+        <div class="step">
+          <span class="n">Step 05</span>
+          <h3>Final walkthrough</h3>
+          <p>We walk the finished roof with you, confirm snow guard placement, and register your warranty before leaving.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Local Expertise -->
+  <section class="section">
+    <div class="container">
+      <div class="narrow" style="margin-bottom:36px">
+        <p><span class="eyebrow">Local Expertise</span></p>
+        <h2>Specifying Metal for New Hampshire</h2>
+        <p class="lead">The same panel performs very differently in Seabrook than it does in Keene. These are the details that decide whether a metal roof reaches forty years or thirty.</p>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Coastal coating systems</h3>
+          <p>Within a few miles of the water, standard finishes and fasteners corrode early. On Seacoast homes we specify coastal-grade coatings and stainless or coated fasteners as standard, not as an upsell.</p>
+        </div>
+        <div class="card">
+          <h3>Snow guards, placed deliberately</h3>
+          <p>Metal sheds snow — which is the point, and also the hazard. Guards go above entrances, walkways, driveways, and anywhere a sudden release could damage landscaping or a parked car.</p>
+        </div>
+        <div class="card">
+          <h3>Thermal movement</h3>
+          <p>Panels expand and contract measurably between a February night and an August afternoon. Concealed clips let them move; fastening them rigidly is how you get oil-canning, stressed seams, and eventual leaks.</p>
+        </div>
+        <div class="card">
+          <h3>Ventilation still matters</h3>
+          <p>Metal reduces ice dams but does not replace a balanced attic. Ridge and intake venting stay part of the specification, because trapped warm air causes problems under any roofing material.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" style="background: #fff;">
+    <div class="container">
+      <div class="sec-header" style="text-align:center; margin:0 auto 40px;">
+        <p><span class="eyebrow">FAQ</span></p>
+        <h2 class="sec-head">Metal Roofing Questions</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q"><span>How much does a metal roof cost in New Hampshire? </span><span class="plus"></span></button>
+          <div class="faq-a">
+            <p>A standing-seam metal roof in New Hampshire typically runs between $18,000 and $45,000 for an average home, roughly two to three times the cost of architectural asphalt shingles. The spread comes down to roof size and complexity, panel gauge and finish, and whether the existing roof needs full tear-off. Because metal lasts forty years or more against roughly twenty-five for asphalt, the cost per year of service is often lower.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Is a metal roof loud when it rains? </span><span class="plus"></span></button>
+          <div class="faq-a">
+            <p>No. This is the most common misconception about metal roofing. The noise people remember comes from bare metal over an open barn structure. A residential metal roof is installed over solid decking with underlayment and sits above insulated attic space, so rain sound is comparable to an asphalt roof. Most homeowners notice no difference after installation.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Does a metal roof attract lightning? </span><span class="plus"></span></button>
+          <div class="faq-a">
+            <p>No. Metal does not attract lightning, and a metal roof does not make a strike more likely. If lightning does strike, metal is actually a safer material because it is non-combustible and disperses the energy across the roof surface rather than igniting.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>How long does a metal roof last here? </span><span class="plus"></span></button>
+          <div class="faq-a">
+            <p>A properly installed standing-seam metal roof typically lasts forty to seventy years in New Hampshire. Coastal properties sit at the lower end of that range unless corrosion-resistant coatings and fasteners are specified. For comparison, most asphalt shingle roofs here reach the end of their service life between twenty and twenty-five years.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Is metal roofing good for snow and ice dams? </span><span class="plus"></span></button>
+          <div class="faq-a">
+            <p>Yes, and it is one of the strongest reasons to choose metal in New Hampshire. Smooth standing-seam panels shed snow before it can build up and refreeze at the eaves, which is what causes ice dams. Snow guards are usually added above entrances and walkways to control where that snow releases.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Can metal be installed over existing shingles? </span><span class="plus"></span></button>
+          <div class="faq-a">
+            <p>Sometimes, where local code allows and the existing roof is flat, dry, and structurally sound. It saves on tear-off cost. However, it prevents inspection of the decking underneath and can trap moisture. We core-check and inspect the attic before recommending it, and in most cases we advise full tear-off so the deck can be assessed properly.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Will a metal roof dent from hail? </span><span class="plus"></span></button>
+          <div class="faq-a">
+            <p>Standing-seam panels in a suitable gauge resist typical New Hampshire hail without functional damage. Very large hail can leave cosmetic dimples on lighter-gauge or flatter panel profiles, though this does not affect performance or watertightness. Heavier gauge steel and textured finishes reduce visible denting.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Services -->
+  <div style="background: #f6f7f9;">
+    <section class="section alt">
+      <div class="container">
+        <div class="narrow" style="text-align:center;margin-bottom:36px">
+          <span class="eyebrow">Related Services</span>
+          <h2>Other Roofing Services</h2>
+        </div>
+        <div class="rel">
+          <a href="/service/roof-replacement/">
+            <h3>Roof Replacement</h3>
+            <p>The full process — tear-off, timeline, permits, and what to expect.</p>
+            <span class="go">View replacement →</span>
+          </a>
+          <a href="/service/metal-roofing/">
+            <h3>Metal Roofing</h3>
+            <p>The other main option — longer life, better snow shedding, higher cost.</p>
+            <span class="go">Compare metal →</span>
+          </a>
+          <a href="/service/roof-repair/">
+            <h3>Roof Repair</h3>
+            <p>Leaks and lifted shingles traced to the actual source before repair.</p>
+            <span class="go">View roof repair →</span>
+          </a>
+          <a href="/service/roof-inspection/">
+            <h3>Roof Inspection</h3>
+            <p>Free, photo-documented condition report before you decide anything.</p>
+            <span class="go">Book an inspection →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Final CTA -->
+  <section class="cta-band">
+    <div class="cta-inner">
+      <div class="center-ctas">
+        <h2>Get Your Free Metal Roof Estimate</h2>
+        <p>We will tell you honestly whether metal makes sense for your home and your timeline — including when asphalt is the smarter spend. Itemized written estimate, no pressure.</p>
+        <div class="btns">
+          <a class="btn btn-blue" href="/contact">Get Your Free Estimate<br></a>
+          <a class="btn btn-ghost-w" href="tel:+1 (603) 502-7080">Call Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
 
         <Footer />
         <style is:global>

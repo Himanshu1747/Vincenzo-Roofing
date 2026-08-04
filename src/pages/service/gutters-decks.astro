@@ -89,258 +89,514 @@ const seodata = alldata?.seo || {};
   <body>
     <Header />
 
-    <main id="top">
-      <!-- ============ HERO ============ -->
-      <section class="page-hero">
-          <div class="hero-grid-tex" aria-hidden="true"></div>
-        <div class="container">
-          <div class="breadcrumb">
-            <a href="../index.html">Home</a>
-            <span>/</span>
-            <span style="color:#fff;">Gutters & Decks</span>
-          </div>
-          <Fragment set:html={alldata?.content || "error"} />
-        </div>
-      </section>
+   <main id="top">
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="hero-grid-tex" aria-hidden="true"></div>
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/service/">Home</a><span>/</span><span style="color:#fff;">Gutters &amp; Decks</span>
+      </div>
+      <h1 class="fade-up">
+        Gutters &amp; Decks in <em style="font-style: normal; color: #9cc0ff;">New Hampshire</em>
+      </h1>
+      <p class="lede-page fade-up">
+        Two jobs that both come down to managing water and building for a New England winter. We install seamless gutters sized for a real spring melt, and decks set on footings that go below the frost line.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-blue" href="/contact/">Get a Free Estimate</a>
+        <a class="btn btn-ghost-w" href="tel:+16035027080">Call (603) 502-7080</a>
+      </div>
+    </div>
+  </section>
 
-      <!-- ============ INTRO ============ -->
-      <section class="section">
-        <div
-          class="container narrow"
-          set:html={alldata?.guttersDecks?.whatWeDoContent || "error"}
-        />
-      </section>
+  <!-- Intro -->
+  <section class="section">
+    <div class="container narrow">
+      <p><span class="eyebrow">What We Do</span></p>
+      <h2>Water Management and Outdoor Living</h2>
+      <p class="lead">
+        Gutters and decks sit at opposite ends of a home improvement list, but both fail for the same reason in New Hampshire: they were built for average conditions rather than for what actually happens here in March.
+      </p>
+      <p>
+        Undersized gutters overflow the moment weeks of accumulated snow melt at once. Deck footings that stop short of the frost line heave out of level after a single hard winter. Both are avoidable at the point of installation and expensive to correct afterward.
+      </p>
+      <p>
+        Vincenzo’s Roofing handles both from our base in Seabrook. Coming at this from roofing matters more than it sounds, because the two places these jobs go wrong are drainage sizing and the flashed connection where structure meets the wall of your house.
+      </p>
+    </div>
+  </section>
 
-      <!-- ============================================================
-     PART ONE: GUTTERS
-============================================================= -->
-      <section class="svc-open" id="gutters">
-        <div class="container">
-          <Fragment
-            set:html={alldata?.guttersDecks?.partOneContent || "error"}
-          />
-        </div>
-      </section>
+  <!-- PART ONE: GUTTERS -->
+  <section class="svc-open" id="gutters">
+    <div class="container">
+      <p><span class="num">Part One</span></p>
+      <h2>Seamless Gutter Installation &amp; Repair</h2>
+      <p>
+        Gutters are the least glamorous thing on your house and one of the most consequential. Everything they fail to carry away ends up against your foundation.
+      </p>
+    </div>
+  </section>
 
-      <!-- Gutter signs -->
-      <section class="section">
-        <div class="container">
-          <div
-            class="narrow"
-            style="text-align:center;margin-bottom:36px"
-            set:html={alldata?.guttersDecks?.assessmentContent || "error"}
-          />
-          <div class="signs">
-            {
-              alldata?.guttersDecks?.assessmentGrids?.map(
-                (griditems, index) => (
-                  <div class="sg">
-                    <span class="n">{String(index + 1).padStart(2, "0")}</span>
-                    <div set:html={griditems?.assessmentGridData || "error"} />
-                  </div>
-                ),
-              )
-            }
-          </div>
-        </div>
-      </section>
-
-      <!-- Gutter options -->
-      <section class="section alt">
-        <div class="container">
-          <div
-            class="narrow"
-            style="text-align:center;margin-bottom:38px"
-            set:html={alldata?.guttersDecks?.optionsContent || "error"}
-          />
-          <div class="sys">
-            {
-              alldata?.guttersDecks?.optionsGrids?.map((optitems, index) => (
-                <div
-                  class={`s ${index === 1 ? "feat" : ""}`}
-                  set:html={optitems?.optionsGridData || "error"}
-                />
-              ))
-            }
-          </div>
-          <div
-            class="card pale"
-            style="margin-top:22px"
-            set:html={alldata?.guttersDecks?.optionsLastData || "error"}
-          />
-        </div>
-      </section>
-
-      <!-- Gutter scope + cost -->
-      <section class="section">
-        <div class="container narrow">
-          <Fragment set:html={alldata?.guttersDecks?.scopeContent || "error"} />
-          <ul class="checks">
-            {
-              alldata?.guttersDecks?.scopeList?.map((scopeitems) => (
-                <li set:html={scopeitems?.listName || "error"} />
-              ))
-            }
-          </ul>
-        </div>
-      </section>
-
-      <section class="section alt">
-        <div class="container">
-          <div
-            class="cost-band"
-            set:html={alldata?.guttersDecks?.straightPricingContent || "error"}
-          />
-        </div>
-      </section>
-
-      <!-- ============================================================
-     PART TWO: DECKS
-============================================================= -->
-      <section class="svc-open" id="decks">
-        <div class="container">
-          <Fragment
-            set:html={alldata?.guttersDecks?.partTwoContent || "error"}
-          />
-        </div>
-      </section>
-
-      <!-- Deck services -->
-      <section class="section">
-        <div class="container">
-          <div
-            class="narrow"
-            style="text-align:center;margin-bottom:36px"
-            set:html={alldata?.guttersDecks?.whatWeBuildContent || "error"}
-          />
-          <div class="signs">
-            {
-              alldata?.guttersDecks?.whatWeBuildGrids?.map(
-                (builditems, index) => (
-                  <div class="sg">
-                    <span class="n">{String(index + 1).padStart(2, "0")}</span>
-                    <div
-                      set:html={builditems?.whatWeBuildGridData || "error"}
-                    />
-                  </div>
-                ),
-              )
-            }
+  <!-- Gutter Signs -->
+  <section class="section">
+    <div class="container">
+      <div class="narrow" style="text-align:center;margin-bottom:36px">
+        <p><span class="eyebrow">Assessment</span></p>
+        <h2>Signs Your Gutters Need Replacing</h2>
+      </div>
+      <div class="signs">
+        <div class="sg">
+          <span class="n">01</span>
+          <div>
+            <h3>Overflowing during heavy rain</h3>
+            <p>Usually undersized gutters or blocked downspouts. Water sheeting over the front edge is doing nothing useful for your foundation.</p>
           </div>
         </div>
-      </section>
-
-      <!-- Decking materials -->
-      <section class="section alt">
-        <div class="container">
-          <div
-            class="narrow"
-            style="text-align:center;margin-bottom:38px"
-            set:html={alldata?.guttersDecks?.materialsContent || "error"}
-          />
-          <div class="sys">
-            {
-              alldata?.guttersDecks?.materialsGrid?.map(
-                (materialitems, index) => (
-                  <div
-                    class={`s ${index === 1 ? "feat" : ""}`}
-                    set:html={materialitems?.materialData || "error"}
-                  />
-                ),
-              )
-            }
+        <div class="sg">
+          <span class="n">02</span>
+          <div>
+            <h3>Pulling away from the fascia</h3>
+            <p>Ice weight and rotted fascia board loosen the hangers. Once a section sags it stops draining toward the downspout.</p>
           </div>
         </div>
-      </section>
-
-      <!-- Deck build standards -->
-      <section class="section">
-        <div class="container narrow">
-          <Fragment
-            set:html={alldata?.guttersDecks?.scopeOfWorkSecondContent ||
-              "error"}
-          />
-          <ul class="checks">
-            {
-              alldata?.guttersDecks?.scopeOfWorkSecondList?.map((scopetwo) => (
-                <li set:html={scopetwo?.scopeOfWorkSecondListName || "error"} />
-              ))
-            }
-          </ul>
-        </div>
-      </section>
-
-      <section class="section alt">
-        <div class="container">
-          <div
-            class="cost-band"
-            set:html={alldata?.guttersDecks?.straightPricingSecondSecContent ||
-              "error"}
-          />
-        </div>
-      </section>
-
-      <!-- ============ NH CONDITIONS ============ -->
-      <section class="section">
-        <div class="container">
-          <div
-            class="narrow"
-            style="margin-bottom:36px"
-            set:html={alldata?.guttersDecks?.localExpertiseContent || "error"}
-          />
-          <div class="grid-2">
-            {
-              alldata?.guttersDecks?.localExpertiseGrids?.map((localitems) => (
-                <div
-                  class="card"
-                  set:html={localitems?.localExpertiseGridContent || "error"}
-                />
-              ))
-            }
+        <div class="sg">
+          <span class="n">03</span>
+          <div>
+            <h3>Leaking at the seams</h3>
+            <p>Sectional gutters fail at their joints first. Seamless runs remove that problem across the whole length of the house.</p>
           </div>
         </div>
-      </section>
-
-      <!-- ============ FAQ ============ -->
-      <section class="section">
-        <div class="container">
-          <div
-            class="sec-header"
-            style="text-align:center; margin:0 auto 40px;"
-            set:html={alldata?.guttersDecks?.faqContent || "error"}
-          />
-          <div class="faq-list">
-            {
-              alldata?.guttersDecks?.faqList?.map((faqitems) => (
-                <div class="faq-item">
-                  <button class="faq-q">
-                    <span>{faqitems?.faqTitle || "error"}</span>
-                    <span class="plus" />
-                  </button>
-                  <div
-                    class="faq-a"
-                    set:html={faqitems?.faqAnswers || "error"}
-                  />
-                </div>
-              ))
-            }
+        <div class="sg">
+          <span class="n">04</span>
+          <div>
+            <h3>Standing water after rain</h3>
+            <p>Water sitting in the trough means the pitch is wrong. It will freeze in winter and add serious weight to the run.</p>
           </div>
         </div>
-      </section>
-
-      <!-- ============ RELATED SERVICES ============ -->
-      <Relatedservice />
-
-      <!-- ============ FINAL CTA ============ -->
-      <section class="cta-band">
-        <div class="cta-inner">
-          <div
-            class="center-ctas"
-            set:html={alldata?.guttersDecks?.finalCtaConatent || "error"}
-          />
+        <div class="sg">
+          <span class="n">05</span>
+          <div>
+            <h3>Erosion or pooling at the foundation</h3>
+            <p>Channels in the mulch and damp basement walls mean water is landing where it should have been carried away.</p>
+          </div>
         </div>
-      </section>
-    </main>
+        <div class="sg">
+          <span class="n">06</span>
+          <div>
+            <h3>Peeling paint or rotted trim</h3>
+            <p>Water running behind the gutter rots fascia and soffit, which then fails to hold the gutter properly. It compounds.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gutter Options -->
+  <section class="section alt">
+    <div class="container">
+      <div class="narrow" style="text-align:center;margin-bottom:38px">
+        <p><span class="eyebrow">Options</span></p>
+        <h2>Gutter Systems We Install</h2>
+        <p class="lead">Sizing is the decision that matters most here, and it is the one most quotes skip over entirely.</p>
+      </div>
+      <div class="sys">
+        <div class="s">
+          <div class="top">
+            <p><span class="tag">Standard</span></p>
+            <h3>5 inch seamless</h3>
+            <p>K style aluminum formed on site to your exact run</p>
+          </div>
+          <div class="body">
+            <ul>
+              <li>No joints along the run, so no seams to leak</li>
+              <li>Suits most New Hampshire homes and roof areas</li>
+              <li>Wide range of colors to match trim or siding</li>
+              <li>Hidden hangers screwed into solid fascia</li>
+            </ul>
+          </div>
+          <div class="foot"><b>Service life:</b> 20 to 30 years</div>
+        </div>
+
+        <div class="s feat">
+          <div class="top">
+            <p><span class="tag">Heavy runoff</span></p>
+            <h3>6 inch seamless</h3>
+            <p>Oversized profile with larger downspouts</p>
+          </div>
+          <div class="body">
+            <ul>
+              <li>Carries roughly 40 percent more water than 5 inch</li>
+              <li>Recommended for large or steeply pitched roofs</li>
+              <li>Handles valleys that concentrate runoff into one section</li>
+              <li>Noticeably better through a fast spring melt</li>
+            </ul>
+          </div>
+          <div class="foot"><b>Service life:</b> 20 to 30 years</div>
+        </div>
+
+        <div class="s">
+          <div class="top">
+            <p><span class="tag">Add on</span></p>
+            <h3>Gutter guards</h3>
+            <p>Mesh or surface tension covers over the trough</p>
+          </div>
+          <div class="body">
+            <ul>
+              <li>Cuts cleaning to roughly once a year under trees</li>
+              <li>Keeps downspouts clear ahead of heavy melt</li>
+              <li>Several grades available at different price points</li>
+              <li>Not a fix for ice dams, whatever the marketing says</li>
+            </ul>
+          </div>
+          <div class="foot"><b>Best for:</b> homes with overhanging trees</div>
+        </div>
+      </div>
+
+      <div class="card pale" style="margin-top:22px">
+        <h3>An honest word about ice dams</h3>
+        <p>No gutter or guard product prevents ice damming. Ice dams are caused by warm attic air melting snow on the roof, which then refreezes at the cold eave. Gutters simply happen to be where the ice becomes visible. The actual fix is attic insulation and balanced ventilation, and any company selling guards as an ice dam solution is telling you something that is not true.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gutter Scope & Cost -->
+  <section class="section">
+    <div class="container narrow">
+      <p><span class="eyebrow">Scope of Work</span></p>
+      <h2>What’s Included in a Gutter Installation</h2>
+      <ul class="checks">
+        <li>Removal and disposal of the existing gutters</li>
+        <li>Fascia and soffit inspection with rotted board replaced</li>
+        <li>Seamless runs formed on site to your exact measurements</li>
+        <li>Correct pitch set toward every downspout</li>
+        <li>Hidden hangers fixed into solid framing</li>
+        <li>Downspouts sized and placed for the roof area they serve</li>
+        <li>Discharge routed away from the foundation</li>
+        <li>End caps and miters sealed properly</li>
+        <li>Gutter guards installed where specified</li>
+        <li>Full cleanup and debris removal</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <div class="cost-band">
+        <p><span class="eyebrow" style="color: #9cc0ff;">Straight Pricing</span></p>
+        <h2>How Much Do Seamless Gutters Cost?</h2>
+        <div class="cost-figure">$1,200 to $4,500</div>
+        <p>That covers most New Hampshire homes for a full seamless replacement. A single story ranch with a short run sits near the bottom, while a larger two story home in 6 inch profile with guards sits at the top.</p>
+        <ul class="cost-drivers">
+          <li><b>Linear feet</b> the total run around the house</li>
+          <li><b>Profile</b> 5 inch or 6 inch, and downspout count</li>
+          <li><b>House height</b> two and three story work needs more staging</li>
+          <li><b>Fascia repair</b> rotted board found once old gutters come off</li>
+          <li><b>Guards</b> which grade of protection you choose</li>
+          <li><b>Discharge routing</b> underground drainage adds cost</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PART TWO: DECKS -->
+  <section class="svc-open" id="decks">
+    <div class="container">
+      <p><span class="num">Part Two</span></p>
+      <h2>Deck Building &amp; Replacement</h2>
+      <p>
+        A deck is a structure fastened to your house and standing in ground that freezes four feet deep. Built properly it lasts decades. Built quickly it moves, sags, and lets water into the wall.
+      </p>
+    </div>
+  </section>
+
+  <!-- Deck Services -->
+  <section class="section">
+    <div class="container">
+      <div class="narrow" style="text-align:center;margin-bottom:36px">
+        <p><span class="eyebrow">What We Build</span></p>
+        <h2>Deck Work We Take On</h2>
+      </div>
+      <div class="signs">
+        <div class="sg">
+          <span class="n">01</span>
+          <div>
+            <h3>New deck construction</h3>
+            <p>Designed around your house and your grade level, permitted with the town, and built to current code.</p>
+          </div>
+        </div>
+        <div class="sg">
+          <span class="n">02</span>
+          <div>
+            <h3>Full deck replacement</h3>
+            <p>Old structure removed to the footings, which are assessed and replaced where they have heaved or cracked.</p>
+          </div>
+        </div>
+        <div class="sg">
+          <span class="n">03</span>
+          <div>
+            <h3>Resurfacing over sound framing</h3>
+            <p>Where the frame is solid, new decking and railings give you a new deck at a fraction of a full rebuild.</p>
+          </div>
+        </div>
+        <div class="sg">
+          <span class="n">04</span>
+          <div>
+            <h3>Ledger repair and reflashing</h3>
+            <p>The most common failure we are called for, and the one that quietly rots the rim joist of the house.</p>
+          </div>
+        </div>
+        <div class="sg">
+          <span class="n">05</span>
+          <div>
+            <h3>Railings and stairs</h3>
+            <p>Code compliant railing heights and baluster spacing, plus stairs built to consistent rise and run.</p>
+          </div>
+        </div>
+        <div class="sg">
+          <span class="n">06</span>
+          <div>
+            <h3>Repairs and board replacement</h3>
+            <p>Soft boards, loose fasteners, and wobbly rail posts put right before they become a safety problem.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Decking Materials -->
+  <section class="section alt">
+    <div class="container">
+      <div class="narrow" style="text-align:center;margin-bottom:38px">
+        <p><span class="eyebrow">Materials</span></p>
+        <h2>Choosing Your Decking</h2>
+        <p class="lead">The decision comes down to how much maintenance you are willing to do each spring.</p>
+      </div>
+      <div class="sys">
+        <div class="s">
+          <div class="top">
+            <p><span class="tag">Budget</span></p>
+            <h3>Pressure treated</h3>
+            <p>Treated softwood, the traditional New England choice</p>
+          </div>
+          <div class="body">
+            <ul>
+              <li>Lowest material cost by a wide margin</li>
+              <li>Readily available and simple to repair board by board</li>
+              <li>Needs cleaning and resealing every one to two years</li>
+              <li>Will check and splinter with age if left unsealed</li>
+            </ul>
+          </div>
+          <div class="foot"><b>Service life in NH:</b> 15 to 20 years</div>
+        </div>
+
+        <div class="s feat">
+          <div class="top">
+            <p><span class="tag">Most popular</span></p>
+            <h3>Composite</h3>
+            <p>Wood fiber and polymer boards with a capped surface</p>
+          </div>
+          <div class="body">
+            <ul>
+              <li>No sanding, sealing, or staining, ever</li>
+              <li>Resists fading, staining, and splintering</li>
+              <li>Hidden fastener systems give a clean surface</li>
+              <li>Costs two to three times pressure treated up front</li>
+            </ul>
+          </div>
+          <div class="foot"><b>Service life in NH:</b> 25 to 30 years</div>
+        </div>
+
+        <div class="s">
+          <div class="top">
+            <p><span class="tag">Natural</span></p>
+            <h3>Cedar</h3>
+            <p>Naturally rot resistant softwood with real grain</p>
+          </div>
+          <div class="body">
+            <ul>
+              <li>Warm natural appearance that suits older homes</li>
+              <li>Naturally resistant to rot and insects</li>
+              <li>Stays cooler underfoot than composite in summer</li>
+              <li>Needs regular sealing, more so near the coast</li>
+            </ul>
+          </div>
+          <div class="foot"><b>Service life in NH:</b> 15 to 25 years</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deck Build Standards -->
+  <section class="section">
+    <div class="container narrow">
+      <p><span class="eyebrow">Scope of Work</span></p>
+      <h2>How We Build a Deck for This Climate</h2>
+      <ul class="checks">
+        <li>Footings dug to 48 inches, below the New Hampshire frost line</li>
+        <li>Concrete piers with proper post bases, no wood in soil</li>
+        <li>Ledger board bolted to structure, never nailed to sheathing</li>
+        <li>Ledger flashed above and behind to keep the rim joist dry</li>
+        <li>Joist spacing set for the decking material specified</li>
+        <li>Joist tape over framing tops to extend frame life</li>
+        <li>Hot dipped galvanized or stainless structural connectors</li>
+        <li>Coastal grade fasteners on Seacoast properties</li>
+        <li>Railing heights and baluster spacing to current code</li>
+        <li>Stairs built to consistent rise and run with solid footing</li>
+        <li>Town permit pulled and inspections scheduled</li>
+        <li>Site cleared and written workmanship warranty registered</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <div class="cost-band">
+        <p><span class="eyebrow" style="color: #9cc0ff;">Straight Pricing</span></p>
+        <h2>How Much Does a Deck Cost in New Hampshire?</h2>
+        <div class="cost-figure">$6,000 to $30,000</div>
+        <p>Pressure treated on a simple low deck sits near the bottom of that range. Composite on an elevated deck with railings, stairs, and lighting sits at the top. Height above grade moves the number more than most people expect, because it changes the footing, framing, and railing requirements.</p>
+        <ul class="cost-drivers">
+          <li><b>Square footage</b> the finished deck area</li>
+          <li><b>Decking material</b> pressure treated, cedar, or composite</li>
+          <li><b>Height above grade</b> taller decks need more structure and railing</li>
+          <li><b>Railing choice</b> wood, composite, cable, or aluminum</li>
+          <li><b>Stairs</b> number of runs and landings required</li>
+          <li><b>Site conditions</b> ledge, slope, and access for equipment</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- NH Conditions -->
+  <section class="section">
+    <div class="container">
+      <div class="narrow" style="margin-bottom:36px">
+        <p><span class="eyebrow">Local Expertise</span></p>
+        <h2>What New Hampshire Demands From Both</h2>
+        <p class="lead">These four conditions are why work built to a generic spec fails here and work built for this climate does not.</p>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>A four foot frost line</h3>
+          <p>Ground here freezes deep. Footings that stop above the frost line heave every winter, pulling a deck out of level and stressing the ledger connection to the house. Forty eight inches is the standard we build to, confirmed with your town at permit stage.</p>
+        </div>
+        <div class="card">
+          <h3>Spring melt in a single weekend</h3>
+          <p>Weeks of accumulated snow can release over two or three warm days. That is the load your gutters actually have to carry, not an average rainfall, which is why 6 inch profile is worth pricing on larger roofs.</p>
+        </div>
+        <div class="card">
+          <h3>Ice weight on the eaves</h3>
+          <p>A frozen gutter run is extraordinarily heavy. Hangers spaced too far apart or fixed into rotted fascia will fail under it, taking the fascia board with them. Spacing and fixing substrate both matter.</p>
+        </div>
+        <div class="card">
+          <h3>Salt air on the Seacoast</h3>
+          <p>Near the water, standard fasteners and connectors corrode years early. On coastal decks and gutter runs we specify stainless or hot dipped components as standard rather than as an upgrade.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container">
+      <div class="sec-header" style="text-align:center; margin:0 auto 40px;">
+        <p><span class="eyebrow">FAQ</span></p>
+        <h2 class="sec-head">Gutter &amp; Deck Questions</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q"><span>How much do seamless gutters cost in New Hampshire?</span><span class="plus"></span></button>
+          <div class="faq-a">
+            <p>Seamless aluminum gutters on an average New Hampshire home typically cost between 1,200 and 4,500 dollars installed. The variables are the total run in linear feet, whether you choose 5 inch or 6 inch profile, the number of downspouts and how they are routed, the height of the house, and whether gutter guards are added.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Are gutter guards worth it here?</span><span class="plus"></span></button>
+          <div class="faq-a">
+            <p>Most New Hampshire homes are served well by 5 inch K style gutters. We recommend upgrading to 6 inch where the roof is large, steeply pitched, or has long valleys that concentrate runoff into one section. A 6 inch gutter carries roughly 40 percent more water, which matters most during a fast spring melt rather than during ordinary rainfall.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>How much does a deck cost in New Hampshire?</span><span class="plus"></span></button>
+          <div class="faq-a">
+            <p>Most decks in New Hampshire cost between 6,000 and 30,000 dollars. Pressure treated lumber on a simple ground level deck sits at the lower end, while composite decking on an elevated deck with railings, stairs, and lighting sits at the upper end. Footing depth, height above grade, and railing choice all move the number significantly.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Composite or pressure treated?</span><span class="plus"></span></button>
+          <div class="faq-a">
+            <p>Composite costs roughly two to three times more up front and lasts 25 to 30 years with almost no maintenance beyond washing. Pressure treated lumber is far cheaper but needs cleaning and resealing every one to two years, and will typically last 15 to 20 years in New Hampshire weather. If you dislike annual maintenance, composite usually justifies its cost over the life of the deck.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>How deep do deck footings need to be?</span><span class="plus"></span></button>
+          <div class="faq-a">
+            <p>New Hampshire has a deep frost line, and most towns require deck footings to reach 48 inches below grade so they sit beneath it. Footings that stop short will heave as the ground freezes and thaws, pulling the deck out of level and stressing the ledger connection to the house. Exact depth is set by your local building department and we confirm it when pulling the permit.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Do I need a permit to build a deck?</span><span class="plus"></span></button>
+          <div class="faq-a">
+            <p>In almost all cases yes. Requirements vary by town, and most New Hampshire municipalities require a building permit for any deck attached to the house or raised above a set height. We handle the permit application and the inspections as part of the project so the deck is documented properly for insurance and for any future sale.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Why do decks cause leaks into the house?</span><span class="plus"></span></button>
+          <div class="faq-a">
+            <p>The ledger board is the beam that fastens the deck to the house, and it sits directly against the wall. Without proper flashing above it, water runs behind the ledger and into the rim joist and sheathing. Rotted ledger connections are a leading cause of deck failure and a common source of hidden water damage, which is why we flash every ledger as a matter of course.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Services -->
+  <section class="section alt">
+    <div class="container">
+      <div class="narrow" style="text-align:center;margin-bottom:36px">
+        <span class="eyebrow">Related Services</span>
+        <h2>Other Roofing Services</h2>
+      </div>
+      <div class="rel">
+        <a href="/service/roof-replacement/">
+          <h3>Roof Replacement</h3>
+          <p>The full process — tear-off, timeline, permits, and what to expect.</p>
+          <span class="go">View replacement →</span>
+        </a>
+        <a href="/service/metal-roofing/">
+          <h3>Metal Roofing</h3>
+          <p>The other main option — longer life, better snow shedding, higher cost.</p>
+          <span class="go">Compare metal →</span>
+        </a>
+        <a href="/service/roof-repair/">
+          <h3>Roof Repair</h3>
+          <p>Leaks and lifted shingles traced to the actual source before repair.</p>
+          <span class="go">View roof repair →</span>
+        </a>
+        <a href="/service/roof-inspection/">
+          <h3>Roof Inspection</h3>
+          <p>Free, photo-documented condition report before you decide anything.</p>
+          <span class="go">Book an inspection →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="cta-band">
+    <div class="cta-inner">
+      <div class="center-ctas">
+        <h2>Get Your Free Gutter or Deck Estimate</h2>
+        <p>We measure on site, talk through sizing and materials, and put everything into an itemized written estimate. No pressure to sign anything.</p>
+        <div class="btns">
+          <a class="btn btn-blue" href="/contact">Get Your Free Estimate</a>
+          <a class="btn btn-ghost-w" href="tel:+1 (603) 502-7080">Call Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
 
     <Footer />
     <style is:global>

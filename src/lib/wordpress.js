@@ -194,7 +194,8 @@ async function fetchWithRetry(endpoint, body) {
 export async function queryWordPress(query, variables = {}) {
   const endpoint =
     import.meta.env.WP_API_URL ||
-    "https://staging2.vincenzoroofing.com/graphql";
+    // "https://staging2.vincenzoroofing.com/graphql";
+    "https://staging.vincenzoroofing.com/graphql";
 
   const body = JSON.stringify({ query, variables });
 

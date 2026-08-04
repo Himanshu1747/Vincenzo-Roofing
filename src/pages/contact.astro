@@ -5,8 +5,8 @@ export const prerender = false;
 // background so WordPress edits (text/images) show up without a full site
 // rebuild. See src/lib/wordpress.js for the data-fetching side.
 Astro.response.headers.set(
-	"Cache-Control",
-	"public, max-age=0, s-maxage=90, stale-while-revalidate=30"
+    "Cache-Control",
+    "public, max-age=0, s-maxage=90, stale-while-revalidate=30",
 );
 import BaseHead from "../components/BaseHead.astro";
 import Contactform from "../components/Contactform.astro";
@@ -62,14 +62,24 @@ const seodata = alldata?.seo || {};
         <main id="top">
             <!-- ============ HERO ============ -->
             <section class="page-hero">
-                  <div class="hero-grid-tex" aria-hidden="true"></div>
+                <div class="hero-grid-tex" aria-hidden="true"></div>
                 <div class="container">
                     <div class="breadcrumb">
-                        <a href="../index.html">Home</a>
-                        <span>/</span>
-                        <span style="color:#fff;">Contact</span>
+                        <a href="/">Home</a><span>/</span><span
+                            style="color:#fff;">Contact</span
+                        >
                     </div>
-                    <Fragment set:html={alldata?.content || "error"} />
+                    <h1 class="fade-up">
+                        Tell us about <em
+                            style="font-style: normal; color: #9cc0ff;"
+                            >your roof.</em
+                        >
+                    </h1>
+                    <p class="lede-page fade-up">
+                        Fill out the form below or call the office directly. We
+                        typically reply within one business hour, 7am–6pm, and
+                        the emergency line is answered 24/7.
+                    </p>
                 </div>
             </section>
 
@@ -77,11 +87,25 @@ const seodata = alldata?.seo || {};
             <Contactform />
 
             <!-- Emergency / Final CTA -->
-           
+
             <section class="cta-band">
                 <div class="cta-inner">
-                    <div class="center-ctas" set:html={alldata?.contactpage?.finalCtaContent || "error"}>
-                        
+                    <div class="center-ctas">
+                        <p>
+                            <span class="badge247">24/7 Response<br /> </span>
+                        </p>
+                        <h2>Active leak or storm damage right now?</h2>
+                        <p>
+                            Skip the form — same-day emergency tarping anywhere
+                            in our New Hampshire service area. One call, and a
+                            crew is on the way.
+                        </p>
+                        <p>
+                            <a
+                                class="btn btn-white"
+                                href="tel:+1 (603) 502-7080"
+                                >Call the Emergency Line</a>
+                        </p>
                     </div>
                 </div>
             </section>
@@ -100,10 +124,10 @@ const seodata = alldata?.seo || {};
             .field-invalid {
                 border-color: #c0392b !important;
             }
-            .cta-inner::before{
+            .cta-inner::before {
                 z-index: -1;
             }
-            a.btn.btn-white{
+            a.btn.btn-white {
                 margin-top: 20px;
             }
             .form-status {

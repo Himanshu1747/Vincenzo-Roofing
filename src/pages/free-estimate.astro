@@ -5,8 +5,8 @@ export const prerender = false;
 // background so WordPress edits (text/images) show up without a full site
 // rebuild. See src/lib/wordpress.js for the data-fetching side.
 Astro.response.headers.set(
-	"Cache-Control",
-	"public, max-age=0, s-maxage=90, stale-while-revalidate=30"
+    "Cache-Control",
+    "public, max-age=0, s-maxage=90, stale-while-revalidate=30",
 );
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
@@ -76,15 +76,23 @@ const seodata = alldata?.seo || {};
     <body>
         <Header />
         <main id="top">
+            <!-- Top Section -->
             <section class="top">
+                <div class="hero-grid-tex" aria-hidden="true"></div>
                 <div class="container">
-                      <div class="hero-grid-tex" aria-hidden="true"></div>
-                <!-- <div class="top-grid" aria-hidden="true"></div> -->
-                <div class="containner">
-                    <div
-                        class="top-copy"
-                        set:html={alldata?.content || "error"}
-                    />
+                    <div class="top-copy">
+                        <p>
+                            <span class="free-badge"
+                                >Free with no obligation</span>
+                        </p>
+                        <h1>Get Your Free Roofing Estimate</h1>
+                        <p>
+                            Tell us about your property and we will come out,
+                            inspect the roof properly, and leave you an itemized
+                            written estimate. No obligation to book, and no
+                            pressure to decide on the spot.
+                        </p>
+                    </div>
 
                     <div class="form-wrap">
                         <!-- FORM -->
@@ -95,8 +103,6 @@ const seodata = alldata?.seo || {};
                                 hour, 7am to 6pm on weekdays.
                             </p>
 
-                            <!-- NOTE: connect this form to a handler such as Formspree, Web3Forms, or your CRM.
-             A static site will not submit anything without one. Add a success state after submit. -->
                             <form id="estimateForm" novalidate>
                                 <div
                                     id="formStatus"
@@ -112,7 +118,7 @@ const seodata = alldata?.seo || {};
                                             id="fname"
                                             name="fname"
                                             type="text"
-                                        
+                                       
                                             autocomplete="given-name"
                                             required
                                         />
@@ -124,7 +130,7 @@ const seodata = alldata?.seo || {};
                                             id="lname"
                                             name="lname"
                                             type="text"
-                                       
+                                          
                                             autocomplete="family-name"
                                             required
                                         />
@@ -139,7 +145,7 @@ const seodata = alldata?.seo || {};
                                             id="phone"
                                             name="phone"
                                             type="tel"
-                                           
+                                            
                                             autocomplete="tel"
                                             required
                                         />
@@ -151,7 +157,7 @@ const seodata = alldata?.seo || {};
                                             id="email"
                                             name="email"
                                             type="email"
-                                          
+                                           
                                             autocomplete="email"
                                             required
                                         />
@@ -168,7 +174,7 @@ const seodata = alldata?.seo || {};
                                             id="address"
                                             name="address"
                                             type="text"
-                                          
+                                            
                                             autocomplete="street-address"
                                             required
                                         />
@@ -186,7 +192,6 @@ const seodata = alldata?.seo || {};
                                                     type="radio"
                                                     name="ptype"
                                                     value="residential"
-                                                    
                                                 /><span>Residential</span
                                                 ></label
                                             >
@@ -251,7 +256,6 @@ const seodata = alldata?.seo || {};
                                                     type="radio"
                                                     name="timing"
                                                     value="soon"
-                                                    
                                                 /><span>Next few months</span
                                                 ></label
                                             >
@@ -300,163 +304,388 @@ const seodata = alldata?.seo || {};
 
                         <!-- SIDEBAR -->
                         <div class="side">
-                            <div
-                                class="side-card urgent"
-                                set:html={alldata?.freeEstimate?.waterComming ||
-                                    "error"}
-                            />
+                            <div class="side-card urgent">
+                                <h3>Water coming in right now?</h3>
+                                <p>
+                                    Do not use this form. Storm damage and
+                                    active leaks are handled around the clock,
+                                    and a phone call gets a crew moving today.
+                                </p>
+                                <p>
+                                    <a href="tel:+16035027080"
+                                        >Call (603) 502-7080</a>
+                                </p>
+                            </div>
 
                             <div class="side-card">
-                                <h3>
-                                    {
-                                        alldata?.freeEstimate?.whatYouGetText ||
-                                            "error"
-                                    }
-                                </h3>
+                                <h3>What you get</h3>
                                 <ul class="side-list">
-                                    {
-                                        alldata?.freeEstimate?.whatGetList.map(
-                                            (freeitems) => (
-                                                <li>
-                                                    {freeitems?.listaName ||
-                                                        "error"}
-                                                </li>
-                                            ),
-                                        )
-                                    }
+                                    <li>A proper on site roof inspection</li>
+                                    <li>Photographs of everything we find</li>
+                                    <li>Itemized written pricing</li>
+                                    <li>A realistic start and finish window</li>
+                                    <li>Warranty terms in writing</li>
                                 </ul>
                             </div>
 
-                            <div
-                                class="side-card"
-                                set:html={alldata?.freeEstimate?.recachOut ||
-                                    "error"}
-                            />
+                            <div class="side-card">
+                                <h3>Reach us directly</h3>
+
+                                <!-- Phone -->
+                                <div class="side-row">
+                                    <span class="ic">
+                                        <svg
+                                            width="18"
+                                            height="18"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            aria-label="Phone"
+                                        >
+                                            <path
+                                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                                            ></path>
+                                        </svg>
+                                    </span>
+                                    <div>
+                                        <b>(603) 502-7080</b>
+                                        <span>Mon to Fri, 7am to 6pm</span>
+                                    </div>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="side-row">
+                                    <span class="ic">
+                                        <svg
+                                            width="18"
+                                            height="18"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            aria-label="Email"
+                                        >
+                                            <path
+                                                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                                            ></path>
+                                            <polyline points="22,6 12,13 2,6"
+                                            ></polyline>
+                                        </svg>
+                                    </span>
+                                    <div>
+                                        <b>info@vincenzosroofing.com</b>
+                                        <span>Replies same business day</span>
+                                    </div>
+                                </div>
+
+                                <!-- Location -->
+                                <div class="side-row">
+                                    <span class="ic">
+                                        <svg
+                                            width="18"
+                                            height="18"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            aria-label="Location"
+                                        >
+                                            <path
+                                                d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
+                                            ></path>
+                                            <circle cx="12" cy="10" r="3"
+                                            ></circle>
+                                        </svg>
+                                    </span>
+                                    <div>
+                                        <b>Based in Seabrook, NH</b>
+                                        <span>Serving the whole state</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                </div>
             </section>
 
+            <!-- Process Steps -->
             <section class="section">
                 <div class="container">
                     <div
                         class="narrow"
                         style="text-align:center;margin-bottom:36px"
-                        set:html={alldata?.freeEstimate?.whatHappenContent ||
-                            "error"}
-                    />
+                    >
+                        <p><span class="eyebrow">What Happens Next</span></p>
+                        <h2>Four Steps, No Surprises</h2>
+                        <p class="lead">
+                            You will know exactly what is happening at every
+                            stage, and nothing gets booked without your say so.
+                        </p>
+                    </div>
                     <div class="steps">
-                        {
-                            alldata?.freeEstimate?.whatHappenGrids?.map(
-                                (happenitem, index) => {
-                                    const stepNumber = String(
-                                        index + 1,
-                                    ).padStart(2, "0");
-                                    return (
-                                        <div class="step" key={index}>
-                                            <span class="n">
-                                                Step {stepNumber}
-                                            </span>
-                                            <Fragment
-                                                set:html={
-                                                    happenitem?.whatHappenData ||
-                                                    "error"
-                                                }
-                                            />
-                                        </div>
-                                    );
-                                },
-                            )
-                        }
+                        <div class="step">
+                            <span class="n">Step 01</span>
+                            <h3>We call you back</h3>
+                            <p>
+                                Usually within one business hour. We ask a few
+                                questions about the property and agree a time
+                                that suits you.
+                            </p>
+                        </div>
+                        <div class="step">
+                            <span class="n">Step 02</span>
+                            <h3>We inspect properly</h3>
+                            <p>
+                                Roof surface, flashing, drainage, and the attic
+                                where relevant. Everything is photographed as we
+                                go.
+                            </p>
+                        </div>
+                        <div class="step">
+                            <span class="n">Step 03</span>
+                            <h3>You get it in writing</h3>
+                            <p>
+                                An itemized estimate with materials, labor,
+                                permit, timeline, and warranty terms. Usually
+                                the same day.
+                            </p>
+                        </div>
+                        <div class="step">
+                            <span class="n">Step 04</span>
+                            <h3>You decide, in your time</h3>
+                            <p>
+                                Compare it, sleep on it, or set it aside for
+                                next year. There is no expiring discount and no
+                                chasing.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </section>
 
+            <!-- Estimate Scope -->
             <section class="section alt">
                 <div class="container narrow">
-                    <Fragment
-                        set:html={alldata?.freeEstimate?.transaparencyContent ||
-                            "error"}
-                    />
+                    <p><span class="eyebrow">Transparency</span></p>
+                    <h2>What Your Written Estimate Includes</h2>
+                    <p>
+                        Estimates are itemized deliberately, so you can lay ours
+                        beside anyone else’s and see exactly where the numbers
+                        differ. A single lump sum tells you nothing about what
+                        you are actually buying.
+                    </p>
                     <ul class="checks">
-                        {
-                            alldata?.freeEstimate?.transaparencyLists.map(
-                                (tranitems) => (
-                                    <li>
-                                        {tranitems?.transaparencyListName ||
-                                            "error"}
-                                    </li>
-                                ),
-                            )
-                        }
+                        <li>Materials listed by type, grade, and quantity</li>
+                        <li>Labor costs stated separately</li>
+                        <li>Tear off and disposal of the old roof</li>
+                        <li>Decking repair allowance if rot is found</li>
+                        <li>Underlayment and ice and water shield coverage</li>
+                        <li>Flashing, venting, and trim work</li>
+                        <li>Building permit and inspection costs</li>
+                        <li>A realistic start date and completion window</li>
+                        <li>Manufacturer warranty terms</li>
+                        <li>Our written workmanship warranty terms</li>
                     </ul>
                 </div>
             </section>
 
+            <!-- How We Work -->
             <section class="section">
                 <div class="container">
                     <div
                         class="narrow"
                         style="text-align:center;margin-bottom:32px"
-                        set:html={alldata?.freeEstimate?.howWeWorkContent ||
-                            "error"}
-                    />
+                    >
+                        <p><span class="eyebrow">How We Work</span></p>
+                        <h2>What You Will Not Get From Us</h2>
+                    </div>
                     <div class="grid-2">
-                        {
-                            alldata?.freeEstimate?.howWorkGrid.map(
-                                (workitems) => (
-                                    <div
-                                        class="card"
-                                        set:html={
-                                            workitems?.workingStyle || "error"
-                                        }
-                                    />
-                                ),
-                            )
-                        }
+                        <div class="card">
+                            <h3>No same day pressure</h3>
+                            <p>
+                                There is no discount that vanishes when we leave
+                                your driveway. That tactic exists to stop you
+                                comparing quotes, which is exactly what you
+                                should be doing on a purchase this size. Take a
+                                week. Take a month.
+                            </p>
+                        </div>
+                        <div class="card">
+                            <h3>No selling you a roof you do not need</h3>
+                            <p>
+                                A meaningful share of the roofs we inspect have
+                                years of life left, and we say so in writing. If
+                                a repair will do, we will quote the repair
+                                rather than steering you toward a replacement.
+                            </p>
+                        </div>
+                        <div class="card">
+                            <h3>No vague lump sums</h3>
+                            <p>
+                                Every estimate is itemized. If our number is
+                                higher than another quote, the line items will
+                                show you precisely why, usually in tear off,
+                                underlayment, or flashing work that the cheaper
+                                quote left out.
+                            </p>
+                        </div>
+                        <div class="card">
+                            <h3>No subcontracted crews</h3>
+                            <p>
+                                The crew that quotes your roof is the crew that
+                                installs it. You are not handed off to a team
+                                you have never met after signing, which is how
+                                accountability gets lost on a job.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </section>
 
+            <!-- FAQ -->
             <section class="section alt">
                 <div class="container narrow">
-                    <div
-                        style="text-align:center;margin-bottom:36px"
-                        set:html={alldata?.freeEstimate?.faqContent || "error"}
-                    />
-
+                    <div style="text-align:center;margin-bottom:36px">
+                        <p><span class="eyebrow">FAQ</span></p>
+                        <h2>Before You Send the Form</h2>
+                    </div>
                     <div class="faq-list">
-                        {
-                            alldata?.freeEstimate?.faqData.map((faqlists) => (
-                                <div class="faq-item">
-                                    <>
-                                        <button class="faq-q">
-                                            <>
-                                                <span>{faqlists?.faqQuestion|| "error"}</span>
-                                                <span class="plus" />
-                                            </>
-                                        </button>
-                                        <div class="faq-a" set:html={faqlists?.faqAnswer || "error"}>
-                                            
-                                        </div>
-                                    </>
-                                </div>
-                            ))
-                        }
+                        <div class="faq-item">
+                            <button class="faq-q"
+                                ><span>Is the estimate really free?</span><span
+                                    class="plus"></span></button
+                            >
+                            <div class="faq-a">
+                                <p>
+                                    Yes. The site visit, the roof inspection,
+                                    the photographs, and the written itemized
+                                    estimate all cost you nothing, and there is
+                                    no obligation to book work afterward. If we
+                                    find your roof does not need work yet, that
+                                    is what we will tell you.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q"
+                                ><span>How quickly will I hear back?</span><span
+                                    class="plus"></span></button
+                            >
+                            <div class="faq-a">
+                                <p>
+                                    Most requests get a reply within one
+                                    business hour between 7am and 6pm on
+                                    weekdays. Requests that come in overnight or
+                                    at the weekend are answered first thing the
+                                    next working morning. Active leaks and storm
+                                    damage should be phoned through instead,
+                                    because those are handled 24 hours a day.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q"
+                                ><span>How long does the visit take?</span><span
+                                    class="plus"></span></button
+                            >
+                            <div class="faq-a">
+                                <p>
+                                    Usually 45 minutes to an hour and a half.
+                                    That covers inspecting the roof,
+                                    photographing the condition, checking the
+                                    attic where relevant, and talking through
+                                    your options. Larger or more complex
+                                    properties take longer, and commercial site
+                                    surveys are scheduled separately.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q"
+                                ><span>Will someone pressure me to sign?</span
+                                ><span class="plus"></span></button
+                            >
+                            <div class="faq-a">
+                                <p>
+                                    No. We leave you the written estimate and
+                                    the photographs and let you take your time.
+                                    There is no same day discount, no expiring
+                                    offer, and no follow up sales campaign. If
+                                    you want to compare quotes elsewhere, we
+                                    would encourage it, because our estimates
+                                    are itemized specifically so they can be
+                                    compared fairly.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q"
+                                ><span>Do I need to be home?</span><span
+                                    class="plus"></span></button
+                            >
+                            <div class="faq-a">
+                                <p>
+                                    It helps, since we can walk you through what
+                                    we found and answer questions straight away.
+                                    If that is not possible we can inspect with
+                                    access to the property and send the
+                                    photographs and written estimate the same
+                                    day, then follow up by phone.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-q"
+                                ><span
+                                    >What is actually in the written estimate?</span
+                                ><span class="plus"></span></button
+                            >
+                            <div class="faq-a">
+                                <p>
+                                    Materials broken out by type and quantity,
+                                    labor, tear off and disposal, permit costs,
+                                    a start date and completion window, and the
+                                    warranty terms. Everything is itemized so
+                                    you can compare it line by line against any
+                                    other quote you receive.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
+            <!-- CTA Band -->
             <section class="cta-band">
                 <div class="cta-inner">
-                    <div class="center-ctas" set:html={alldata?.freeEstimate?.ctaData || "error"}>
-                       
+                    <div class="center-ctas">
+                        <h2>Rather Just Talk to Someone?</h2>
+                        <p>
+                            Call us and we will answer your questions directly,
+                            book the visit, and tell you honestly whether you
+                            need one yet.
+                        </p>
+                        <div class="btns">
+                            <a
+                                class="btn btn-blue btn-lg"
+                                style="background: #fff; color: var(--blue); box-shadow: none;"
+                                href="tel:+16035027080">Call (603) 502-7080</a
+                            >
+                            <a class="btn btn-ghost-w" href="#top"
+                                >Back to the Form</a
+                            >
+                        </div>
                     </div>
                 </div>
             </section>
         </main>
-
         <Footer />
         <style is:global>
             :root {
@@ -638,7 +867,7 @@ const seodata = alldata?.seo || {};
                 overflow: hidden;
                 padding: 60px 0 90px;
             }
-            .hero-grid-tex{
+            .hero-grid-tex {
                 z-index: 1;
                 position: static !important;
             }

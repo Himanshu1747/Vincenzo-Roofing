@@ -1,18 +1,15 @@
 ---
 export const prerender = false;
 
-// Serve the cached page from the host's CDN for 90s, then refresh it in the
-// background so WordPress edits (text/images) show up without a full site
-// rebuild. See src/lib/wordpress.js for the data-fetching side.
 Astro.response.headers.set(
-	"Cache-Control",
-	"public, max-age=0, s-maxage=90, stale-while-revalidate=30"
+  "Cache-Control",
+  "public, max-age=0, s-maxage=90, stale-while-revalidate=30"
 );
+
 import BaseHead from "../../components/BaseHead.astro";
 import Footer from "../../components/Footer.astro";
 import Header from "../../components/Header.astro";
 import { queryWordPress } from "../../lib/wordpress";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 
 const PAGEDATA = `
 query blogpage {
@@ -29,46 +26,47 @@ query blogpage {
 `;
 
 const MAINBLOG = `
-  query MainBlog {
-    posts(first: 100) {
-      nodes {
-        id
-        title
-        slug
-        excerpt
-        date
-        featuredImage {
-          node {
-            sourceUrl
-            altText
-            mediaDetails {
+query MainBlog {
+  posts(first: 100) {
+    nodes {
+      id
+      title
+      slug
+      excerpt
+      date
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+          mediaDetails {
+            width
+            height
+            sizes {
+              name
+              sourceUrl
               width
               height
-              sizes {
-                name
-                sourceUrl
-                width
-                height
-              }
             }
           }
         }
       }
     }
   }
+}
 `;
 
-// PERF: these two queries are independent — fire them together instead of
-// awaiting one after the other. Cuts the WordPress round-trip time roughly
-// in half on every request.
-const [pageResponse, data] = await Promise.all([
+// Execute Queries
+const [pageResponse, rawData] = await Promise.all([
   queryWordPress(PAGEDATA),
   queryWordPress(MAINBLOG),
 ]);
 
 const pageData = pageResponse?.page;
 const seodata = pageData?.seo || {};
-const posts = data?.posts?.nodes || [];
+
+// Safely resolve nested response structure (handles raw WP-GraphQL response vs parsed body)
+const posts = rawData?.posts?.nodes || rawData?.data?.posts?.nodes || [];
+
 const featuredPost = posts[0];
 const gridPosts = posts.slice(1);
 
@@ -86,7 +84,6 @@ function cleanExcerpt(excerpt: string) {
   return excerpt.replace(/<[^>]*>?/gm, "").trim();
 }
 
-// sizes array me se "large" dhoondo, nahi mile to original sourceUrl pe fallback karo
 function getImageUrl(imgNode: any, fallback: string) {
   if (!imgNode) return fallback;
   const sizes = imgNode.mediaDetails?.sizes || [];
@@ -94,7 +91,6 @@ function getImageUrl(imgNode: any, fallback: string) {
   return large?.sourceUrl || imgNode.sourceUrl || fallback;
 }
 
-// Sabhi available sizes se srcset bana do (jitni sizes utni entries)
 function getImageSrcSet(imgNode: any) {
   const sizes = imgNode?.mediaDetails?.sizes || [];
   if (!sizes.length) return undefined;
@@ -104,38 +100,29 @@ function getImageSrcSet(imgNode: any) {
     .join(", ");
 }
 
+// Convert String dimensions from GraphQL into Numbers safely
 function getImageDimensions(imgNode: any, fallback: { width: number; height: number }) {
-  const sizes = imgNode?.mediaDetails?.sizes || [];
+  if (!imgNode) return fallback;
+  const sizes = imgNode.mediaDetails?.sizes || [];
   const large = sizes.find((s: any) => s.name === "large");
-  if (large?.width && large?.height) {
-    return { width: large.width, height: large.height };
-  }
-  if (imgNode?.mediaDetails?.width && imgNode?.mediaDetails?.height) {
-    return { width: imgNode.mediaDetails.width, height: imgNode.mediaDetails.height };
+  
+  const w = parseInt(large?.width || imgNode.mediaDetails?.width, 10);
+  const h = parseInt(large?.height || imgNode.mediaDetails?.height, 10);
+
+  if (!isNaN(w) && !isNaN(h) && w > 0 && h > 0) {
+    return { width: w, height: h };
   }
   return fallback;
 }
 
-const FEATURED_FALLBACK = { width: 1200, height: 800 };
+const FEATURED_FALLBACK = { width: 1024, height: 768 };
 const GRID_FALLBACK = { width: 800, height: 600 };
-const GRID_IMG_FALLBACK_URL =
-  "https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Best-Roofing-in-North-Hampton-NH-1-1.webp";
+const FALLBACK_IMG = "https://staging.vincenzoroofing.com/wp-content/uploads/2026/08/metal-roofing-nh-1.png";
 
-// PERF: this is the big one. The old version rendered every one of the
-// (up to 99) grid posts into the initial HTML — full markup + a multi-size
-// srcset per image — on every single page load. That's a huge amount of
-// DOM and simultaneous image requests for a first paint.
-// We still fetch all posts in one WordPress call (no extra network cost),
-// but only render the first batch immediately. The rest are serialized as
-// plain JSON (already in memory, no extra fetch) and appended in batches
-// by the "Load More" button below — reusing your existing .btn.btn-blue
-// and .pagination styles, no new CSS.
 const INITIAL_COUNT = 9;
 const visibleGridPosts = gridPosts.slice(0, INITIAL_COUNT);
 const deferredGridPosts = gridPosts.slice(INITIAL_COUNT);
 
-// Pre-shape the deferred posts into exactly the strings the template needs,
-// so the client-side script has zero WP-shape logic to reimplement.
 const deferredPayload = deferredGridPosts.map((post) => {
   const node = post.featuredImage?.node;
   const dims = getImageDimensions(node, GRID_FALLBACK);
@@ -144,13 +131,14 @@ const deferredPayload = deferredGridPosts.map((post) => {
     title: post.title,
     excerpt: cleanExcerpt(post.excerpt),
     date: formatDate(post.date),
-    imgSrc: getImageUrl(node, GRID_IMG_FALLBACK_URL),
+    imgSrc: getImageUrl(node, FALLBACK_IMG),
     imgSrcSet: getImageSrcSet(node) || "",
     imgWidth: dims.width,
     imgHeight: dims.height,
     imgAlt: node?.altText || post.title,
   };
 });
+
 const deferredJson = JSON.stringify(deferredPayload).replace(/</g, "\\u003c");
 ---
 
@@ -163,27 +151,27 @@ const deferredJson = JSON.stringify(deferredPayload).replace(/</g, "\\u003c");
       focuskw={seodata?.focuskw || ""}
     />
     {seodata?.fullHead && <Fragment set:html={seodata.fullHead} />}
-    <link rel="preconnect" href="https://staging2.vincenzoroofing.com" crossorigin />
-    <link rel="dns-prefetch" href="https://staging2.vincenzoroofing.com" />
+    <link rel="preconnect" href="https://staging.vincenzoroofing.com" crossorigin />
+    <link rel="dns-prefetch" href="https://staging.vincenzoroofing.com" />
   </head>
   <body>
     <Header />
 
     <main id="top">
       <section class="page-hero">
-                <div class="hero-grid-tex" aria-hidden="true"></div>
         <div class="container">
           <div class="breadcrumb">
-            <a href="/">Home</a>
-            <span>/</span>
-            <span>Blog &amp; Resources</span>
+            <a href="/">Home</a><span>/</span><span>Blog &amp; Resources</span>
           </div>
-          {pageData && <Fragment set:html={pageData.content} />}
+          <h1>Insights, Tips &amp; <span style="color: #9cc0ff;">Industry Updates</span></h1>
+          <p>Stay informed with our latest articles, expert insights, practical tips, and industry news. Explore valuable resources designed to help you make informed decisions and stay ahead with the latest trends.</p>
         </div>
       </section>
 
       <section class="section" style="background: var(--off);">
         <div class="container">
+          
+          {/* FEATURED POST */}
           {featuredPost && (() => {
             const node = featuredPost.featuredImage?.node;
             const dims = getImageDimensions(node, FEATURED_FALLBACK);
@@ -195,7 +183,7 @@ const deferredJson = JSON.stringify(deferredPayload).replace(/</g, "\\u003c");
               >
                 <div class="featured-img">
                   <img
-                    src={getImageUrl(node, "https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/image-1-1.webp")}
+                    src={getImageUrl(node, FALLBACK_IMG)}
                     srcset={getImageSrcSet(node)}
                     sizes="(max-width: 1024px) 100vw, 55vw"
                     width={dims.width}
@@ -228,6 +216,7 @@ const deferredJson = JSON.stringify(deferredPayload).replace(/</g, "\\u003c");
             );
           })()}
 
+          {/* GRID POSTS */}
           <div class="blog-grid" id="blog-grid">
             {visibleGridPosts.map((post, index) => {
               const node = post.featuredImage?.node;
@@ -241,7 +230,7 @@ const deferredJson = JSON.stringify(deferredPayload).replace(/</g, "\\u003c");
                   <div class="blog-media">
                     <span class="blog-cat-badge">Article</span>
                     <img
-                      src={getImageUrl(node, GRID_IMG_FALLBACK_URL)}
+                      src={getImageUrl(node, FALLBACK_IMG)}
                       srcset={getImageSrcSet(node)}
                       sizes="(max-width: 720px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       width={dims.width}
@@ -267,6 +256,7 @@ const deferredJson = JSON.stringify(deferredPayload).replace(/</g, "\\u003c");
             })}
           </div>
 
+          {/* PAGINATION / DEFERRED DATA */}
           {deferredGridPosts.length > 0 && (
             <div class="pagination" id="load-more-wrap">
               <button
@@ -287,25 +277,11 @@ const deferredJson = JSON.stringify(deferredPayload).replace(/</g, "\\u003c");
           />
         </div>
       </section>
-
-      <!-- <section class="cta-band">
-        <div class="cta-inner">
-          <h2>Ready for a roof that&rsquo;s <em>built for here?</em></h2>
-          <div class="btns">
-            <a class="btn btn-blue" href="/contact">Get Your Free Estimate</a>
-            <a class="btn btn-ghost-w" href="tel:+16035550199">Call Now</a>
-          </div>
-        </div>
-      </section> -->
     </main>
 
     <Footer />
 
     <script>
-      // Progressive rendering for the remaining blog posts. All data is
-      // already embedded in the page (no extra network request) — this
-      // just avoids paying the DOM/parse/image-request cost for posts
-      // nobody has scrolled to yet.
       document.addEventListener("DOMContentLoaded", () => {
         const dataEl = document.getElementById("more-posts-data");
         const grid = document.getElementById("blog-grid");
@@ -569,32 +545,8 @@ const deferredJson = JSON.stringify(deferredPayload).replace(/</g, "\\u003c");
         gap: 8px;
         margin-top: 20px;
       }
-        section.page-hero h1 {
+      section.page-hero h1 {
         padding-bottom: 15px;
-      }
-      .pg-btn {
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-        border: 1px solid var(--line);
-        background: var(--white);
-        color: var(--ink);
-        font-family: "Montserrat", sans-serif;
-        font-weight: 700;
-        font-size: 13.5px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.2s;
-      }
-      .pg-btn:hover {
-        border-color: var(--blue);
-        color: var(--blue);
-      }
-      .pg-btn.active {
-        background: var(--blue);
-        color: var(--white);
-        border-color: var(--blue);
       }
       @media (max-width: 1024px) {
         .featured-article-card {
@@ -606,7 +558,7 @@ const deferredJson = JSON.stringify(deferredPayload).replace(/</g, "\\u003c");
         .blog-grid {
           grid-template-columns: repeat(2, 1fr);
         }
-        .featured-body{
+        .featured-body {
           padding: 15px;
         }
       }

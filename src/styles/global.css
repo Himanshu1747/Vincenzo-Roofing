@@ -1313,7 +1313,7 @@ nav.primary a:hover {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 44px;
+  margin-bottom: 15px;
 }
 
 .p-num::after {
@@ -2225,9 +2225,7 @@ footer {
     padding: 26px 24px;
   }
 
-  .p-num {
-    margin-bottom: 26px;
-  }
+ 
 
   .ba-grid,
   .testi-grid,
