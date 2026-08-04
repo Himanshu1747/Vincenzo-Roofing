@@ -126,6 +126,22 @@ const footerCopyrightWidget = pagedata?.footerCopyrightWidget || "";
 .mycopy{
 padding: 0px 15px !important;
 }
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.contact-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between icon and text */
+  margin-bottom: 8px;
+}
+
+.contact-list svg {
+  flex-shrink: 0; /* Prevents icons from squishing on small screens */
+}
 @media(max-width:767px){
   .mycopy{
 padding: 10px 15px !important;
