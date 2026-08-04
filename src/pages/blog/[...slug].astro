@@ -5,24 +5,15 @@ import Header from "../../components/Header.astro";
 import { queryWordPress } from "../../lib/wordpress";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 
-// 1. Generate static paths dynamically from WordPress GraphQL
-export async function getStaticPaths() {
-	const data = await queryWordPress(`
-    query AllSlugs {
-      posts(first: 100) {
-        nodes {
-          slug
-        }
-      }
-    }
-  `);
+// Rendered on-demand (not pre-built) so a new WordPress post/edit shows up
+// without a full site rebuild. Cache-Control below lets the CDN still serve
+// this fast and cache it briefly, refreshing in the background.
+export const prerender = false;
 
-	const posts = data?.posts?.nodes || [];
-
-	return posts.map((post: { slug: string }) => ({
-		params: { slug: post.slug },
-	}));
-}
+Astro.response.headers.set(
+	"Cache-Control",
+	"public, max-age=0, s-maxage=90, stale-while-revalidate=30",
+);
 
 const { slug } = Astro.params;
 

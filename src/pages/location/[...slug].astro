@@ -4,8 +4,17 @@ import Footer from "../../components/Footer.astro";
 import Header from "../../components/Header.astro";
 import { queryWordPress } from "../../lib/wordpress";
 
-export async function getStaticPaths() {
-    const LOCATION_QUERY = `
+// Rendered on-demand (not pre-built) so a new WordPress location page
+// shows up without a full site rebuild. Cache-Control below lets the CDN
+// still serve this fast and cache it briefly, refreshing in the background.
+export const prerender = false;
+
+Astro.response.headers.set(
+    "Cache-Control",
+    "public, max-age=0, s-maxage=90, stale-while-revalidate=30",
+);
+
+const LOCATION_QUERY = `
     query locationall {
       locationpost {
         nodes {
@@ -29,16 +38,15 @@ export async function getStaticPaths() {
     }
   `;
 
-    const data = await queryWordPress(LOCATION_QUERY);
-    const posts = data?.locationpost?.nodes || [];
+const { slug } = Astro.params;
+const data = await queryWordPress(LOCATION_QUERY);
+const posts = data?.locationpost?.nodes || [];
+const post = posts.find((p) => p.slug === slug);
 
-    return posts.map((post) => ({
-        params: { slug: post.slug },
-        props: { post },
-    }));
+if (!post) {
+    return Astro.redirect("/404");
 }
 
-const { post } = Astro.props;
 const seodata = post?.seo || {};
 ---
 
