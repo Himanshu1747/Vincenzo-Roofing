@@ -20,14 +20,6 @@ query GetFooterData {
     }
   }
 
-  # 2. Header Widget
-  topHeaderWidgetArea
-
-  # 3. Footer Widgets
-  footerLogoWidget
-  footerContactWidget
-  footerMapWidget
-  footerCopyrightWidget
 }
 `;
 
@@ -134,7 +126,7 @@ const footerCopyrightWidget = pagedata?.footerCopyrightWidget || "";
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                 <circle cx="12" cy="10" r="3"></circle>
               </svg>
-              <span>Serving all of New Hampshire</span>
+              <span>43 True Rd, Seabrook, NH 03874</span>
             </li>
 
             <!-- Hours -->
@@ -143,7 +135,7 @@ const footerCopyrightWidget = pagedata?.footerCopyrightWidget || "";
                 <circle cx="12" cy="12" r="10"></circle>
                 <polyline points="12 6 12 12 16 14"></polyline>
               </svg>
-              <span>Mon–Fri 7am–6pm · 24/7 Emergency</span>
+              <span>Mon – Sat 8 AM–4 PM · 24/7 Emergency</span>
             </li>
           </ul>
         </div>

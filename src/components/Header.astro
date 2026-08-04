@@ -5,7 +5,6 @@ import { queryWordPress } from "../lib/wordpress";
 
 const QUERY_MENU = `
 query MainMenu {
-  topHeaderWidgetArea
   menu(id: "main-menu", idType: SLUG) {
     menuItems(first: 100) {
       nodes {
