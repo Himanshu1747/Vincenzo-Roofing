@@ -1,9 +1,7 @@
 ---
 export const prerender = false;
 
-// Serve the cached page from the host's CDN for 90s, then refresh it in the
-// background so WordPress edits (text/images) show up without a full site
-// rebuild. See src/lib/wordpress.js for the data-fetching side.
+// Serve cached page from the host's CDN for 90s, then refresh in background
 Astro.response.headers.set(
     "Cache-Control",
     "public, max-age=0, s-maxage=90, stale-while-revalidate=30",
@@ -31,13 +29,81 @@ query homepagedata {
       cornerstone
       fullHead
     }
+    homePage {
+      bannerQuote
+      bannerWaranty
+      slidingText
+      bannerImage {
+        node {
+          mediaItemUrl
+        }
+      }
+      whatWeDoContent
+      whatWeDoGrids {
+        whatWeDoIconImage {
+          node {
+            mediaItemUrl
+          }
+        }
+        whatWeDoGridContent
+      }
+      localExpertiseContetnt
+      localExpertiseGrids {
+        localExpertiseGridIcon {
+          node {
+            mediaItemUrl
+          }
+        }
+        localExpertiseGridContent
+      }
+      whyChooseUsContent
+      whyChooseUsGrid {
+        whyChooseUsGridIconImage {
+          node {
+            mediaItemUrl
+          }
+        }
+        whyChooseUsGridContent
+      }
+      whyVincenzoSContent
+      whyVincenzoSGrid {
+        whyVincenzoSGridIconImage {
+          node {
+            mediaItemUrl
+          }
+        }
+        whyVincenzoSGridContent
+      }
+      whyVincenzoSMainImage {
+        node {
+          mediaItemUrl
+        }
+      }
+      whyVincenzoSMainImageContent
+      howItWorksContent
+      howItWorksGrids {
+        howItWorksGridContent
+      }
+      emergencyResponseContent
+      whereWeWorkContent
+      whereWeWorkGrids {
+        whereWeWorkLocationName
+      }
+      faqContent
+      faqLists {
+        faqTitle
+        faqAnswer
+      }
+      readyForARoofContent
+    }
   }
 }
 `;
 
 const pagedata = await queryWordPress(HOMEPAGE);
-const responsedata = pagedata?.page || {};
-const seodata = responsedata?.seo || {};
+const page = pagedata?.page || {};
+const seodata = page?.seo || {};
+const hp = page?.homePage || {};
 ---
 
 <!doctype html>
@@ -58,40 +124,14 @@ const seodata = responsedata?.seo || {};
                 <div class="hero-grid-tex" aria-hidden="true"></div>
                 <div class="container hero-inner">
                     <div class="hero-copy">
-                        <div class="hero-kicker">
-                            <span class="chip">NH</span> Residential &amp; Commercial Roofing
-                        </div>
-                        <h1>
-                            New Hampshire Roofing Contractor <em>, Built for Every Season</em>
-                        </h1>
-                        <p class="lede">
-                            Based in Seabrook and serving all of New Hampshire,
-                            Vincenzo’s Roofing installs, repairs, and replaces
-                            residential and commercial roofs backed by a 25-year
-                            written workmanship warranty, in-house crews, and
-                            same-day storm response.
-                        </p>
-                        <div class="hero-ctas">
-                            <a class="btn btn-blue" href="/free-estimate">Get a Free Estimate</a>
-                            <a class="btn btn-ghost-w" href="tel:+16035027080">Call +1 (603) 502-7080</a>
-                        </div>
-                        <div class="hero-stats">
-                            <div class="hero-stat">
-                                <b>100<span class="plus">+</span></b>Roofs completed
-                            </div>
-                            <div class="hero-stat">
-                                <b>4.9<span class="plus">★</span></b>Average Rating
-                            </div>
-                            <div class="hero-stat">
-                                <b>25<span class="plus">yr</span></b>Workmanship Warranty
-                            </div>
-                        </div>
+                        {page?.content && <Fragment set:html={page.content} />}
                     </div>
 
                     <div class="hero-visual">
                         <div class="hero-card">
                             <img
-                                src="/home-1.webp"
+                                src={hp?.bannerImage?.node?.mediaItemUrl ||
+                                    "/home-1.webp"}
                                 alt="Vincenzo’s Roofing"
                                 width="615"
                                 height="460"
@@ -100,244 +140,106 @@ const seodata = responsedata?.seo || {};
                                 decoding="async"
                             />
                         </div>
-                        <div class="hero-float warranty">
-                            <div class="ic">
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                >
-                                    <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"></path>
-                                    <path d="M9 12l2 2 4-4"></path>
-                                </svg>
-                            </div>
-                            <div class="warnaty-box">
-                                <p>
-                                    <b>25-Year Warranty </b><small>Written &amp; registered</small>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="hero-float review">
-                            <p>
-                                “On time, spotless cleanup, and the roof looks incredible.”
-                            </p>
-                        </div>
+
+                        {
+                            hp?.bannerWaranty && (
+                                <div class="hero-float warranty">
+                                    <div class="ic">
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                        >
+                                            <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z" />
+                                            <path d="M9 12l2 2 4-4" />
+                                        </svg>
+                                    </div>
+                                    <div class="warnaty-box">
+                                        <Fragment set:html={hp.bannerWaranty} />
+                                    </div>
+                                </div>
+                            )
+                        }
+
+                        {
+                            hp?.bannerQuote && (
+                                <div class="hero-float review">
+                                    <Fragment set:html={hp.bannerQuote} />
+                                </div>
+                            )
+                        }
                     </div>
                 </div>
             </section>
 
             <!-- Marquee Trust Bar -->
-            <div class="marquee-wrap" aria-hidden="true">
-                <div class="marquee" id="marquee">
-                    <p class="marquee-content">
-                        Licensed Insured in NH · 25-Year Workmanship Warranty ·
-                        24/7 Storm Response · Free On-Site Estimates · Local NH
-                        Crews · Insurance Claims Assistance
-                    </p>
-                </div>
-            </div>
+            {
+                hp?.slidingText && (
+                    <div class="marquee-wrap" aria-hidden="true">
+                        <div class="marquee" id="marquee">
+                            <p class="marquee-content">{hp.slidingText}</p>
+                        </div>
+                    </div>
+                )
+            }
 
             <!-- Services Section -->
             <section class="section svc-section" id="services">
                 <div class="container">
                     <div class="sec-header">
-                        <p><span class="eyebrow">What We Do</span></p>
-                        <h2 class="sec-head">
-                            Every roofing service, <span class="accent">in New Hampshire,</span>
-                        </h2>
-                        <h2 class="sec-head">
-                            <span class="accent">One Accountable Crew</span>
-                        </h2>
-                        <p class="sec-sub">
-                            From a single missing shingle on a family home to a
-                            full commercial re-roof, the same licensed NH team
-                            handles every residential and commercial project end
-                            to end — no subcontracted labor.
-                        </p>
+                        {
+                            hp?.whatWeDoContent && (
+                                <Fragment set:html={hp.whatWeDoContent} />
+                            )
+                        }
                     </div>
 
                     <div class="svc-grid">
-                        <!-- 01: Roof Replacement -->
-                        <div class="svc-card feature reveal">
-                            <span class="svc-num">01</span>
-                            <div class="svc-icon">
-                                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Roof Replacement">
-                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                                </svg>
-                            </div>
-                            <h3>Roof Replacement</h3>
-                            <div>
-                                <p>
-                                    Complete tear-off to the deck, never an
-                                    overlay, with ice-and-water shield where New
-                                    Hampshire winters do the most damage —
-                                    finished with a written workmanship warranty.
-                                </p>
-                            </div>
-                            <a class="svc-arrow" href="/service/roof-replacement">Explore Now</a>
-                        </div>
+                        {
+                            hp?.whatWeDoGrids?.map(
+                                (item: any, index: number) => {
+                                    const stepNum = String(index + 1).padStart(
+                                        2,
+                                        "0",
+                                    );
+                                    const isFeature =
+                                        index < 2 ? "feature " : "";
+                                    const iconUrl =
+                                        item?.whatWeDoIconImage?.node
+                                            ?.mediaItemUrl;
 
-                        <!-- 02: Roof Repair -->
-                        <div class="svc-card feature reveal">
-                            <span class="svc-num">02</span>
-                            <div class="svc-icon">
-                                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Roof Repair">
-                                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.4a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
-                                </svg>
-                            </div>
-                            <h3>Roof Repair</h3>
-                            <div>
-                                <p>
-                                    Leaks, failed flashing, and cracked vent
-                                    boots traced to the actual source before we
-                                    touch a shingle so the fix holds instead of
-                                    moving the problem.
-                                </p>
-                            </div>
-                            <a class="svc-arrow" href="/service/roof-repair">Explore Now</a>
-                        </div>
-
-                        <!-- 03: Storm & Emergency Response -->
-                        <div class="svc-card reveal">
-                            <span class="svc-num">03</span>
-                            <div class="svc-icon">
-                                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Storm & Emergency Response">
-                                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                                </svg>
-                            </div>
-                            <h3>Storm &amp; Emergency Response</h3>
-                            <div>
-                                <p>
-                                    Wind, hail, ice dams, and fallen limbs
-                                    handled around the clock — same-day tarping,
-                                    full photo documentation for your insurer,
-                                    and adjuster meetings on site.
-                                </p>
-                            </div>
-                            <a class="svc-arrow" href="/service/storm-emergency">Explore Now</a>
-                        </div>
-
-                        <!-- 04: Roof Inspection -->
-                        <div class="svc-card reveal">
-                            <span class="svc-num">04</span>
-                            <div class="svc-icon">
-                                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Roof Inspection">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                    <polyline points="14 2 14 8 20 8"></polyline>
-                                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                                    <polyline points="10 9 9 9 8 9"></polyline>
-                                </svg>
-                            </div>
-                            <h3>Roof Inspection</h3>
-                            <div>
-                                <p>
-                                    A free, photo-documented walkthrough with a
-                                    written condition report you can keep, hand
-                                    to a buyer, or send to your insurance
-                                    company. No pressure afterward.
-                                </p>
-                            </div>
-                            <a class="svc-arrow" href="/service/roof-inspection">Explore Now</a>
-                        </div>
-
-                        <!-- 05: Asphalt Shingle Roofing -->
-                        <div class="svc-card reveal">
-                            <span class="svc-num">05</span>
-                            <div class="svc-icon">
-                                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Asphalt Shingle Roofing">
-                                    <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-                                    <path d="M3 9h18"></path>
-                                    <path d="M3 15h18"></path>
-                                    <path d="M9 3v6"></path>
-                                    <path d="M15 9v6"></path>
-                                    <path d="M9 15v6"></path>
-                                </svg>
-                            </div>
-                            <h3>Asphalt Shingle Roofing</h3>
-                            <div>
-                                <p>
-                                    Architectural shingles are the workhorse of
-                                    New Hampshire homes, and wind rating matters
-                                    more here than most contractors admit. We
-                                    walk you through what drives the price.
-                                </p>
-                            </div>
-                            <a class="svc-arrow" href="/service/asphalt-shingle-roofing">Explore Now</a>
-                        </div>
-
-                        <!-- 06: Metal Roofing -->
-                        <div class="svc-card reveal">
-                            <span class="svc-num">06</span>
-                            <div class="svc-icon">
-                                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Metal Roofing">
-                                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                                    <path d="M2 17l10 5 10-5"></path>
-                                    <path d="M2 12l10 5 10-5"></path>
-                                </svg>
-                            </div>
-                            <h3>Metal Roofing</h3>
-                            <div>
-                                <p>
-                                    Standing-seam metal sheds snow before it
-                                    becomes an ice dam and shrugs off coastal
-                                    salt air — expect four decades or more from
-                                    a properly installed system.
-                                </p>
-                            </div>
-                            <a class="svc-arrow" href="/service/metal-roofing">Explore Now</a>
-                        </div>
-
-                        <!-- 07: Commercial & Flat Roofing -->
-                        <div class="svc-card reveal">
-                            <span class="svc-num">07</span>
-                            <div class="svc-icon">
-                                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Commercial & Flat Roofing">
-                                    <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
-                                    <line x1="9" y1="6" x2="9" y2="6.01"></line>
-                                    <line x1="15" y1="6" x2="15" y2="6.01"></line>
-                                    <line x1="9" y1="10" x2="9" y2="10.01"></line>
-                                    <line x1="15" y1="10" x2="15" y2="10.01"></line>
-                                    <line x1="9" y1="14" x2="9" y2="14.01"></line>
-                                    <line x1="15" y1="14" x2="15" y2="14.01"></line>
-                                    <path d="M10 22v-4h4v4"></path>
-                                </svg>
-                            </div>
-                            <h3>Commercial &amp; Flat Roofing</h3>
-                            <div>
-                                <p>
-                                    TPO, EPDM, and modified bitumen for retail,
-                                    office, and multi-unit buildings scheduled
-                                    around your operating hours, with recurring
-                                    maintenance available for property managers.
-                                </p>
-                            </div>
-                            <a class="svc-arrow" href="/service/commercial-flat-roofing">Explore Now</a>
-                        </div>
-
-                        <!-- 08: Siding Installation & Replacement -->
-                        <div class="svc-card reveal">
-                            <span class="svc-num">08</span>
-                            <div class="svc-icon">
-                                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Siding Installation & Replacement">
-                                    <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-                                    <line x1="3" y1="9" x2="21" y2="9"></line>
-                                    <line x1="3" y1="15" x2="21" y2="15"></line>
-                                </svg>
-                            </div>
-                            <h3>Siding Installation &amp; Replacement</h3>
-                            <div>
-                                <p>
-                                    Vinyl and fiber cement installed with the
-                                    trim and flashing details that keep water
-                                    out where wall meets roof — often paired
-                                    with a roofing project.
-                                </p>
-                            </div>
-                            <a class="svc-arrow" href="/service/siding-installation-replacement">Explore Now</a>
-                        </div>
+                                    return (
+                                        <div
+                                            class={`svc-card ${isFeature}reveal`}
+                                        >
+                                            <span class="svc-num">
+                                                {stepNum}
+                                            </span>
+                                            {iconUrl && (
+                                                <div class="svc-icon">
+                                                    <img
+                                                        src={iconUrl}
+                                                        alt="Service Icon"
+                                                        width="23"
+                                                        height="23"
+                                                        loading="lazy"
+                                                        decoding="async"
+                                                    />
+                                                </div>
+                                            )}
+                                            {item?.whatWeDoGridContent && (
+                                                <Fragment
+                                                    set:html={
+                                                        item.whatWeDoGridContent
+                                                    }
+                                                />
+                                            )}
+                                        </div>
+                                    );
+                                },
+                            )
+                        }
                     </div>
                 </div>
             </section>
@@ -346,99 +248,46 @@ const seodata = responsedata?.seo || {};
             <section class="section weather-section" id="nh-weather">
                 <div class="container">
                     <div class="sec-header">
-                        <p><span class="eyebrow">Local Expertise</span></p>
-                        <h2 class="sec-head">
-                            Roofing Built for <span class="accent">New Hampshire Weather.</span>
-                        </h2>
-                        <p class="sec-sub">
-                            A roof in Seabrook takes a different beating than
-                            one in Manchester. We build for salt air, coastal
-                            wind, and the freeze-thaw cycle that pulls New
-                            England roofs apart — because that’s what’s actually
-                            hitting your house.
-                        </p>
+                        {
+                            hp?.localExpertiseContetnt && (
+                                <Fragment
+                                    set:html={hp.localExpertiseContetnt}
+                                />
+                            )
+                        }
                     </div>
 
                     <div class="weather-grid">
-                        <!-- Salt Air Near the Coast -->
-                        <div class="weather-card reveal">
-                            <div class="weather-icon">
-                                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Salt Air">
-                                    <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"></path>
-                                    <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"></path>
-                                    <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"></path>
-                                </svg>
-                            </div>
-                            <h3>Salt air near the coast</h3>
-                            <p>
-                                Within a few miles of the water, salt
-                                accelerates corrosion on fasteners, flashing,
-                                and drip edge. We spec stainless or coated
-                                components on Seacoast jobs instead of the
-                                standard galvanized most crews default to.
-                            </p>
-                        </div>
-
-                        <!-- Wind Exposure -->
-                        <div class="weather-card reveal">
-                            <div class="weather-icon">
-                                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Wind Exposure">
-                                    <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"></path>
-                                    <path d="M9.6 4.6A2 2 0 1 1 11 8H2"></path>
-                                    <path d="M12.6 19.4A2.5 2.5 0 1 0 15 15H2"></path>
-                                </svg>
-                            </div>
-                            <h3>Wind exposure</h3>
-                            <p>
-                                Open coastal stretches see gusts that lift
-                                improperly nailed shingles. Correct nailing
-                                pattern, starter strip, and a shingle rated for
-                                the exposure matter far more here than the brand
-                                name on the bundle.
-                            </p>
-                        </div>
-
-                        <!-- Ice Dams and Freeze-Thaw -->
-                        <div class="weather-card reveal">
-                            <div class="weather-icon">
-                                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Ice and Freeze">
-                                    <line x1="12" y1="2" x2="12" y2="22"></line>
-                                    <line x1="20" y1="12" x2="4" y2="12"></line>
-                                    <line x1="17.66" y1="6.34" x2="6.34" y2="17.66"></line>
-                                    <line x1="17.66" y1="17.66" x2="6.34" y2="6.34"></line>
-                                </svg>
-                            </div>
-                            <h3>Ice dams and freeze-thaw</h3>
-                            <p>
-                                Meltwater refreezes at the cold eave and backs
-                                up under the shingles. Ice-and-water shield at
-                                the eaves and valleys, plus proper attic
-                                ventilation, is what stops it — not roof rakes
-                                in February.
-                            </p>
-                        </div>
-
-                        <!-- Snow Load and Spring Melt -->
-                        <div class="weather-card reveal">
-                            <div class="weather-icon">
-                                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Snow and Melt">
-                                    <path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"></path>
-                                    <line x1="8" y1="16" x2="8.01" y2="16"></line>
-                                    <line x1="8" y1="20" x2="8.01" y2="20"></line>
-                                    <line x1="12" y1="18" x2="12.01" y2="18"></line>
-                                    <line x1="12" y1="22" x2="12.01" y2="22"></line>
-                                    <line x1="16" y1="16" x2="16.01" y2="16"></line>
-                                    <line x1="16" y1="20" x2="16.01" y2="20"></line>
-                                </svg>
-                            </div>
-                            <h3>Snow load and spring melt</h3>
-                            <p>
-                                Heavy wet snow followed by a fast thaw
-                                overwhelms undersized gutters and finds every
-                                weak flashing joint. We size drainage for the
-                                melt, not for an average rainfall.
-                            </p>
-                        </div>
+                        {
+                            hp?.localExpertiseGrids?.map((item: any) => {
+                                const iconUrl =
+                                    item?.localExpertiseGridIcon?.node
+                                        ?.mediaItemUrl;
+                                return (
+                                    <div class="weather-card reveal">
+                                        {iconUrl && (
+                                            <div class="weather-icon">
+                                                <img
+                                                    src={iconUrl}
+                                                    alt="Weather Icon"
+                                                    width="23"
+                                                    height="23"
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                />
+                                            </div>
+                                        )}
+                                        {item?.localExpertiseGridContent && (
+                                            <Fragment
+                                                set:html={
+                                                    item.localExpertiseGridContent
+                                                }
+                                            />
+                                        )}
+                                    </div>
+                                );
+                            })
+                        }
                     </div>
                 </div>
             </section>
@@ -447,68 +296,44 @@ const seodata = responsedata?.seo || {};
             <section class="section" id="why-choose-us">
                 <div class="container">
                     <div class="sec-header">
-                        <p><span class="eyebrow">Why Choose Us</span></p>
-                        <h2 class="sec-head">
-                            Credentials You Can Check <span class="accent">Before You Hire</span>
-                        </h2>
-                        <p class="sec-sub">
-                            Every claim below is verifiable. Ask us for the
-                            paperwork and you’ll have it before a ladder touches
-                            your house.
-                        </p>
+                        {
+                            hp?.whyChooseUsContent && (
+                                <Fragment set:html={hp.whyChooseUsContent} />
+                            )
+                        }
                     </div>
 
                     <div class="wcu-grid">
-                        <!-- Licensed & Insured -->
-                        <div class="wcu-card reveal">
-                            <div class="wcu-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Licensed & Insured">
-                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                                    <path d="m9 12 2 2 4-4"></path>
-                                </svg>
-                            </div>
-                            <h3>Registered & insured in New Hampshire</h3>
-                            <p>
-                                NH Business ID 1034506, in Good Standing with
-                                the Secretary of State. Full liability and
-                                workers' comp coverage, with the certificate of
-                                insurance sent before work begins.
-                            </p>
-                        </div>
-
-                        <!-- Factory Certified Installers -->
-                        <div class="wcu-card reveal">
-                            <div class="wcu-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Factory Certified">
-                                    <circle cx="12" cy="8" r="7"></circle>
-                                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
-                                </svg>
-                            </div>
-                            <h3>Manufacturer spec installation</h3>
-                            <p>
-                                We install GAF, Owens Corning, CertainTeed, IKO,
-                                and Tamko systems to each manufacturer's
-                                published specification, so your material
-                                warranty stays valid.
-                            </p>
-                        </div>
-
-                        <!-- 25-Year Workmanship Warranty -->
-                        <div class="wcu-card reveal">
-                            <div class="wcu-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Workmanship Warranty">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                    <polyline points="14 2 14 8 20 8"></polyline>
-                                    <path d="m9 15 2 2 4-4"></path>
-                                </svg>
-                            </div>
-                            <h3>25-year workmanship warranty</h3>
-                            <p>
-                                Separate from the manufacturer’s material
-                                coverage, written out and registered before we
-                                pull off your driveway.
-                            </p>
-                        </div>
+                        {
+                            hp?.whyChooseUsGrid?.map((item: any) => {
+                                const iconUrl =
+                                    item?.whyChooseUsGridIconImage?.node
+                                        ?.mediaItemUrl;
+                                return (
+                                    <div class="wcu-card reveal">
+                                        {iconUrl && (
+                                            <div class="wcu-icon">
+                                                <img
+                                                    src={iconUrl}
+                                                    alt="Choose Us Icon"
+                                                    width="24"
+                                                    height="24"
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                />
+                                            </div>
+                                        )}
+                                        {item?.whyChooseUsGridContent && (
+                                            <Fragment
+                                                set:html={
+                                                    item.whyChooseUsGridContent
+                                                }
+                                            />
+                                        )}
+                                    </div>
+                                );
+                            })
+                        }
                     </div>
                 </div>
             </section>
@@ -519,7 +344,8 @@ const seodata = responsedata?.seo || {};
                     <div class="why-visual reveal">
                         <div class="frame">
                             <img
-                                src="/home-2.webp"
+                                src={hp?.whyVincenzoSMainImage?.node
+                                    ?.mediaItemUrl || "/home-2.webp"}
                                 alt="Why Vincenzo’s"
                                 loading="lazy"
                                 decoding="async"
@@ -527,144 +353,59 @@ const seodata = responsedata?.seo || {};
                                 height="462"
                             />
                         </div>
-                        <div class="why-chip">
-                            <p>
-                                <b>100+</b><small>NH roofs completed</small>
-                            </p>
-                        </div>
+                        {
+                            hp?.whyVincenzoSMainImageContent && (
+                                <div class="why-chip">
+                                    <Fragment
+                                        set:html={
+                                            hp.whyVincenzoSMainImageContent
+                                        }
+                                    />
+                                </div>
+                            )
+                        }
                     </div>
 
                     <div>
-                        <p><span class="eyebrow">Why Vincenzo’s</span></p>
-                        <h2 class="sec-head">
-                            Craftsmanship you can <span class="accent">hold us to in writing.<br /></span>
-                        </h2>
-                        <p>
-                            Anyone can promise a good roof. We put the specifics
-                            in writing before we start, and we’re still the ones
-                            standing on your roof when the work happens.
-                        </p>
+                        {
+                            hp?.whyVincenzoSContent && (
+                                <Fragment set:html={hp.whyVincenzoSContent} />
+                            )
+                        }
 
                         <div class="why-list">
-                            <!-- Registered & Insured -->
-                            <div class="why-item reveal">
-                                <div class="why-icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Registered & Insured">
-                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                                        <path d="m9 12 2 2 4-4"></path>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4>Registered &amp; insured in New Hampshire</h4>
-                                    <p>
-                                        NH Business ID 1034506, in Good Standing
-                                        with the Secretary of State. Full
-                                        liability and workers' comp coverage,
-                                        with the certificate of insurance sent
-                                        before work begins.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- Manufacturer Spec Installation -->
-                            <div class="why-item reveal">
-                                <div class="why-icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Manufacturer Spec">
-                                        <circle cx="12" cy="8" r="7"></circle>
-                                        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4>Manufacturer spec installation</h4>
-                                    <p>
-                                        We install GAF, Owens Corning,
-                                        CertainTeed, IKO, and Tamko systems to
-                                        each manufacturer's published
-                                        specification, so your material warranty
-                                        stays valid.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- Itemized Written Estimates -->
-                            <div class="why-item reveal">
-                                <div class="why-icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Itemized Estimates">
-                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                        <polyline points="14 2 14 8 20 8"></polyline>
-                                        <line x1="16" y1="13" x2="8" y2="13"></line>
-                                        <line x1="16" y1="17" x2="8" y2="17"></line>
-                                        <polyline points="10 9 9 9 8 9"></polyline>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4>Itemized written estimates</h4>
-                                    <p>
-                                        Materials, labor, and timeline broken
-                                        out line by line, so you can see exactly
-                                        what you’re paying for. No vague lump
-                                        sums, no surprise charges.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- Local Crews, Never Subcontracted -->
-                            <div class="why-item reveal">
-                                <div class="why-icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Local Crews">
-                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="9" cy="7" r="4"></circle>
-                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4>Local crews, never subcontracted</h4>
-                                    <p>
-                                        The crew that quotes your roof is the
-                                        crew that installs it. We’re based in
-                                        Seabrook and working across New
-                                        Hampshire every day.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- 25-Year Workmanship Warranty -->
-                            <div class="why-item reveal">
-                                <div class="why-icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Workmanship Warranty">
-                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                                        <path d="m9 12 2 2 4-4"></path>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4>25-year workmanship warranty</h4>
-                                    <p>
-                                        Separate from the manufacturer’s
-                                        material warranty, written out and
-                                        registered before we pull off your
-                                        driveway.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- Daily Magnetic Cleanup -->
-                            <div class="why-item reveal">
-                                <div class="why-icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Magnetic Cleanup">
-                                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4>Daily magnetic cleanup</h4>
-                                    <p>
-                                        Nail sweeps and debris removal at the
-                                        end of every work day — not just on the
-                                        last day of the job.
-                                    </p>
-                                </div>
-                            </div>
+                            {
+                                hp?.whyVincenzoSGrid?.map((item: any) => {
+                                    const iconUrl =
+                                        item?.whyVincenzoSGridIconImage?.node
+                                            ?.mediaItemUrl;
+                                    return (
+                                        <div class="why-item reveal">
+                                            {iconUrl && (
+                                                <div class="why-icon">
+                                                    <img
+                                                        src={iconUrl}
+                                                        alt="Vincenzo's Icon"
+                                                        width="20"
+                                                        height="20"
+                                                        loading="lazy"
+                                                        decoding="async"
+                                                    />
+                                                </div>
+                                            )}
+                                            <div>
+                                                {item?.whyVincenzoSGridContent && (
+                                                    <Fragment
+                                                        set:html={
+                                                            item.whyVincenzoSGridContent
+                                                        }
+                                                    />
+                                                )}
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                            }
                         </div>
                     </div>
                 </div>
@@ -674,60 +415,33 @@ const seodata = responsedata?.seo || {};
             <section class="section process" id="process">
                 <div class="container">
                     <div class="sec-header">
-                        <p><span class="eyebrow">How It Works</span></p>
-                        <h2 class="sec-head">
-                            From First Call to Final Walkthrough
-                        </h2>
-                        <p>
-                            Four steps, no mystery. You’ll know what’s happening
-                            on your roof and what it costs before anyone climbs
-                            a ladder.
-                        </p>
+                        {
+                            hp?.howItWorksContent && (
+                                <Fragment set:html={hp.howItWorksContent} />
+                            )
+                        }
                     </div>
 
                     <div class="process-grid">
-                        <div class="p-step reveal">
-                            <span class="p-num">Step 01</span>
-                            <h4>Free Inspection</h4>
-                            <p>
-                                We get up on the roof, photograph what we find,
-                                and tell you honestly whether you need a repair
-                                or a replacement. Usually within a few days of
-                                your call.
-                            </p>
-                        </div>
-
-                        <div class="p-step reveal">
-                            <span class="p-num">Step 02</span>
-                            <h4>Written Estimate</h4>
-                            <p>
-                                You get a quote you can actually read, with a
-                                start date and a realistic completion window.
-                                Take your time with it — there’s no pressure to
-                                sign on the spot.
-                            </p>
-                        </div>
-
-                        <div class="p-step reveal">
-                            <span class="p-num">Step 03</span>
-                            <h4>Scheduled Install</h4>
-                            <p>
-                                Our own crew handles tear-off through cleanup,
-                                and we text you updates as the job moves. Most
-                                residential roofs are done in one to three days.
-                            </p>
-                        </div>
-
-                        <div class="p-step reveal">
-                            <span class="p-num">Step 04</span>
-                            <h4>Final Walkthrough</h4>
-                            <p>
-                                We walk the finished roof with you, answer
-                                anything outstanding, and hand over your
-                                registered warranty paperwork before we leave
-                                the driveway.
-                            </p>
-                        </div>
+                        {
+                            hp?.howItWorksGrids?.map(
+                                (item: any, index: number) => {
+                                    const stepNum = `Step ${String(index + 1).padStart(2, "0")}`;
+                                    return (
+                                        <div class="p-step reveal">
+                                            <span class="p-num">{stepNum}</span>
+                                            {item?.howItWorksGridContent && (
+                                                <Fragment
+                                                    set:html={
+                                                        item.howItWorksGridContent
+                                                    }
+                                                />
+                                            )}
+                                        </div>
+                                    );
+                                },
+                            )
+                        }
                     </div>
                 </div>
             </section>
@@ -738,7 +452,9 @@ const seodata = responsedata?.seo || {};
                     <div class="sec-header">
                         <p><span class="eyebrow">Recent Projects</span></p>
                         <h2 class="sec-head">
-                            Real Roofs Across <span class="accent">New Hampshire</span>
+                            Real Roofs Across <span class="accent"
+                                >New Hampshire</span
+                            >
                         </h2>
                         <p>
                             Every project below was done by our own crew. Photos
@@ -748,7 +464,11 @@ const seodata = responsedata?.seo || {};
                     </div>
 
                     <div class="gallery-masonry">
-                        <a href="javascript:void(0)" class="photo-frame" data-cat="residential">
+                        <a
+                            href="javascript:void(0)"
+                            class="photo-frame"
+                            data-cat="residential"
+                        >
                             <img
                                 src="/location-1.webp"
                                 alt="Keene, NH — Metal Roof Detail"
@@ -762,7 +482,11 @@ const seodata = responsedata?.seo || {};
                             </div>
                         </a>
 
-                        <a href="javascript:void(0)" class="photo-frame" data-cat="residential">
+                        <a
+                            href="javascript:void(0)"
+                            class="photo-frame"
+                            data-cat="residential"
+                        >
                             <img
                                 src="/location-2.webp"
                                 alt="Dover, NH — Multi-Unit Roofing"
@@ -776,7 +500,11 @@ const seodata = responsedata?.seo || {};
                             </div>
                         </a>
 
-                        <a href="javascript:void(0)" class="photo-frame" data-cat="residential">
+                        <a
+                            href="javascript:void(0)"
+                            class="photo-frame"
+                            data-cat="residential"
+                        >
                             <img
                                 src="/location-3.webp"
                                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 434px"
@@ -797,21 +525,15 @@ const seodata = responsedata?.seo || {};
             <!-- Emergency Response Banner -->
             <section class="emergency">
                 <div class="container">
-                    <div>
-                        <p>
-                            <span class="badge247">24/7 Emergency Response</span>
-                        </p>
-                        <h2>Active Leak or Storm Damage Right Now?</h2>
-                        <p>
-                            Don’t wait for business hours. We answer the
-                            emergency line around the clock and tarp the same
-                            day anywhere in New Hampshire stopping the water
-                            before it reaches your ceilings and insulation.
-                        </p>
+                    <div class="ctaholders">
+                        {
+                            hp?.emergencyResponseContent && (
+                                <Fragment
+                                    set:html={hp.emergencyResponseContent}
+                                />
+                            )
+                        }
                     </div>
-                    <p>
-                        <a class="btn btn-white" href="tel:+16035027080">Call the Emergency Line</a>
-                    </p>
                 </div>
             </section>
 
@@ -819,47 +541,50 @@ const seodata = responsedata?.seo || {};
             <section class="section" id="areas" style="background: #F6F7F9;">
                 <div class="container areas-wrap">
                     <div>
-                        <p><span class="eyebrow">Where We Work</span></p>
-                        <h2 class="sec-head">
-                            Roofing Across New Hampshire <span class="accent">, From Our Base in Seabrook</span>
-                        </h2>
-                        <p class="sec-sub">
-                            We’re on the Seacoast, so towns like Hampton,
-                            Exeter, and Portsmouth often see us the same day.
-                            From there our crews run statewide Manchester,
-                            Nashua, Concord, and everywhere between. Don’t see
-                            your town listed? Call and ask, we likely cover it.
-                        </p>
+                        <div class="contentonly">
+                            {
+                                hp?.whereWeWorkContent && (
+                                    <Fragment
+                                        set:html={hp.whereWeWorkContent}
+                                    />
+                                )
+                            }
+                        </div>
 
                         <div class="area-chips">
-                            <a class="area-chip" title="Manchester" href="#">Manchester</a>
-                            <a class="area-chip" title="Nashua" href="#">Nashua</a>
-                            <a class="area-chip" title="Concord" href="#">Concord</a>
-                            <a class="area-chip" title="Portsmouth" href="#">Portsmouth</a>
-                            <a class="area-chip" title="Dover" href="#">Dover</a>
-                            <a class="area-chip" title="Rochester" href="#">Rochester</a>
-                            <a class="area-chip" title="Keene" href="#">Keene</a>
-                            <a class="area-chip" title="Salem" href="#">Salem</a>
-                            <a class="area-chip" title="Derry" href="#">Derry</a>
-                            <a class="area-chip" title="Londonderry" href="#">Londonderry</a>
-                            <a class="area-chip" title="Hudson" href="#">Hudson</a>
-                            <a class="area-chip" title="Bedford" href="#">Bedford</a>
-                            <a class="area-chip" title="Merrimack" href="#">Merrimack</a>
-                            <a class="area-chip" title="Exeter" href="#">Exeter</a>
-                            <a class="area-chip" title="Hampton" href="#">Hampton</a>
+                            {
+                                hp?.whereWeWorkGrids?.map((item: any) => (
+                                    <a
+                                        class="area-chip"
+                                        title={item.whereWeWorkLocationName}
+                                        href="#"
+                                    >
+                                        {item.whereWeWorkLocationName}
+                                    </a>
+                                ))
+                            }
                         </div>
-                        <a href="#" class="btn btn-blue" style="margin-top: 25px;">Explore All</a>
+                        <a
+                            href="/about"
+                            class="btn btn-blue"
+                            style="margin-top: 25px;"
+                        >
+                            Explore All
+                        </a>
                     </div>
 
                     <div class="map-frame reveal">
-                        <svg viewBox="0 0 520 430" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="520" height="430" fill="#071F45"></rect>
+                        <svg
+                            viewBox="0 0 520 430"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <rect width="520" height="430" fill="#071F45"
+                            ></rect>
                             <path
                                 d="M160 30 L355 62 L335 168 L378 232 L346 360 L188 392 L126 274 L94 126 Z"
                                 fill="#0E2B5B"
                                 stroke="#0D47A1"
-                                stroke-width="2.5"
-                            ></path>
+                                stroke-width="2.5"></path>
                             <g fill="#4A7FD4">
                                 <circle cx="210" cy="190" r="6"></circle>
                                 <circle cx="252" cy="232" r="6"></circle>
@@ -879,18 +604,6 @@ const seodata = responsedata?.seo || {};
                                 <circle cx="272" cy="315" r="14"></circle>
                                 <circle cx="318" cy="210" r="14"></circle>
                             </g>
-                            <text
-                                x="260"
-                                y="416"
-                                fill="#7A8FB4"
-                                font-family="Montserrat,sans-serif"
-                                font-weight="600"
-                                font-size="11"
-                                text-anchor="middle"
-                                letter-spacing="2"
-                            >
-                                SERVING ALL OF NEW HAMPSHIRE
-                            </text>
                         </svg>
                     </div>
                 </div>
@@ -899,98 +612,35 @@ const seodata = responsedata?.seo || {};
             <!-- FAQ Section -->
             <section class="section" id="faq">
                 <div class="container">
-                    <div class="sec-header" style="text-align:center; margin:0 auto 40px;">
-                        <p><span class="eyebrow">FAQ</span></p>
-                        <h2 class="sec-head">Straight answers first.</h2>
+                    <div
+                        class="sec-header"
+                        style="text-align:center; margin:0 auto 40px;"
+                    >
+                        {
+                            hp?.faqContent && (
+                                <Fragment set:html={hp.faqContent} />
+                            )
+                        }
                     </div>
 
                     <div class="faq-list">
-                        <div class="faq-item">
-                            <button class="faq-q" type="button">
-                                <span>Does coastal weather affect roofs in New Hampshire differently?</span>
-                                <span class="plus"></span>
-                            </button>
-                            <div class="faq-a">
-                                <p>
-                                    Yes, significantly. Salt air within a few
-                                    miles of the coast corrodes fasteners and
-                                    flashing faster than inland, and open
-                                    coastal stretches see higher wind loads. On
-                                    Seacoast jobs we spec corrosion resistant
-                                    components and shingles rated for the
-                                    exposure rather than defaulting to standard
-                                    materials.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <button class="faq-q" type="button">
-                                <span>How soon can you come out for an estimate?</span>
-                                <span class="plus"></span>
-                            </button>
-                            <div class="faq-a">
-                                <p>
-                                    Most estimates happen within a few days of
-                                    your call, and Seacoast towns are often
-                                    same-week. Active leaks and storm damage
-                                    jump the queue — those get a 24/7 emergency
-                                    response with same-day tarping.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <button class="faq-q" type="button">
-                                <span>How do I know if I need a roof repair or a full replacement?</span>
-                                <span class="plus"></span>
-                            </button>
-                            <div class="faq-a">
-                                <p>
-                                    Age and extent are the deciding factors.
-                                    Isolated damage on a roof under fifteen
-                                    years old is usually repairable. Widespread
-                                    granule loss, curling shingles, multiple
-                                    leaks, or a roof past twenty years typically
-                                    means replacement is the better spend. Our
-                                    free inspection tells you which, in writing.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <button class="faq-q" type="button">
-                                <span>Are you licensed and insured in New Hampshire?</span>
-                                <span class="plus"></span>
-                            </button>
-                            <div class="faq-a">
-                                <p>
-                                    Yes. Vincenzo’s Roofing is a licensed New
-                                    Hampshire roofing contractor carrying full
-                                    liability and workers’ compensation
-                                    coverage. We provide a certificate of
-                                    insurance before any work begins, and you’re
-                                    welcome to ask for it upfront.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <button class="faq-q" type="button">
-                                <span>What areas of New Hampshire do you serve?</span>
-                                <span class="plus"></span>
-                            </button>
-                            <div class="faq-a">
-                                <p>
-                                    We’re based in Seabrook and serve the entire
-                                    state. Seacoast towns like Hampton, Exeter,
-                                    Portsmouth, and Dover often see us the same
-                                    day, and our crews work statewide including
-                                    Manchester, Nashua, and Concord. If your
-                                    town isn’t listed, call and ask.
-                                </p>
-                            </div>
-                        </div>
+                        {
+                            hp?.faqLists?.map((item: any) => (
+                                <div class="faq-item">
+                                    <button class="faq-q" type="button">
+                                        <span>{item?.faqTitle}</span>
+                                        <span class="plus" />
+                                    </button>
+                                    <div class="faq-a">
+                                        {item?.faqAnswer && (
+                                            <Fragment
+                                                set:html={item.faqAnswer}
+                                            />
+                                        )}
+                                    </div>
+                                </div>
+                            ))
+                        }
                     </div>
                 </div>
             </section>
@@ -998,11 +648,11 @@ const seodata = responsedata?.seo || {};
             <!-- CTA Band -->
             <section class="cta-band">
                 <div class="cta-inner">
-                    <h2>Ready for a roof that’s <em>built for here?</em></h2>
-                    <div class="btns">
-                        <a class="btn btn-blue" href="/free-estimate">Get Your Free Estimate<br /></a>
-                        <a class="btn btn-ghost-w" href="tel:+16035027080">Call Now</a>
-                    </div>
+                    {
+                        hp?.readyForARoofContent && (
+                            <Fragment set:html={hp.readyForARoofContent} />
+                        )
+                    }
                 </div>
             </section>
 
@@ -1011,10 +661,22 @@ const seodata = responsedata?.seo || {};
         </main>
 
         <Footer />
+        <style is:global>
+            .ctaholders {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+        </style>
 
         <script>
             document.addEventListener("DOMContentLoaded", () => {
-                const contentImages = document.querySelectorAll("main img:not([loading])");
+                const contentImages = document.querySelectorAll(
+                    "main img:not([loading])",
+                );
                 contentImages.forEach((img) => {
                     img.setAttribute("loading", "lazy");
                     img.setAttribute("decoding", "async");
@@ -1026,6 +688,7 @@ const seodata = responsedata?.seo || {};
                 if (!marquee || !marqueeWrap) return;
 
                 const content = marquee.querySelector(".marquee-content");
+                if (!content) return;
 
                 marquee.appendChild(content.cloneNode(true));
                 marquee.appendChild(content.cloneNode(true));
@@ -1042,17 +705,20 @@ const seodata = responsedata?.seo || {};
                 let rafId = null;
 
                 const measure = () => {
-                    contentWidth = content.offsetWidth;
+                    contentWidth = (content as HTMLElement).offsetWidth;
                 };
                 measure();
 
-                let resizeTimer;
+                let resizeTimer: any;
                 window.addEventListener("resize", () => {
                     clearTimeout(resizeTimer);
                     resizeTimer = setTimeout(measure, 150);
                 });
 
-                marqueeWrap.addEventListener("mouseenter", () => (isPaused = true));
+                marqueeWrap.addEventListener(
+                    "mouseenter",
+                    () => (isPaused = true),
+                );
                 marqueeWrap.addEventListener("mouseleave", () => {
                     isPaused = false;
                     lastTimestamp = null;
@@ -1081,7 +747,7 @@ const seodata = responsedata?.seo || {};
                     }
                 });
 
-                function animate(timestamp) {
+                function animate(timestamp: number) {
                     if (!isVisible) {
                         rafId = null;
                         return;
@@ -1098,7 +764,9 @@ const seodata = responsedata?.seo || {};
                             xPos = 0;
                         }
 
-                        marquee.style.transform = `translate3d(${xPos}px, 0, 0)`;
+                        if (marquee) {
+                            marquee.style.transform = `translate3d(${xPos}px, 0, 0)`;
+                        }
                     } else {
                         lastTimestamp = null;
                     }
@@ -1118,11 +786,13 @@ const seodata = responsedata?.seo || {};
                     button.addEventListener("click", () => {
                         const currentItem = button.closest(".faq-item");
 
-                        document.querySelectorAll(".faq-item").forEach((item) => {
-                            if (item !== currentItem) {
-                                item.classList.remove("open");
-                            }
-                        });
+                        document
+                            .querySelectorAll(".faq-item")
+                            .forEach((item) => {
+                                if (item !== currentItem) {
+                                    item.classList.remove("open");
+                                }
+                            });
 
                         currentItem.classList.toggle("open");
                     });
