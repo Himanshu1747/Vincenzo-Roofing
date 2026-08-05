@@ -26,6 +26,19 @@ query homepagedata {
       cornerstone
       fullHead
     }
+    contactPage{
+      contactFormSecData
+      vincenzosRoofingLlcTitle
+      vincenzosRoofingLlcGridLists{
+        vincenzosRoofingLlcIconImage{
+          node{
+            mediaItemUrl
+          }
+        }
+        vincenzosRoofingLlcGristContent
+      }
+      finalCtaSecContent
+    }
   }
 }
 `;
@@ -57,17 +70,7 @@ const seodata = alldata?.seo || {};
                             style="color:#fff;">Contact</span
                         >
                     </div>
-                    <h1 class="fade-up">
-                        Tell us about <em
-                            style="font-style: normal; color: #9cc0ff;"
-                            >your roof.</em
-                        >
-                    </h1>
-                    <p class="lede-page fade-up">
-                        Fill out the form below or call the office directly. We
-                        typically reply within one business hour, 7am–6pm, and
-                        the emergency line is answered 24/7.
-                    </p>
+                    <Fragment set:html={alldata?.content || "error"}/>
                 </div>
             </section>
 
@@ -78,23 +81,7 @@ const seodata = alldata?.seo || {};
 
             <section class="cta-band">
                 <div class="cta-inner">
-                    <div class="center-ctas">
-                        <p>
-                            <span class="badge247">24/7 Response<br /> </span>
-                        </p>
-                        <h2>Active leak or storm damage right now?</h2>
-                        <p>
-                            Skip the form — same-day emergency tarping anywhere
-                            in our New Hampshire service area. One call, and a
-                            crew is on the way.
-                        </p>
-                        <p>
-                            <a
-                                class="btn btn-white"
-                                href="tel:+1 (603) 502-7080"
-                                >Call the Emergency Line</a>
-                        </p>
-                    </div>
+                    <Fragment set:html={alldata?.contactPage?.finalCtaSecContent || "error"}/>
                 </div>
             </section>
         </main>
