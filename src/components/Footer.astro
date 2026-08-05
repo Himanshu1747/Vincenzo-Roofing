@@ -99,9 +99,7 @@ const footerCopyrightWidget = pagedata?.footerCopyrightWidget || "";
 
     <!-- Contact Info Column -->
     <div class="footer-col">
-      <div id="custom_html-4" class="widget_text widget footer-widget-contact widget_custom_html">
-        <div class="textwidget custom-html-widget">
-          <h5>Contact</h5>
+        <h5>Contact</h5>
           <ul style="list-style: none; padding: 0;">
             <!-- Phone -->
             <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
@@ -138,31 +136,19 @@ const footerCopyrightWidget = pagedata?.footerCopyrightWidget || "";
               <span>Mon – Sat 8 AM–4 PM · 24/7 Emergency</span>
             </li>
           </ul>
-        </div>
-      </div>
     </div>
 
     <!-- Map Column -->
     <div class="footer-col">
-      <div>
-        <div id="custom_html-5" class="widget_text widget footer-widget-map widget_custom_html">
-          <div class="textwidget custom-html-widget">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52816169.558200695!2d-161.49265223136007!3d36.102185713814805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2sUnited%20States!5e0!3m2!1sen!2sin!4v1784472204006!5m2!1sen!2sin" width="600" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-          </div>
-        </div>
-      </div>
+       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52816169.558200695!2d-161.49265223136007!3d36.102185713814805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2sUnited%20States!5e0!3m2!1sen!2sin!4v1784472204006!5m2!1sen!2sin" width="600" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </div>
   </div>
 
   <!-- Copyright Bar -->
-  <div id="custom_html-6" class="widget_text widget footer-widget-copyright widget_custom_html">
-    <div class="textwidget custom-html-widget">
-      <div class="container footer-bottom">
+  <div class="container footer-bottom">
         <span>© 2026 Vincenzo's Roofing LLC. All rights reserved.</span>
         <span>Licensed &amp; Insured in New Hampshire</span>
       </div>
-    </div>
-  </div>
 </footer>
 
 <!-- Mobile sticky -->
@@ -236,5 +222,8 @@ ul.contact-list li {
 padding: 10px 15px !important;
 }
 
+}
+ iframe{
+  width: 100%;
 }
 </style>
