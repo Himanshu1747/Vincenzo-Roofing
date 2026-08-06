@@ -2347,6 +2347,7 @@ footer {
   color: #9CC0FF;
   margin-bottom: 20px;
   font-family: 'Montserrat', sans-serif;
+  flex-wrap: wrap;
 }
 
 .breadcrumb a {
