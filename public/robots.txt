@@ -1,10 +1,7 @@
+
+
 User-agent: *
 Allow: /
-
-# Block system/admin folders
-Disallow: /wp-admin/
-Allow: /wp-admin/admin-ajax.php
-
 
 # Sitemap
 Sitemap: https://www.vincenzoroofing.com/sitemap.xml
