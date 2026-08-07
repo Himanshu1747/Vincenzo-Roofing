@@ -5,8 +5,8 @@ export const prerender = false;
 // background so WordPress edits (text/images) show up without a full site
 // rebuild. See src/lib/wordpress.js for the data-fetching side.
 Astro.response.headers.set(
-	"Cache-Control",
-	"public, max-age=0, s-maxage=90, stale-while-revalidate=30"
+  "Cache-Control",
+  "public, max-age=0, s-maxage=90, stale-while-revalidate=30",
 );
 import BaseHead from "../../components/BaseHead.astro";
 import Footer from "../../components/Footer.astro";
@@ -25,381 +25,327 @@ query homepagedata {
       cornerstone
       fullHead
     }
+    roofReplacementPage {
+      whatWeDoContent
+      repairOrReplaceSecContent
+      repairOrReplaceGrid {
+        repairOrReplaceGridContent
+      }
+      repairOrReplaceSecLastLine
+      scopeOfWorkContent
+      scopeOfWorkLists {
+        scopeOfWorkListName
+      }
+      yourOptionsContent
+      yourOptionsGrids {
+        yourOptionsGridContent
+      }
+      noteContent
+      straightPricingContent
+      howItWorksContent
+      howItWorksGrids {
+        howItWorksGridContent
+      }
+      localExpertiseContent
+      localExpertiseGrids {
+        localExpertiseGridContent
+      }
+      whyVincenzoSContent
+      whyVincenzoSGrids {
+        whyVincenzoSGridContent
+      }
+      faqContent
+      faqList {
+        faqTitle
+        faqAnswer
+      }
+      finalCtaContent
+    }
   }
 }
 `;
 const pagedata = await queryWordPress(PAGEJSON);
 const alldata = pagedata?.page;
 const seodata = alldata?.seo || {};
+const pageData = alldata?.roofReplacementPage || {};
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <BaseHead
-            useYoast={true}
-            canonical={seodata?.canonical || ""}
-            focuskw={seodata?.focuskw || ""}
-        />
-        {seodata?.fullHead && <Fragment set:html={seodata.fullHead} />}
+      useYoast={true}
+      canonical={seodata?.canonical || ""}
+      focuskw={seodata?.focuskw || ""}
+    />
+    {seodata?.fullHead && <Fragment set:html={seodata.fullHead} />}
   </head>
   <body>
     <Header />
 
- <main id="top">
-  <!-- Page Hero -->
-  <section class="page-hero">
-    <div class="hero-grid-tex" aria-hidden="true"></div>
-    <div class="container">
-      <div class="breadcrumb">
-        <a href="/service/">Home</a><span>/</span><span style="color:#fff;">Roof Replacement</span>
-      </div>
-      <h1 class="fade-up">
-        Roof Replacement <em style="font-style: normal; color: #9cc0ff;">New Hampshire<br></em>
-      </h1>
-      <p class="lede-page fade-up">
-        When repairs stop being worth the money, a full replacement is the fix. We tear off to the deck, build it back properly for New Hampshire weather, and hand you a written warranty before we leave.
-      </p>
-      <div class="hero-ctas">
-        <a class="btn btn-blue" href="/contact/">Get a Free Estimate</a><br>
-        <a class="btn btn-ghost-w" href="tel:+16035027080">Call (603) 502-7080</a>
-      </div>
-    </div>
-  </section>
+    <main id="top">
+      <!-- Page Hero -->
+      <section class="page-hero">
+        <div class="hero-grid-tex" aria-hidden="true"></div>
+        <div class="container">
+          <div class="breadcrumb">
+            <a href="/service/">Home</a><span>/</span><span style="color:#fff;"
+              >Roof Replacement</span
+            >
+          </div>
+          {alldata?.content && <Fragment set:html={alldata.content} />}
+        </div>
+      </section>
 
-  <!-- Intro -->
-  <section class="section">
-    <div class="container narrow">
-      <p><span class="eyebrow">What We Do</span></p>
-      <h2>Full Roof Replacement, Done by Our Own Crew</h2>
-      <p class="lead">A roof replacement is the single biggest exterior investment most homeowners make, and it is one of the easiest to get wrong. Shortcuts hide under the shingles for years before they show up as a stain on a bedroom ceiling.</p>
-      <p>Vincenzo’s Roofing replaces residential and commercial roofs across New Hampshire, from Seacoast capes to multi-unit buildings inland. Every job is a complete tear-off down to the decking — we never lay new shingles over old ones, because it hides rot, voids most manufacturer warranties, and shortens the life of the roof you just paid for.</p>
-      <p>The crew that quotes your roof is the crew that installs it. No subcontractors, no handoff to a team you have never met, and no surprise line items between the estimate and the invoice.</p>
-    </div>
-  </section>
+      <!-- Intro -->
+      {
+        pageData?.whatWeDoContent && (
+          <section class="section">
+            <div class="container narrow">
+              <Fragment set:html={pageData.whatWeDoContent} />
+            </div>
+          </section>
+        )
+      }
 
-  <!-- Signs -->
-  <section class="section alt">
-    <div class="container">
-      <div class="narrow" style="text-align:center;margin-bottom:36px">
-        <p><span class="eyebrow">Repair or Replace?</span></p>
-        <h2>Signs It’s Time to Replace Your Roof</h2>
-        <p class="lead">One or two of these usually means a repair will do. Several at once, or any of them on a roof past twenty years, and replacement is almost always the better spend.</p>
-      </div>
-      <div class="signs">
-        <div class="sign">
-          <span class="n">01</span>
-          <div>
-            <h3>Curling or cracked shingles</h3>
-            <p>Edges lifting or corners cupping means the shingle has lost its flexibility and no longer seals against wind-driven rain.</p>
+      <!-- Signs -->
+      <section class="section alt">
+        <div class="container">
+          <div class="narrow" style="text-align:center;margin-bottom:36px">
+            {
+              pageData?.repairOrReplaceSecContent && (
+                <Fragment set:html={pageData.repairOrReplaceSecContent} />
+              )
+            }
           </div>
+          {
+            pageData?.repairOrReplaceGrid && (
+              <div class="signs">
+                {pageData.repairOrReplaceGrid.map(
+                  (item: any, index: number) => {
+                    const signNum = String(index + 1).padStart(2, "0");
+                    return (
+                      <div class="sign">
+                        <span class="n">{signNum}</span>
+                        <div>
+                          {item?.repairOrReplaceGridContent && (
+                            <Fragment
+                              set:html={item.repairOrReplaceGridContent}
+                            />
+                          )}
+                        </div>
+                      </div>
+                    );
+                  },
+                )}
+              </div>
+            )
+          }
+          {
+            pageData?.repairOrReplaceSecLastLine && (
+              <div>
+                <Fragment set:html={pageData.repairOrReplaceSecLastLine} />
+              </div>
+            )
+          }
         </div>
-        <div class="sign">
-          <span class="n">02</span>
-          <div>
-            <h3>Granules in your gutters</h3>
-            <p>Those dark sandy deposits are the shingle’s protective layer washing away. Once it is gone, UV breaks down what is left quickly.</p>
-          </div>
-        </div>
-        <div class="sign">
-          <span class="n">03</span>
-          <div>
-            <h3>Leaks in more than one place</h3>
-            <p>A single leak is a repair. Water showing up in separate areas usually means the system has failed, not one flashing detail.</p>
-          </div>
-        </div>
-        <div class="sign">
-          <span class="n">04</span>
-          <div>
-            <h3>A sagging or spongy deck</h3>
-            <p>Dips along the roofline mean moisture has reached the sheathing. This one does not wait — the damage spreads under the surface.</p>
-          </div>
-        </div>
-        <div class="sign">
-          <span class="n">05</span>
-          <div>
-            <h3>Daylight through the attic</h3>
-            <p>If you can see light between the boards from inside, water and cold air are getting in the same way.</p>
-          </div>
-        </div>
-        <div class="sign">
-          <span class="n">06</span>
-          <div>
-            <h3>Twenty years or older</h3>
-            <p>Most asphalt roofs in New Hampshire reach the end of their service life somewhere between twenty and twenty-five years.</p>
-          </div>
-        </div>
-      </div>
-      <div>
-        <p style="text-align: center; margin-top: 32px; color: var(--grey);">
-          Not sure which side of the line you are on? Our 
-          <a style="color: var(--blue); font-weight: 500;" href="/service/roof-inspection/">
-            free roof inspection gives you an honest answer in writing — including when the answer is<br>“this roof has five good years left.”
-          </a>
-        </p>
-      </div>
-    </div>
-  </section>
+      </section>
 
-  <!-- Scope of Work -->
-  <section class="section">
-    <div class="container narrow">
-      <p><span class="eyebrow">Scope of Work</span></p>
-      <h2>What’s Included in a Vincenzo’s Roof Replacement</h2>
-      <p>Every replacement we quote includes the following as standard. If a competitor’s number comes in lower, this list is usually where the difference is hiding.</p>
-      <ul class="checks" style="margin-top: 20px;">
-        <li>Complete tear-off to the bare deck, all layers removed</li>
-        <li>Full deck inspection with rotted sheathing replaced</li>
-        <li>Ice-and-water shield at eaves, valleys, and penetrations</li>
-        <li>Synthetic underlayment across the entire roof</li>
-        <li>New drip edge, step flashing, and pipe boots</li>
-        <li>Ridge vent and intake ventilation balanced for the attic</li>
-        <li>Starter strip and manufacturer-spec nailing pattern</li>
-        <li>Daily magnetic nail sweeps and full debris haul-away</li>
-        <li>Building permit pulled and final inspection handled</li>
-        <li>Written warranty registered at final walkthrough</li>
-      </ul>
-    </div>
-  </section>
+      <!-- Scope of Work -->
+      <section class="section">
+        <div class="container narrow">
+          {
+            pageData?.scopeOfWorkContent && (
+              <Fragment set:html={pageData.scopeOfWorkContent} />
+            )
+          }
+          {
+            pageData?.scopeOfWorkLists && (
+              <ul class="checks" style="margin-top: 20px;">
+                {pageData.scopeOfWorkLists.map((list: any) => (
+                  <li>{list?.scopeOfWorkListName}</li>
+                ))}
+              </ul>
+            )
+          }
+        </div>
+      </section>
 
-  <!-- Materials -->
-  <section class="section alt">
-    <div class="container">
-      <div class="narrow" style="text-align:center;margin-bottom:36px">
-        <p><span class="eyebrow">Your Options</span></p>
-        <h2>Choosing Your Roofing Material</h2>
-        <p class="lead">Two materials cover the vast majority of New Hampshire replacements. The right answer depends on how long you plan to stay, your roof’s pitch, and how exposed the house is.</p>
-      </div>
-      <div class="grid-2">
-        <div class="card">
-          <h3>Architectural asphalt shingles</h3>
-          <p>The default for most homes, and for good reason: strong value, a wide colour range, and a 25–30 year service life when installed correctly. Near the coast or on exposed hillsides we specify a higher wind rating rather than the builder-grade product most quotes assume.</p>
-          <p style="margin-top: 12px;"><a style="color: var(--blue); font-weight: 500;" href="/service/asphalt-shingle-roofing/">More on asphalt shingle roofing →</a></p>
-        </div>
-        <div class="card">
-          <h3>Standing-seam metal</h3>
-          <p>Costs more up front and pays it back over forty-plus years. Metal sheds snow before it can build into an ice dam and holds up far better against coastal salt air. Worth serious consideration if you are staying in the house long term.</p>
-          <p style="margin-top: 12px;"><a style="color: var(--blue); font-weight: 500;" href="/service/metal-roofing/">More on metal roofing →</a></p>
-        </div>
-      </div>
-      <div class="card pale" style="margin-top:22px">
-        <h3>A note on warranties</h3>
-        <p>Manufacturer warranties cover defects in the material itself. They do not cover installation errors — and an improper install can void them entirely. That is why our 25-year workmanship warranty is separate and written down: between the two, you are covered on both sides.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Cost -->
-  <section class="section">
-    <div class="container">
-      <div class="cost-band">
-        <p><span class="eyebrow" style="color: #9cc0ff;">Straight Pricing</span></p>
-        <h2>How Much Does a Roof Replacement Cost in New Hampshire?</h2>
-        <div class="cost-figure">$8,000 – $22,000</div>
-        <p>That is the honest range for most New Hampshire homes. A small ranch with a simple gable roof sits near the bottom; a large colonial with multiple dormers, steep pitch, and metal roofing sits at the top. We would rather you see the range now than find it out after an hour-long sales visit.</p>
-        <ul class="cost-drivers">
-          <li><b>Size and pitch —</b> square footage plus how steep the roof is to work on safely</li>
-          <li><b>Material choice —</b> asphalt vs. metal is the single biggest swing</li>
-          <li><b>Existing layers —</b> two or three old layers means more tear-off and disposal</li>
-          <li><b>Deck condition —</b> rotted sheathing found during tear-off is replaced at cost</li>
-          <li><b>Complexity —</b> dormers, valleys, skylights, and chimneys all add flashing work</li>
-          <li><b>Access —</b> tight lots and steep driveways affect staging and cleanup time</li>
-        </ul>
-        <div style="margin-top: 30px;">
-          <a class="btn btn-blue" style="background: #fff; color: var(--blue); box-shadow: none;" href="/contact/">Get Your Itemized Estimate</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Process -->
-  <section class="section alt">
-    <div class="container">
-      <div class="narrow" style="text-align:center;margin-bottom:36px">
-        <p><span class="eyebrow">How It Works</span></p>
-        <h2>Your Roof Replacement, Step by Step</h2>
-      </div>
-      <div class="steps">
-        <div class="step">
-          <span class="n">Step 01</span>
-          <h3>Free inspection</h3>
-          <p>We get on the roof, photograph what we find, and tell you honestly whether you need a replacement yet.</p>
-        </div>
-        <div class="step">
-          <span class="n">Step 02</span>
-          <h3>Written estimate</h3>
-          <p>An itemized quote with materials, labour, permit, and a realistic start and finish window. No pressure to sign.</p>
-        </div>
-        <div class="step">
-          <span class="n">Step 03</span>
-          <h3>Schedule &amp; permit</h3>
-          <p>We lock in dates, pull the town permit, and order material so nothing stalls once the roof is open.</p>
-        </div>
-        <div class="step">
-          <span class="n">Step 04</span>
-          <h3>Tear-off &amp; install</h3>
-          <p>Usually one to three days. We text you updates and flag anything unexpected found under the old shingles.</p>
-        </div>
-        <div class="step">
-          <span class="n">Step 05</span>
-          <h3>Final walkthrough</h3>
-          <p>We walk the finished roof with you, clear the site, and register your warranty before pulling out of the driveway.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- NH Weather -->
-  <section class="section">
-    <div class="container">
-      <div class="narrow" style="margin-bottom:36px">
-        <p><span class="eyebrow">Local Expertise</span></p>
-        <h2>Built for New Hampshire Weather</h2>
-        <p class="lead">A roof in Seabrook takes a different beating than one in Manchester. We build for what is actually hitting your house.</p>
-      </div>
-      <div class="grid-2">
-        <div class="card">
-          <h3>Salt air on the Seacoast</h3>
-          <p>Within a few miles of the water, salt corrodes fasteners, flashing, and drip edge far faster than inland. On coastal jobs we specify corrosion-resistant components instead of the standard galvanised most crews default to.</p>
-        </div>
-        <div class="card">
-          <h3>Coastal wind exposure</h3>
-          <p>Open stretches near the shore see gusts that lift improperly nailed shingles. Correct nailing pattern, starter strip, and a shingle rated for the exposure matter far more here than the brand on the bundle.</p>
-        </div>
-        <div class="card">
-          <h3>Ice dams and freeze-thaw</h3>
-          <p>Meltwater refreezes at the cold eave and backs up under the shingles. Ice-and-water shield at eaves and valleys, plus balanced attic ventilation, is what actually stops it.</p>
-        </div>
-        <div class="card">
-          <h3>Snow load and spring melt</h3>
-          <p>Heavy wet snow followed by a fast thaw finds every weak flashing joint and overwhelms undersized drainage. We size gutters for the melt, not for average rainfall.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Why Us -->
-  <section class="section alt">
-    <div class="container">
-      <div class="narrow" style="text-align:center;margin-bottom:36px">
-        <p><span class="eyebrow">Why Vincenzo’s</span></p>
-        <h2>Why Homeowners Choose Us for Replacement</h2>
-      </div>
-      <div class="grid-2">
-        <div class="card">
-          <h3>Itemized written estimates</h3>
-          <p>Materials, labour, permit, and timeline broken out line by line — so you can compare quotes on equal terms instead of guessing what is included.</p>
-        </div>
-        <div class="card">
-          <h3>Local crews, never subcontracted</h3>
-          <p>The crew that quotes your roof is the crew that installs it. We are based in Seabrook and working across New Hampshire every day.</p>
-        </div>
-        <div class="card">
-          <h3>25-year workmanship warranty</h3>
-          <p>Separate from the manufacturer’s material coverage, written out and registered before we pull off your driveway.</p>
-        </div>
-        <div class="card">
-          <h3>Daily magnetic cleanup</h3>
-          <p>Nail sweeps and debris removal at the end of every work day, not just on the last day of the job.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="section">
-    <div class="container">
-      <div class="sec-header" style="text-align:center; margin:0 auto 40px;">
-        <p><span class="eyebrow">FAQ</span></p>
-        <h2 class="sec-head">Asphalt Shingle Questions</h2>
-      </div>
-      <div class="faq-list">
-        <div class="faq-item">
-          <button class="faq-q"><span>How much does a roof replacement cost in New Hampshire? </span><span class="plus"></span></button>
-          <div class="faq-a">
-            <p>Most full roof replacements in New Hampshire run between $8,000 and $22,000. The main cost drivers are roof size and pitch, the material you choose, how many old layers need removing, and whether any decking underneath has rotted and needs replacing. We give you an itemized written estimate after an on-site inspection.</p>
+      <!-- Materials -->
+      <section class="section alt">
+        <div class="container">
+          <div class="narrow" style="text-align:center;margin-bottom:36px">
+            {
+              pageData?.yourOptionsContent && (
+                <Fragment set:html={pageData.yourOptionsContent} />
+              )
+            }
           </div>
+          {
+            pageData?.yourOptionsGrids && (
+              <div class="grid-2">
+                {pageData.yourOptionsGrids.map((grid: any) => (
+                  <div class="card">
+                    {grid?.yourOptionsGridContent && (
+                      <Fragment set:html={grid.yourOptionsGridContent} />
+                    )}
+                  </div>
+                ))}
+              </div>
+            )
+          }
+          {
+            pageData?.noteContent && (
+              <div class="card pale" style="margin-top:22px">
+                <Fragment set:html={pageData.noteContent} />
+              </div>
+            )
+          }
         </div>
-        <div class="faq-item">
-          <button class="faq-q"><span>How long does a roof replacement take? </span><span class="plus"></span></button>
-          <div class="faq-a">
-            <p>Most residential roof replacements in New Hampshire are finished in one to three days, weather permitting. Steeper or larger roofs, and homes with multiple dormers or valleys, can take longer. Your written estimate includes a specific timeline.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q"><span>Can I stay in my house during the work? </span><span class="plus"></span></button>
-          <div class="faq-a">
-            <p>Yes. Almost every homeowner stays home during the work. It is loud, especially during tear-off, and you should move vehicles out of the driveway and take fragile items off walls in upper rooms. Pets are usually happier somewhere quiet for the day.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q"><span>Do you handle the building permit? </span><span class="plus"></span></button>
-          <div class="faq-a">
-            <p>Yes. We pull the permit with your town or city before work starts and handle the inspection at the end. Permit requirements vary between New Hampshire municipalities and the cost is listed as a line item on your estimate.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q"><span>Do I need to replace my gutters at the same time? </span><span class="plus"></span></button>
-          <div class="faq-a">
-            <p>Not always, but it is often the right time. Gutters have to come off or be worked around during tear-off, so replacing worn gutters during a roof replacement costs less than doing it as a separate job later. We will tell you honestly whether yours have life left in them.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q"><span>What does the 25-year workmanship warranty cover? </span><span class="plus"></span></button>
-          <div class="faq-a">
-            <p>It covers our installation work: leaks or failures caused by how the roof was installed. It is separate from the manufacturer’s warranty on the shingles themselves, which covers material defects. You get both in writing, and we register the workmanship warranty before we leave the job.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+      </section>
 
-  <!-- Related Services -->
-  <section class="section alt">
-    <div class="container">
-      <div class="narrow" style="text-align:center;margin-bottom:36px">
-        <span class="eyebrow">Related Services</span>
-        <h2>Other Roofing Services</h2>
-      </div>
-      <div class="rel">
-        <a href="/service/roof-replacement/">
-          <h3>Roof Replacement</h3>
-          <p>The full process — tear-off, timeline, permits, and what to expect.</p>
-          <span class="go">View replacement →</span>
-        </a>
-        <a href="/service/metal-roofing/">
-          <h3>Metal Roofing</h3>
-          <p>The other main option — longer life, better snow shedding, higher cost.</p>
-          <span class="go">Compare metal →</span>
-        </a>
-        <a href="/service/roof-repair/">
-          <h3>Roof Repair</h3>
-          <p>Leaks and lifted shingles traced to the actual source before repair.</p>
-          <span class="go">View roof repair →</span>
-        </a>
-        <a href="/service/roof-inspection/">
-          <h3>Roof Inspection</h3>
-          <p>Free, photo-documented condition report before you decide anything.</p>
-          <span class="go">Book an inspection →</span>
-        </a>
-      </div>
-    </div>
-  </section>
+      <!-- Cost -->
+      {
+        pageData?.straightPricingContent && (
+          <section class="section">
+            <div class="container">
+              <div class="cost-band">
+                <Fragment set:html={pageData.straightPricingContent} />
+              </div>
+            </div>
+          </section>
+        )
+      }
 
-  <!-- Final CTA -->
-  <section class="cta-band">
-    <div class="cta-inner">
-      <div class="center-ctas">
-        <h2>Get Your Free Roof Replacement Estimate</h2>
-        <p>Free inspection, itemized written estimate, and no pressure to sign. Most homeowners hear back within one business hour.</p>
-        <div class="btns">
-          <a class="btn btn-blue" href="/free-estimate">Get Your Free Estimate<br></a>
-          <a class="btn btn-ghost-w" href="tel:+1 (603) 502-7080">Call Now</a>
+      <!-- Process -->
+      <section class="section alt">
+        <div class="container">
+          <div class="narrow" style="text-align:center;margin-bottom:36px">
+            {
+              pageData?.howItWorksContent && (
+                <Fragment set:html={pageData.howItWorksContent} />
+              )
+            }
+          </div>
+          {
+            pageData?.howItWorksGrids && (
+              <div class="steps">
+                {pageData.howItWorksGrids.map((step: any, index: number) => {
+                  const stepNum = `Step ${String(index + 1).padStart(2, "0")}`;
+                  return (
+                    <div class="step">
+                      <span class="n">{stepNum}</span>
+                      {step?.howItWorksGridContent && (
+                        <Fragment set:html={step.howItWorksGridContent} />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )
+          }
         </div>
-      </div>
-    </div>
-  </section>
-</main>
+      </section>
+
+      <!-- NH Weather -->
+      <section class="section">
+        <div class="container">
+          <div class="narrow" style="margin-bottom:36px">
+            {
+              pageData?.localExpertiseContent && (
+                <Fragment set:html={pageData.localExpertiseContent} />
+              )
+            }
+          </div>
+          {
+            pageData?.localExpertiseGrids && (
+              <div class="grid-2">
+                {pageData.localExpertiseGrids.map((grid: any) => (
+                  <div class="card">
+                    {grid?.localExpertiseGridContent && (
+                      <Fragment set:html={grid.localExpertiseGridContent} />
+                    )}
+                  </div>
+                ))}
+              </div>
+            )
+          }
+        </div>
+      </section>
+
+      <!-- Why Us -->
+      <section class="section alt">
+        <div class="container">
+          <div class="narrow" style="text-align:center;margin-bottom:36px">
+            {
+              pageData?.whyVincenzoSContent && (
+                <Fragment set:html={pageData.whyVincenzoSContent} />
+              )
+            }
+          </div>
+          {
+            pageData?.whyVincenzoSGrids && (
+              <div class="grid-2">
+                {pageData.whyVincenzoSGrids.map((grid: any) => (
+                  <div class="card">
+                    {grid?.whyVincenzoSGridContent && (
+                      <Fragment set:html={grid.whyVincenzoSGridContent} />
+                    )}
+                  </div>
+                ))}
+              </div>
+            )
+          }
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="section">
+        <div class="container">
+          <div
+            class="sec-header"
+            style="text-align:center; margin:0 auto 40px;"
+          >
+            {
+              pageData?.faqContent && (
+                <Fragment set:html={pageData.faqContent} />
+              )
+            }
+          </div>
+          {
+            pageData?.faqList && (
+              <div class="faq-list">
+                {pageData.faqList.map((faq: any) => (
+                  <div class="faq-item">
+                    <button class="faq-q">
+                      <span>{faq?.faqTitle}</span>
+                      <span class="plus" />
+                    </button>
+                    <div class="faq-a">
+                      {faq?.faqAnswer && <Fragment set:html={faq.faqAnswer} />}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )
+          }
+        </div>
+      </section>
+
+      <!-- Related Services -->
+      <Relatedservice />
+
+      <!-- Final CTA -->
+      {
+        pageData?.finalCtaContent && (
+          <section class="cta-band">
+            <div class="cta-inner">
+              <Fragment set:html={pageData.finalCtaContent} />
+            </div>
+          </section>
+        )
+      }
+    </main>
 
     <Footer />
     <style is:global>
@@ -890,7 +836,7 @@ const seodata = alldata?.seo || {};
         color: var(--ink);
       }
 
-      .faq-q .p {
+      .faq-q .plus {
         width: 28px;
         height: 28px;
         border-radius: 50%;
@@ -902,8 +848,8 @@ const seodata = alldata?.seo || {};
           background 0.28s;
       }
 
-      .faq-q .p::before,
-      .faq-q .p::after {
+      .faq-q .plus::before,
+      .faq-q .plus::after {
         content: "";
         position: absolute;
         background: var(--blue);
@@ -913,23 +859,23 @@ const seodata = alldata?.seo || {};
         transition: background 0.28s;
       }
 
-      .faq-q .p::before {
+      .faq-q .plus::before {
         width: 11px;
         height: 2px;
       }
 
-      .faq-q .p::after {
+      .faq-q .plus::after {
         width: 2px;
         height: 11px;
       }
 
-      .faq-item.open .p {
+      .faq-item.open .plus {
         transform: rotate(45deg);
         background: var(--blue);
       }
 
-      .faq-item.open .p::before,
-      .faq-item.open .p::after {
+      .faq-item.open .plus::before,
+      .faq-item.open .plus::after {
         background: #fff;
       }
 
