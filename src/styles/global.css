@@ -2349,7 +2349,9 @@ footer {
   font-family: 'Montserrat', sans-serif;
   flex-wrap: wrap;
 }
-
+.faq-a p{
+  max-width: 100% !important;
+}
 .breadcrumb a {
   color: #C9CDD4;
   transition: color .2s;
