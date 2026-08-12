@@ -1,5 +1,8 @@
-import { B as InvalidGetStaticPathsReturn, C as AstroResponseHeadersReassigned, F as GetStaticPathsRequired, G as MiddlewareNoDataOrNextCalled, K as MiddlewareNotAResponse, M as ForbiddenRewrite, N as GetStaticPathsExpectedParams, P as GetStaticPathsInvalidRouteParam, S as ActionsReturnedInvalidDataError, T as ClientAddressNotAvailable, U as LocalsNotAnObject, W as LocalsReassigned, _t as i18nNoLocaleFoundInPath, a as fileExtension, at as PrerenderDynamicEndpointPathCollide, b as matchPattern, ct as ResponseSentError, d as removeLeadingForwardSlash, dt as SessionStorageSaveError, ft as StaticClientAddressNotAvailable, h as trimSlashes, i as collapseDuplicateTrailingSlashes, it as PrerenderClientAddressNotAvailable, l as joinPaths, lt as RewriteWithBodyUsed, m as slash, n as collapseDuplicateLeadingSlashes, o as hasFileExtension, p as removeTrailingForwardSlash, pt as UnableToLoadLogger, r as collapseDuplicateSlashes, rt as PageNumberParamNotFound, s as isInternalPath, st as ReservedSlotName, t as appendForwardSlash, tt as NoMatchingStaticPathFound, u as prependForwardSlash, ut as SessionStorageInitError, vt as AstroError, w as CacheNotEnabled, x as ActionNotFoundError, z as InvalidGetStaticPathsEntry } from "./chunks/path_JcdHq8sq.mjs";
-import { A as clientAddressSymbol, C as isRoute500, D as REDIRECT_STATUS_CODES, E as DEFAULT_404_COMPONENT, M as originPathnameSymbol, N as pipelineSymbol, O as REROUTABLE_STATUS_CODES, P as responseSentSymbol$1, S as isRoute404, T as ASTRO_GENERATOR, _ as pushDirective, a as chunkToString, b as renderEndpoint, c as isRenderTemplateResult, d as decryptString, f as generateCspDigest, g as normalizeCspResourceEntry, h as isRenderInstruction, i as renderComponent, j as fetchStateSymbol, k as appSymbol, l as renderTemplate, n as renderPage, o as createSlotValueFromString, r as renderJSX, s as renderSlotToString, u as decodeKey, v as isAstroComponentFactory, w as ASTRO_ERROR_HEADER } from "./chunks/server_DY7b0X9O.mjs";
+import { B as PrerenderClientAddressNotAvailable, D as MiddlewareNoDataOrNextCalled, E as LocalsReassigned, J as StaticClientAddressNotAvailable, K as SessionStorageInitError, O as MiddlewareNotAResponse, T as LocalsNotAnObject, W as ResponseSentError, a as ClientAddressNotAvailable, et as i18nNoLocaleFoundInPath, i as CacheNotEnabled, n as ActionsReturnedInvalidDataError, p as ForbiddenRewrite, q as SessionStorageSaveError, r as AstroResponseHeadersReassigned, t as ActionNotFoundError, tt as AstroError } from "./chunks/errors-data_B2GzEEWH.mjs";
+import { a as matchPattern } from "./chunks/remoteProbe_BOU5VCMP.mjs";
+import { a as fileExtension, f as removeLeadingForwardSlash, h as slash, i as collapseDuplicateTrailingSlashes, l as joinPaths, m as removeTrailingForwardSlash, n as collapseDuplicateLeadingSlashes, o as hasFileExtension, r as collapseDuplicateSlashes, s as isInternalPath, t as appendForwardSlash, u as prependForwardSlash } from "./chunks/path_DSAdOJJi.mjs";
+import { A as readBodyWithLimit, C as validateAndDecodePathname, D as isForbiddenCrossOriginRequest, E as createCrossOriginForbiddenResponse, S as MultiLevelEncodingError, T as AstroIntegrationLogger, _ as sequence, a as createConsoleLogger, b as getOriginPathname, c as getProps, d as routeHasHtmlExtension, f as routeIsFallback, g as RedirectSinglePageBuiltModule, h as getRouteGenerator, i as PipelineFeatures, j as shouldAppendForwardSlash, k as BodySizeLimitError, l as getCustom404Route, m as SERVER_ISLAND_COMPONENT, n as ALL_PIPELINE_FEATURES, o as routeComparator, p as routeIsRedirect, r as Pipeline, s as getParams, t as Slots, u as getFallbackRoute, v as copyRequest, w as NOOP_MIDDLEWARE_FN, x as setOriginPathname, y as findRouteToRewrite } from "./chunks/render_Cme7R16p.mjs";
+import { A as REDIRECT_STATUS_CODES, C as renderEndpoint, D as ASTRO_ERROR_HEADER, E as isRoute500, F as originPathnameSymbol, I as pipelineSymbol, L as responseSentSymbol$1, M as appSymbol, N as clientAddressSymbol, O as ASTRO_GENERATOR, P as fetchStateSymbol, T as isRoute404, b as pushDirective, d as decodeKey, j as REROUTABLE_STATUS_CODES, n as renderPage, p as generateCspDigest, y as normalizeCspResourceEntry } from "./chunks/server_VgpkRdB2.mjs";
 import nodePath from "node:path";
 import "@vercel/routing-utils";
 import colors from "piccolore";
@@ -18,7 +21,7 @@ var ASTRO_LOCALS_HEADER = "x-astro-locals";
 var ASTRO_MIDDLEWARE_SECRET_HEADER = "x-astro-middleware-secret";
 //#endregion
 //#region \0virtual:astro-vercel:config
-var middlewareSecret = "45d7e7b6-fdba-4413-a127-aa3d01e86ce5";
+var middlewareSecret = "c13425a3-34bb-47ff-95bc-923121ace291";
 //#endregion
 //#region node_modules/astro/dist/actions/consts.js
 var ACTION_QUERY_PARAMS = {
@@ -134,7 +137,7 @@ function deserializeActionResult(res) {
 			"DEV": false,
 			"MODE": "production",
 			"PROD": true,
-			"SITE": "https://www.vincenzoroofing.com",
+			"SITE": void 0,
 			"SSR": true
 		}, {
 			OS: "Windows_NT",
@@ -175,56 +178,6 @@ var actionResultErrorStack = /* @__PURE__ */ (function actionResultErrorStackFn(
 function getActionQueryString(name) {
 	return `?${new URLSearchParams({ [ACTION_QUERY_PARAMS.actionName]: name }).toString()}`;
 }
-//#endregion
-//#region node_modules/astro/dist/core/build/util.js
-function shouldAppendForwardSlash(trailingSlash, buildFormat) {
-	switch (trailingSlash) {
-		case "always": return true;
-		case "never": return false;
-		case "ignore": switch (buildFormat) {
-			case "directory": return true;
-			case "preserve":
-			case "file": return false;
-		}
-	}
-}
-//#endregion
-//#region node_modules/astro/dist/core/request-body.js
-async function readBodyWithLimit(request, limit) {
-	const contentLengthHeader = request.headers.get("content-length");
-	if (contentLengthHeader) {
-		const contentLength = Number.parseInt(contentLengthHeader, 10);
-		if (Number.isFinite(contentLength) && contentLength > limit) throw new BodySizeLimitError(limit);
-	}
-	if (!request.body) return /* @__PURE__ */ new Uint8Array();
-	const reader = request.body.getReader();
-	const chunks = [];
-	let received = 0;
-	while (true) {
-		const { done, value } = await reader.read();
-		if (done) break;
-		if (value) {
-			received += value.byteLength;
-			if (received > limit) throw new BodySizeLimitError(limit);
-			chunks.push(value);
-		}
-	}
-	const buffer = new Uint8Array(received);
-	let offset = 0;
-	for (const chunk of chunks) {
-		buffer.set(chunk, offset);
-		offset += chunk.byteLength;
-	}
-	return buffer;
-}
-var BodySizeLimitError = class extends Error {
-	limit;
-	constructor(limit) {
-		super(`Request body exceeds the configured limit of ${limit} bytes`);
-		this.name = "BodySizeLimitError";
-		this.limit = limit;
-	}
-};
 //#endregion
 //#region node_modules/astro/dist/actions/runtime/server.js
 function getActionContext(context) {
@@ -351,7 +304,7 @@ function serializeActionResult(res) {
 			"DEV": false,
 			"MODE": "production",
 			"PROD": true,
-			"SITE": "https://www.vincenzoroofing.com",
+			"SITE": void 0,
 			"SSR": true
 		}, { OS: "Windows_NT" })?.DEV) actionResultErrorStack.set(res.error.stack);
 		let body2;
@@ -608,748 +561,6 @@ function* getSetCookiesFromResponse(response) {
 	return [];
 }
 //#endregion
-//#region node_modules/astro/dist/actions/noop-actions.js
-var NOOP_ACTIONS_MOD = { server: {} };
-//#endregion
-//#region node_modules/astro/dist/core/middleware/defineMiddleware.js
-function defineMiddleware(fn) {
-	return fn;
-}
-//#endregion
-//#region node_modules/astro/dist/core/app/origin-check.js
-var FORM_CONTENT_TYPES = [
-	"application/x-www-form-urlencoded",
-	"multipart/form-data",
-	"text/plain"
-];
-var SAFE_METHODS = [
-	"GET",
-	"HEAD",
-	"OPTIONS"
-];
-function isForbiddenCrossOriginRequest(request, url, isPrerendered) {
-	if (isPrerendered) return false;
-	if (SAFE_METHODS.includes(request.method)) return false;
-	const isSameOrigin = request.headers.get("origin") === url.origin;
-	if (request.headers.has("content-type")) return hasFormLikeHeader(request.headers.get("content-type")) && !isSameOrigin;
-	return !isSameOrigin;
-}
-function createCrossOriginForbiddenResponse(request) {
-	return new Response(`Cross-site ${request.method} form submissions are forbidden`, { status: 403 });
-}
-function createOriginCheckMiddleware() {
-	return defineMiddleware((context, next) => {
-		const { request, url, isPrerendered } = context;
-		if (isForbiddenCrossOriginRequest(request, url, isPrerendered)) return createCrossOriginForbiddenResponse(request);
-		return next();
-	});
-}
-function hasFormLikeHeader(contentType) {
-	if (contentType) {
-		for (const FORM_CONTENT_TYPE of FORM_CONTENT_TYPES) if (contentType.toLowerCase().includes(FORM_CONTENT_TYPE)) return true;
-	}
-	return false;
-}
-//#endregion
-//#region node_modules/astro/dist/core/logger/core.js
-var dateTimeFormat = new Intl.DateTimeFormat([], {
-	hour: "2-digit",
-	minute: "2-digit",
-	second: "2-digit",
-	hour12: false
-});
-var levels = {
-	debug: 20,
-	info: 30,
-	warn: 40,
-	error: 50,
-	silent: 90
-};
-function log(opts, level, label, message, newLine = true) {
-	const logLevel = opts.level;
-	const dest = opts.destination;
-	const event = {
-		label,
-		level,
-		message,
-		newLine
-	};
-	if (!isLogLevelEnabled(logLevel, level)) return;
-	dest.write(event);
-}
-function isLogLevelEnabled(configuredLogLevel, level) {
-	return levels[configuredLogLevel] <= levels[level];
-}
-function info(opts, label, message, newLine = true) {
-	return log(opts, "info", label, message, newLine);
-}
-function warn(opts, label, message, newLine = true) {
-	return log(opts, "warn", label, message, newLine);
-}
-function error(opts, label, message, newLine = true) {
-	return log(opts, "error", label, message, newLine);
-}
-function debug(...args) {
-	if ("_astroGlobalDebug" in globalThis) globalThis._astroGlobalDebug(...args);
-}
-function getEventPrefix({ level, label }) {
-	const timestamp = `${dateTimeFormat.format(/* @__PURE__ */ new Date())}`;
-	const prefix = [];
-	if (level === "error" || level === "warn") {
-		prefix.push(colors.bold(timestamp));
-		prefix.push(`[${level.toUpperCase()}]`);
-	} else prefix.push(timestamp);
-	if (label) prefix.push(`[${label}]`);
-	if (level === "error") return colors.red(prefix.join(" "));
-	if (level === "warn") return colors.yellow(prefix.join(" "));
-	if (prefix.length === 1) return colors.dim(prefix[0]);
-	return colors.dim(prefix[0]) + " " + colors.blue(prefix.splice(1).join(" "));
-}
-var AstroLogger = class {
-	options;
-	constructor(options) {
-		this.options = options;
-	}
-	info(label, message, newLine = true) {
-		info(this.options, label, message, newLine);
-	}
-	warn(label, message, newLine = true) {
-		warn(this.options, label, message, newLine);
-	}
-	error(label, message, newLine = true) {
-		error(this.options, label, message, newLine);
-	}
-	debug(label, ...messages) {
-		debug(label, ...messages);
-	}
-	level() {
-		return this.options.level;
-	}
-	forkIntegrationLogger(label) {
-		return new AstroIntegrationLogger(this.options, label);
-	}
-	setDestination(destination) {
-		this.options.destination = destination;
-	}
-	/**
-	* It calls the `close` function of the provided destination, if it exists.
-	*/
-	close() {
-		if (this.options.destination.close) this.options.destination.close();
-	}
-	/**
-	* It calls the `flush` function of the provided destination, if it exists.
-	*/
-	flush() {
-		if (this.options.destination.flush) this.options.destination.flush();
-	}
-};
-var AstroIntegrationLogger = class AstroIntegrationLogger {
-	options;
-	label;
-	constructor(logging, label) {
-		this.options = logging;
-		this.label = label;
-	}
-	/**
-	* Creates a new logger instance with a new label, but the same log options.
-	*/
-	fork(label) {
-		return new AstroIntegrationLogger(this.options, label);
-	}
-	info(message) {
-		info(this.options, this.label, message);
-	}
-	warn(message) {
-		warn(this.options, this.label, message);
-	}
-	error(message) {
-		error(this.options, this.label, message);
-	}
-	debug(message) {
-		debug(this.label, message);
-	}
-	/**
-	* It calls the `flush` function of the provided destination, if it exists.
-	*/
-	flush() {
-		if (this.options.destination.flush) this.options.destination.flush();
-	}
-	/**
-	* It calls the `close` function of the provided destination, if it exists.
-	*/
-	close() {
-		if (this.options.destination.close) this.options.destination.close();
-	}
-};
-//#endregion
-//#region node_modules/astro/dist/core/middleware/noop-middleware.js
-var NOOP_MIDDLEWARE_FN = async (_ctx, next) => {
-	return await next();
-};
-//#endregion
-//#region node_modules/astro/dist/core/request.js
-function createRequest({ url, headers, method = "GET", body = void 0, logger, isPrerendered = false, routePattern, init }) {
-	const headersObj = isPrerendered ? void 0 : headers instanceof Headers ? headers : new Headers(Object.entries(headers).filter(([name]) => !name.startsWith(":")));
-	if (typeof url === "string") url = new URL(url);
-	if (isPrerendered) url.search = "";
-	const request = new Request(url, {
-		method,
-		headers: headersObj,
-		body: isPrerendered ? null : body,
-		...init
-	});
-	if (isPrerendered) {
-		let _headers = request.headers;
-		const { value, writable, ...headersDesc } = Object.getOwnPropertyDescriptor(request, "headers") || {};
-		Object.defineProperty(request, "headers", {
-			...headersDesc,
-			get() {
-				logger.warn(null, `\`Astro.request.headers\` was used when rendering the route \`${routePattern}'\`. \`Astro.request.headers\` is not available on prerendered pages. If you need access to request headers, make sure that the page is server-rendered using \`export const prerender = false;\` or by setting \`output\` to \`"server"\` in your Astro config to make all your pages server-rendered by default.`);
-				return _headers;
-			},
-			set(newHeaders) {
-				_headers = newHeaders;
-			}
-		});
-	}
-	return request;
-}
-//#endregion
-//#region node_modules/astro/dist/core/util/pathname.js
-var MultiLevelEncodingError = class extends Error {
-	constructor() {
-		super("URL encoding depth exceeded the maximum number of decode iterations");
-		this.name = "MultiLevelEncodingError";
-	}
-};
-var MAX_DECODE_ITERATIONS = 10;
-function validateAndDecodePathname(pathname) {
-	let decoded;
-	try {
-		decoded = decodeURI(pathname);
-	} catch (_e) {
-		throw new Error("Invalid URL encoding");
-	}
-	let iterations = 0;
-	while (decoded !== pathname) {
-		if (iterations >= MAX_DECODE_ITERATIONS) throw new MultiLevelEncodingError();
-		pathname = decoded;
-		try {
-			decoded = decodeURI(pathname);
-		} catch {
-			break;
-		}
-		iterations++;
-	}
-	return decoded;
-}
-//#endregion
-//#region node_modules/astro/dist/template/4xx.js
-function template({ title, pathname, statusCode = 404, tabTitle, body }) {
-	return `<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>${tabTitle}</title>
-		<style>
-			:root {
-				--gray-10: hsl(258, 7%, 10%);
-				--gray-20: hsl(258, 7%, 20%);
-				--gray-30: hsl(258, 7%, 30%);
-				--gray-40: hsl(258, 7%, 40%);
-				--gray-50: hsl(258, 7%, 50%);
-				--gray-60: hsl(258, 7%, 60%);
-				--gray-70: hsl(258, 7%, 70%);
-				--gray-80: hsl(258, 7%, 80%);
-				--gray-90: hsl(258, 7%, 90%);
-				--black: #13151A;
-				--accent-light: #E0CCFA;
-			}
-
-			* {
-				box-sizing: border-box;
-			}
-
-			html {
-				background: var(--black);
-				color-scheme: dark;
-				accent-color: var(--accent-light);
-			}
-
-			body {
-				background-color: var(--gray-10);
-				color: var(--gray-80);
-				font-family: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
-				line-height: 1.5;
-				margin: 0;
-			}
-
-			a {
-				color: var(--accent-light);
-			}
-
-			.center {
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				align-items: center;
-				height: 100vh;
-				width: 100vw;
-			}
-
-			h1 {
-				margin-bottom: 8px;
-				color: white;
-				font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-				font-weight: 700;
-				margin-top: 1rem;
-				margin-bottom: 0;
-			}
-
-			.statusCode {
-				color: var(--accent-light);
-			}
-
-			.astro-icon {
-				height: 124px;
-				width: 124px;
-			}
-
-			pre, code {
-				padding: 2px 8px;
-				background: rgba(0,0,0, 0.25);
-				border: 1px solid rgba(255,255,255, 0.25);
-				border-radius: 4px;
-				font-size: 1.2em;
-				margin-top: 0;
-				max-width: 60em;
-			}
-		</style>
-	</head>
-	<body>
-		<main class="center">
-			<svg class="astro-icon" xmlns="http://www.w3.org/2000/svg" width="64" height="80" viewBox="0 0 64 80" fill="none"> <path d="M20.5253 67.6322C16.9291 64.3531 15.8793 57.4632 17.3776 52.4717C19.9755 55.6188 23.575 56.6157 27.3035 57.1784C33.0594 58.0468 38.7122 57.722 44.0592 55.0977C44.6709 54.7972 45.2362 54.3978 45.9045 53.9931C46.4062 55.4451 46.5368 56.9109 46.3616 58.4028C45.9355 62.0362 44.1228 64.8429 41.2397 66.9705C40.0868 67.8215 38.8669 68.5822 37.6762 69.3846C34.0181 71.8508 33.0285 74.7426 34.403 78.9491C34.4357 79.0516 34.4649 79.1541 34.5388 79.4042C32.6711 78.5705 31.3069 77.3565 30.2674 75.7604C29.1694 74.0757 28.6471 72.2121 28.6196 70.1957C28.6059 69.2144 28.6059 68.2244 28.4736 67.257C28.1506 64.8985 27.0406 63.8425 24.9496 63.7817C22.8036 63.7192 21.106 65.0426 20.6559 67.1268C20.6215 67.2865 20.5717 67.4446 20.5218 67.6304L20.5253 67.6322Z" fill="white"/> <path d="M20.5253 67.6322C16.9291 64.3531 15.8793 57.4632 17.3776 52.4717C19.9755 55.6188 23.575 56.6157 27.3035 57.1784C33.0594 58.0468 38.7122 57.722 44.0592 55.0977C44.6709 54.7972 45.2362 54.3978 45.9045 53.9931C46.4062 55.4451 46.5368 56.9109 46.3616 58.4028C45.9355 62.0362 44.1228 64.8429 41.2397 66.9705C40.0868 67.8215 38.8669 68.5822 37.6762 69.3846C34.0181 71.8508 33.0285 74.7426 34.403 78.9491C34.4357 79.0516 34.4649 79.1541 34.5388 79.4042C32.6711 78.5705 31.3069 77.3565 30.2674 75.7604C29.1694 74.0757 28.6471 72.2121 28.6196 70.1957C28.6059 69.2144 28.6059 68.2244 28.4736 67.257C28.1506 64.8985 27.0406 63.8425 24.9496 63.7817C22.8036 63.7192 21.106 65.0426 20.6559 67.1268C20.6215 67.2865 20.5717 67.4446 20.5218 67.6304L20.5253 67.6322Z" fill="url(#paint0_linear_738_686)"/> <path d="M0 51.6401C0 51.6401 10.6488 46.4654 21.3274 46.4654L29.3786 21.6102C29.6801 20.4082 30.5602 19.5913 31.5538 19.5913C32.5474 19.5913 33.4275 20.4082 33.7289 21.6102L41.7802 46.4654C54.4274 46.4654 63.1076 51.6401 63.1076 51.6401C63.1076 51.6401 45.0197 2.48776 44.9843 2.38914C44.4652 0.935933 43.5888 0 42.4073 0H20.7022C19.5206 0 18.6796 0.935933 18.1251 2.38914C18.086 2.4859 0 51.6401 0 51.6401Z" fill="white"/> <defs> <linearGradient id="paint0_linear_738_686" x1="31.554" y1="75.4423" x2="39.7462" y2="48.376" gradientUnits="userSpaceOnUse"> <stop stop-color="#D83333"/> <stop offset="1" stop-color="#F041FF"/> </linearGradient> </defs> </svg>
-			<h1>${statusCode ? `<span class="statusCode">${statusCode}: </span> ` : ""}<span class="statusMessage">${title}</span></h1>
-			${body || `
-				<pre>Path: ${escape(pathname)}</pre>
-			`}
-			</main>
-	</body>
-</html>`;
-}
-//#endregion
-//#region node_modules/astro/dist/core/routing/internal/astro-designed-error-pages.js
-var DEFAULT_404_ROUTE = {
-	component: DEFAULT_404_COMPONENT,
-	params: [],
-	pattern: /^\/404\/?$/,
-	prerender: false,
-	pathname: "/404",
-	segments: [[{
-		content: "404",
-		dynamic: false,
-		spread: false
-	}]],
-	type: "page",
-	route: "/404",
-	fallbackRoutes: [],
-	isIndex: false,
-	origin: "internal",
-	distURL: []
-};
-async function default404Page({ pathname }) {
-	return new Response(template({
-		statusCode: 404,
-		title: "Not found",
-		tabTitle: "404: Not Found",
-		pathname
-	}), {
-		status: 404,
-		headers: { "Content-Type": "text/html" }
-	});
-}
-default404Page.isAstroComponentFactory = true;
-var default404Instance = { default: default404Page };
-//#endregion
-//#region node_modules/astro/dist/core/routing/rewrite.js
-function findRouteToRewrite({ payload, routes, request, trailingSlash, buildFormat, base, outDir }) {
-	let newUrl = void 0;
-	if (payload instanceof URL) newUrl = payload;
-	else if (payload instanceof Request) newUrl = new URL(payload.url);
-	else newUrl = new URL(collapseDuplicateSlashes(payload), new URL(request.url).origin);
-	const { pathname, resolvedUrlPathname } = normalizeRewritePathname(newUrl.pathname, base, trailingSlash, buildFormat);
-	newUrl.pathname = resolvedUrlPathname;
-	const decodedPathname = validateAndDecodePathname(pathname);
-	if (isRoute404(decodedPathname)) {
-		const errorRoute = routes.find((route) => route.route === "/404");
-		if (errorRoute) return {
-			routeData: errorRoute,
-			newUrl,
-			pathname: decodedPathname
-		};
-	}
-	if (isRoute500(decodedPathname)) {
-		const errorRoute = routes.find((route) => route.route === "/500");
-		if (errorRoute) return {
-			routeData: errorRoute,
-			newUrl,
-			pathname: decodedPathname
-		};
-	}
-	let foundRoute;
-	for (const route of routes) if (route.pattern.test(decodedPathname)) {
-		if (route.params && route.params.length !== 0 && route.distURL && route.distURL.length !== 0) {
-			if (!route.distURL.find((url) => url.href.replace(outDir.toString(), "").replace(/(?:\/index\.html|\.html)$/, "") === trimSlashes(pathname))) continue;
-		}
-		foundRoute = route;
-		break;
-	}
-	if (foundRoute) return {
-		routeData: foundRoute,
-		newUrl,
-		pathname: decodedPathname
-	};
-	else {
-		const custom404 = routes.find((route) => route.route === "/404");
-		if (custom404) return {
-			routeData: custom404,
-			newUrl,
-			pathname
-		};
-		else return {
-			routeData: DEFAULT_404_ROUTE,
-			newUrl,
-			pathname
-		};
-	}
-}
-function copyRequest(newUrl, oldRequest, isPrerendered, logger, routePattern) {
-	if (oldRequest.bodyUsed) throw new AstroError(RewriteWithBodyUsed);
-	return createRequest({
-		url: newUrl,
-		method: oldRequest.method,
-		body: oldRequest.body,
-		isPrerendered,
-		logger,
-		headers: isPrerendered ? {} : oldRequest.headers,
-		routePattern,
-		init: {
-			referrer: oldRequest.referrer,
-			referrerPolicy: oldRequest.referrerPolicy,
-			mode: oldRequest.mode,
-			credentials: oldRequest.credentials,
-			cache: oldRequest.cache,
-			redirect: oldRequest.redirect,
-			integrity: oldRequest.integrity,
-			signal: oldRequest.signal,
-			keepalive: oldRequest.keepalive,
-			duplex: "half"
-		}
-	});
-}
-function setOriginPathname(request, pathname, trailingSlash, buildFormat) {
-	if (!pathname) pathname = "/";
-	const shouldAppendSlash = shouldAppendForwardSlash(trailingSlash, buildFormat);
-	let finalPathname;
-	if (pathname === "/") finalPathname = "/";
-	else if (shouldAppendSlash) finalPathname = appendForwardSlash(pathname);
-	else finalPathname = removeTrailingForwardSlash(pathname);
-	Reflect.set(request, originPathnameSymbol, encodeURIComponent(finalPathname));
-}
-function getOriginPathname(request) {
-	const origin = Reflect.get(request, originPathnameSymbol);
-	if (origin) return decodeURIComponent(origin);
-	return new URL(request.url).pathname;
-}
-function normalizeRewritePathname(urlPathname, base, trailingSlash, buildFormat) {
-	let pathname = collapseDuplicateSlashes(urlPathname);
-	const shouldAppendSlash = shouldAppendForwardSlash(trailingSlash, buildFormat);
-	if (base !== "/") {
-		if (urlPathname === base || urlPathname === removeTrailingForwardSlash(base)) pathname = "/";
-		else if (urlPathname.startsWith(base)) {
-			pathname = shouldAppendSlash ? appendForwardSlash(urlPathname) : removeTrailingForwardSlash(urlPathname);
-			pathname = pathname.slice(base.length);
-		}
-	}
-	if (!pathname.startsWith("/") && shouldAppendSlash && urlPathname.endsWith("/")) pathname = prependForwardSlash(pathname);
-	if (buildFormat === "file") pathname = pathname.replace(/\.html$/, "");
-	let resolvedUrlPathname;
-	if (base !== "/" && (pathname === "" || pathname === "/") && !shouldAppendSlash) resolvedUrlPathname = removeTrailingForwardSlash(base);
-	else resolvedUrlPathname = joinPaths(...[base, pathname].filter(Boolean));
-	return {
-		pathname,
-		resolvedUrlPathname
-	};
-}
-//#endregion
-//#region node_modules/astro/dist/core/middleware/sequence.js
-function sequence(...handlers) {
-	const filtered = handlers.filter((h) => !!h);
-	const length = filtered.length;
-	if (!length) return defineMiddleware((_context, next) => {
-		return next();
-	});
-	return defineMiddleware((context, next) => {
-		let carriedPayload = void 0;
-		return applyHandle(0, context);
-		function applyHandle(i, handleContext) {
-			const handle = filtered[i];
-			return handle(handleContext, async (payload) => {
-				if (i < length - 1) {
-					if (payload) {
-						let newRequest;
-						if (payload instanceof Request) newRequest = payload;
-						else if (payload instanceof URL) newRequest = new Request(payload, handleContext.request.clone());
-						else newRequest = new Request(new URL(payload, handleContext.url.origin), handleContext.request.clone());
-						const oldPathname = handleContext.url.pathname;
-						const pipeline = Reflect.get(handleContext, pipelineSymbol);
-						const { routeData, pathname } = await pipeline.tryRewrite(payload, handleContext.request);
-						if (pipeline.manifest.serverLike === true && handleContext.isPrerendered === false && routeData.prerender === true) throw new AstroError({
-							...ForbiddenRewrite,
-							message: ForbiddenRewrite.message(handleContext.url.pathname, pathname, routeData.component),
-							hint: ForbiddenRewrite.hint(routeData.component)
-						});
-						carriedPayload = payload;
-						handleContext.request = newRequest;
-						handleContext.url = new URL(newRequest.url);
-						handleContext.params = getParams(routeData, pathname);
-						handleContext.routePattern = routeData.route;
-						setOriginPathname(handleContext.request, oldPathname, pipeline.manifest.trailingSlash, pipeline.manifest.buildFormat);
-					}
-					return applyHandle(i + 1, handleContext);
-				} else return next(payload ?? carriedPayload);
-			});
-		}
-	});
-}
-//#endregion
-//#region node_modules/astro/dist/core/redirects/component.js
-var RedirectComponentInstance = { default() {
-	return new Response(null, { status: 301 });
-} };
-var RedirectSinglePageBuiltModule = {
-	page: () => Promise.resolve(RedirectComponentInstance),
-	onRequest: (_, next) => next()
-};
-//#endregion
-//#region node_modules/astro/dist/core/routing/generator.js
-function sanitizeParams(params) {
-	return Object.fromEntries(Object.entries(params).map(([key, value]) => {
-		if (typeof value === "string") return [key, value.normalize().replace(/#/g, "%23").replace(/\?/g, "%3F")];
-		return [key, value];
-	}));
-}
-function getParameter(part, params) {
-	if (part.spread) return params[part.content.slice(3)] ?? "";
-	if (part.dynamic) {
-		if (params[part.content] === void 0) throw new TypeError(`Missing parameter: ${part.content}`);
-		return params[part.content];
-	}
-	return part.content.normalize().replace(/\?/g, "%3F").replace(/#/g, "%23").replace(/%5B/g, "[").replace(/%5D/g, "]");
-}
-function getSegment(segment, params) {
-	const segmentPath = segment.map((part) => getParameter(part, params)).join("");
-	return segmentPath ? collapseDuplicateLeadingSlashes("/" + segmentPath) : "";
-}
-function getRouteGenerator(segments, addTrailingSlash) {
-	return (params) => {
-		const sanitizedParams = sanitizeParams(params);
-		let trailing = "";
-		if (addTrailingSlash === "always" && segments.length) trailing = "/";
-		return segments.map((segment) => getSegment(segment, sanitizedParams)).join("") + trailing || "/";
-	};
-}
-//#endregion
-//#region node_modules/astro/dist/core/routing/internal/validation.js
-var VALID_PARAM_TYPES = ["string", "undefined"];
-function validateGetStaticPathsParameter([key, value], route) {
-	if (!VALID_PARAM_TYPES.includes(typeof value)) throw new AstroError({
-		...GetStaticPathsInvalidRouteParam,
-		message: GetStaticPathsInvalidRouteParam.message(key, value, typeof value),
-		location: { file: route }
-	});
-}
-//#endregion
-//#region node_modules/astro/dist/core/routing/params.js
-function stringifyParams(params, route, trailingSlash) {
-	if (route.type === "endpoint" && hasFileExtension(route.route)) trailingSlash = "never";
-	const validatedParams = {};
-	for (const [key, value] of Object.entries(params)) {
-		validateGetStaticPathsParameter([key, value], route.component);
-		if (value !== void 0) validatedParams[key] = trimSlashes(value);
-	}
-	return getRouteGenerator(route.segments, trailingSlash)(validatedParams);
-}
-//#endregion
-//#region node_modules/astro/dist/core/routing/validation.js
-function validateDynamicRouteModule(mod, { ssr, route }) {
-	if ((!ssr || route.prerender) && route.origin !== "internal" && !mod.getStaticPaths) throw new AstroError({
-		...GetStaticPathsRequired,
-		location: { file: route.component }
-	});
-}
-function validateGetStaticPathsResult(result, route) {
-	if (!Array.isArray(result)) throw new AstroError({
-		...InvalidGetStaticPathsReturn,
-		message: InvalidGetStaticPathsReturn.message(typeof result),
-		location: { file: route.component }
-	});
-	result.forEach((pathObject) => {
-		if (typeof pathObject === "object" && Array.isArray(pathObject) || pathObject === null) throw new AstroError({
-			...InvalidGetStaticPathsEntry,
-			message: InvalidGetStaticPathsEntry.message(Array.isArray(pathObject) ? "array" : typeof pathObject)
-		});
-		if (pathObject.params === void 0 || pathObject.params === null || pathObject.params && Object.keys(pathObject.params).length === 0) throw new AstroError({
-			...GetStaticPathsExpectedParams,
-			location: { file: route.component }
-		});
-	});
-}
-//#endregion
-//#region node_modules/astro/dist/core/render/paginate.js
-function generatePaginateFunction(routeMatch, base, trailingSlash) {
-	return function paginateUtility(data, args = {}) {
-		const generate = getRouteGenerator(routeMatch.segments, trailingSlash);
-		let { pageSize: _pageSize, params: _params, props: _props, format: _format } = args;
-		const pageSize = _pageSize || 10;
-		const paramName = "page";
-		const additionalParams = _params || {};
-		const additionalProps = _props || {};
-		const formatUrl = _format || ((url) => url);
-		let includesFirstPageNumber;
-		if (routeMatch.params.includes(`...${paramName}`)) includesFirstPageNumber = false;
-		else if (routeMatch.params.includes(`${paramName}`)) includesFirstPageNumber = true;
-		else throw new AstroError({
-			...PageNumberParamNotFound,
-			message: PageNumberParamNotFound.message(paramName)
-		});
-		const lastPage = Math.max(1, Math.ceil(data.length / pageSize));
-		return [...Array(lastPage).keys()].map((num) => {
-			const pageNum = num + 1;
-			const start = pageSize === Number.POSITIVE_INFINITY ? 0 : (pageNum - 1) * pageSize;
-			const end = Math.min(start + pageSize, data.length);
-			const params = {
-				...additionalParams,
-				[paramName]: includesFirstPageNumber || pageNum > 1 ? String(pageNum) : void 0
-			};
-			const current = formatUrl(addRouteBase(generate({ ...params }), base));
-			const next = pageNum === lastPage ? void 0 : formatUrl(addRouteBase(generate({
-				...params,
-				page: String(pageNum + 1)
-			}), base));
-			const prev = pageNum === 1 ? void 0 : formatUrl(addRouteBase(generate({
-				...params,
-				page: !includesFirstPageNumber && pageNum - 1 === 1 ? void 0 : String(pageNum - 1)
-			}), base));
-			const first = pageNum === 1 ? void 0 : formatUrl(addRouteBase(generate({
-				...params,
-				page: includesFirstPageNumber ? "1" : void 0
-			}), base));
-			const last = pageNum === lastPage ? void 0 : formatUrl(addRouteBase(generate({
-				...params,
-				page: String(lastPage)
-			}), base));
-			return {
-				params,
-				props: {
-					...additionalProps,
-					page: {
-						data: data.slice(start, end),
-						start,
-						end: end - 1,
-						size: pageSize,
-						total: data.length,
-						currentPage: pageNum,
-						lastPage,
-						url: {
-							current,
-							next,
-							prev,
-							first,
-							last
-						}
-					}
-				}
-			};
-		});
-	};
-}
-function addRouteBase(route, base) {
-	let routeWithBase = joinPaths(base, route);
-	if (routeWithBase === "") routeWithBase = "/";
-	return routeWithBase;
-}
-//#endregion
-//#region node_modules/astro/dist/core/render/route-cache.js
-async function callGetStaticPaths({ mod, route, routeCache, ssr, base, trailingSlash }) {
-	const cached = routeCache.get(route);
-	if (!mod) throw new Error("This is an error caused by Astro and not your code. Please file an issue.");
-	if (cached?.staticPaths && cached.mod === mod) return cached.staticPaths;
-	validateDynamicRouteModule(mod, {
-		ssr,
-		route
-	});
-	if (ssr && !route.prerender || route.origin === "internal") {
-		const entry = Object.assign([], { keyed: /* @__PURE__ */ new Map() });
-		routeCache.set(route, {
-			...cached,
-			mod,
-			staticPaths: entry
-		});
-		return entry;
-	}
-	let staticPaths = [];
-	if (!mod.getStaticPaths) throw new Error("Unexpected Error.");
-	staticPaths = await mod.getStaticPaths({
-		paginate: generatePaginateFunction(route, base, trailingSlash),
-		routePattern: route.route
-	});
-	validateGetStaticPathsResult(staticPaths, route);
-	const keyedStaticPaths = staticPaths;
-	keyedStaticPaths.keyed = /* @__PURE__ */ new Map();
-	for (const sp of keyedStaticPaths) {
-		const paramsKey = stringifyParams(sp.params, route, trailingSlash);
-		keyedStaticPaths.keyed.set(paramsKey, sp);
-	}
-	routeCache.set(route, {
-		...cached,
-		mod,
-		staticPaths: keyedStaticPaths
-	});
-	return keyedStaticPaths;
-}
-var RouteCache = class {
-	logger;
-	cache = {};
-	runtimeMode;
-	constructor(logger, runtimeMode = "production") {
-		this.logger = logger;
-		this.runtimeMode = runtimeMode;
-	}
-	/** Clear the cache. */
-	clearAll() {
-		this.cache = {};
-	}
-	set(route, entry) {
-		const key = this.key(route);
-		if (this.runtimeMode === "production" && this.cache[key]?.staticPaths) this.logger.warn(null, `Internal Warning: route cache overwritten. (${key})`);
-		this.cache[key] = entry;
-	}
-	get(route) {
-		return this.cache[this.key(route)];
-	}
-	key(route) {
-		return `${route.route}_${route.component}`;
-	}
-};
-function findPathItemByKey(staticPaths, params, route, logger, trailingSlash) {
-	const paramsKey = stringifyParams(params, route, trailingSlash);
-	const matchedStaticPath = staticPaths.keyed.get(paramsKey);
-	if (matchedStaticPath) return matchedStaticPath;
-	logger.debug("router", `findPathItemByKey() - Unexpected cache miss looking for ${paramsKey}`);
-}
-//#endregion
 //#region node_modules/astro/dist/core/routing/pattern.js
 function getPattern(segments, base, addTrailingSlash) {
 	const pathname = segments.map((segment) => {
@@ -1370,757 +581,6 @@ function getTrailingSlashPattern(addTrailingSlash) {
 	if (addTrailingSlash === "never") return "$";
 	return "\\/?$";
 }
-//#endregion
-//#region node_modules/astro/dist/core/server-islands/endpoint.js
-var SERVER_ISLAND_ROUTE = "/_server-islands/[name]";
-var SERVER_ISLAND_COMPONENT = "_server-islands.astro";
-function badRequest(reason) {
-	return new Response(null, {
-		status: 400,
-		statusText: "Bad request: " + reason
-	});
-}
-var DEFAULT_BODY_SIZE_LIMIT = 1024 * 1024;
-async function getRequestData(request, bodySizeLimit = DEFAULT_BODY_SIZE_LIMIT) {
-	switch (request.method) {
-		case "GET": {
-			const params = new URL(request.url).searchParams;
-			if (!params.has("s") || !params.has("e") || !params.has("p")) return badRequest("Missing required query parameters.");
-			const encryptedSlots = params.get("s");
-			return {
-				encryptedComponentExport: params.get("e"),
-				encryptedProps: params.get("p"),
-				encryptedSlots
-			};
-		}
-		case "POST": try {
-			const body = await readBodyWithLimit(request, bodySizeLimit);
-			const raw = new TextDecoder().decode(body);
-			const data = JSON.parse(raw);
-			if (Object.hasOwn(data, "slots") && typeof data.slots === "object") return badRequest("Plaintext slots are not allowed. Slots must be encrypted.");
-			if (Object.hasOwn(data, "componentExport") && typeof data.componentExport === "string") return badRequest("Plaintext componentExport is not allowed. componentExport must be encrypted.");
-			return data;
-		} catch (e) {
-			if (e instanceof BodySizeLimitError) return new Response(null, {
-				status: 413,
-				statusText: e.message
-			});
-			if (e instanceof SyntaxError) return badRequest("Request format is invalid.");
-			throw e;
-		}
-		default: return new Response(null, { status: 405 });
-	}
-}
-function createEndpoint(manifest) {
-	const page = async (result) => {
-		const params = result.params;
-		if (!params.name) return new Response(null, {
-			status: 400,
-			statusText: "Bad request"
-		});
-		const componentId = params.name;
-		const data = await getRequestData(result.request, manifest.serverIslandBodySizeLimit);
-		if (data instanceof Response) return data;
-		let imp = (await (await manifest.serverIslandMappings?.())?.serverIslandMap)?.get(componentId);
-		if (!imp) return new Response(null, {
-			status: 404,
-			statusText: "Not found"
-		});
-		const key = await manifest.key;
-		let componentExport;
-		try {
-			componentExport = await decryptString(key, data.encryptedComponentExport, `export:${componentId}`);
-		} catch (_e) {
-			return badRequest("Encrypted componentExport value is invalid.");
-		}
-		const encryptedProps = data.encryptedProps;
-		let props = {};
-		if (encryptedProps !== "") try {
-			const propString = await decryptString(key, encryptedProps, `props:${componentId}`);
-			props = JSON.parse(propString);
-		} catch (_e) {
-			return badRequest("Encrypted props value is invalid.");
-		}
-		let decryptedSlots = {};
-		const encryptedSlots = data.encryptedSlots;
-		if (encryptedSlots !== "") try {
-			const slotsString = await decryptString(key, encryptedSlots, `slots:${componentId}`);
-			decryptedSlots = JSON.parse(slotsString);
-		} catch (_e) {
-			return badRequest("Encrypted slots value is invalid.");
-		}
-		let Component = (await imp())[componentExport];
-		const slots = {};
-		for (const prop in decryptedSlots) slots[prop] = createSlotValueFromString(decryptedSlots[prop]);
-		result.response.headers.set("X-Robots-Tag", "noindex");
-		if (isAstroComponentFactory(Component)) {
-			const ServerIsland = Component;
-			Component = function(...args) {
-				return ServerIsland.apply(this, args);
-			};
-			Object.assign(Component, ServerIsland);
-			Component.propagation = "self";
-		}
-		return renderTemplate`${renderComponent(result, "Component", Component, props, slots)}`;
-	};
-	page.isAstroComponentFactory = true;
-	return {
-		default: page,
-		partial: true
-	};
-}
-//#endregion
-//#region node_modules/astro/dist/core/routing/default.js
-function createDefaultRoutes(manifest) {
-	const root = new URL(manifest.rootDir);
-	return [{
-		instance: default404Instance,
-		matchesComponent: (filePath) => filePath.href === new URL(DEFAULT_404_COMPONENT, root).href,
-		route: DEFAULT_404_ROUTE.route,
-		component: DEFAULT_404_COMPONENT
-	}, {
-		instance: createEndpoint(manifest),
-		matchesComponent: (filePath) => filePath.href === new URL(SERVER_ISLAND_COMPONENT, root).href,
-		route: SERVER_ISLAND_ROUTE,
-		component: SERVER_ISLAND_COMPONENT
-	}];
-}
-//#endregion
-//#region node_modules/astro/dist/core/routing/astro-designed-error-pages.js
-function ensure404Route(manifest) {
-	if (!manifest.routes.some((route) => route.route === "/404")) manifest.routes.push(DEFAULT_404_ROUTE);
-	return manifest;
-}
-//#endregion
-//#region node_modules/astro/dist/core/routing/helpers.js
-function routeIsRedirect(route) {
-	return route?.type === "redirect";
-}
-function routeIsFallback(route) {
-	return route?.type === "fallback";
-}
-function getFallbackRoute(route, routeList) {
-	const fallbackRoute = routeList.find((r) => {
-		if (route.route === "/" && r.routeData.route === "/") return true;
-		return r.routeData.fallbackRoutes.find((f) => {
-			return f.route === route.route;
-		});
-	});
-	if (!fallbackRoute) throw new Error(`No fallback route found for route ${route.route}`);
-	return fallbackRoute.routeData;
-}
-function getCustom404Route(manifestData) {
-	return manifestData.routes.find((r) => isRoute404(r.route));
-}
-function routeHasHtmlExtension(route) {
-	return route.segments.some((segment) => segment.some((part) => !part.dynamic && part.content.includes(".html")));
-}
-//#endregion
-//#region node_modules/astro/dist/core/render/params-and-props.js
-async function getProps(opts) {
-	const { logger, mod, routeData: route, routeCache, pathname, serverLike, base, trailingSlash } = opts;
-	if (!route || route.pathname) return {};
-	if (routeIsRedirect(route) || routeIsFallback(route) || route.component === "astro-default-404.astro") return {};
-	const staticPaths = await callGetStaticPaths({
-		mod,
-		route,
-		routeCache,
-		ssr: serverLike,
-		base,
-		trailingSlash
-	});
-	const params = getParams(route, pathname);
-	const matchedStaticPath = findPathItemByKey(staticPaths, params, route, logger, trailingSlash);
-	if (!matchedStaticPath && route.origin !== "internal" && (serverLike ? route.prerender : true)) throw new AstroError({
-		...NoMatchingStaticPathFound,
-		message: NoMatchingStaticPathFound.message(pathname),
-		hint: NoMatchingStaticPathFound.hint([route.component])
-	});
-	if (mod) validatePrerenderEndpointCollision(route, mod, params);
-	return matchedStaticPath?.props ? { ...matchedStaticPath.props } : {};
-}
-function getParams(route, pathname) {
-	if (!route.params.length) return {};
-	const hasHtmlSuffix = pathname.endsWith(".html") && !routeHasHtmlExtension(route);
-	const path = hasHtmlSuffix && route.type === "page" ? pathname.slice(0, -5) : pathname;
-	const allPatterns = [route, ...route.fallbackRoutes].map((r) => r.pattern);
-	let paramsMatch = allPatterns.map((pattern) => pattern.exec(path)).find((x) => x);
-	if (!paramsMatch && hasHtmlSuffix && route.type !== "page") {
-		const strippedPath = pathname.endsWith("/index.html") ? pathname.slice(0, -11) || "/" : pathname.slice(0, -5);
-		paramsMatch = allPatterns.map((pattern) => pattern.exec(strippedPath)).find((x) => x);
-	}
-	if (!paramsMatch) return {};
-	const params = {};
-	route.params.forEach((key, i) => {
-		if (key.startsWith("...")) params[key.slice(3)] = paramsMatch[i + 1] ? paramsMatch[i + 1] : void 0;
-		else params[key] = paramsMatch[i + 1];
-	});
-	return params;
-}
-function validatePrerenderEndpointCollision(route, mod, params) {
-	if (route.type === "endpoint" && mod.getStaticPaths) {
-		const lastSegment = route.segments[route.segments.length - 1];
-		const paramValues = Object.values(params);
-		const lastParam = paramValues[paramValues.length - 1];
-		if (lastSegment.length === 1 && lastSegment[0].dynamic && lastParam === void 0) throw new AstroError({
-			...PrerenderDynamicEndpointPathCollide,
-			message: PrerenderDynamicEndpointPathCollide.message(route.route),
-			hint: PrerenderDynamicEndpointPathCollide.hint(route.component),
-			location: { file: route.component }
-		});
-	}
-}
-//#endregion
-//#region node_modules/astro/dist/core/routing/priority.js
-function routeComparator(a, b) {
-	const commonLength = Math.min(a.segments.length, b.segments.length);
-	for (let index = 0; index < commonLength; index++) {
-		const aSegment = a.segments[index];
-		const bSegment = b.segments[index];
-		const aIsStatic = aSegment.every((part) => !part.dynamic && !part.spread);
-		const bIsStatic = bSegment.every((part) => !part.dynamic && !part.spread);
-		if (aIsStatic && bIsStatic) {
-			const aContent = aSegment.map((part) => part.content).join("");
-			const bContent = bSegment.map((part) => part.content).join("");
-			if (aContent !== bContent) return aContent.localeCompare(bContent);
-		}
-		if (aIsStatic !== bIsStatic) return aIsStatic ? -1 : 1;
-		const aAllDynamic = aSegment.every((part) => part.dynamic);
-		if (aAllDynamic !== bSegment.every((part) => part.dynamic)) return aAllDynamic ? 1 : -1;
-		const aHasSpread = aSegment.some((part) => part.spread);
-		if (aHasSpread !== bSegment.some((part) => part.spread)) return aHasSpread ? 1 : -1;
-	}
-	const aLength = a.segments.length;
-	const bLength = b.segments.length;
-	if (aLength !== bLength) {
-		const aEndsInRest = a.segments.at(-1)?.some((part) => part.spread);
-		const bEndsInRest = b.segments.at(-1)?.some((part) => part.spread);
-		if (aEndsInRest !== bEndsInRest && Math.abs(aLength - bLength) === 1) {
-			if (aLength > bLength && aEndsInRest) return 1;
-			if (bLength > aLength && bEndsInRest) return -1;
-		}
-		return aLength > bLength ? -1 : 1;
-	}
-	if (a.type === "endpoint" !== (b.type === "endpoint")) return a.type === "endpoint" ? -1 : 1;
-	return a.route.localeCompare(b.route);
-}
-//#endregion
-//#region node_modules/astro/dist/core/routing/router.js
-var Router = class {
-	#routes;
-	#base;
-	#baseWithoutTrailingSlash;
-	#buildFormat;
-	#trailingSlash;
-	constructor(routes, options) {
-		this.#routes = [...routes].sort(routeComparator);
-		this.#base = normalizeBase(options.base);
-		this.#baseWithoutTrailingSlash = removeTrailingForwardSlash(this.#base);
-		this.#buildFormat = options.buildFormat;
-		this.#trailingSlash = options.trailingSlash;
-	}
-	/**
-	* Match an input pathname against the route list.
-	* If allowWithoutBase is true, a non-base-prefixed path is still considered.
-	*/
-	match(inputPathname, { allowWithoutBase = false } = {}) {
-		const normalized = getRedirectForPathname(inputPathname);
-		if (normalized.redirect) return {
-			type: "redirect",
-			location: normalized.redirect,
-			status: 301
-		};
-		if (this.#base !== "/") {
-			const baseWithSlash = `${this.#baseWithoutTrailingSlash}/`;
-			if (this.#trailingSlash === "always" && (normalized.pathname === this.#baseWithoutTrailingSlash || normalized.pathname === this.#base)) return {
-				type: "redirect",
-				location: baseWithSlash,
-				status: 301
-			};
-			if (this.#trailingSlash === "never" && normalized.pathname === baseWithSlash) return {
-				type: "redirect",
-				location: this.#baseWithoutTrailingSlash,
-				status: 301
-			};
-		}
-		const baseResult = stripBase(normalized.pathname, this.#base, this.#baseWithoutTrailingSlash, this.#trailingSlash);
-		if (!baseResult) {
-			if (!allowWithoutBase) return {
-				type: "none",
-				reason: "outside-base"
-			};
-		}
-		let pathname = baseResult ?? normalized.pathname;
-		if (this.#buildFormat === "file") pathname = normalizeFileFormatPathname(pathname);
-		const route = this.#routes.find((candidate) => {
-			if (candidate.pattern.test(pathname)) return true;
-			return candidate.fallbackRoutes.some((fallbackRoute) => fallbackRoute.pattern.test(pathname));
-		});
-		if (!route) return {
-			type: "none",
-			reason: "no-match"
-		};
-		return {
-			type: "match",
-			route,
-			params: getParams(route, pathname),
-			pathname
-		};
-	}
-	/**
-	* Returns all routes that match the given pathname, in priority order.
-	* Used when the first match (e.g. a prerendered route) cannot serve
-	* the request and subsequent matches need to be tried.
-	*/
-	matchAll(inputPathname, { allowWithoutBase = false } = {}) {
-		const normalized = getRedirectForPathname(inputPathname);
-		if (normalized.redirect) return [];
-		const baseResult = stripBase(normalized.pathname, this.#base, this.#baseWithoutTrailingSlash, this.#trailingSlash);
-		if (!baseResult && !allowWithoutBase) return [];
-		let pathname = baseResult ?? normalized.pathname;
-		if (this.#buildFormat === "file") pathname = normalizeFileFormatPathname(pathname);
-		return this.#routes.filter((candidate) => {
-			if (candidate.pattern.test(pathname)) return true;
-			return candidate.fallbackRoutes.some((fallbackRoute) => fallbackRoute.pattern.test(pathname));
-		});
-	}
-};
-function normalizeBase(base) {
-	if (!base) return "/";
-	if (base === "/") return base;
-	return prependForwardSlash(base);
-}
-function getRedirectForPathname(pathname) {
-	let value = prependForwardSlash(pathname);
-	if (value.startsWith("//")) return {
-		pathname: value,
-		redirect: `/${value.replace(/^\/+/, "")}`
-	};
-	return { pathname: value };
-}
-function stripBase(pathname, base, baseWithoutTrailingSlash, trailingSlash) {
-	if (base === "/") return pathname;
-	const baseWithSlash = `${baseWithoutTrailingSlash}/`;
-	if (pathname === baseWithoutTrailingSlash || pathname === base) return trailingSlash === "always" ? null : "/";
-	if (pathname === baseWithSlash) return trailingSlash === "never" ? null : "/";
-	if (pathname.startsWith(baseWithSlash)) return pathname.slice(baseWithoutTrailingSlash.length);
-	return null;
-}
-function normalizeFileFormatPathname(pathname) {
-	if (pathname.endsWith("/index.html")) {
-		const trimmed = pathname.slice(0, -11);
-		return trimmed === "" ? "/" : trimmed;
-	}
-	if (pathname.endsWith(".html")) {
-		const trimmed = pathname.slice(0, -5);
-		return trimmed === "" ? "/" : trimmed;
-	}
-	return pathname;
-}
-//#endregion
-//#region node_modules/@astrojs/internal-helpers/dist/object.js
-var FORBIDDEN_PATH_KEYS = /* @__PURE__ */ new Set([
-	"__proto__",
-	"constructor",
-	"prototype"
-]);
-//#endregion
-//#region node_modules/astro/dist/core/logger/public.js
-function matchesLevel(messageLevel, configuredLevel) {
-	return levels[messageLevel] >= levels[configuredLevel];
-}
-//#endregion
-//#region node_modules/astro/dist/core/logger/impls/node.js
-function nodeLogDestination(config = {}) {
-	const { level = "info" } = config;
-	return { write(event) {
-		let dest = process.stderr;
-		if (levels[event.level] < levels["error"]) dest = process.stdout;
-		if (!matchesLevel(event.level, level)) return;
-		let trailingLine = event.newLine ? "\n" : "";
-		if (event.label === "SKIP_FORMAT") dest.write(event.message + trailingLine);
-		else dest.write(getEventPrefix(event) + " " + event.message + trailingLine);
-	} };
-}
-function node_default(options) {
-	return nodeLogDestination(options);
-}
-//#endregion
-//#region node_modules/astro/dist/core/logger/impls/console.js
-function consoleLogDestination(config = {}) {
-	const { level = "info" } = config;
-	return { write(event) {
-		let dest = console.error;
-		if (levels[event.level] < levels["error"]) dest = console.info;
-		if (!matchesLevel(event.level, level)) return;
-		if (event.label === "SKIP_FORMAT") dest(event.message);
-		else dest(getEventPrefix(event) + " " + event.message);
-	} };
-}
-function createConsoleLogger({ level }) {
-	return new AstroLogger({
-		level,
-		destination: consoleLogDestination()
-	});
-}
-function console_default(options) {
-	return consoleLogDestination(options);
-}
-//#endregion
-//#region node_modules/astro/dist/core/logger/impls/json.js
-var SGR_REGEX = new RegExp(`${String.fromCharCode(27)}\\[[0-9;]*m`, "g");
-function jsonLoggerDestination(config = {}) {
-	const { pretty = false, level = "info" } = config;
-	return { write(event) {
-		if (!matchesLevel(event.level, level)) return;
-		const dest = levels[event.level] >= levels["error"] ? console.error : console.info;
-		const message = event.message.replace(SGR_REGEX, "");
-		dest(pretty ? JSON.stringify({
-			message,
-			label: event.label,
-			level: event.level
-		}, null, 2) : JSON.stringify({
-			message,
-			label: event.label,
-			level: event.level
-		}));
-	} };
-}
-//#endregion
-//#region node_modules/astro/dist/core/logger/impls/compose.js
-function compose(destinations) {
-	return {
-		write(chunk) {
-			for (const logger of destinations) logger.write(chunk);
-		},
-		flush() {
-			for (const logger of destinations) if (logger.flush) logger.flush();
-		},
-		close() {
-			for (const logger of destinations) if (logger.close) logger.close();
-		}
-	};
-}
-//#endregion
-//#region node_modules/astro/dist/core/logger/load.js
-function normalizeEntrypoint(entrypoint) {
-	return entrypoint instanceof URL ? entrypoint.href : entrypoint;
-}
-async function loadLoggerDestination(config) {
-	let cause = void 0;
-	const entrypoint = normalizeEntrypoint(config.entrypoint);
-	try {
-		switch (config.entrypoint) {
-			case "astro/logger/node": return node_default(config.config);
-			case "astro/logger/console": return console_default(config.config);
-			case "astro/logger/json": return jsonLoggerDestination(config.config);
-			case "astro/logger/compose": {
-				let destinations = [];
-				if (config.config?.loggers) {
-					const loggers = config.config?.loggers;
-					destinations = await Promise.all(loggers.map(async (loggerConfig) => {
-						return (await import(
-							/* @vite-ignore */
-							normalizeEntrypoint(loggerConfig.entrypoint)
-)).default(loggerConfig.config);
-					}));
-				}
-				return compose(destinations);
-			}
-			default: return (await import(
-				/* @vite-ignore */
-				entrypoint
-)).default(config.config);
-		}
-	} catch (e) {
-		if (e instanceof Error) cause = e;
-	}
-	const error = new AstroError({
-		...UnableToLoadLogger,
-		message: UnableToLoadLogger.message(entrypoint)
-	});
-	if (cause) error.cause = cause;
-	throw error;
-}
-//#endregion
-//#region node_modules/astro/dist/core/base-pipeline.js
-var PipelineFeatures = {
-	redirects: 1,
-	sessions: 2,
-	actions: 4,
-	middleware: 8,
-	i18n: 16,
-	cache: 32
-};
-var ALL_PIPELINE_FEATURES = PipelineFeatures.redirects | PipelineFeatures.sessions | PipelineFeatures.actions | PipelineFeatures.middleware | PipelineFeatures.i18n | PipelineFeatures.cache;
-var Pipeline = class {
-	internalMiddleware;
-	resolvedMiddleware = void 0;
-	resolvedLogger = false;
-	resolvedActions = void 0;
-	resolvedSessionDriver = void 0;
-	resolvedCacheProvider = void 0;
-	compiledCacheRoutes = void 0;
-	/**
-	* Bit mask of pipeline features activated by handler classes.
-	* Each handler sets its bit via `|=`. Only meaningful when a
-	* custom `src/fetch.ts` fetch handler is in use.
-	*/
-	usedFeatures = 0;
-	logger;
-	manifest;
-	/**
-	* "development" or "production" only
-	*/
-	runtimeMode;
-	renderers;
-	resolve;
-	streaming;
-	/**
-	* Used to provide better error messages for `Astro.clientAddress`
-	*/
-	adapterName;
-	clientDirectives;
-	inlinedScripts;
-	compressHTML;
-	i18n;
-	middleware;
-	routeCache;
-	/**
-	* Used for `Astro.site`.
-	*/
-	site;
-	/**
-	* Array of built-in, internal, routes.
-	* Used to find the route module
-	*/
-	defaultRoutes;
-	actions;
-	sessionDriver;
-	cacheProvider;
-	cacheConfig;
-	serverIslands;
-	/** Route data derived from the manifest, used for route matching. */
-	manifestData;
-	/** Pattern-matching router built from manifestData. */
-	#router;
-	constructor(logger, manifest, runtimeMode, renderers, resolve, streaming, adapterName = manifest.adapterName, clientDirectives = manifest.clientDirectives, inlinedScripts = manifest.inlinedScripts, compressHTML = manifest.compressHTML, i18n = manifest.i18n, middleware = manifest.middleware, routeCache = new RouteCache(logger, runtimeMode), site = manifest.site ? new URL(manifest.site) : void 0, defaultRoutes = createDefaultRoutes(manifest), actions = manifest.actions, sessionDriver = manifest.sessionDriver, cacheProvider = manifest.cacheProvider, cacheConfig = manifest.cacheConfig, serverIslands = manifest.serverIslandMappings) {
-		this.logger = logger;
-		this.manifest = manifest;
-		this.runtimeMode = runtimeMode;
-		this.renderers = renderers;
-		this.resolve = resolve;
-		this.streaming = streaming;
-		this.adapterName = adapterName;
-		this.clientDirectives = clientDirectives;
-		this.inlinedScripts = inlinedScripts;
-		this.compressHTML = compressHTML;
-		this.i18n = i18n;
-		this.middleware = middleware;
-		this.routeCache = routeCache;
-		this.site = site;
-		this.defaultRoutes = defaultRoutes;
-		this.actions = actions;
-		this.sessionDriver = sessionDriver;
-		this.cacheProvider = cacheProvider;
-		this.cacheConfig = cacheConfig;
-		this.serverIslands = serverIslands;
-		this.manifestData = { routes: (manifest.routes ?? []).map((route) => route.routeData) };
-		ensure404Route(this.manifestData);
-		this.#router = new Router(this.manifestData.routes, {
-			base: manifest.base,
-			trailingSlash: manifest.trailingSlash,
-			buildFormat: manifest.buildFormat
-		});
-		this.internalMiddleware = [];
-	}
-	/**
-	* Low-level route matching against the manifest routes. Returns the
-	* matched `RouteData` or `undefined`. Does not filter prerendered
-	* routes or check public assets — use `BaseApp.match()` for that.
-	*/
-	matchRoute(pathname) {
-		const match = this.#router.match(pathname, { allowWithoutBase: true });
-		if (match.type !== "match") return void 0;
-		return match.route;
-	}
-	/**
-	* Returns all routes matching the given pathname, in priority order.
-	* Used when the first match cannot serve the request (e.g. a
-	* prerendered dynamic route that doesn't cover this specific path)
-	* and the caller needs to try subsequent matches.
-	*/
-	matchAllRoutes(pathname) {
-		return this.#router.matchAll(pathname, { allowWithoutBase: true });
-	}
-	/**
-	* Rebuilds the internal router after routes have been added or
-	* removed (e.g. by the dev server on HMR).
-	*/
-	rebuildRouter() {
-		this.#router = new Router(this.manifestData.routes, {
-			base: this.manifest.base,
-			trailingSlash: this.manifest.trailingSlash,
-			buildFormat: this.manifest.buildFormat
-		});
-	}
-	/**
-	* Resolves the middleware from the manifest, and returns the `onRequest` function. If `onRequest` isn't there,
-	* it returns a no-op function
-	*/
-	async getMiddleware() {
-		if (this.resolvedMiddleware) return this.resolvedMiddleware;
-		if (this.middleware) {
-			const internalMiddlewares = [(await this.middleware()).onRequest ?? NOOP_MIDDLEWARE_FN];
-			if (this.manifest.checkOrigin) internalMiddlewares.unshift(createOriginCheckMiddleware());
-			this.resolvedMiddleware = sequence(...internalMiddlewares);
-			return this.resolvedMiddleware;
-		} else {
-			this.resolvedMiddleware = NOOP_MIDDLEWARE_FN;
-			return this.resolvedMiddleware;
-		}
-	}
-	/**
-	* Clears the cached middleware so it is re-resolved on the next request.
-	* Called via HMR when middleware files change during development.
-	*/
-	clearMiddleware() {
-		this.resolvedMiddleware = void 0;
-	}
-	/**
-	* Resolves the logger destination from the manifest and updates the pipeline logger.
-	* If the user configured `logger`, the bundled logger factory is loaded
-	* and replaces the default console destination. This is lazy and only resolves once.
-	*/
-	async getLogger() {
-		if (this.resolvedLogger) return this.logger;
-		this.resolvedLogger = true;
-		if (this.manifest.loggerConfig) this.logger = new AstroLogger({
-			destination: await loadLoggerDestination(this.manifest.loggerConfig),
-			level: this.manifest.logLevel
-		});
-		return this.logger;
-	}
-	async getActions() {
-		if (this.resolvedActions) return this.resolvedActions;
-		else if (this.actions) {
-			this.resolvedActions = await this.actions();
-			return this.resolvedActions;
-		}
-		return NOOP_ACTIONS_MOD;
-	}
-	async getSessionDriver() {
-		if (this.resolvedSessionDriver !== void 0) return this.resolvedSessionDriver;
-		if (this.sessionDriver) {
-			const driverModule = await this.sessionDriver();
-			this.resolvedSessionDriver = driverModule?.default || null;
-			return this.resolvedSessionDriver;
-		}
-		this.resolvedSessionDriver = null;
-		return null;
-	}
-	async getCacheProvider() {
-		if (this.resolvedCacheProvider !== void 0) return this.resolvedCacheProvider;
-		if (this.cacheProvider) {
-			const factory = (await this.cacheProvider())?.default || null;
-			this.resolvedCacheProvider = factory ? factory(this.cacheConfig?.options) : null;
-			return this.resolvedCacheProvider;
-		}
-		this.resolvedCacheProvider = null;
-		return null;
-	}
-	async getServerIslands() {
-		if (this.serverIslands) return this.serverIslands();
-		return {
-			serverIslandMap: /* @__PURE__ */ new Map(),
-			serverIslandNameMap: /* @__PURE__ */ new Map()
-		};
-	}
-	async getAction(path) {
-		const pathKeys = path.split(".").map((key) => decodeURIComponent(key));
-		let { server } = await this.getActions();
-		if (!server || !(typeof server === "object")) throw new TypeError(`Expected \`server\` export in actions file to be an object. Received ${typeof server}.`);
-		for (const key of pathKeys) {
-			if (FORBIDDEN_PATH_KEYS.has(key)) throw new AstroError({
-				...ActionNotFoundError,
-				message: ActionNotFoundError.message(pathKeys.join("."))
-			});
-			if (!Object.hasOwn(server, key)) throw new AstroError({
-				...ActionNotFoundError,
-				message: ActionNotFoundError.message(pathKeys.join("."))
-			});
-			server = server[key];
-		}
-		if (typeof server !== "function") throw new TypeError(`Expected handler for action ${pathKeys.join(".")} to be a function. Received ${typeof server}.`);
-		return server;
-	}
-	async getModuleForRoute(route) {
-		for (const defaultRoute of this.defaultRoutes) if (route.component === defaultRoute.component) return { page: () => Promise.resolve(defaultRoute.instance) };
-		if (route.type === "redirect") return RedirectSinglePageBuiltModule;
-		else {
-			if (this.manifest.pageMap) {
-				const importComponentInstance = this.manifest.pageMap.get(route.component);
-				if (!importComponentInstance) throw new Error(`Unexpectedly unable to find a component instance for route ${route.route}`);
-				return await importComponentInstance();
-			} else if (this.manifest.pageModule) return this.manifest.pageModule;
-			throw new Error("Astro couldn't find the correct page to render, probably because it wasn't correctly mapped for SSR usage. This is an internal error, please file an issue.");
-		}
-	}
-};
-//#endregion
-//#region node_modules/astro/dist/core/render/slots.js
-function getFunctionExpression(slot) {
-	if (!slot) return;
-	const expressions = slot?.expressions?.filter((e) => isRenderInstruction(e) === false || isRenderTemplateResult(e));
-	if (expressions?.length !== 1) return;
-	const expression = expressions[0];
-	if (isRenderTemplateResult(expression)) return getFunctionExpression(expression);
-	return expression;
-}
-var Slots = class {
-	#result;
-	#slots;
-	#logger;
-	constructor(result, slots, logger) {
-		this.#result = result;
-		this.#slots = slots;
-		this.#logger = logger;
-		if (slots) for (const key of Object.keys(slots)) {
-			if (this[key] !== void 0) throw new AstroError({
-				...ReservedSlotName,
-				message: ReservedSlotName.message(key)
-			});
-			Object.defineProperty(this, key, {
-				get() {
-					return true;
-				},
-				enumerable: true
-			});
-		}
-	}
-	has(name) {
-		if (!this.#slots) return false;
-		return Boolean(this.#slots[name]);
-	}
-	async render(name, args = []) {
-		if (!this.#slots || !this.has(name)) return;
-		const result = this.#result;
-		if (!Array.isArray(args)) this.#logger.warn(null, `Expected second parameter to be an array, received a ${typeof args}. If you're trying to pass an array as a single argument and getting unexpected results, make sure you're passing your array as an item of an array. Ex: Astro.slots.render('default', [["Hello", "World"]])`);
-		else if (args.length > 0) {
-			const slotValue = this.#slots[name];
-			const component = typeof slotValue === "function" ? await slotValue(result) : await slotValue;
-			const expression = getFunctionExpression(component);
-			if (expression) {
-				const slot = async () => typeof expression === "function" ? expression(...args) : expression;
-				return await renderSlotToString(result, slot).then((res) => {
-					return res;
-				});
-			}
-			if (typeof component === "function") return await renderJSX(result, component(...args)).then((res) => res != null ? String(res) : res);
-		}
-		return chunkToString(result, await renderSlotToString(result, this.#slots[name]));
-	}
-};
 //#endregion
 //#region node_modules/astro/dist/i18n/fallback.js
 function computeFallbackRoute(options) {
@@ -5165,6 +3625,31 @@ var renderers = [];
 		"scripts": [],
 		"styles": [],
 		"routeData": {
+			"route": "/about",
+			"isIndex": false,
+			"type": "page",
+			"pattern": "^\\/about\\/?$",
+			"segments": [[{
+				"content": "about",
+				"dynamic": false,
+				"spread": false
+			}]],
+			"params": [],
+			"component": "src/pages/about.astro",
+			"pathname": "/about",
+			"prerender": false,
+			"fallbackRoutes": [],
+			"distURL": [],
+			"origin": "project",
+			"_meta": { "trailingSlash": "ignore" }
+		}
+	},
+	{
+		"file": "",
+		"links": [],
+		"scripts": [],
+		"styles": [],
+		"routeData": {
 			"route": "/api/revalidate",
 			"isIndex": false,
 			"type": "endpoint",
@@ -5245,23 +3730,536 @@ var renderers = [];
 			"origin": "project",
 			"_meta": { "trailingSlash": "ignore" }
 		}
+	},
+	{
+		"file": "",
+		"links": [],
+		"scripts": [],
+		"styles": [],
+		"routeData": {
+			"route": "/blog",
+			"isIndex": true,
+			"type": "page",
+			"pattern": "^\\/blog\\/?$",
+			"segments": [[{
+				"content": "blog",
+				"dynamic": false,
+				"spread": false
+			}]],
+			"params": [],
+			"component": "src/pages/blog/index.astro",
+			"pathname": "/blog",
+			"prerender": false,
+			"fallbackRoutes": [],
+			"distURL": [],
+			"origin": "project",
+			"_meta": { "trailingSlash": "ignore" }
+		}
+	},
+	{
+		"file": "",
+		"links": [],
+		"scripts": [],
+		"styles": [],
+		"routeData": {
+			"route": "/blog/[...slug]",
+			"isIndex": false,
+			"type": "page",
+			"pattern": "^\\/blog(?:\\/(.*?))?\\/?$",
+			"segments": [[{
+				"content": "blog",
+				"dynamic": false,
+				"spread": false
+			}], [{
+				"content": "...slug",
+				"dynamic": true,
+				"spread": true
+			}]],
+			"params": ["...slug"],
+			"component": "src/pages/blog/[...slug].astro",
+			"prerender": false,
+			"fallbackRoutes": [],
+			"distURL": [],
+			"origin": "project",
+			"_meta": { "trailingSlash": "ignore" }
+		}
+	},
+	{
+		"file": "",
+		"links": [],
+		"scripts": [],
+		"styles": [],
+		"routeData": {
+			"route": "/contact",
+			"isIndex": false,
+			"type": "page",
+			"pattern": "^\\/contact\\/?$",
+			"segments": [[{
+				"content": "contact",
+				"dynamic": false,
+				"spread": false
+			}]],
+			"params": [],
+			"component": "src/pages/contact.astro",
+			"pathname": "/contact",
+			"prerender": false,
+			"fallbackRoutes": [],
+			"distURL": [],
+			"origin": "project",
+			"_meta": { "trailingSlash": "ignore" }
+		}
+	},
+	{
+		"file": "",
+		"links": [],
+		"scripts": [],
+		"styles": [],
+		"routeData": {
+			"route": "/free-estimate",
+			"isIndex": false,
+			"type": "page",
+			"pattern": "^\\/free-estimate\\/?$",
+			"segments": [[{
+				"content": "free-estimate",
+				"dynamic": false,
+				"spread": false
+			}]],
+			"params": [],
+			"component": "src/pages/free-estimate.astro",
+			"pathname": "/free-estimate",
+			"prerender": false,
+			"fallbackRoutes": [],
+			"distURL": [],
+			"origin": "project",
+			"_meta": { "trailingSlash": "ignore" }
+		}
+	},
+	{
+		"file": "",
+		"links": [],
+		"scripts": [],
+		"styles": [],
+		"routeData": {
+			"route": "/middleware",
+			"isIndex": false,
+			"type": "endpoint",
+			"pattern": "^\\/middleware\\/?$",
+			"segments": [[{
+				"content": "middleware",
+				"dynamic": false,
+				"spread": false
+			}]],
+			"params": [],
+			"component": "src/pages/middleware.js",
+			"pathname": "/middleware",
+			"prerender": false,
+			"fallbackRoutes": [],
+			"distURL": [],
+			"origin": "project",
+			"_meta": { "trailingSlash": "ignore" }
+		}
+	},
+	{
+		"file": "",
+		"links": [],
+		"scripts": [],
+		"styles": [],
+		"routeData": {
+			"route": "/rss.xml",
+			"isIndex": false,
+			"type": "endpoint",
+			"pattern": "^\\/rss\\.xml$",
+			"segments": [[{
+				"content": "rss.xml",
+				"dynamic": false,
+				"spread": false
+			}]],
+			"params": [],
+			"component": "src/pages/rss.xml.js",
+			"pathname": "/rss.xml",
+			"prerender": false,
+			"fallbackRoutes": [],
+			"distURL": [],
+			"origin": "project",
+			"_meta": { "trailingSlash": "ignore" }
+		}
+	},
+	{
+		"file": "",
+		"links": [],
+		"scripts": [],
+		"styles": [],
+		"routeData": {
+			"route": "/service/asphalt-shingle-roofing",
+			"isIndex": false,
+			"type": "page",
+			"pattern": "^\\/service\\/asphalt-shingle-roofing\\/?$",
+			"segments": [[{
+				"content": "service",
+				"dynamic": false,
+				"spread": false
+			}], [{
+				"content": "asphalt-shingle-roofing",
+				"dynamic": false,
+				"spread": false
+			}]],
+			"params": [],
+			"component": "src/pages/service/asphalt-shingle-roofing.astro",
+			"pathname": "/service/asphalt-shingle-roofing",
+			"prerender": false,
+			"fallbackRoutes": [],
+			"distURL": [],
+			"origin": "project",
+			"_meta": { "trailingSlash": "ignore" }
+		}
+	},
+	{
+		"file": "",
+		"links": [],
+		"scripts": [],
+		"styles": [],
+		"routeData": {
+			"route": "/service/commercial-flat-roofing",
+			"isIndex": false,
+			"type": "page",
+			"pattern": "^\\/service\\/commercial-flat-roofing\\/?$",
+			"segments": [[{
+				"content": "service",
+				"dynamic": false,
+				"spread": false
+			}], [{
+				"content": "commercial-flat-roofing",
+				"dynamic": false,
+				"spread": false
+			}]],
+			"params": [],
+			"component": "src/pages/service/commercial-flat-roofing.astro",
+			"pathname": "/service/commercial-flat-roofing",
+			"prerender": false,
+			"fallbackRoutes": [],
+			"distURL": [],
+			"origin": "project",
+			"_meta": { "trailingSlash": "ignore" }
+		}
+	},
+	{
+		"file": "",
+		"links": [],
+		"scripts": [],
+		"styles": [],
+		"routeData": {
+			"route": "/service/gutters-decks",
+			"isIndex": false,
+			"type": "page",
+			"pattern": "^\\/service\\/gutters-decks\\/?$",
+			"segments": [[{
+				"content": "service",
+				"dynamic": false,
+				"spread": false
+			}], [{
+				"content": "gutters-decks",
+				"dynamic": false,
+				"spread": false
+			}]],
+			"params": [],
+			"component": "src/pages/service/gutters-decks.astro",
+			"pathname": "/service/gutters-decks",
+			"prerender": false,
+			"fallbackRoutes": [],
+			"distURL": [],
+			"origin": "project",
+			"_meta": { "trailingSlash": "ignore" }
+		}
+	},
+	{
+		"file": "",
+		"links": [],
+		"scripts": [],
+		"styles": [],
+		"routeData": {
+			"route": "/service/metal-roofing",
+			"isIndex": false,
+			"type": "page",
+			"pattern": "^\\/service\\/metal-roofing\\/?$",
+			"segments": [[{
+				"content": "service",
+				"dynamic": false,
+				"spread": false
+			}], [{
+				"content": "metal-roofing",
+				"dynamic": false,
+				"spread": false
+			}]],
+			"params": [],
+			"component": "src/pages/service/metal-roofing.astro",
+			"pathname": "/service/metal-roofing",
+			"prerender": false,
+			"fallbackRoutes": [],
+			"distURL": [],
+			"origin": "project",
+			"_meta": { "trailingSlash": "ignore" }
+		}
+	},
+	{
+		"file": "",
+		"links": [],
+		"scripts": [],
+		"styles": [],
+		"routeData": {
+			"route": "/service/roof-inspection",
+			"isIndex": false,
+			"type": "page",
+			"pattern": "^\\/service\\/roof-inspection\\/?$",
+			"segments": [[{
+				"content": "service",
+				"dynamic": false,
+				"spread": false
+			}], [{
+				"content": "roof-inspection",
+				"dynamic": false,
+				"spread": false
+			}]],
+			"params": [],
+			"component": "src/pages/service/roof-inspection.astro",
+			"pathname": "/service/roof-inspection",
+			"prerender": false,
+			"fallbackRoutes": [],
+			"distURL": [],
+			"origin": "project",
+			"_meta": { "trailingSlash": "ignore" }
+		}
+	},
+	{
+		"file": "",
+		"links": [],
+		"scripts": [],
+		"styles": [],
+		"routeData": {
+			"route": "/service/roof-repair",
+			"isIndex": false,
+			"type": "page",
+			"pattern": "^\\/service\\/roof-repair\\/?$",
+			"segments": [[{
+				"content": "service",
+				"dynamic": false,
+				"spread": false
+			}], [{
+				"content": "roof-repair",
+				"dynamic": false,
+				"spread": false
+			}]],
+			"params": [],
+			"component": "src/pages/service/roof-repair.astro",
+			"pathname": "/service/roof-repair",
+			"prerender": false,
+			"fallbackRoutes": [],
+			"distURL": [],
+			"origin": "project",
+			"_meta": { "trailingSlash": "ignore" }
+		}
+	},
+	{
+		"file": "",
+		"links": [],
+		"scripts": [],
+		"styles": [],
+		"routeData": {
+			"route": "/service/roof-replacement",
+			"isIndex": false,
+			"type": "page",
+			"pattern": "^\\/service\\/roof-replacement\\/?$",
+			"segments": [[{
+				"content": "service",
+				"dynamic": false,
+				"spread": false
+			}], [{
+				"content": "roof-replacement",
+				"dynamic": false,
+				"spread": false
+			}]],
+			"params": [],
+			"component": "src/pages/service/roof-replacement.astro",
+			"pathname": "/service/roof-replacement",
+			"prerender": false,
+			"fallbackRoutes": [],
+			"distURL": [],
+			"origin": "project",
+			"_meta": { "trailingSlash": "ignore" }
+		}
+	},
+	{
+		"file": "",
+		"links": [],
+		"scripts": [],
+		"styles": [],
+		"routeData": {
+			"route": "/service/siding-installation-replacement",
+			"isIndex": false,
+			"type": "page",
+			"pattern": "^\\/service\\/siding-installation-replacement\\/?$",
+			"segments": [[{
+				"content": "service",
+				"dynamic": false,
+				"spread": false
+			}], [{
+				"content": "siding-installation-replacement",
+				"dynamic": false,
+				"spread": false
+			}]],
+			"params": [],
+			"component": "src/pages/service/siding-installation-replacement.astro",
+			"pathname": "/service/siding-installation-replacement",
+			"prerender": false,
+			"fallbackRoutes": [],
+			"distURL": [],
+			"origin": "project",
+			"_meta": { "trailingSlash": "ignore" }
+		}
+	},
+	{
+		"file": "",
+		"links": [],
+		"scripts": [],
+		"styles": [],
+		"routeData": {
+			"route": "/service/storm-emergency",
+			"isIndex": false,
+			"type": "page",
+			"pattern": "^\\/service\\/storm-emergency\\/?$",
+			"segments": [[{
+				"content": "service",
+				"dynamic": false,
+				"spread": false
+			}], [{
+				"content": "storm-emergency",
+				"dynamic": false,
+				"spread": false
+			}]],
+			"params": [],
+			"component": "src/pages/service/storm-emergency.astro",
+			"pathname": "/service/storm-emergency",
+			"prerender": false,
+			"fallbackRoutes": [],
+			"distURL": [],
+			"origin": "project",
+			"_meta": { "trailingSlash": "ignore" }
+		}
+	},
+	{
+		"file": "",
+		"links": [],
+		"scripts": [],
+		"styles": [],
+		"routeData": {
+			"route": "/src/pages/api/send-estimate",
+			"isIndex": false,
+			"type": "endpoint",
+			"pattern": "^\\/src\\/pages\\/api\\/send-estimate\\/?$",
+			"segments": [
+				[{
+					"content": "src",
+					"dynamic": false,
+					"spread": false
+				}],
+				[{
+					"content": "pages",
+					"dynamic": false,
+					"spread": false
+				}],
+				[{
+					"content": "api",
+					"dynamic": false,
+					"spread": false
+				}],
+				[{
+					"content": "send-estimate",
+					"dynamic": false,
+					"spread": false
+				}]
+			],
+			"params": [],
+			"component": "src/pages/src/pages/api/send-estimate.js",
+			"pathname": "/src/pages/api/send-estimate",
+			"prerender": false,
+			"fallbackRoutes": [],
+			"distURL": [],
+			"origin": "project",
+			"_meta": { "trailingSlash": "ignore" }
+		}
+	},
+	{
+		"file": "",
+		"links": [],
+		"scripts": [],
+		"styles": [],
+		"routeData": {
+			"route": "/",
+			"isIndex": true,
+			"type": "page",
+			"pattern": "^\\/$",
+			"segments": [],
+			"params": [],
+			"component": "src/pages/index.astro",
+			"pathname": "/",
+			"prerender": false,
+			"fallbackRoutes": [],
+			"distURL": [],
+			"origin": "project",
+			"_meta": { "trailingSlash": "ignore" }
+		}
 	}
 ].map(deserializeRouteInfo);
 //#endregion
 //#region \0virtual:astro:pages
-var _page0 = () => import("./chunks/generic_CBgMXG4g.mjs");
-var _page1 = () => import("./chunks/revalidate_CvBanFdG.mjs");
-var _page2 = () => import("./chunks/send-contact_BOp0jDml.mjs");
-var _page3 = () => import("./chunks/send-estimate_DX3hRpvk.mjs");
+var _page0 = () => import("./chunks/generic_bJl3Q5BX.mjs");
+var _page1 = () => import("./chunks/about_13F5UyA7.mjs");
+var _page2 = () => import("./chunks/revalidate_CvBanFdG.mjs");
+var _page3 = () => import("./chunks/send-contact_BOp0jDml.mjs");
+var _page4 = () => import("./chunks/send-estimate_DX3hRpvk.mjs");
+var _page5 = () => import("./chunks/index_BGf-xdpR.mjs");
+var _page6 = () => import("./chunks/_.._ItyMQDR1.mjs");
+var _page7 = () => import("./chunks/contact_C3fhk6BC.mjs");
+var _page8 = () => import("./chunks/free-estimate_Cl1eM8w-.mjs");
+var _page9 = () => import("./chunks/middleware_Cz-xJsR_.mjs");
+var _page10 = () => import("./chunks/rss_BJc_8qqZ.mjs");
+var _page11 = () => import("./chunks/asphalt-shingle-roofing_DBQGgU8F.mjs");
+var _page12 = () => import("./chunks/commercial-flat-roofing_CoCc5XC0.mjs");
+var _page13 = () => import("./chunks/gutters-decks_VET83uhw.mjs");
+var _page14 = () => import("./chunks/metal-roofing_CWmdX_u6.mjs");
+var _page15 = () => import("./chunks/roof-inspection_DP70axhe.mjs");
+var _page16 = () => import("./chunks/roof-repair_COLlSKkw.mjs");
+var _page17 = () => import("./chunks/roof-replacement_ChTpGWri.mjs");
+var _page18 = () => import("./chunks/siding-installation-replacement_71u6oIlk.mjs");
+var _page19 = () => import("./chunks/storm-emergency_BQlT7KMA.mjs");
+var _page20 = () => import("./chunks/send-estimate_DkAM-Oku.mjs");
+var _page21 = () => import("./chunks/index_Dlg37Ywn.mjs");
 var pageMap = /* @__PURE__ */ new Map([
 	["node_modules/astro/dist/assets/endpoint/generic.js", _page0],
-	["src/pages/api/revalidate.js", _page1],
-	["src/pages/api/send-contact.js", _page2],
-	["src/pages/api/send-estimate.js", _page3]
+	["src/pages/about.astro", _page1],
+	["src/pages/api/revalidate.js", _page2],
+	["src/pages/api/send-contact.js", _page3],
+	["src/pages/api/send-estimate.js", _page4],
+	["src/pages/blog/index.astro", _page5],
+	["src/pages/blog/[...slug].astro", _page6],
+	["src/pages/contact.astro", _page7],
+	["src/pages/free-estimate.astro", _page8],
+	["src/pages/middleware.js", _page9],
+	["src/pages/rss.xml.js", _page10],
+	["src/pages/service/asphalt-shingle-roofing.astro", _page11],
+	["src/pages/service/commercial-flat-roofing.astro", _page12],
+	["src/pages/service/gutters-decks.astro", _page13],
+	["src/pages/service/metal-roofing.astro", _page14],
+	["src/pages/service/roof-inspection.astro", _page15],
+	["src/pages/service/roof-repair.astro", _page16],
+	["src/pages/service/roof-replacement.astro", _page17],
+	["src/pages/service/siding-installation-replacement.astro", _page18],
+	["src/pages/service/storm-emergency.astro", _page19],
+	["src/pages/src/pages/api/send-estimate.js", _page20],
+	["src/pages/index.astro", _page21]
 ]);
 //#endregion
 //#region \0virtual:astro:manifest
-var _manifest = deserializeManifest({"rootDir":"file:///D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/","cacheDir":"file:///D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/node_modules/.astro/","outDir":"file:///D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/dist/","srcDir":"file:///D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/","publicDir":"file:///D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/public/","buildClientDir":"file:///D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/dist/client/","buildServerDir":"file:///D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/dist/server/","adapterName":"@astrojs/vercel","assetsDir":"_astro","routes":[{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"type":"page","component":"_server-islands.astro","params":["name"],"segments":[[{"content":"_server-islands","dynamic":false,"spread":false}],[{"content":"name","dynamic":true,"spread":false}]],"pattern":"^\\/_server-islands\\/([^/]+?)\\/?$","prerender":false,"isIndex":false,"fallbackRoutes":[],"route":"/_server-islands/[name]","origin":"internal","distURL":[],"_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/_image","component":"node_modules/astro/dist/assets/endpoint/generic.js","params":[],"pathname":"/_image","pattern":"^\\/_image\\/?$","segments":[[{"content":"_image","dynamic":false,"spread":false}]],"type":"endpoint","prerender":false,"fallbackRoutes":[],"distURL":[],"isIndex":false,"origin":"internal","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/about","isIndex":false,"type":"page","pattern":"^\\/about\\/?$","segments":[[{"content":"about","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/about.astro","pathname":"/about","prerender":true,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/api/revalidate","isIndex":false,"type":"endpoint","pattern":"^\\/api\\/revalidate\\/?$","segments":[[{"content":"api","dynamic":false,"spread":false}],[{"content":"revalidate","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/api/revalidate.js","pathname":"/api/revalidate","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/api/send-contact","isIndex":false,"type":"endpoint","pattern":"^\\/api\\/send-contact\\/?$","segments":[[{"content":"api","dynamic":false,"spread":false}],[{"content":"send-contact","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/api/send-contact.js","pathname":"/api/send-contact","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/api/send-estimate","isIndex":false,"type":"endpoint","pattern":"^\\/api\\/send-estimate\\/?$","segments":[[{"content":"api","dynamic":false,"spread":false}],[{"content":"send-estimate","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/api/send-estimate.js","pathname":"/api/send-estimate","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/blog","isIndex":true,"type":"page","pattern":"^\\/blog\\/?$","segments":[[{"content":"blog","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/blog/index.astro","pathname":"/blog","prerender":true,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/blog/[...slug]","isIndex":false,"type":"page","pattern":"^\\/blog(?:\\/(.*?))?\\/?$","segments":[[{"content":"blog","dynamic":false,"spread":false}],[{"content":"...slug","dynamic":true,"spread":true}]],"params":["...slug"],"component":"src/pages/blog/[...slug].astro","prerender":true,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/contact","isIndex":false,"type":"page","pattern":"^\\/contact\\/?$","segments":[[{"content":"contact","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/contact.astro","pathname":"/contact","prerender":true,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/free-estimate","isIndex":false,"type":"page","pattern":"^\\/free-estimate\\/?$","segments":[[{"content":"free-estimate","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/free-estimate.astro","pathname":"/free-estimate","prerender":true,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/middleware","isIndex":false,"type":"endpoint","pattern":"^\\/middleware\\/?$","segments":[[{"content":"middleware","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/middleware.js","pathname":"/middleware","prerender":true,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/rss.xml","isIndex":false,"type":"endpoint","pattern":"^\\/rss\\.xml$","segments":[[{"content":"rss.xml","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/rss.xml.js","pathname":"/rss.xml","prerender":true,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/service/asphalt-shingle-roofing","isIndex":false,"type":"page","pattern":"^\\/service\\/asphalt-shingle-roofing\\/?$","segments":[[{"content":"service","dynamic":false,"spread":false}],[{"content":"asphalt-shingle-roofing","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/service/asphalt-shingle-roofing.astro","pathname":"/service/asphalt-shingle-roofing","prerender":true,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/service/commercial-flat-roofing","isIndex":false,"type":"page","pattern":"^\\/service\\/commercial-flat-roofing\\/?$","segments":[[{"content":"service","dynamic":false,"spread":false}],[{"content":"commercial-flat-roofing","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/service/commercial-flat-roofing.astro","pathname":"/service/commercial-flat-roofing","prerender":true,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/service/gutters-decks","isIndex":false,"type":"page","pattern":"^\\/service\\/gutters-decks\\/?$","segments":[[{"content":"service","dynamic":false,"spread":false}],[{"content":"gutters-decks","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/service/gutters-decks.astro","pathname":"/service/gutters-decks","prerender":true,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/service/metal-roofing","isIndex":false,"type":"page","pattern":"^\\/service\\/metal-roofing\\/?$","segments":[[{"content":"service","dynamic":false,"spread":false}],[{"content":"metal-roofing","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/service/metal-roofing.astro","pathname":"/service/metal-roofing","prerender":true,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/service/roof-inspection","isIndex":false,"type":"page","pattern":"^\\/service\\/roof-inspection\\/?$","segments":[[{"content":"service","dynamic":false,"spread":false}],[{"content":"roof-inspection","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/service/roof-inspection.astro","pathname":"/service/roof-inspection","prerender":true,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/service/roof-repair","isIndex":false,"type":"page","pattern":"^\\/service\\/roof-repair\\/?$","segments":[[{"content":"service","dynamic":false,"spread":false}],[{"content":"roof-repair","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/service/roof-repair.astro","pathname":"/service/roof-repair","prerender":true,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/service/roof-replacement","isIndex":false,"type":"page","pattern":"^\\/service\\/roof-replacement\\/?$","segments":[[{"content":"service","dynamic":false,"spread":false}],[{"content":"roof-replacement","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/service/roof-replacement.astro","pathname":"/service/roof-replacement","prerender":true,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/service/siding-installation-replacement","isIndex":false,"type":"page","pattern":"^\\/service\\/siding-installation-replacement\\/?$","segments":[[{"content":"service","dynamic":false,"spread":false}],[{"content":"siding-installation-replacement","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/service/siding-installation-replacement.astro","pathname":"/service/siding-installation-replacement","prerender":true,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/service/storm-emergency","isIndex":false,"type":"page","pattern":"^\\/service\\/storm-emergency\\/?$","segments":[[{"content":"service","dynamic":false,"spread":false}],[{"content":"storm-emergency","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/service/storm-emergency.astro","pathname":"/service/storm-emergency","prerender":true,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/src/pages/api/send-estimate","isIndex":false,"type":"endpoint","pattern":"^\\/src\\/pages\\/api\\/send-estimate\\/?$","segments":[[{"content":"src","dynamic":false,"spread":false}],[{"content":"pages","dynamic":false,"spread":false}],[{"content":"api","dynamic":false,"spread":false}],[{"content":"send-estimate","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/src/pages/api/send-estimate.js","pathname":"/src/pages/api/send-estimate","prerender":true,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/","isIndex":true,"type":"page","pattern":"^\\/$","segments":[],"params":[],"component":"src/pages/index.astro","pathname":"/","prerender":true,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}}],"serverLike":true,"middlewareMode":"classic","site":"https://www.vincenzoroofing.com","base":"/","trailingSlash":"ignore","compressHTML":"jsx","componentMetadata":[["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/contact.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/index.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/blog/[...slug].astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/about.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/service/asphalt-shingle-roofing.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/service/commercial-flat-roofing.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/free-estimate.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/service/gutters-decks.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/blog/index.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/service/metal-roofing.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/service/roof-inspection.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/service/roof-repair.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/service/roof-replacement.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/service/siding-installation-replacement.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/service/storm-emergency.astro",{"propagation":"none","containsHead":true}]],"renderers":[],"clientDirectives":[["idle","(()=>{var l=(n,t)=>{let i=async()=>{await(await n())()},e=typeof t.value==\"object\"?t.value:void 0,s={timeout:e==null?void 0:e.timeout};\"requestIdleCallback\"in window?window.requestIdleCallback(i,s):setTimeout(i,s.timeout||200)};(self.Astro||(self.Astro={})).idle=l;window.dispatchEvent(new Event(\"astro:idle\"));})();"],["load","(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).load=e;window.dispatchEvent(new Event(\"astro:load\"));})();"],["media","(()=>{var n=(a,t)=>{let i=async()=>{await(await a())()};if(t.value){let e=matchMedia(t.value);e.matches?i():e.addEventListener(\"change\",i,{once:!0})}};(self.Astro||(self.Astro={})).media=n;window.dispatchEvent(new Event(\"astro:media\"));})();"],["only","(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).only=e;window.dispatchEvent(new Event(\"astro:only\"));})();"],["visible","(()=>{var a=(s,i,o)=>{let r=async()=>{await(await s())()},t=typeof i.value==\"object\"?i.value:void 0,c={rootMargin:t==null?void 0:t.rootMargin},n=new IntersectionObserver(e=>{for(let l of e)if(l.isIntersecting){n.disconnect(),r();break}},c);for(let e of o.children)n.observe(e)};(self.Astro||(self.Astro={})).visible=a;window.dispatchEvent(new Event(\"astro:visible\"));})();"]],"entryModules":{"astro/entrypoints/prerender":"prerender-entry.BbHLKvTi.mjs","\u0000virtual:astro:page:src/pages/blog/[...slug]@_@astro":"chunks/_.._KsRm5no4.mjs","\u0000astro:data-layer-content":"chunks/_astro_data-layer-content_LK42wJFc.mjs","\u0000noop-middleware":"virtual_astro_middleware.mjs","\u0000virtual:astro:server-island-manifest":"chunks/_virtual_astro_server-island-manifest_C1Q2srgE.mjs","\u0000virtual:astro:session-driver":"chunks/_virtual_astro_session-driver_C-PI1Pas.mjs","\u0000virtual:astro:page:src/pages/about@_@astro":"chunks/about_Brn5PDUf.mjs","\u0000virtual:astro:page:src/pages/service/asphalt-shingle-roofing@_@astro":"chunks/asphalt-shingle-roofing_Bn0WnukH.mjs","\u0000virtual:astro:page:src/pages/service/commercial-flat-roofing@_@astro":"chunks/commercial-flat-roofing_ZX23if4l.mjs","\u0000virtual:astro:page:src/pages/contact@_@astro":"chunks/contact_B2m3pfh9.mjs","D:\\himanshu\\finalroofing\\alldone\\Vincenzo-Roofing\\.astro\\content-assets.mjs":"chunks/content-assets_YLecXCN7.mjs","\u0000virtual:astro:page:src/pages/free-estimate@_@astro":"chunks/free-estimate_CacFdC-T.mjs","\u0000virtual:astro:page:src/pages/service/gutters-decks@_@astro":"chunks/gutters-decks_hxQPAdwC.mjs","\u0000virtual:astro:page:src/pages/index@_@astro":"chunks/index_D9Qx0sK_.mjs","\u0000virtual:astro:page:src/pages/blog/index@_@astro":"chunks/index_fPPlOY06.mjs","\u0000virtual:astro:page:src/pages/service/metal-roofing@_@astro":"chunks/metal-roofing_CeGxdSTl.mjs","\u0000virtual:astro:page:src/pages/middleware@_@js":"chunks/middleware_Cr29e9IP.mjs","\u0000virtual:astro:actions/noop-entrypoint":"chunks/noop-entrypoint_Z3zFhrGC.mjs","\u0000virtual:astro:page:src/pages/service/roof-inspection@_@astro":"chunks/roof-inspection_kNMpYgHD.mjs","\u0000virtual:astro:page:src/pages/service/roof-repair@_@astro":"chunks/roof-repair_CW6ZqLEr.mjs","\u0000virtual:astro:page:src/pages/service/roof-replacement@_@astro":"chunks/roof-replacement_BUNpWAyU.mjs","\u0000virtual:astro:page:src/pages/rss.xml@_@js":"chunks/rss_CZKGy7FL.mjs","\u0000virtual:astro:page:src/pages/src/pages/api/send-estimate@_@js":"chunks/send-estimate_DkAM-Oku.mjs","\u0000virtual:astro:page:src/pages/service/siding-installation-replacement@_@astro":"chunks/siding-installation-replacement_CN0nnAQt.mjs","\u0000virtual:astro:page:src/pages/service/storm-emergency@_@astro":"chunks/storm-emergency_DUeBgNDs.mjs","@astrojs/vercel/entrypoint":"entry.mjs","\u0000virtual:astro:page:node_modules/astro/dist/assets/endpoint/generic@_@js":"chunks/generic_CBgMXG4g.mjs","\u0000virtual:astro:page:src/pages/api/revalidate@_@js":"chunks/revalidate_CvBanFdG.mjs","\u0000virtual:astro:page:src/pages/api/send-contact@_@js":"chunks/send-contact_BOp0jDml.mjs","\u0000virtual:astro:page:src/pages/api/send-estimate@_@js":"chunks/send-estimate_DX3hRpvk.mjs","D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/node_modules/astro/dist/assets/services/sharp.js":"chunks/sharp_CDoBJrzf.mjs","D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/components/BaseHead.astro?astro&type=script&index=0&lang.ts":"_astro/BaseHead.astro_astro_type_script_index_0_lang.Da6TCRI-.js","D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/components/Header.astro?astro&type=script&index=0&lang.ts":"_astro/Header.astro_astro_type_script_index_0_lang.GrTFlhog.js","D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/blog/index.astro?astro&type=script&index=0&lang.ts":"_astro/index.astro_astro_type_script_index_0_lang.Bl8NpTCO.js","D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/index.astro?astro&type=script&index=0&lang.ts":"_astro/index.astro_astro_type_script_index_0_lang.E4JUVBi0.js","astro:scripts/before-hydration.js":""},"inlinedScripts":[["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/components/BaseHead.astro?astro&type=script&index=0&lang.ts","window.dataLayer=window.dataLayer||[];function e(){dataLayer.push(arguments)}e(`js`,new Date),e(`config`,`G-6ZW3B877NL`);"],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/components/Header.astro?astro&type=script&index=0&lang.ts","var e=document.getElementById(`siteHeader`),t=document.querySelector(`.margin-top`),n=document.getElementById(`menuToggle`),r=document.getElementById(`mobilePanel`),i=()=>{if(e&&t){let n=e.offsetHeight;t.style.marginTop=`${n}px`}};if(i(),window.addEventListener(`resize`,i),window.addEventListener(`load`,i),e){let t=()=>e.classList.toggle(`scrolled`,window.scrollY>8);t(),window.addEventListener(`scroll`,t,{passive:!0})}document.addEventListener(`click`,e=>{let t=e.target;if(n&&(t===n||n.contains(t))){let e=r?.classList.toggle(`open`);n.classList.toggle(`active`,e),n.setAttribute(`aria-expanded`,String(e)),document.body.style.overflow=e?`hidden`:``;return}if(t.closest(`a.mp-link, a.mp-sublink`)){r?.classList.remove(`open`),n?.classList.remove(`active`),n?.setAttribute(`aria-expanded`,`false`),document.body.style.overflow=``;return}let i=t.closest(`.dropdown-opens`),a=t.closest(`.mp-toggle`);if(i||a){let n=t.closest(`.mp-link-group`);if(n){let t=n.querySelector(`.mp-toggle`),r=n.querySelector(`.mp-submenu`);if(a){let t=a.getAttribute(`href`);(!t||t===`#`)&&e.preventDefault()}else i&&e.preventDefault();if(r&&r.classList.contains(`mp-submenu`)){let e=r.classList.toggle(`open`);t?.setAttribute(`aria-expanded`,String(e))}}return}document.querySelectorAll(`.nav-dropdown`).forEach(e=>{e.contains(t)||e.classList.remove(`open`)})});"],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/blog/index.astro?astro&type=script&index=0&lang.ts","document.addEventListener(`DOMContentLoaded`,()=>{let e=document.getElementById(`more-posts-data`),t=document.getElementById(`blog-grid`),n=document.getElementById(`load-more-btn`),r=document.getElementById(`load-more-wrap`);if(!e||!t||!n||!r)return;let i=[];try{i=JSON.parse(e.textContent||`[]`)}catch{i=[]}let a=parseInt(n.dataset.batchSize||`9`,10);function o(e){let t=document.createElement(`div`);return t.textContent=e??``,t.innerHTML}function s(){let e=i.splice(0,a),n=document.createDocumentFragment();e.forEach(e=>{let t=document.createElement(`article`);t.className=`blog-card`,t.style.cursor=`pointer`,t.addEventListener(`click`,()=>{window.location.href=`/blog/${e.slug}`}),t.innerHTML=`\n              <div class=\"blog-media\">\n                <span class=\"blog-cat-badge\">Article</span>\n                <img\n                  src=\"${o(e.imgSrc)}\"\n                  ${e.imgSrcSet?`srcset=\"${o(e.imgSrcSet)}\"`:``}\n                  sizes=\"(max-width: 720px) 100vw, (max-width: 1024px) 50vw, 33vw\"\n                  width=\"${e.imgWidth}\"\n                  height=\"${e.imgHeight}\"\n                  alt=\"${o(e.imgAlt)}\"\n                  loading=\"lazy\"\n                  decoding=\"async\"\n                />\n              </div>\n              <div class=\"blog-content\">\n                <span class=\"blog-date\">${o(e.date)}</span>\n                <h3><a href=\"/blog/${encodeURIComponent(e.slug)}\">${o(e.title)}</a></h3>\n                <p>${o(e.excerpt)}</p>\n                <div class=\"blog-footer\">\n                  <a href=\"/blog/${encodeURIComponent(e.slug)}\" class=\"read-more-link\">Read Article</a>\n                </div>\n              </div>\n            `,n.appendChild(t)}),t.appendChild(n),i.length===0&&r.remove()}n.addEventListener(`click`,s)});"],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/index.astro?astro&type=script&index=0&lang.ts","document.addEventListener(`DOMContentLoaded`,()=>{document.querySelectorAll(`main img:not([loading])`).forEach(e=>{e.setAttribute(`loading`,`lazy`),e.setAttribute(`decoding`,`async`)});let e=document.getElementById(`marquee`),t=document.querySelector(`.marquee-wrap`);if(!e||!t)return;let n=e.querySelector(`.marquee-content`);if(!n)return;e.appendChild(n.cloneNode(!0)),e.appendChild(n.cloneNode(!0)),e.appendChild(n.cloneNode(!0)),e.style.willChange=`transform`;let r=0,i=!1,a=!0,o=0,s=null,c=null,l=()=>{o=n.offsetWidth};l();let u;window.addEventListener(`resize`,()=>{clearTimeout(u),u=setTimeout(l,150)}),t.addEventListener(`mouseenter`,()=>i=!0),t.addEventListener(`mouseleave`,()=>{i=!1,s=null}),new IntersectionObserver(e=>{e.forEach(e=>{a=e.isIntersecting,a&&c===null&&(s=null,c=requestAnimationFrame(d))})},{threshold:0}).observe(t),document.addEventListener(`visibilitychange`,()=>{document.hidden?i=!0:(i=!1,s=null)});function d(t){if(!a){c=null;return}if(i)s=null;else{s===null&&(s=t);let n=(t-s)/1e3;s=t,r-=30*n,Math.abs(r)>=o&&(r=0),e&&(e.style.transform=`translate3d(${r}px, 0, 0)`)}c=requestAnimationFrame(d)}c=requestAnimationFrame(d)});"]],"assets":["/about-image.webp","/fav.png","/footer-logo.png","/home-1.webp","/home-2.webp","/image-1.png","/image-2.png","/image-3.png","/image-4.png","/image-5.png","/image-6.png","/location-1.webp","/location-2.webp","/location-3.webp","/logo.png","/logonew.png","/robots.txt","/sitemap.xml","/_astro/fonts/14aa8dd5744dd4bc.woff","/_astro/fonts/89758defcfa85239.woff","/_astro/blog-placeholder-1.Bx0Zcyzv.jpg","/_astro/blog-placeholder-4.gLBdjEDe.jpg","/_astro/blog-placeholder-about.BtEdEmGp.jpg","/_astro/blog-placeholder-3.ijrf8Ohr.jpg","/_astro/blog-placeholder-5.CB3Xi-gp.jpg","/_astro/blog-placeholder-2.1WQRLJGH.jpg","/_astro/Header.nSTc8Nez.css","/_astro/_..D1ReKpkK.css","/_astro/free-estimate.DW6PdWLr.css","/_astro/asphalt-shingle-roofing.g19fguKO.css","/_astro/commercial-flat-roofing.Cu0uTkVT.css","/_astro/gutters-decks.CrPCZf_4.css","/_astro/metal-roofing.BNvD64eA.css","/_astro/roof-inspection.B0LL652o.css","/_astro/roof-repair.EkL3hk6Q.css","/_astro/roof-replacement.D0mxpfuN.css","/_astro/siding-installation-replacement.BDpESS-G.css","/_astro/storm-emergency.CvIWSz_l.css","/about/index.html","/blog/index.html","/contact/index.html","/free-estimate/index.html","/middleware","/rss.xml","/service/asphalt-shingle-roofing/index.html","/service/commercial-flat-roofing/index.html","/service/gutters-decks/index.html","/service/metal-roofing/index.html","/service/roof-inspection/index.html","/service/roof-repair/index.html","/service/roof-replacement/index.html","/service/siding-installation-replacement/index.html","/service/storm-emergency/index.html","/src/pages/api/send-estimate","/index.html"],"buildFormat":"directory","checkOrigin":true,"actionBodySizeLimit":1048576,"serverIslandBodySizeLimit":1048576,"allowedDomains":[],"key":"uQBsB87DYv3ghWlSXC7nwJy+3YZ33wFAuDX3udBugqg=","image":{},"devToolbar":{"enabled":false,"debugInfoOutput":""},"logLevel":"info","shouldInjectCspMetaTags":false});
+var _manifest = deserializeManifest({"rootDir":"file:///D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/","cacheDir":"file:///D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/node_modules/.astro/","outDir":"file:///D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/dist/","srcDir":"file:///D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/","publicDir":"file:///D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/public/","buildClientDir":"file:///D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/dist/client/","buildServerDir":"file:///D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/dist/server/","adapterName":"@astrojs/vercel","assetsDir":"_astro","routes":[{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"type":"page","component":"_server-islands.astro","params":["name"],"segments":[[{"content":"_server-islands","dynamic":false,"spread":false}],[{"content":"name","dynamic":true,"spread":false}]],"pattern":"^\\/_server-islands\\/([^/]+?)\\/?$","prerender":false,"isIndex":false,"fallbackRoutes":[],"route":"/_server-islands/[name]","origin":"internal","distURL":[],"_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[],"routeData":{"route":"/_image","component":"node_modules/astro/dist/assets/endpoint/generic.js","params":[],"pathname":"/_image","pattern":"^\\/_image\\/?$","segments":[[{"content":"_image","dynamic":false,"spread":false}]],"type":"endpoint","prerender":false,"fallbackRoutes":[],"distURL":[],"isIndex":false,"origin":"internal","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[{"type":"external","src":"_astro/Header.nSTc8Nez.css"},{"type":"inline","content":".materials-box{background:linear-gradient(135deg, var(--deep) 0%, #06193b 50%, var(--deep-2) 100%);color:var(--white);box-shadow:var(--sh-lg);border-radius:26px;padding:56px 64px;position:relative;overflow:hidden}.brand-info br{display:none}.materials-glow{z-index:0;pointer-events:none;background:radial-gradient(circle,#1a5fd059,#0000 70%);width:60%;height:100%;position:absolute;top:-30%;right:-10%}.materials-box>*{z-index:1;position:relative}.materials-eyebrow{color:#9cc0ff}.materials-eyebrow:before{background:#9cc0ff}.materials-box h2{color:var(--white);letter-spacing:-.02em;margin:12px 0 20px;font-size:clamp(30px,4vw,42px)}.materials-section{padding:40px 0}.materials-card{background-color:var(--deep);background-image:radial-gradient(circle at top right, var(--deep-2) 0%, var(--deep) 70%);border-radius:var(--r-lg);color:var(--white);box-shadow:var(--sh-lg);padding:56px 48px}.eyebrow{color:var(--blue-soft);letter-spacing:1.5px;text-transform:uppercase;align-items:center;gap:8px;margin-bottom:12px;font-size:.78rem;font-weight:700;display:inline-flex}.materials-header h2{color:var(--white);margin:0 0 16px;font-size:2.25rem;font-weight:700;line-height:1.2}.materials-header .lead{color:#fffc;max-width:680px;margin:0;font-size:1.05rem;line-height:1.6}.materials-divider{background-color:var(--line-dark);border:none;height:1px;margin:40px 0}.brands-grid{grid-template-columns:repeat(3,1fr);gap:40px;display:grid}.brand-category{color:var(--blue-soft);letter-spacing:1.2px;text-transform:uppercase;margin:0 0 24px;font-size:.82rem;font-weight:700}.brand-list{margin:0;padding:0;list-style:none}.brand-list li{align-items:flex-start;gap:12px;margin-bottom:20px;display:flex}.bullet{background-color:var(--blue-soft);border-radius:50%;flex-shrink:0;width:6px;height:6px;margin-top:7px}.brand-info{flex-direction:column;display:flex}.brand-info strong{color:var(--white);font-size:1.02rem;font-weight:600;line-height:1.3}.brand-desc{color:var(--blue-soft);margin-top:3px;font-size:.85rem;font-weight:400}@media (width<=868px){.materials-card{padding:36px 24px}.brands-grid{grid-template-columns:repeat(2,1fr);gap:32px}}@media (width<=576px){.brands-grid{grid-template-columns:1fr;gap:28px}}.materials-box p{color:#c6d4ec;max-width:680px;margin-bottom:48px;font-size:16px;line-height:1.65}.materials-grid{border-top:1px solid #ffffff1f;grid-template-columns:repeat(3,1fr);gap:40px;padding-top:48px;display:grid}.col-title{color:#9cc0ff;text-transform:uppercase;letter-spacing:.12em;margin-bottom:24px;font-family:Montserrat,sans-serif;font-size:12px;font-weight:700}.material-list{flex-direction:column;gap:20px;display:flex}.material-list li{padding-left:20px;position:relative}.material-list li:before{content:\"\";background:var(--blue-soft);border-radius:50%;width:6px;height:6px;position:absolute;top:9px;left:0}.m-name{color:var(--white);font-size:15.5px;font-weight:600;display:block}.m-desc{color:#8fa3c4;margin-top:4px;font-size:13.5px;display:block}@media (width<=900px){.materials-grid{grid-template-columns:repeat(2,1fr);gap:48px 30px}}@media (width<=600px){.materials-box{border-radius:20px;padding:40px 24px}.materials-grid{grid-template-columns:1fr;padding-top:36px}.materials-box p{margin-bottom:36px}}\n"}],"routeData":{"route":"/about","isIndex":false,"type":"page","pattern":"^\\/about\\/?$","segments":[[{"content":"about","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/about.astro","pathname":"/about","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[],"routeData":{"route":"/api/revalidate","isIndex":false,"type":"endpoint","pattern":"^\\/api\\/revalidate\\/?$","segments":[[{"content":"api","dynamic":false,"spread":false}],[{"content":"revalidate","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/api/revalidate.js","pathname":"/api/revalidate","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[],"routeData":{"route":"/api/send-contact","isIndex":false,"type":"endpoint","pattern":"^\\/api\\/send-contact\\/?$","segments":[[{"content":"api","dynamic":false,"spread":false}],[{"content":"send-contact","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/api/send-contact.js","pathname":"/api/send-contact","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[],"routeData":{"route":"/api/send-estimate","isIndex":false,"type":"endpoint","pattern":"^\\/api\\/send-estimate\\/?$","segments":[[{"content":"api","dynamic":false,"spread":false}],[{"content":"send-estimate","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/api/send-estimate.js","pathname":"/api/send-estimate","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[{"type":"external","src":"_astro/Header.nSTc8Nez.css"},{"type":"inline","content":".featured-article-card{background:var(--white);border-radius:var(--r-lg);border:1px solid var(--line);box-shadow:var(--sh-md);transition:transform .3s var(--ease), box-shadow .3s var(--ease);grid-template-columns:1.1fr .9fr;gap:0;margin-bottom:50px;display:grid;overflow:hidden}.featured-article-card:hover{box-shadow:var(--sh-lg);transform:translateY(-4px)}.featured-img{background:var(--deep);min-height:340px;position:relative}.featured-img img{object-fit:cover;width:100%;height:100%;display:block}.featured-body{flex-direction:column;justify-content:center;padding:44px 40px;display:flex}.meta-tag{text-transform:uppercase;letter-spacing:.12em;color:var(--blue);flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:14px;font-family:Montserrat,sans-serif;font-size:11.5px;font-weight:700;display:inline-flex}.meta-tag .category{background:var(--blue-pale);border-radius:100px;padding:4px 12px}.meta-tag .read-time{color:var(--grey-light)}.featured-body h2{margin-bottom:16px;font-size:clamp(22px,2.5vw,30px);line-height:1.25;transition:color .2s}.featured-body h2 a:hover{color:var(--blue)}.featured-body p{color:var(--grey);margin-bottom:24px;font-size:15px;line-height:1.65}.author-strip{border-top:1px solid var(--line);align-items:center;gap:12px;padding-top:18px;display:flex}.author-info span{color:var(--grey-light);font-size:12px}.blog-grid{grid-template-columns:repeat(3,1fr);gap:28px;margin-bottom:60px;display:grid}.blog-card{background:var(--white);border-radius:var(--r-lg);border:1px solid var(--line);transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s;flex-direction:column;display:flex;overflow:hidden}.blog-card:hover{box-shadow:var(--sh-md);border-color:#0000;transform:translateY(-5px)}.blog-media{background:var(--off);height:300px;position:relative;overflow:hidden}.blog-media img{object-fit:cover;width:100%;height:100%;transition:transform .5s var(--ease);display:block}.blog-card:hover .blog-media img{transform:scale(1.05)}.blog-cat-badge{backdrop-filter:blur(8px);color:var(--white);letter-spacing:.08em;text-transform:uppercase;background:#071f45d9;border-radius:100px;padding:5px 12px;font-family:Montserrat,sans-serif;font-size:10.5px;font-weight:700;position:absolute;top:14px;left:14px}.blog-content{flex-direction:column;flex:1;padding:26px 24px;display:flex}.blog-date{color:var(--grey-light);margin-bottom:10px;font-family:Montserrat,sans-serif;font-size:12px;font-weight:600}.blog-content h3{margin-bottom:12px;font-size:18px;font-weight:700;line-height:1.35}.blog-content h3 a:hover{color:var(--blue)}.blog-content p{color:var(--grey);flex:1;margin-bottom:20px;font-size:14px;line-height:1.6}.blog-footer{border-top:1px solid var(--line);justify-content:space-between;align-items:center;padding-top:16px;display:flex}.read-more-link{color:var(--blue);align-items:center;gap:6px;font-family:Montserrat,sans-serif;font-size:12.5px;font-weight:700;display:inline-flex}.read-more-link:after{content:\"→\";transition:transform .25s var(--ease)}.blog-card:hover .read-more-link:after{transform:translate(4px)}.pagination{justify-content:center;align-items:center;gap:8px;margin-top:20px;display:flex}section.page-hero h1{padding-bottom:15px}@media (width<=1024px){.featured-article-card{grid-template-columns:1fr}.featured-img{min-height:260px}.blog-grid{grid-template-columns:repeat(2,1fr)}.featured-body{padding:15px}}@media (width<=720px){.blog-grid{grid-template-columns:1fr}}\n"}],"routeData":{"route":"/blog","isIndex":true,"type":"page","pattern":"^\\/blog\\/?$","segments":[[{"content":"blog","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/blog/index.astro","pathname":"/blog","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[{"type":"external","src":"_astro/Header.nSTc8Nez.css"},{"type":"external","src":"_astro/_..D1ReKpkK.css"}],"routeData":{"route":"/blog/[...slug]","isIndex":false,"type":"page","pattern":"^\\/blog(?:\\/(.*?))?\\/?$","segments":[[{"content":"blog","dynamic":false,"spread":false}],[{"content":"...slug","dynamic":true,"spread":true}]],"params":["...slug"],"component":"src/pages/blog/[...slug].astro","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[{"type":"external","src":"_astro/Header.nSTc8Nez.css"},{"type":"inline","content":".err[data-astro-cid-rdnqlhoo]{color:#c0392b;min-height:14px;margin-top:4px;font-size:12px;display:block}.field-invalid[data-astro-cid-rdnqlhoo]{border-color:#c0392b!important}.form-status[data-astro-cid-rdnqlhoo]{border-radius:var(--r-sm,12px);margin-bottom:16px;padding:12px 14px;font-size:14px}.form-status[data-astro-cid-rdnqlhoo].success{color:#1e7e34;background:#e9f7ef;border:1px solid #c3e6cb}.form-status[data-astro-cid-rdnqlhoo].error{color:#c0392b;background:#fdecea;border:1px solid #f5c6cb}\n.err{color:#c0392b;min-height:14px;margin-top:4px;font-size:12px;display:block}.field-invalid{border-color:#c0392b!important}.cta-inner:before{z-index:-1}a.btn.btn-white{margin-top:20px}.form-status{border-radius:var(--r-sm,12px);margin-bottom:16px;padding:12px 14px;font-size:14px}.form-status.success{color:#1e7e34;background:#e9f7ef;border:1px solid #c3e6cb}.form-status.error{color:#c0392b;background:#fdecea;border:1px solid #f5c6cb}\n"}],"routeData":{"route":"/contact","isIndex":false,"type":"page","pattern":"^\\/contact\\/?$","segments":[[{"content":"contact","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/contact.astro","pathname":"/contact","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[{"type":"external","src":"_astro/Header.nSTc8Nez.css"},{"type":"external","src":"_astro/free-estimate.DW6PdWLr.css"}],"routeData":{"route":"/free-estimate","isIndex":false,"type":"page","pattern":"^\\/free-estimate\\/?$","segments":[[{"content":"free-estimate","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/free-estimate.astro","pathname":"/free-estimate","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[],"routeData":{"route":"/middleware","isIndex":false,"type":"endpoint","pattern":"^\\/middleware\\/?$","segments":[[{"content":"middleware","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/middleware.js","pathname":"/middleware","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[],"routeData":{"route":"/rss.xml","isIndex":false,"type":"endpoint","pattern":"^\\/rss\\.xml$","segments":[[{"content":"rss.xml","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/rss.xml.js","pathname":"/rss.xml","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[{"type":"external","src":"_astro/Header.nSTc8Nez.css"},{"type":"inline","content":".rel{flex-wrap:wrap;justify-content:center;gap:30px;display:flex}.rel a{background:#fff;border-radius:10px;max-width:300px;padding:15px}.rel p{color:var(--grey);font-size:13.5px}.rel h3{margin-bottom:5px;font-size:16px}.rel .go{color:var(--blue);margin-top:12px;font-family:Montserrat,sans-serif;font-size:12.5px;font-weight:700;display:block}\n"},{"type":"external","src":"_astro/asphalt-shingle-roofing.g19fguKO.css"}],"routeData":{"route":"/service/asphalt-shingle-roofing","isIndex":false,"type":"page","pattern":"^\\/service\\/asphalt-shingle-roofing\\/?$","segments":[[{"content":"service","dynamic":false,"spread":false}],[{"content":"asphalt-shingle-roofing","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/service/asphalt-shingle-roofing.astro","pathname":"/service/asphalt-shingle-roofing","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[{"type":"external","src":"_astro/Header.nSTc8Nez.css"},{"type":"inline","content":".rel{flex-wrap:wrap;justify-content:center;gap:30px;display:flex}.rel a{background:#fff;border-radius:10px;max-width:300px;padding:15px}.rel p{color:var(--grey);font-size:13.5px}.rel h3{margin-bottom:5px;font-size:16px}.rel .go{color:var(--blue);margin-top:12px;font-family:Montserrat,sans-serif;font-size:12.5px;font-weight:700;display:block}\n"},{"type":"external","src":"_astro/commercial-flat-roofing.Cu0uTkVT.css"}],"routeData":{"route":"/service/commercial-flat-roofing","isIndex":false,"type":"page","pattern":"^\\/service\\/commercial-flat-roofing\\/?$","segments":[[{"content":"service","dynamic":false,"spread":false}],[{"content":"commercial-flat-roofing","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/service/commercial-flat-roofing.astro","pathname":"/service/commercial-flat-roofing","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[{"type":"external","src":"_astro/Header.nSTc8Nez.css"},{"type":"inline","content":".rel{flex-wrap:wrap;justify-content:center;gap:30px;display:flex}.rel a{background:#fff;border-radius:10px;max-width:300px;padding:15px}.rel p{color:var(--grey);font-size:13.5px}.rel h3{margin-bottom:5px;font-size:16px}.rel .go{color:var(--blue);margin-top:12px;font-family:Montserrat,sans-serif;font-size:12.5px;font-weight:700;display:block}\n"},{"type":"external","src":"_astro/gutters-decks.CrPCZf_4.css"}],"routeData":{"route":"/service/gutters-decks","isIndex":false,"type":"page","pattern":"^\\/service\\/gutters-decks\\/?$","segments":[[{"content":"service","dynamic":false,"spread":false}],[{"content":"gutters-decks","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/service/gutters-decks.astro","pathname":"/service/gutters-decks","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[{"type":"external","src":"_astro/Header.nSTc8Nez.css"},{"type":"inline","content":".rel{flex-wrap:wrap;justify-content:center;gap:30px;display:flex}.rel a{background:#fff;border-radius:10px;max-width:300px;padding:15px}.rel p{color:var(--grey);font-size:13.5px}.rel h3{margin-bottom:5px;font-size:16px}.rel .go{color:var(--blue);margin-top:12px;font-family:Montserrat,sans-serif;font-size:12.5px;font-weight:700;display:block}\n"},{"type":"external","src":"_astro/metal-roofing.BNvD64eA.css"}],"routeData":{"route":"/service/metal-roofing","isIndex":false,"type":"page","pattern":"^\\/service\\/metal-roofing\\/?$","segments":[[{"content":"service","dynamic":false,"spread":false}],[{"content":"metal-roofing","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/service/metal-roofing.astro","pathname":"/service/metal-roofing","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[{"type":"external","src":"_astro/Header.nSTc8Nez.css"},{"type":"inline","content":".rel{flex-wrap:wrap;justify-content:center;gap:30px;display:flex}.rel a{background:#fff;border-radius:10px;max-width:300px;padding:15px}.rel p{color:var(--grey);font-size:13.5px}.rel h3{margin-bottom:5px;font-size:16px}.rel .go{color:var(--blue);margin-top:12px;font-family:Montserrat,sans-serif;font-size:12.5px;font-weight:700;display:block}\n"},{"type":"external","src":"_astro/roof-inspection.B0LL652o.css"}],"routeData":{"route":"/service/roof-inspection","isIndex":false,"type":"page","pattern":"^\\/service\\/roof-inspection\\/?$","segments":[[{"content":"service","dynamic":false,"spread":false}],[{"content":"roof-inspection","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/service/roof-inspection.astro","pathname":"/service/roof-inspection","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[{"type":"external","src":"_astro/Header.nSTc8Nez.css"},{"type":"inline","content":".rel{flex-wrap:wrap;justify-content:center;gap:30px;display:flex}.rel a{background:#fff;border-radius:10px;max-width:300px;padding:15px}.rel p{color:var(--grey);font-size:13.5px}.rel h3{margin-bottom:5px;font-size:16px}.rel .go{color:var(--blue);margin-top:12px;font-family:Montserrat,sans-serif;font-size:12.5px;font-weight:700;display:block}\n"},{"type":"external","src":"_astro/roof-repair.EkL3hk6Q.css"}],"routeData":{"route":"/service/roof-repair","isIndex":false,"type":"page","pattern":"^\\/service\\/roof-repair\\/?$","segments":[[{"content":"service","dynamic":false,"spread":false}],[{"content":"roof-repair","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/service/roof-repair.astro","pathname":"/service/roof-repair","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[{"type":"external","src":"_astro/Header.nSTc8Nez.css"},{"type":"inline","content":".rel{flex-wrap:wrap;justify-content:center;gap:30px;display:flex}.rel a{background:#fff;border-radius:10px;max-width:300px;padding:15px}.rel p{color:var(--grey);font-size:13.5px}.rel h3{margin-bottom:5px;font-size:16px}.rel .go{color:var(--blue);margin-top:12px;font-family:Montserrat,sans-serif;font-size:12.5px;font-weight:700;display:block}\n"},{"type":"external","src":"_astro/roof-replacement.D0mxpfuN.css"}],"routeData":{"route":"/service/roof-replacement","isIndex":false,"type":"page","pattern":"^\\/service\\/roof-replacement\\/?$","segments":[[{"content":"service","dynamic":false,"spread":false}],[{"content":"roof-replacement","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/service/roof-replacement.astro","pathname":"/service/roof-replacement","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[{"type":"external","src":"_astro/Header.nSTc8Nez.css"},{"type":"inline","content":".rel{flex-wrap:wrap;justify-content:center;gap:30px;display:flex}.rel a{background:#fff;border-radius:10px;max-width:300px;padding:15px}.rel p{color:var(--grey);font-size:13.5px}.rel h3{margin-bottom:5px;font-size:16px}.rel .go{color:var(--blue);margin-top:12px;font-family:Montserrat,sans-serif;font-size:12.5px;font-weight:700;display:block}\n"},{"type":"external","src":"_astro/siding-installation-replacement.BDpESS-G.css"}],"routeData":{"route":"/service/siding-installation-replacement","isIndex":false,"type":"page","pattern":"^\\/service\\/siding-installation-replacement\\/?$","segments":[[{"content":"service","dynamic":false,"spread":false}],[{"content":"siding-installation-replacement","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/service/siding-installation-replacement.astro","pathname":"/service/siding-installation-replacement","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[{"type":"external","src":"_astro/Header.nSTc8Nez.css"},{"type":"inline","content":".rel{flex-wrap:wrap;justify-content:center;gap:30px;display:flex}.rel a{background:#fff;border-radius:10px;max-width:300px;padding:15px}.rel p{color:var(--grey);font-size:13.5px}.rel h3{margin-bottom:5px;font-size:16px}.rel .go{color:var(--blue);margin-top:12px;font-family:Montserrat,sans-serif;font-size:12.5px;font-weight:700;display:block}\n"},{"type":"external","src":"_astro/storm-emergency.CvIWSz_l.css"}],"routeData":{"route":"/service/storm-emergency","isIndex":false,"type":"page","pattern":"^\\/service\\/storm-emergency\\/?$","segments":[[{"content":"service","dynamic":false,"spread":false}],[{"content":"storm-emergency","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/service/storm-emergency.astro","pathname":"/service/storm-emergency","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[],"routeData":{"route":"/src/pages/api/send-estimate","isIndex":false,"type":"endpoint","pattern":"^\\/src\\/pages\\/api\\/send-estimate\\/?$","segments":[[{"content":"src","dynamic":false,"spread":false}],[{"content":"pages","dynamic":false,"spread":false}],[{"content":"api","dynamic":false,"spread":false}],[{"content":"send-estimate","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/src/pages/api/send-estimate.js","pathname":"/src/pages/api/send-estimate","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[{"stage":"head-inline","children":"window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n\t\tvar script = document.createElement('script');\n\t\tscript.defer = true;\n\t\tscript.src = '/_vercel/insights/script.js';\n\t\tvar head = document.querySelector('head');\n\t\thead.appendChild(script);\n\t"}],"styles":[{"type":"external","src":"_astro/Header.nSTc8Nez.css"},{"type":"inline","content":".ctaholders{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;width:100%;display:flex}\n.err[data-astro-cid-rdnqlhoo]{color:#c0392b;min-height:14px;margin-top:4px;font-size:12px;display:block}.field-invalid[data-astro-cid-rdnqlhoo]{border-color:#c0392b!important}.form-status[data-astro-cid-rdnqlhoo]{border-radius:var(--r-sm,12px);margin-bottom:16px;padding:12px 14px;font-size:14px}.form-status[data-astro-cid-rdnqlhoo].success{color:#1e7e34;background:#e9f7ef;border:1px solid #c3e6cb}.form-status[data-astro-cid-rdnqlhoo].error{color:#c0392b;background:#fdecea;border:1px solid #f5c6cb}\n"}],"routeData":{"route":"/","isIndex":true,"type":"page","pattern":"^\\/$","segments":[],"params":[],"component":"src/pages/index.astro","pathname":"/","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}}],"serverLike":true,"middlewareMode":"classic","base":"/","trailingSlash":"ignore","compressHTML":"jsx","componentMetadata":[["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/contact.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/index.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/blog/[...slug].astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/about.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/service/asphalt-shingle-roofing.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/service/commercial-flat-roofing.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/free-estimate.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/service/gutters-decks.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/blog/index.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/service/metal-roofing.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/service/roof-inspection.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/service/roof-repair.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/service/roof-replacement.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/service/siding-installation-replacement.astro",{"propagation":"none","containsHead":true}],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/service/storm-emergency.astro",{"propagation":"none","containsHead":true}]],"renderers":[],"clientDirectives":[["idle","(()=>{var l=(n,t)=>{let i=async()=>{await(await n())()},e=typeof t.value==\"object\"?t.value:void 0,s={timeout:e==null?void 0:e.timeout};\"requestIdleCallback\"in window?window.requestIdleCallback(i,s):setTimeout(i,s.timeout||200)};(self.Astro||(self.Astro={})).idle=l;window.dispatchEvent(new Event(\"astro:idle\"));})();"],["load","(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).load=e;window.dispatchEvent(new Event(\"astro:load\"));})();"],["media","(()=>{var n=(a,t)=>{let i=async()=>{await(await a())()};if(t.value){let e=matchMedia(t.value);e.matches?i():e.addEventListener(\"change\",i,{once:!0})}};(self.Astro||(self.Astro={})).media=n;window.dispatchEvent(new Event(\"astro:media\"));})();"],["only","(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).only=e;window.dispatchEvent(new Event(\"astro:only\"));})();"],["visible","(()=>{var a=(s,i,o)=>{let r=async()=>{await(await s())()},t=typeof i.value==\"object\"?i.value:void 0,c={rootMargin:t==null?void 0:t.rootMargin},n=new IntersectionObserver(e=>{for(let l of e)if(l.isIntersecting){n.disconnect(),r();break}},c);for(let e of o.children)n.observe(e)};(self.Astro||(self.Astro={})).visible=a;window.dispatchEvent(new Event(\"astro:visible\"));})();"]],"entryModules":{"astro/entrypoints/prerender":"prerender-entry.eKOs5Zvp.mjs","\u0000noop-middleware":"virtual_astro_middleware.mjs","\u0000virtual:astro:server-island-manifest":"chunks/_virtual_astro_server-island-manifest_C1Q2srgE.mjs","\u0000virtual:astro:session-driver":"chunks/_virtual_astro_session-driver_C-PI1Pas.mjs","\u0000virtual:astro:actions/noop-entrypoint":"chunks/noop-entrypoint_Z3zFhrGC.mjs","@astrojs/vercel/entrypoint":"entry.mjs","\u0000virtual:astro:page:src/pages/blog/[...slug]@_@astro":"chunks/_.._ItyMQDR1.mjs","\u0000astro:data-layer-content":"chunks/_astro_data-layer-content_D2m6tGEK.mjs","\u0000virtual:astro:page:src/pages/about@_@astro":"chunks/about_13F5UyA7.mjs","\u0000virtual:astro:page:src/pages/service/asphalt-shingle-roofing@_@astro":"chunks/asphalt-shingle-roofing_DBQGgU8F.mjs","\u0000virtual:astro:page:src/pages/service/commercial-flat-roofing@_@astro":"chunks/commercial-flat-roofing_CoCc5XC0.mjs","\u0000virtual:astro:page:src/pages/contact@_@astro":"chunks/contact_C3fhk6BC.mjs","D:\\himanshu\\finalroofing\\alldone\\Vincenzo-Roofing\\.astro\\content-assets.mjs":"chunks/content-assets_DyQ12uTg.mjs","\u0000virtual:astro:page:src/pages/free-estimate@_@astro":"chunks/free-estimate_Cl1eM8w-.mjs","\u0000virtual:astro:page:node_modules/astro/dist/assets/endpoint/generic@_@js":"chunks/generic_bJl3Q5BX.mjs","\u0000virtual:astro:page:src/pages/service/gutters-decks@_@astro":"chunks/gutters-decks_VET83uhw.mjs","\u0000virtual:astro:page:src/pages/blog/index@_@astro":"chunks/index_BGf-xdpR.mjs","\u0000virtual:astro:page:src/pages/index@_@astro":"chunks/index_Dlg37Ywn.mjs","\u0000virtual:astro:page:src/pages/service/metal-roofing@_@astro":"chunks/metal-roofing_CWmdX_u6.mjs","\u0000virtual:astro:page:src/pages/middleware@_@js":"chunks/middleware_Cz-xJsR_.mjs","\u0000virtual:astro:page:src/pages/api/revalidate@_@js":"chunks/revalidate_CvBanFdG.mjs","\u0000virtual:astro:page:src/pages/service/roof-inspection@_@astro":"chunks/roof-inspection_DP70axhe.mjs","\u0000virtual:astro:page:src/pages/service/roof-repair@_@astro":"chunks/roof-repair_COLlSKkw.mjs","\u0000virtual:astro:page:src/pages/service/roof-replacement@_@astro":"chunks/roof-replacement_ChTpGWri.mjs","\u0000virtual:astro:page:src/pages/rss.xml@_@js":"chunks/rss_BJc_8qqZ.mjs","\u0000virtual:astro:page:src/pages/api/send-contact@_@js":"chunks/send-contact_BOp0jDml.mjs","\u0000virtual:astro:page:src/pages/api/send-estimate@_@js":"chunks/send-estimate_DX3hRpvk.mjs","\u0000virtual:astro:page:src/pages/src/pages/api/send-estimate@_@js":"chunks/send-estimate_DkAM-Oku.mjs","D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/node_modules/astro/dist/assets/services/sharp.js":"chunks/sharp_CASQjMdB.mjs","\u0000virtual:astro:page:src/pages/service/siding-installation-replacement@_@astro":"chunks/siding-installation-replacement_71u6oIlk.mjs","\u0000virtual:astro:page:src/pages/service/storm-emergency@_@astro":"chunks/storm-emergency_BQlT7KMA.mjs","D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/components/BaseHead.astro?astro&type=script&index=0&lang.ts":"_astro/BaseHead.astro_astro_type_script_index_0_lang.Da6TCRI-.js","D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/components/Header.astro?astro&type=script&index=0&lang.ts":"_astro/Header.astro_astro_type_script_index_0_lang.GrTFlhog.js","D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/blog/index.astro?astro&type=script&index=0&lang.ts":"_astro/index.astro_astro_type_script_index_0_lang.Bl8NpTCO.js","D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/index.astro?astro&type=script&index=0&lang.ts":"_astro/index.astro_astro_type_script_index_0_lang.E4JUVBi0.js","astro:scripts/before-hydration.js":""},"inlinedScripts":[["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/components/BaseHead.astro?astro&type=script&index=0&lang.ts","window.dataLayer=window.dataLayer||[];function e(){dataLayer.push(arguments)}e(`js`,new Date),e(`config`,`G-6ZW3B877NL`);"],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/components/Header.astro?astro&type=script&index=0&lang.ts","var e=document.getElementById(`siteHeader`),t=document.querySelector(`.margin-top`),n=document.getElementById(`menuToggle`),r=document.getElementById(`mobilePanel`),i=()=>{if(e&&t){let n=e.offsetHeight;t.style.marginTop=`${n}px`}};if(i(),window.addEventListener(`resize`,i),window.addEventListener(`load`,i),e){let t=()=>e.classList.toggle(`scrolled`,window.scrollY>8);t(),window.addEventListener(`scroll`,t,{passive:!0})}document.addEventListener(`click`,e=>{let t=e.target;if(n&&(t===n||n.contains(t))){let e=r?.classList.toggle(`open`);n.classList.toggle(`active`,e),n.setAttribute(`aria-expanded`,String(e)),document.body.style.overflow=e?`hidden`:``;return}if(t.closest(`a.mp-link, a.mp-sublink`)){r?.classList.remove(`open`),n?.classList.remove(`active`),n?.setAttribute(`aria-expanded`,`false`),document.body.style.overflow=``;return}let i=t.closest(`.dropdown-opens`),a=t.closest(`.mp-toggle`);if(i||a){let n=t.closest(`.mp-link-group`);if(n){let t=n.querySelector(`.mp-toggle`),r=n.querySelector(`.mp-submenu`);if(a){let t=a.getAttribute(`href`);(!t||t===`#`)&&e.preventDefault()}else i&&e.preventDefault();if(r&&r.classList.contains(`mp-submenu`)){let e=r.classList.toggle(`open`);t?.setAttribute(`aria-expanded`,String(e))}}return}document.querySelectorAll(`.nav-dropdown`).forEach(e=>{e.contains(t)||e.classList.remove(`open`)})});"],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/blog/index.astro?astro&type=script&index=0&lang.ts","document.addEventListener(`DOMContentLoaded`,()=>{let e=document.getElementById(`more-posts-data`),t=document.getElementById(`blog-grid`),n=document.getElementById(`load-more-btn`),r=document.getElementById(`load-more-wrap`);if(!e||!t||!n||!r)return;let i=[];try{i=JSON.parse(e.textContent||`[]`)}catch{i=[]}let a=parseInt(n.dataset.batchSize||`9`,10);function o(e){let t=document.createElement(`div`);return t.textContent=e??``,t.innerHTML}function s(){let e=i.splice(0,a),n=document.createDocumentFragment();e.forEach(e=>{let t=document.createElement(`article`);t.className=`blog-card`,t.style.cursor=`pointer`,t.addEventListener(`click`,()=>{window.location.href=`/blog/${e.slug}`}),t.innerHTML=`\n              <div class=\"blog-media\">\n                <span class=\"blog-cat-badge\">Article</span>\n                <img\n                  src=\"${o(e.imgSrc)}\"\n                  ${e.imgSrcSet?`srcset=\"${o(e.imgSrcSet)}\"`:``}\n                  sizes=\"(max-width: 720px) 100vw, (max-width: 1024px) 50vw, 33vw\"\n                  width=\"${e.imgWidth}\"\n                  height=\"${e.imgHeight}\"\n                  alt=\"${o(e.imgAlt)}\"\n                  loading=\"lazy\"\n                  decoding=\"async\"\n                />\n              </div>\n              <div class=\"blog-content\">\n                <span class=\"blog-date\">${o(e.date)}</span>\n                <h3><a href=\"/blog/${encodeURIComponent(e.slug)}\">${o(e.title)}</a></h3>\n                <p>${o(e.excerpt)}</p>\n                <div class=\"blog-footer\">\n                  <a href=\"/blog/${encodeURIComponent(e.slug)}\" class=\"read-more-link\">Read Article</a>\n                </div>\n              </div>\n            `,n.appendChild(t)}),t.appendChild(n),i.length===0&&r.remove()}n.addEventListener(`click`,s)});"],["D:/himanshu/finalroofing/alldone/Vincenzo-Roofing/src/pages/index.astro?astro&type=script&index=0&lang.ts","document.addEventListener(`DOMContentLoaded`,()=>{document.querySelectorAll(`main img:not([loading])`).forEach(e=>{e.setAttribute(`loading`,`lazy`),e.setAttribute(`decoding`,`async`)});let e=document.getElementById(`marquee`),t=document.querySelector(`.marquee-wrap`);if(!e||!t)return;let n=e.querySelector(`.marquee-content`);if(!n)return;e.appendChild(n.cloneNode(!0)),e.appendChild(n.cloneNode(!0)),e.appendChild(n.cloneNode(!0)),e.style.willChange=`transform`;let r=0,i=!1,a=!0,o=0,s=null,c=null,l=()=>{o=n.offsetWidth};l();let u;window.addEventListener(`resize`,()=>{clearTimeout(u),u=setTimeout(l,150)}),t.addEventListener(`mouseenter`,()=>i=!0),t.addEventListener(`mouseleave`,()=>{i=!1,s=null}),new IntersectionObserver(e=>{e.forEach(e=>{a=e.isIntersecting,a&&c===null&&(s=null,c=requestAnimationFrame(d))})},{threshold:0}).observe(t),document.addEventListener(`visibilitychange`,()=>{document.hidden?i=!0:(i=!1,s=null)});function d(t){if(!a){c=null;return}if(i)s=null;else{s===null&&(s=t);let n=(t-s)/1e3;s=t,r-=30*n,Math.abs(r)>=o&&(r=0),e&&(e.style.transform=`translate3d(${r}px, 0, 0)`)}c=requestAnimationFrame(d)}c=requestAnimationFrame(d)});"]],"assets":["/about-image.webp","/fav.png","/footer-logo.png","/home-1.webp","/home-2.webp","/image-1.png","/image-2.png","/image-3.png","/image-4.png","/image-5.png","/image-6.png","/location-1.webp","/location-2.webp","/location-3.webp","/logo.png","/logonew.png","/robots.txt","/sitemap.xml","/_astro/blog-placeholder-1.Bx0Zcyzv.jpg","/_astro/blog-placeholder-about.BtEdEmGp.jpg","/_astro/blog-placeholder-3.ijrf8Ohr.jpg","/_astro/blog-placeholder-2.1WQRLJGH.jpg","/_astro/blog-placeholder-4.gLBdjEDe.jpg","/_astro/Header.nSTc8Nez.css","/_astro/_..D1ReKpkK.css","/_astro/free-estimate.DW6PdWLr.css","/_astro/asphalt-shingle-roofing.g19fguKO.css","/_astro/commercial-flat-roofing.Cu0uTkVT.css","/_astro/gutters-decks.CrPCZf_4.css","/_astro/metal-roofing.BNvD64eA.css","/_astro/roof-inspection.B0LL652o.css","/_astro/roof-repair.EkL3hk6Q.css","/_astro/roof-replacement.D0mxpfuN.css","/_astro/siding-installation-replacement.BDpESS-G.css","/_astro/storm-emergency.CvIWSz_l.css"],"buildFormat":"directory","checkOrigin":true,"actionBodySizeLimit":1048576,"serverIslandBodySizeLimit":1048576,"allowedDomains":[],"key":"4JhjvLwITVfRGbTGbdfHmSMJ6ixOvzvijyKAZhDsWyU=","image":{},"devToolbar":{"enabled":false,"debugInfoOutput":""},"logLevel":"info","shouldInjectCspMetaTags":false});
 var manifestRoutes = _manifest.routes;
 var manifest = Object.assign(_manifest, {
 	renderers,
@@ -5304,7 +4302,7 @@ var entrypoint_default = { async fetch(request) {
 	const hasValidMiddlewareSecret = request.headers.get(ASTRO_MIDDLEWARE_SECRET_HEADER) === middlewareSecret;
 	let realPath = void 0;
 	if (hasValidMiddlewareSecret) realPath = request.headers.get(ASTRO_PATH_HEADER);
-	else if (url.searchParams.get("x_astro_path_token") === "45d7e7b6-fdba-4413-a127-aa3d01e86ce5") realPath = url.searchParams.get(ASTRO_PATH_PARAM);
+	else if (url.searchParams.get("x_astro_path_token") === "c13425a3-34bb-47ff-95bc-923121ace291") realPath = url.searchParams.get(ASTRO_PATH_PARAM);
 	if (typeof realPath === "string") {
 		url.pathname = realPath;
 		url.searchParams.delete(ASTRO_PATH_PARAM);
