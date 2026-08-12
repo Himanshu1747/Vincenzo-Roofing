@@ -6,13 +6,17 @@ var send_contact_exports = /* @__PURE__ */ __exportAll({
 	prerender: () => false
 });
 function getTransporter() {
+	const host = process.env.SMTP_HOST || "smtp.gmail.com";
+	const port = Number(process.env.SMTP_PORT || "587");
+	const user = process.env.SMTP_USER || "vincenzo.nastasia.825@gmail.com";
+	const pass = process.env.SMTP_PASS || "lfyo afss oclx fray";
 	return nodemailer.createTransport({
-		host: "smtp.gmail.com",
-		port: 587,
-		secure: false,
+		host,
+		port,
+		secure: port === 465,
 		auth: {
-			user: "vincenzo.nastasia.825@gmail.com",
-			pass: "lfyo afss oclx fray"
+			user,
+			pass
 		}
 	});
 }
@@ -33,8 +37,8 @@ async function POST({ request }) {
 			headers: { "Content-Type": "application/json" }
 		});
 		const transporter = getTransporter();
-		const fromAddress = "vincenzo.nastasia.825@gmail.com";
-		const toAddress = "vincenzo.nastasia.825@gmail.com";
+		const fromAddress = process.env.SMTP_USER || "vincenzo.nastasia.825@gmail.com";
+		const toAddress = process.env.TO_EMAIL || "vincenzo.nastasia.825@gmail.com";
 		const html = `
       <h2>New Contact Form Submission</h2>
       <p><b>Name:</b> ${fname} ${lname}</p>

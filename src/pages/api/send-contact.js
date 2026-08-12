@@ -3,24 +3,25 @@ import nodemailer from "nodemailer";
 export const prerender = false;
 
 function getTransporter() {
+  const host = process.env.SMTP_HOST || import.meta.env.SMTP_HOST;
+  const port = Number(process.env.SMTP_PORT || import.meta.env.SMTP_PORT || 587);
+  const user = process.env.SMTP_USER || import.meta.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS || import.meta.env.SMTP_PASS;
+
   return nodemailer.createTransport({
-    host: import.meta.env.SMTP_HOST,
-    port: Number(import.meta.env.SMTP_PORT || 587),
-    secure: Number(import.meta.env.SMTP_PORT) === 465, // true for 465, false for 587 (STARTTLS)
-    auth: {
-      user: import.meta.env.SMTP_USER,
-      pass: import.meta.env.SMTP_PASS,
-    },
+    host,
+    port,
+    secure: port === 465,
+    auth: { user, pass },
   });
 }
 
 export async function POST({ request }) {
   try {
     const data = await request.json();
-
     const { fname, lname, phone, email, service, msg } = data;
 
-    // ---- Server-side validation (never trust the client) ----
+    // ---- Server-side validation ----
     const errors = {};
 
     if (!fname || fname.trim().length < 2) errors.fname = "First name is required.";
@@ -40,10 +41,10 @@ export async function POST({ request }) {
     }
 
     const transporter = getTransporter();
-    const fromAddress = import.meta.env.SMTP_USER;
-    const toAddress = import.meta.env.TO_EMAIL || fromAddress;
+    const fromAddress = process.env.SMTP_USER || import.meta.env.SMTP_USER;
+    const toAddress = process.env.TO_EMAIL || import.meta.env.TO_EMAIL || fromAddress;
 
-    // ---- Compose notification email (to business owner) ----
+    // ---- Compose notification email ----
     const html = `
       <h2>New Contact Form Submission</h2>
       <p><b>Name:</b> ${fname} ${lname}</p>
@@ -61,7 +62,7 @@ export async function POST({ request }) {
       html,
     });
 
-    // ---- Auto-reply thank-you email (to the person who filled the form) ----
+    // ---- Auto-reply thank-you email ----
     const thankYouHtml = `
       <p>Hi ${fname},</p>
       <p>Thank you for reaching out. We've received your message and a member of our team will get back to you shortly, typically within one business hour (7am–6pm, Mon–Fri).</p>
