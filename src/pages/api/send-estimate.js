@@ -3,15 +3,14 @@ import nodemailer from "nodemailer";
 export const prerender = false;
 
 function getTransporter() {
-  const host = process.env.SMTP_HOST || import.meta.env.SMTP_HOST;
-  const port = Number(process.env.SMTP_PORT || import.meta.env.SMTP_PORT || 587);
+  const host = process.env.SMTP_HOST || import.meta.env.SMTP_HOST || "smtp.gmail.com";
   const user = process.env.SMTP_USER || import.meta.env.SMTP_USER;
   const pass = process.env.SMTP_PASS || import.meta.env.SMTP_PASS;
 
   return nodemailer.createTransport({
     host,
-    port,
-    secure: port === 465,
+    port: 465,
+    secure: true, // Live Vercel par Port 465 (SSL) 100% reliable rehta hai
     auth: { user, pass },
   });
 }
@@ -19,22 +18,10 @@ function getTransporter() {
 export async function POST({ request }) {
   try {
     const data = await request.json();
+    const { fname, lname, phone, email, address, ptype, service, timing, details } = data;
 
-    const {
-      fname,
-      lname,
-      phone,
-      email,
-      address,
-      ptype,
-      service,
-      timing,
-      details,
-    } = data;
-
-    // ---- Server-side validation ----
+    // ---- Validation ----
     const errors = {};
-
     if (!fname || fname.trim().length < 2) errors.fname = "First name is required.";
     if (!lname || lname.trim().length < 2) errors.lname = "Last name is required.";
 
@@ -57,7 +44,7 @@ export async function POST({ request }) {
     const fromAddress = process.env.SMTP_USER || import.meta.env.SMTP_USER;
     const toAddress = process.env.TO_EMAIL || import.meta.env.TO_EMAIL || fromAddress;
 
-    // ---- Compose notification email ----
+    // ---- Email To Owner ----
     const html = `
       <h2>New Free Estimate Request</h2>
       <p><b>Name:</b> ${fname} ${lname}</p>
@@ -78,17 +65,16 @@ export async function POST({ request }) {
       html,
     });
 
-    // ---- Auto-reply thank-you email ----
+    // ---- Auto Reply Email ----
     const thankYouHtml = `
       <p>Hi ${fname},</p>
-      <p>Thank you for requesting a free roofing estimate. We've received your details and a member of our team will be in touch shortly, typically within one business hour (7am–6pm, Mon–Fri).</p>
-      <p><b>Here's a quick summary of what you submitted:</b></p>
+      <p>Thank you for requesting a free roofing estimate. We've received your details and a member of our team will be in touch shortly.</p>
+      <p><b>Summary:</b></p>
       <ul>
         <li><b>Service:</b> ${service || "Not specified"}</li>
         <li><b>Address:</b> ${address}</li>
         <li><b>Timing:</b> ${timing || "Not specified"}</li>
       </ul>
-      <p>If your matter is urgent (active leak or storm damage), please call us directly rather than waiting for a reply.</p>
       <p>Thanks again,<br/>The Roofing Team</p>
     `;
 
