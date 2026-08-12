@@ -5,21 +5,30 @@ import Header from "../../components/Header.astro";
 import { queryWordPress } from "../../lib/wordpress";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 
-// Rendered on-demand (not pre-built) so a new WordPress post/edit shows up
-// without a full site rebuild. Cache-Control below lets the CDN still serve
-// this fast and cache it briefly, refreshing in the background.
+// 1. Static Mode me WordPress ke saare slugs fetch karna zaroori hai
+export async function getStaticPaths() {
+    const data = await queryWordPress(`
+        query GetAllSlugs {
+            posts(first: 100) {
+                nodes {
+                    slug
+                }
+            }
+        }
+    `);
 
+    const posts = data?.posts?.nodes || [];
 
-Astro.response.headers.set(
-	"Cache-Control",
-	"public, max-age=0, s-maxage=90, stale-while-revalidate=30",
-);
+    return posts.map((post: { slug: string }) => ({
+        params: { slug: post.slug },
+    }));
+}
 
 const { slug } = Astro.params;
 
-// 2. Fetch Single Post details + Related/Recent Posts
+// 2. Single Post details + Related/Recent Posts Fetching
 const data = await queryWordPress(
-	`
+    `
   query SinglePostAndRecent($slug: ID!) {
     post(id: $slug, idType: SLUG) {
       id
@@ -57,14 +66,14 @@ const data = await queryWordPress(
     }
   }
 `,
-	{ slug },
+    { slug },
 );
 
 const post = data?.post;
 
 // Fallback safety if post is not found
 if (!post) {
-	return Astro.redirect("/404");
+    return Astro.redirect("/404");
 }
 
 // Filter out current active post from related list
@@ -73,577 +82,525 @@ const relatedPosts = allPosts.filter((p: any) => p.slug !== slug).slice(0, 3);
 
 // Helper function to format WordPress dates
 function formatDate(dateString: string) {
-	if (!dateString) return "";
-	return new Date(dateString).toLocaleDateString("en-US", {
-		month: "short",
-		day: "numeric",
-		year: "numeric",
-	});
+    if (!dateString) return "";
+    return new Date(dateString).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+    });
 }
 
 // Helper to strip HTML tags from excerpts
 function cleanExcerpt(excerpt: string) {
-	if (!excerpt) return "";
-	return excerpt.replace(/<[^>]*>?/gm, "").trim();
+    if (!excerpt) return "";
+    return excerpt.replace(/<[^>]*>?/gm, "").trim();
 }
 
 // Helper to truncate title to N words for breadcrumb
 function truncateWords(text: string, wordLimit: number = 5) {
-	if (!text) return "";
-	const words = text.trim().split(/\s+/);
-	if (words.length <= wordLimit) return text;
-	return words.slice(0, wordLimit).join(" ") + "...";
+    if (!text) return "";
+    const words = text.trim().split(/\s+/);
+    if (words.length <= wordLimit) return text;
+    return words.slice(0, wordLimit).join(" ") + "...";
 }
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead
-			title={`${post.title} | Vincenzo's Roofing`}
-			description={cleanExcerpt(post.excerpt) || SITE_DESCRIPTION}
-		/>
-	</head>
-	<body>
-		<Header />
+    <head>
+        <BaseHead
+            title={`${post.title} | Vincenzo's Roofing`}
+            description={cleanExcerpt(post.excerpt) || SITE_DESCRIPTION}
+        />
+    </head>
+    <body>
+        <Header />
 
-		<main id="top">
-			<!-- Page Hero Header -->
-			<section class="page-hero">
-				<div class="container">
-					<div class="breadcrumb">
-						<a href="/">Home</a>
-						<span>/</span>
-						<a href="/blog">Blog &amp; Resources</a>
-						<span>/</span>
-						<span title={post.title}>{truncateWords(post.title, 5)}</span>
-					</div>
-					<h1>
-						{post.title}
-					</h1>
-					<Fragment set:html={post.excerpt} />
-				</div>
-			</section>
+        <main id="top">
+            <!-- Page Hero Header -->
+            <section class="page-hero">
+                <div class="container">
+                    <div class="breadcrumb">
+                        <a href="/">Home</a>
+                        <span>/</span>
+                        <a href="/blog">Blog &amp; Resources</a>
+                        <span>/</span>
+                        <span title={post.title}>{truncateWords(post.title, 5)}</span>
+                    </div>
+                    <h1>
+                        {post.title}
+                    </h1>
+                    <Fragment set:html={post.excerpt} />
+                </div>
+            </section>
 
-			<!-- Main Content & Sidebar Layout -->
-			<div class="container article-layout">
-				<!-- Single Article Content Column -->
-				<article>
-					{
-						post.featuredImage?.node?.sourceUrl && (
-							<div class="featured-cover-img">
-								<img
-									src={post.featuredImage.node.sourceUrl}
-									alt={
-										post.featuredImage.node.altText ||
-										post.title
-									}
-								/>
-							</div>
-						)
-					}
+            <!-- Main Content & Sidebar Layout -->
+            <div class="container article-layout">
+                <!-- Single Article Content Column -->
+                <article>
+                    {
+                        post.featuredImage?.node?.sourceUrl && (
+                            <div class="featured-cover-img">
+                                <img
+                                    src={post.featuredImage.node.sourceUrl}
+                                    alt={
+                                        post.featuredImage.node.altText ||
+                                        post.title
+                                    }
+                                />
+                            </div>
+                        )
+                    }
 
-					<!-- Dynamic WordPress Article Content -->
-					<div class="article-body">
-						<Fragment set:html={post.content} />
-					</div>
+                    <!-- Dynamic WordPress Article Content -->
+                    <div class="article-body">
+                        <Fragment set:html={post.content} />
+                    </div>
 
-					<!-- Author Bio Box -->
-				</article>
+                    <!-- Author Bio Box -->
+                </article>
 
-				<!-- Sidebar -->
-				<aside class="sidebar">
-					<!-- Recent Articles Widget -->
-					<div class="sidebar-widget">
-						<h3>Related Guides</h3>
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <!-- Recent Articles Widget -->
+                    <div class="sidebar-widget">
+                        <h3>Related Guides</h3>
 
-						{
-							relatedPosts.map((relPost: any) => (
-								<div
-									class="recent-post-item"
-									onclick={`window.location.href='/blog/${relPost.slug}'`}
-									style="cursor: pointer;"
-								>
-									<div class="recent-thumb">
-										<img
-											src={
-												relPost.featuredImage?.node
-													?.sourceUrl ||
-												"https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Best-Roofing-in-North-Hampton-NH-1-1.webp"
-											}
-											alt={
-												relPost.featuredImage?.node
-													?.altText || relPost.title
-											}
-										/>
-									</div>
-									<div>
-										<div class="recent-title">
-											<a href={`/blog/${relPost.slug}`}>
-												{relPost.title}
-											</a>
-										</div>
-										<span class="recent-date">
-											{formatDate(relPost.date)}
-										</span>
-									</div>
-								</div>
-							))
-						}
-					</div>
-				</aside>
-			</div>
+                        {
+                            relatedPosts.map((relPost: any) => (
+                                <div
+                                    class="recent-post-item"
+                                    onclick={`window.location.href='/blog/${relPost.slug}'`}
+                                    style="cursor: pointer;"
+                                >
+                                    <div class="recent-thumb">
+                                        <img
+                                            src={
+                                                relPost.featuredImage?.node
+                                                    ?.sourceUrl ||
+                                                "https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Best-Roofing-in-North-Hampton-NH-1-1.webp"
+                                            }
+                                            alt={
+                                                relPost.featuredImage?.node
+                                                    ?.altText || relPost.title
+                                            }
+                                        />
+                                    </div>
+                                    <div>
+                                        <div class="recent-title">
+                                            <a href={`/blog/${relPost.slug}`}>
+                                                {relPost.title}
+                                            </a>
+                                        </div>
+                                        <span class="recent-date">
+                                            {formatDate(relPost.date)}
+                                        </span>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </aside>
+            </div>
+        </main>
 
-			<!-- Related Articles Grid Section -->
-			<!-- {
-				relatedPosts.length > 0 && (
-					<section class="related-section">
-						<div class="container">
-							<h2 style="font-size: 24px;">
-								Recommended Articles
-							</h2>
-							<div class="related-grid">
-								{relatedPosts.map((relPost: any) => (
-									<div
-										class="related-card"
-										onclick={`window.location.href='/blog/${relPost.slug}'`}
-										style="cursor: pointer;"
-									>
-										<div class="related-media">
-											<img
-												src={
-													relPost.featuredImage?.node
-														?.sourceUrl ||
-													"https://staging2.vincenzoroofing.com/wp-content/uploads/2026/07/Best-Roofing-in-North-Hampton-NH-1-1.webp"
-												}
-												alt={
-													relPost.featuredImage?.node
-														?.altText ||
-													relPost.title
-												}
-											/>
-										</div>
-										<div class="related-body">
-											<h4>
-												<a
-													href={`/blog/${relPost.slug}`}
-												>
-													{relPost.title}
-												</a>
-											</h4>
-											<p>
-												{cleanExcerpt(relPost.excerpt)}
-											</p>
-										</div>
-									</div>
-								))}
-							</div>
-						</div>
-					</section>
-				)
-			} -->
-		</main>
+        <Footer />
 
-		<Footer />
+        <style is:global>
+            /* Single Post Header & Meta */
+            .article-header {
+                padding: 50px 0 40px;
+                background: var(--off);
+                border-bottom: 1px solid var(--line);
+            }
 
-		<style is:global>
-			/* Single Post Header & Meta */
-			.article-header {
-				padding: 50px 0 40px;
-				background: var(--off);
-				border-bottom: 1px solid var(--line);
-			}
+            .post-badge-row {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin-bottom: 16px;
+            }
 
-			.post-badge-row {
-				display: flex;
-				align-items: center;
-				gap: 12px;
-				margin-bottom: 16px;
-			}
+            .post-cat {
+                font-family: "Montserrat", sans-serif;
+                background: var(--blue-pale);
+                color: var(--blue);
+                font-size: 11px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                padding: 5px 14px;
+                border-radius: 100px;
+            }
 
-			.post-cat {
-				font-family: "Montserrat", sans-serif;
-				background: var(--blue-pale);
-				color: var(--blue);
-				font-size: 11px;
-				font-weight: 700;
-				text-transform: uppercase;
-				letter-spacing: 0.1em;
-				padding: 5px 14px;
-				border-radius: 100px;
-			}
+            .post-read-time {
+                font-size: 12.5px;
+                color: var(--grey-light);
+                font-family: "Montserrat", sans-serif;
+                font-weight: 600;
+            }
 
-			.post-read-time {
-				font-size: 12.5px;
-				color: var(--grey-light);
-				font-family: "Montserrat", sans-serif;
-				font-weight: 600;
-			}
+            .article-header h1 {
+                font-size: clamp(28px, 4vw, 44px);
+                line-height: 1.2;
+                max-width: 900px;
+                margin-bottom: 20px;
+            }
 
-			.article-header h1 {
-				font-size: clamp(28px, 4vw, 44px);
-				line-height: 1.2;
-				max-width: 900px;
-				margin-bottom: 20px;
-			}
+            .post-author-meta {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                padding-top: 10px;
+            }
 
-			.post-author-meta {
-				display: flex;
-				align-items: center;
-				gap: 14px;
-				padding-top: 10px;
-			}
+            .author-avatar-lg {
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                background: var(--blue-bright);
+                color: var(--white);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 700;
+                font-family: "Montserrat", sans-serif;
+                font-size: 16px;
+            }
 
-			.author-avatar-lg {
-				width: 44px;
-				height: 44px;
-				border-radius: 50%;
-				background: var(--blue-bright);
-				color: var(--white);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				font-weight: 700;
-				font-family: "Montserrat", sans-serif;
-				font-size: 16px;
-			}
+            .author-meta-info b {
+                display: block;
+                font-size: 14px;
+                color: var(--ink);
+            }
 
-			.author-meta-info b {
-				display: block;
-				font-size: 14px;
-				color: var(--ink);
-			}
+            .author-meta-info span {
+                font-size: 12.5px;
+                color: var(--grey-light);
+            }
 
-			.author-meta-info span {
-				font-size: 12.5px;
-				color: var(--grey-light);
-			}
+            /* Article Grid Layout & Body Typography */
+            .article-layout {
+                display: grid;
+                align-items: start;
+                grid-template-columns: 1fr 340px;
+                gap: 52px;
+                padding: 60px 15px 80px;
+            }
 
-			/* Article Grid Layout & Body Typography */
-			.article-layout {
-				display: grid;
-				align-items: start;
-				grid-template-columns: 1fr 340px;
-				gap: 52px;
-				padding: 60px 15px 80px;
-			}
+            .featured-cover-img {
+                border-radius: var(--r-lg);
+                overflow: hidden;
+                margin-bottom: 40px;
+                box-shadow: var(--sh-md);
+                border: 1px solid var(--line);
+            }
 
-			.featured-cover-img {
-				border-radius: var(--r-lg);
-				overflow: hidden;
-				margin-bottom: 40px;
-				box-shadow: var(--sh-md);
-				border: 1px solid var(--line);
-			}
+            .featured-cover-img img {
+                width: 100%;
+                height: 420px;
+                object-fit: cover;
+                display: block;
+            }
 
-			.featured-cover-img img {
-				width: 100%;
-				height: 420px;
-				object-fit: cover;
-				display: block;
-			}
+            .article-body {
+                font-size: 16.5px;
+                line-height: 1.8;
+                color: #2d3139;
+            }
 
-			.article-body {
-				font-size: 16.5px;
-				line-height: 1.8;
-				color: #2d3139;
-			}
+            .article-body p {
+                margin-bottom: 24px;
+            }
 
-			.article-body p {
-				margin-bottom: 24px;
-			}
+            .article-body h2 {
+                font-size: clamp(22px, 2.8vw, 28px);
+                margin: 42px 0 18px;
+                line-height: 1.3;
+            }
 
-			.article-body h2 {
-				font-size: clamp(22px, 2.8vw, 28px);
-				margin: 42px 0 18px;
-				line-height: 1.3;
-			}
+            .article-body h3 {
+                font-size: 20px;
+                margin: 32px 0 14px;
+            }
 
-			.article-body h3 {
-				font-size: 20px;
-				margin: 32px 0 14px;
-			}
+            .article-body ul,
+            .article-body ol {
+                margin: 0 0 28px 20px;
+            }
 
-			.article-body ul,
-			.article-body ol {
-				margin: 0 0 28px 20px;
-			}
+            .article-body ul li {
+                list-style-type: disc;
+                margin-bottom: 10px;
+                padding-left: 6px;
+            }
 
-			.article-body ul li {
-				list-style-type: disc;
-				margin-bottom: 10px;
-				padding-left: 6px;
-			}
+            .article-body ol li {
+                list-style-type: decimal;
+                margin-bottom: 10px;
+                padding-left: 6px;
+            }
 
-			.article-body ol li {
-				list-style-type: decimal;
-				margin-bottom: 10px;
-				padding-left: 6px;
-			}
+            .article-body img {
+                max-width: 100%;
+                height: auto;
+                border-radius: var(--r-md);
+                margin: 20px 0;
+            }
 
-			.article-body img {
-				max-width: 100%;
-				height: auto;
-				border-radius: var(--r-md);
-				margin: 20px 0;
-			}
+            /* Callout Boxes & Author Bio */
+            .pull-quote {
+                background: var(--blue-pale);
+                border-left: 4px solid var(--blue);
+                padding: 24px 28px;
+                border-radius: 0 var(--r-md) var(--r-md) 0;
+                margin: 36px 0;
+                font-family: "Montserrat", sans-serif;
+                font-size: 18px;
+                font-weight: 700;
+                color: var(--deep);
+                line-height: 1.5;
+            }
 
-			/* Callout Boxes & Author Bio */
-			.pull-quote {
-				background: var(--blue-pale);
-				border-left: 4px solid var(--blue);
-				padding: 24px 28px;
-				border-radius: 0 var(--r-md) var(--r-md) 0;
-				margin: 36px 0;
-				font-family: "Montserrat", sans-serif;
-				font-size: 18px;
-				font-weight: 700;
-				color: var(--deep);
-				line-height: 1.5;
-			}
+            .pro-tip-box {
+                background: #fffdf3;
+                border: 1.5px solid #f0e3a2;
+                border-radius: var(--r-md);
+                padding: 24px;
+                margin: 36px 0;
+            }
 
-			.pro-tip-box {
-				background: #fffdf3;
-				border: 1.5px solid #f0e3a2;
-				border-radius: var(--r-md);
-				padding: 24px;
-				margin: 36px 0;
-			}
+            .pro-tip-box h4 {
+                color: #8c6a00;
+                font-size: 15px;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                margin-bottom: 8px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
 
-			.pro-tip-box h4 {
-				color: #8c6a00;
-				font-size: 15px;
-				text-transform: uppercase;
-				letter-spacing: 0.08em;
-				margin-bottom: 8px;
-				display: flex;
-				align-items: center;
-				gap: 8px;
-			}
+            .pro-tip-box p {
+                margin: 0;
+                font-size: 15px;
+                color: #4a3e10;
+            }
 
-			.pro-tip-box p {
-				margin: 0;
-				font-size: 15px;
-				color: #4a3e10;
-			}
+            .author-bio-card {
+                background: var(--off);
+                border: 1px solid var(--line);
+                border-radius: var(--r-lg);
+                padding: 32px;
+                display: flex;
+                gap: 22px;
+                align-items: center;
+                margin-top: 50px;
+            }
 
-			.author-bio-card {
-				background: var(--off);
-				border: 1px solid var(--line);
-				border-radius: var(--r-lg);
-				padding: 32px;
-				display: flex;
-				gap: 22px;
-				align-items: center;
-				margin-top: 50px;
-			}
+            .author-bio-card .bio-avatar {
+                width: 70px;
+                height: 70px;
+                border-radius: 50%;
+                background: var(--blue);
+                color: var(--white);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 26px;
+                font-weight: 700;
+                flex-shrink: 0;
+                font-family: "Montserrat", sans-serif;
+            }
 
-			.author-bio-card .bio-avatar {
-				width: 70px;
-				height: 70px;
-				border-radius: 50%;
-				background: var(--blue);
-				color: var(--white);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				font-size: 26px;
-				font-weight: 700;
-				flex-shrink: 0;
-				font-family: "Montserrat", sans-serif;
-			}
+            .author-bio-card h4 {
+                font-size: 17px;
+                margin-bottom: 4px;
+            }
 
-			.author-bio-card h4 {
-				font-size: 17px;
-				margin-bottom: 4px;
-			}
+            .author-bio-card p {
+                font-size: 14px;
+                color: var(--grey);
+                margin: 0;
+            }
 
-			.author-bio-card p {
-				font-size: 14px;
-				color: var(--grey);
-				margin: 0;
-			}
+            /* Sidebar Widgets & Form */
+            .sidebar {
+                display: flex;
+                flex-direction: column;
+                gap: 32px;
+                position: sticky;
+                top: 15%;
+            }
 
-			/* Sidebar Widgets & Form */
-			.sidebar {
-				display: flex;
-				flex-direction: column;
-				gap: 32px;
-				position: sticky;
-				top: 15%;
-			}
+            .sidebar-widget {
+                background: var(--white);
+                border: 1px solid var(--line);
+                border-radius: var(--r-lg);
+                padding: 28px;
+                box-shadow: var(--sh-sm);
+            }
 
-			.sidebar-widget {
-				background: var(--white);
-				border: 1px solid var(--line);
-				border-radius: var(--r-lg);
-				padding: 28px;
-				box-shadow: var(--sh-sm);
-			}
+            .sidebar-widget h3 {
+                font-size: 17px;
+                margin-bottom: 20px;
+                padding-bottom: 12px;
+                border-bottom: 2px solid var(--blue-pale);
+                position: relative;
+            }
 
-			.sidebar-widget h3 {
-				font-size: 17px;
-				margin-bottom: 20px;
-				padding-bottom: 12px;
-				border-bottom: 2px solid var(--blue-pale);
-				position: relative;
-			}
+            .sidebar-widget h3::after {
+                content: "";
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                width: 40px;
+                height: 2px;
+                background: var(--blue);
+            }
 
-			.sidebar-widget h3::after {
-				content: "";
-				position: absolute;
-				bottom: -2px;
-				left: 0;
-				width: 40px;
-				height: 2px;
-				background: var(--blue);
-			}
+            .recent-post-item {
+                display: flex;
+                gap: 14px;
+                margin-bottom: 18px;
+                align-items: center;
+                transition: transform 0.2s var(--ease);
+            }
 
-			.recent-post-item {
-				display: flex;
-				gap: 14px;
-				margin-bottom: 18px;
-				align-items: center;
-				transition: transform 0.2s var(--ease);
-			}
+            .recent-post-item:hover {
+                transform: translateX(4px);
+            }
 
-			.recent-post-item:hover {
-				transform: translateX(4px);
-			}
-			/* .article-body table {
-				border: 1px solid #000;
-				padding: 10px;
-			} */
-			table tr,
-			table td,
-			table th {
-				border: 1px solid #000;
-				padding: 10px;
-			}
-			.recent-post-item:last-child {
-				margin-bottom: 0;
-			}
+            table tr,
+            table td,
+            table th {
+                border: 1px solid #000;
+                padding: 10px;
+            }
+            .recent-post-item:last-child {
+                margin-bottom: 0;
+            }
 
-			.recent-thumb {
-				width: 68px;
-				height: 68px;
-				border-radius: var(--r-sm);
-				overflow: hidden;
-				flex-shrink: 0;
-				background: var(--off);
-			}
+            .recent-thumb {
+                width: 68px;
+                height: 68px;
+                border-radius: var(--r-sm);
+                overflow: hidden;
+                flex-shrink: 0;
+                background: var(--off);
+            }
 
-			.recent-thumb img {
-				width: 100%;
-				height: 100%;
-				object-fit: cover;
-			}
+            .recent-thumb img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
 
-			.recent-title {
-				font-family: "Montserrat", sans-serif;
-				font-size: 13.5px;
-				font-weight: 700;
-				line-height: 1.35;
-			}
+            .recent-title {
+                font-family: "Montserrat", sans-serif;
+                font-size: 13.5px;
+                font-weight: 700;
+                line-height: 1.35;
+            }
 
-			.recent-title a:hover {
-				color: var(--blue);
-			}
-			section.page-hero h1 {
-				padding-bottom: 15px;
-			}
+            .recent-title a:hover {
+                color: var(--blue);
+            }
+            section.page-hero h1 {
+                padding-bottom: 15px;
+            }
 
-			.recent-date {
-				font-size: 11.5px;
-				color: var(--grey-light);
-				margin-top: 4px;
-				display: block;
-			}
+            .recent-date {
+                font-size: 11.5px;
+                color: var(--grey-light);
+                margin-top: 4px;
+                display: block;
+            }
 
-			/* Related Articles Section */
-			.related-section {
-				background: var(--off);
-				padding: 70px 0;
-				border-top: 1px solid var(--line);
-			}
+            /* Related Articles Section */
+            .related-section {
+                background: var(--off);
+                padding: 70px 0;
+                border-top: 1px solid var(--line);
+            }
 
-			.related-grid {
-				display: grid;
-				grid-template-columns: repeat(3, 1fr);
-				gap: 24px;
-				margin-top: 36px;
-			}
+            .related-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 24px;
+                margin-top: 36px;
+            }
 
-			.related-card {
-				background: var(--white);
-				border-radius: var(--r-lg);
-				border: 1px solid var(--line);
-				overflow: hidden;
-				display: flex;
-				flex-direction: column;
-				transition: transform 0.3s var(--ease);
-			}
+            .related-card {
+                background: var(--white);
+                border-radius: var(--r-lg);
+                border: 1px solid var(--line);
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                transition: transform 0.3s var(--ease);
+            }
 
-			.related-card:hover {
-				transform: translateY(-4px);
-			}
+            .related-card:hover {
+                transform: translateY(-4px);
+            }
 
-			.related-media {
-				height: 200px;
-				overflow: hidden;
-			}
+            .related-media {
+                height: 200px;
+                overflow: hidden;
+            }
 
-			.related-media img {
-				width: 100%;
-				height: 100%;
-				object-fit: cover;
-			}
+            .related-media img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
 
-			.related-body {
-				padding: 20px;
-				display: flex;
-				flex-direction: column;
-				flex: 1;
-			}
+            .related-body {
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+            }
 
-			.related-body h4 {
-				font-size: 16px;
-				line-height: 1.35;
-				margin-bottom: 10px;
-			}
+            .related-body h4 {
+                font-size: 16px;
+                line-height: 1.35;
+                margin-bottom: 10px;
+            }
 
-			.related-body p {
-				font-size: 13.5px;
-				color: var(--grey);
-				line-height: 1.55;
-			}
+            .related-body p {
+                font-size: 13.5px;
+                color: var(--grey);
+                line-height: 1.55;
+            }
 
-			/* Single Article Responsive */
-			@media (max-width: 1024px) {
-				.article-layout {
-					grid-template-columns: 1fr;
-					gap: 40px;
-				}
-				.featured-cover-img img {
-					height: 320px;
-				}
-				.related-grid {
-					grid-template-columns: repeat(2, 1fr);
-				}
-				.sidebar {
-					position: static;
-				}
-			}
+            /* Single Article Responsive */
+            @media (max-width: 1024px) {
+                .article-layout {
+                    grid-template-columns: 1fr;
+                    gap: 40px;
+                }
+                .featured-cover-img img {
+                    height: 320px;
+                }
+                .related-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                .sidebar {
+                    position: static;
+                }
+            }
 
-			@media (max-width: 720px) {
-				.related-grid {
-					grid-template-columns: 1fr;
-				}
-				.author-bio-card {
-					flex-direction: column;
-					text-align: center;
-				}
-			}
-		</style>
-	</body>
+            @media (max-width: 720px) {
+                .related-grid {
+                    grid-template-columns: 1fr;
+                }
+                .author-bio-card {
+                    flex-direction: column;
+                    text-align: center;
+                }
+            }
+        </style>
+    </body>
 </html>
