@@ -2,6 +2,10 @@
 dist/
 # generated types
 .astro/
+# Vercel local build/link cache — NEVER commit or deploy this.
+# It bakes in native binaries (e.g. sharp) for whatever OS built it
+# locally (Windows), which crash on Vercel's Linux servers.
+.vercel/
 
 # dependencies
 node_modules/

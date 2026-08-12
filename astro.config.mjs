@@ -68,7 +68,14 @@ function getAdapter() {
 // https://astro.build/config
 export default defineConfig({
   site: 'https://example.com',
-  output: 'server', // <-- Fixed: Serverless API routes (Forms) chalane ke liye zaroori hai
+  // 'static': pages are built to plain HTML once at build time and served
+  // from Vercel's CDN — no per-visitor server computation, so nothing can
+  // time out or "crash" from a slow upstream. Routes that explicitly set
+  // `export const prerender = false` (the 3 files in src/pages/api/) still
+  // run as on-demand serverless functions, so the contact/estimate forms
+  // keep working exactly as before. This is the "hybrid" setup: static
+  // pages + serverless-only-where-needed.
+  output: 'static',
   adapter: getAdapter(),
   integrations: [mdx(), sitemap()],
   fonts: [
