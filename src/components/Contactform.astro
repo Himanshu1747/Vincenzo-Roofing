@@ -300,9 +300,14 @@ const alldata = pagedata?.page;
                         body: JSON.stringify(data),
                     });
 
-                    const result = await res.json();
+                    // Safe JSON Parsing Logic (To prevent JSON parse crashes)
+                    let result = {};
+                    const contentType = res.headers.get("content-type");
+                    if (contentType && contentType.includes("application/json")) {
+                        result = await res.json();
+                    }
 
-                    if (result.success) {
+                    if (res.ok && result.success) {
                         cSetStatus(
                             "Thanks! Your request has been sent. We'll be in touch within one business hour.",
                             "success",
@@ -319,11 +324,12 @@ const alldata = pagedata?.page;
                     } else {
                         cSetStatus(
                             result.message ||
-                                "Something went wrong. Please call us instead.",
+                                `Server Error (${res.status}). Please check Vercel Logs or call directly.`,
                             "error",
                         );
                     }
                 } catch (err) {
+                    console.error("Submit Error:", err);
                     cSetStatus(
                         "Network error. Please try again or call us directly.",
                         "error",

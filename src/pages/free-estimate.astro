@@ -1,6 +1,4 @@
 ---
-
-
 // Serve the cached page from the host's CDN for 90s, then refresh it in the
 // background so WordPress edits (text/images) show up without a full site
 // rebuild. See src/lib/wordpress.js for the data-fetching side.
@@ -1496,9 +1494,14 @@ const pageData = alldata?.freeEstimateMainPage || {};
                         body: JSON.stringify(data),
                     });
 
-                    const result = await res.json();
+                    // Safe JSON Parsing logic
+                    let result = {};
+                    const contentType = res.headers.get("content-type");
+                    if (contentType && contentType.includes("application/json")) {
+                        result = await res.json();
+                    }
 
-                    if (result.success) {
+                    if (res.ok && result.success) {
                         setStatus(
                             "Thanks! Your request has been sent. We'll be in touch within one business hour.",
                             "success",
@@ -1515,11 +1518,12 @@ const pageData = alldata?.freeEstimateMainPage || {};
                     } else {
                         setStatus(
                             result.message ||
-                                "Something went wrong. Please call us instead.",
+                                `Server Error (${res.status}). Please check Vercel logs or call us instead.`,
                             "error",
                         );
                     }
                 } catch (err) {
+                    console.error("Estimate Form Submit Error:", err);
                     setStatus(
                         "Network error. Please try again or call us directly.",
                         "error",
