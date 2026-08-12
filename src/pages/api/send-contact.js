@@ -4,14 +4,21 @@ export const prerender = false;
 
 function getTransporter() {
   const host = process.env.SMTP_HOST || import.meta.env.SMTP_HOST || "smtp.gmail.com";
+  const port = Number(process.env.SMTP_PORT || import.meta.env.SMTP_PORT || 465);
   const user = process.env.SMTP_USER || import.meta.env.SMTP_USER;
   const pass = process.env.SMTP_PASS || import.meta.env.SMTP_PASS;
 
+  if (!user || !pass) {
+    throw new Error("SMTP credentials missing in Environment Variables");
+  }
+
   return nodemailer.createTransport({
     host,
-    port: 465,
-    secure: true, // Live Vercel par Port 465 (SSL) 100% reliable rehta hai
+    port,
+    secure: port === 465,
     auth: { user, pass },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
   });
 }
 
@@ -20,8 +27,9 @@ export async function POST({ request }) {
     const data = await request.json();
     const { fname, lname, phone, email, service, msg } = data;
 
-    // ---- Validation ----
+    // ---- Server-side validation ----
     const errors = {};
+
     if (!fname || fname.trim().length < 2) errors.fname = "First name is required.";
     if (!lname || lname.trim().length < 2) errors.lname = "Last name is required.";
 
@@ -42,7 +50,7 @@ export async function POST({ request }) {
     const fromAddress = process.env.SMTP_USER || import.meta.env.SMTP_USER;
     const toAddress = process.env.TO_EMAIL || import.meta.env.TO_EMAIL || fromAddress;
 
-    // ---- Email To Owner ----
+    // ---- Notification email to business owner ----
     const html = `
       <h2>New Contact Form Submission</h2>
       <p><b>Name:</b> ${fname} ${lname}</p>
@@ -60,11 +68,11 @@ export async function POST({ request }) {
       html,
     });
 
-    // ---- Auto Reply Email ----
+    // ---- Auto-reply thank-you email ----
     const thankYouHtml = `
       <p>Hi ${fname},</p>
-      <p>Thank you for reaching out. We've received your message and a member of our team will get back to you shortly.</p>
-      <p><b>Summary:</b></p>
+      <p>Thank you for reaching out. We've received your message and a member of our team will get back to you shortly, typically within one business hour (7am–6pm, Mon–Fri).</p>
+      <p><b>Here's a quick summary of what you submitted:</b></p>
       <ul>
         <li><b>Service:</b> ${service || "Not specified"}</li>
         <li><b>Message:</b> ${msg ? msg.replace(/\n/g, "<br/>") : "None provided"}</li>
@@ -86,7 +94,10 @@ export async function POST({ request }) {
   } catch (err) {
     console.error("Email send error:", err);
     return new Response(
-      JSON.stringify({ success: false, message: "Server error. Please try again." }),
+      JSON.stringify({ 
+        success: false, 
+        message: err.message || "Server error. Please try again or call us." 
+      }),
       { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
