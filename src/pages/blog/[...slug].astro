@@ -8,7 +8,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 // Rendered on-demand (not pre-built) so a new WordPress post/edit shows up
 // without a full site rebuild. Cache-Control below lets the CDN still serve
 // this fast and cache it briefly, refreshing in the background.
-export const prerender = false;
+
 
 Astro.response.headers.set(
 	"Cache-Control",

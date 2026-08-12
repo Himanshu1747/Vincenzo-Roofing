@@ -50,15 +50,15 @@
 
 
 // @ts-check
-
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
+import vercel from '@astrojs/vercel';
 import { defineConfig, fontProviders } from 'astro/config';
 
-// https://astro.build/config
 export default defineConfig({
-    site: 'https://www.vincenzoroofing.com', // Apni asli domain URL
-    output: 'static',
+    site: 'https://www.vincenzoroofing.com',
+    output: 'static', 
+    adapter: vercel(), 
     integrations: [mdx(), sitemap()],
     fonts: [
         {
