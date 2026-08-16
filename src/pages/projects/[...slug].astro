@@ -3,84 +3,93 @@ import BaseHead from "../../components/BaseHead.astro";
 import Footer from "../../components/Footer.astro";
 import Header from "../../components/Header.astro";
 import { queryWordPress } from "../../lib/wordpress";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+import { SITE_DESCRIPTION } from "../../consts";
 
-// 1. Static Mode me WordPress ke saare slugs fetch karna zaroori hai
 export async function getStaticPaths() {
     const data = await queryWordPress(`
-        query GetAllSlugs {
-            posts(first: 100) {
-                nodes {
-                    slug
+        query ALLPROJECTS {
+          myproject(first: 100) {
+            nodes {
+              id
+              title
+              content
+              slug
+              excerpt
+              date
+              featuredImage {
+                node {
+                  sourceUrl
+                  altText
+                  mediaDetails {
+                    width
+                    height
+                    sizes {
+                      name
+                      sourceUrl
+                      width
+                      height
+                    }
+                  }
                 }
+              }
+              allprojectsacf {
+                galleryImage(first: 500) {
+                  nodes {
+                    altText
+                    sourceUrl
+                    mediaDetails {
+                      sizes {
+                        name
+                        sourceUrl
+                        width
+                        height
+                      }
+                    }
+                  }
+                }
+              }
             }
+          }
         }
     `);
 
-    const posts = data?.posts?.nodes || [];
+    const projects = data?.myproject?.nodes || [];
 
-    return posts.map((post: { slug: string }) => ({
-        params: { slug: post.slug },
-    }));
+    return projects.map((post: any) => {
+        const relatedPosts = projects
+            .filter((p: any) => p.slug !== post.slug)
+            .slice(0, 3);
+
+        return {
+            params: { slug: post.slug },
+            props: { post, relatedPosts },
+        };
+    });
 }
 
-const { slug } = Astro.params;
+const { post, relatedPosts } = Astro.props;
 
-// 2. Single Post details + Related/Recent Posts Fetching
-const data = await queryWordPress(
-    `
-  query SinglePostAndRecent($slug: ID!) {
-    post(id: $slug, idType: SLUG) {
-      id
-      title
-      slug
-      excerpt
-      content
-      date
-      author {
-        node {
-          name
-        }
-      }
-      featuredImage {
-        node {
-          sourceUrl(size: LARGE)
-          altText
-        }
-      }
-    }
-    posts(first: 10) {
-      nodes {
-        id
-        title
-        slug
-        excerpt
-        date
-        featuredImage {
-          node {
-            sourceUrl(size: MEDIUM_LARGE)
-            altText
-          }
-        }
-      }
-    }
-  }
-`,
-    { slug },
-);
-
-const post = data?.post;
-
-// Fallback safety if post is not found
 if (!post) {
     return Astro.redirect("/404");
 }
 
-// Filter out current active post from related list
-const allPosts = data?.posts?.nodes || [];
-const relatedPosts = allPosts.filter((p: any) => p.slug !== slug).slice(0, 3);
+const galleryImages = post.allprojectsacf?.galleryImage?.nodes || [];
 
-// Helper function to format WordPress dates
+// Helper function to find Large image -> Medium image -> Original sourceUrl
+function getImageUrls(imgNode: any) {
+    const originalUrl = imgNode?.sourceUrl || "";
+    const sizes = imgNode?.mediaDetails?.sizes || [];
+
+    const largeObj = sizes.find((s: any) => s.name === "large");
+
+    // Fall back to originalUrl if large does not exist, bypassing medium
+    const displayUrl = largeObj?.sourceUrl || originalUrl;
+
+    return {
+        full: originalUrl,    // Original image for Lightbox modal
+        display: displayUrl,  // Large -> Original for <img> thumbnail
+    };
+}
 function formatDate(dateString: string) {
     if (!dateString) return "";
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -90,13 +99,11 @@ function formatDate(dateString: string) {
     });
 }
 
-// Helper to strip HTML tags from excerpts
 function cleanExcerpt(excerpt: string) {
     if (!excerpt) return "";
     return excerpt.replace(/<[^>]*>?/gm, "").trim();
 }
 
-// Helper to truncate title to N words for breadcrumb
 function truncateWords(text: string, wordLimit: number = 5) {
     if (!text) return "";
     const words = text.trim().split(/\s+/);
@@ -109,8 +116,12 @@ function truncateWords(text: string, wordLimit: number = 5) {
 <html lang="en">
     <head>
         <BaseHead
-            title={`${post.title} | Vincenzo's Roofing`}
+            title={`${post.title || "Vincenzo's Roofing"}`}
             description={cleanExcerpt(post.excerpt) || SITE_DESCRIPTION}
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css"
         />
     </head>
     <body>
@@ -123,54 +134,56 @@ function truncateWords(text: string, wordLimit: number = 5) {
                     <div class="breadcrumb">
                         <a href="/">Home</a>
                         <span>/</span>
-                        <a href="/blog">Blog &amp; Resources</a>
+                        <a href="/projects">Projects</a>
                         <span>/</span>
-                        <span title={post.title}>{truncateWords(post.title, 5)}</span>
+                        <span title={post.title}
+                            >{truncateWords(post.title, 5)}</span
+                        >
                     </div>
                     <h1>
                         {post.title}
                     </h1>
-                    <Fragment set:html={post.excerpt} />
+                    <Fragment set:html={post.excerpt || ""} />
                 </div>
             </section>
 
             <!-- Main Content & Sidebar Layout -->
             <div class="container article-layout">
                 <!-- Single Article Content Column -->
-                <article>
-                    {
-                        post.featuredImage?.node?.sourceUrl && (
-                            <div class="featured-cover-img">
-                                <img
-                                    src={post.featuredImage.node.sourceUrl}
-                                    alt={
-                                        post.featuredImage.node.altText ||
-                                        post.title
-                                    }
-                                />
-                            </div>
-                        )
-                    }
+                <div class="alldata">
+                    <article>
+                        {
+                            post.featuredImage?.node?.sourceUrl && (
+                                <div class="featured-cover-img">
+                                    <img
+                                        src={post.featuredImage.node.sourceUrl}
+                                        alt={
+                                            post.featuredImage.node.altText ||
+                                            post.title
+                                        }
+                                    />
+                                </div>
+                            )
+                        }
 
-                    <!-- Dynamic WordPress Article Content -->
-                    <div class="article-body">
-                        <Fragment set:html={post.content} />
-                    </div>
-
-                    <!-- Author Bio Box -->
-                </article>
+                        <!-- Dynamic WordPress Article Content -->
+                        <div class="article-body">
+                            <Fragment set:html={post.content || ""} />
+                        </div>
+                    </article>
+                </div>
 
                 <!-- Sidebar -->
                 <aside class="sidebar">
                     <!-- Recent Articles Widget -->
                     <div class="sidebar-widget">
-                        <h3>Related Guides</h3>
+                        <h3>Explore Projects</h3>
 
                         {
                             relatedPosts.map((relPost: any) => (
                                 <div
                                     class="recent-post-item"
-                                    onclick={`window.location.href='/blog/${relPost.slug}'`}
+                                    onclick={`window.location.href='/projects/${relPost.slug}'`}
                                     style="cursor: pointer;"
                                 >
                                     <div class="recent-thumb">
@@ -188,7 +201,9 @@ function truncateWords(text: string, wordLimit: number = 5) {
                                     </div>
                                     <div>
                                         <div class="recent-title">
-                                            <a href={`/blog/${relPost.slug}`}>
+                                            <a
+                                                href={`/projects/${relPost.slug}`}
+                                            >
                                                 {relPost.title}
                                             </a>
                                         </div>
@@ -202,6 +217,45 @@ function truncateWords(text: string, wordLimit: number = 5) {
                     </div>
                 </aside>
             </div>
+
+            <!-- Dynamic ACF Gallery Section -->
+            {
+                galleryImages.length > 0 && (
+                    <section class="gallery-sec">
+                        <div class="container">
+                            <div class="center-data">
+                                <h2 class="titlenameees">
+                                    {post.title || "Project Gallery"}
+                                </h2>
+                            </div>
+                            <div class="gallery-grids">
+                                {galleryImages.map((imgNode: any) => {
+                                    const urls = getImageUrls(imgNode);
+                                    return (
+                                        <div class="gallery-image">
+                                            <a
+                                                href={urls.full}
+                                                class="glightbox"
+                                                data-gallery="fence-gallery"
+                                            >
+                                                <img
+                                                    src={urls.display}
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                    alt={
+                                                        imgNode.altText ||
+                                                        "Gallery Image"
+                                                    }
+                                                />
+                                            </a>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </section>
+                )
+            }
         </main>
 
         <Footer />
@@ -279,6 +333,11 @@ function truncateWords(text: string, wordLimit: number = 5) {
                 color: var(--grey-light);
             }
 
+            h2.titlenameees {
+                font-size: clamp(27px, 3.9vw, 40px);
+                line-height: 1.14;
+            }
+
             /* Article Grid Layout & Body Typography */
             .article-layout {
                 display: grid;
@@ -298,7 +357,6 @@ function truncateWords(text: string, wordLimit: number = 5) {
 
             .featured-cover-img img {
                 width: 100%;
-                /* height: 420px; */
                 object-fit: cover;
                 display: block;
             }
@@ -517,90 +575,137 @@ function truncateWords(text: string, wordLimit: number = 5) {
                 display: block;
             }
 
-            /* Related Articles Section */
-            .related-section {
-                background: var(--off);
-                padding: 70px 0;
-                border-top: 1px solid var(--line);
-            }
-
-            .related-grid {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 24px;
-                margin-top: 36px;
-            }
-
-            .related-card {
-                background: var(--white);
-                border-radius: var(--r-lg);
-                border: 1px solid var(--line);
-                overflow: hidden;
-                display: flex;
-                flex-direction: column;
-                transition: transform 0.3s var(--ease);
-            }
-
-            .related-card:hover {
-                transform: translateY(-4px);
-            }
-
-            .related-media {
-                height: 200px;
-                overflow: hidden;
-            }
-
-            .related-media img {
+            /* Gallery Styles */
+            .center-data {
+                max-width: fit-content;
+                margin: 0 auto;
                 width: 100%;
+                text-align: center;
+            }
+            .center-data .fs-40 {
+                font-weight: 700;
+            }
+            .gallery-sec {
+                padding: 85px 0px;
+                background: #efefef;
+            }
+            .gallery-grids {
+                display: grid;
+                gap: 10px;
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                padding-top: 70px;
+            }
+            .gallery-image {
+                height: 305px;
+                overflow: hidden;
+                max-width: 388px;
+                width: 100%;
+                margin: 0 auto;
+                border-radius: 10px;
+            }
+            .gallery-image a {
+                display: block;
                 height: 100%;
+                width: 100%;
+            }
+            .gallery-image img {
+                height: 100%;
+                width: 100%;
                 object-fit: cover;
+                object-position: center;
+            }
+            .gallery-grids .gallery-image:nth-child(1) {
+                grid-column: span 2;
+                grid-row: span 2;
+                height: 626px;
+                width: 100%;
+                max-width: 100%;
             }
 
-            .related-body {
-                padding: 20px;
-                display: flex;
-                flex-direction: column;
-                flex: 1;
+            /* Responsive Design */
+            @media (max-width: 1600px) {
+                .gallery-sec {
+                    padding: 60px 0px;
+                }
+                .gallery-grids {
+                    padding-top: 50px;
+                }
             }
-
-            .related-body h4 {
-                font-size: 16px;
-                line-height: 1.35;
-                margin-bottom: 10px;
+            @media (max-width: 1400px) {
+                .gallery-sec {
+                    padding: 40px 0px;
+                }
+                .gallery-grids {
+                    padding-top: 30px;
+                }
             }
-
-            .related-body p {
-                font-size: 13.5px;
-                color: var(--grey);
-                line-height: 1.55;
+            @media (max-width: 1199px) {
+                .gallery-grids {
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                }
             }
-
-            /* Single Article Responsive */
             @media (max-width: 1024px) {
                 .article-layout {
                     grid-template-columns: 1fr;
                     gap: 40px;
                 }
-                /* .featured-cover-img img {
-                    height: 320px;
-                } */
-                .related-grid {
-                    grid-template-columns: repeat(2, 1fr);
-                }
                 .sidebar {
                     position: static;
                 }
             }
-
-            @media (max-width: 720px) {
-                .related-grid {
-                    grid-template-columns: 1fr;
+            @media (max-width: 991px) {
+                .gallery-grids .gallery-image:nth-child(1) {
+                    grid-column: span 1;
+                    grid-row: span 1;
                 }
-                .author-bio-card {
-                    flex-direction: column;
-                    text-align: center;
+                .gallery-image,
+                .gallery-grids .gallery-image:nth-child(1) {
+                    height: 215px;
+                    max-width: 388px;
+                    width: 100%;
+                    margin: 0 auto;
+                }
+            }
+            @media (max-width: 767px) {
+                .gallery-grids {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
+                .gallery-sec {
+                    padding: 30px 0px;
+                }
+            }
+            @media (max-width: 575px) {
+                .gallery-grids {
+                    grid-template-columns: repeat(1, minmax(0, 1fr));
+                }
+                .gallery-image,
+                .gallery-grids .gallery-image:nth-child(1) {
+                    height: auto;
                 }
             }
         </style>
+
+        <script
+            is:inline
+            src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"
+        ></script>
+
+        <script is:inline>
+            function setupLightbox() {
+                if (window.lightboxInstance) {
+                    window.lightboxInstance.destroy();
+                }
+                if (typeof GLightbox === "function") {
+                    window.lightboxInstance = GLightbox({
+                        selector: ".glightbox",
+                        touchNavigation: true,
+                        loop: true,
+                    });
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", setupLightbox);
+            document.addEventListener("astro:page-load", setupLightbox);
+        </script>
     </body>
 </html>

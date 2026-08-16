@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Rangoli Paints — Precision Visualizer</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+
+    <style>
+        *, *::before, *::after {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+        :root {
+            --primary: #C84E3A;
+            --primary-dark: #A83A2A;
+            --primary-light: #E8A79B;
+            --bg-cream: #FDF8F3;
+            --bg-white: #FFFFFF;
+            --text-dark: #1A1A2E;
+            --text-muted: #5A5A7A;
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            --radius: 20px;
+            --radius-sm: 12px;
+            --font: 'Inter', sans-serif;
+            --navbar-height: 76px;
+        }
+        body {
+            font-family: var(--font);
+            background: var(--bg-cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        button { cursor: pointer; font-family: inherit; border: none; background: none; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+        .badge {
+            display: inline-block; background: var(--primary); color: #fff;
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.08em; padding: 4px 14px; border-radius: 100px; margin-bottom: 12px;
+        }
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04); height: var(--navbar-height);
+            display: flex; align-items: center;
+        }
+        .navbar .container { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+        .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.5rem; color: var(--text-dark); text-decoration: none; }
+        .logo span { color: var(--primary); }
+        .logo-icon {
+            width: 36px; height: 36px; background: var(--primary); border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; font-size: 1.2rem;
+        }
+        .visualizer-section { background: var(--bg-white); padding: 120px 0 80px; }
+        .visualizer-wrapper {
+            background: var(--bg-cream); border-radius: var(--radius); padding: 28px;
+            box-shadow: var(--shadow); margin-top: 20px;
+        }
+        .visualizer-layout { display: grid; grid-template-columns: 1fr 320px; gap: 28px; }
+        .canvas-area {
+            position: relative; border-radius: var(--radius-sm); overflow: hidden;
+            background: #d5cfc8; min-height: 400px; display: flex; align-items: center;
+            justify-content: center; flex-direction: column; width: 100%;
+        }
+        .canvas-area canvas {
+            width: 100%; height: auto; display: block; object-fit: contain; cursor: crosshair; touch-action: none;
+        }
+        .canvas-placeholder { text-align: center; padding: 50px 20px; color: var(--text-muted); }
+        .upload-area { margin-top: 16px; display: flex; gap: 10px; justify-content: center; }
+        .upload-area label, .btn-action-label {
+            padding: 10px 22px; border-radius: 60px; background: var(--bg-white);
+            border: 2px dashed var(--text-muted); font-weight: 600; font-size: 0.85rem; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .upload-area input[type="file"], #replaceImageInput { display: none; }
+        
+        .mode-toggle {
+            display: flex; gap: 8px; justify-content: center; margin-bottom: 10px;
+        }
+        .mode-btn {
+            padding: 6px 16px; border-radius: 20px; background: var(--bg-white);
+            border: 1px solid rgba(0,0,0,0.15); font-weight: 600; font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        .mode-btn.active {
+            background: var(--primary); color: #fff; border-color: var(--primary);
+        }
+
+        .canvas-controls {
+            display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px;
+            justify-content: center; width: 100%; align-items: center;
+        }
+        .canvas-controls button, .btn-control-label {
+            padding: 7px 16px; border-radius: 60px; background: var(--bg-white);
+            border: 1px solid rgba(0, 0, 0, 0.08); font-weight: 500; font-size: 0.75rem;
+            transition: all 0.2s ease; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;
+        }
+        .canvas-controls button:hover, .canvas-controls button.active, .btn-control-label:hover {
+            background: var(--primary); color: #fff; border-color: var(--primary);
+        }
+        
+        .tolerance-picker {
+            display: inline-flex; align-items: center; gap: 8px; background: var(--bg-white);
+            padding: 4px 14px; border-radius: 60px; border: 1px solid rgba(0, 0, 0, 0.08);
+            font-size: 0.75rem; font-weight: 500;
+        }
+
+        .status-badge {
+            display: inline-block; padding: 4px 14px; border-radius: 60px; font-size: 0.7rem;
+            font-weight: 600; margin-top: 6px;
+        }
+        .status-badge.waiting { background: #fff3cd; color: #856404; }
+        .status-badge.ready { background: #d4edda; color: #155724; }
+        .status-badge.painted { background: #cce5ff; color: #004085; }
+
+        .compare-section {
+            margin-top: 16px; padding: 14px 16px; background: var(--bg-white);
+            border-radius: var(--radius-sm); width: 100%; display: none; border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        .compare-section h4 { font-size: 0.8rem; font-weight: 600; margin-bottom: 10px; text-align: center; }
+        .compare-slider {
+            position: relative; width: 100%; max-width: 400px; margin: 0 auto;
+            height: 6px; background: #d5cfc8; border-radius: 10px; cursor: pointer; touch-action: none;
+        }
+        .compare-slider .thumb {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 22px; height: 22px; background: var(--primary); border-radius: 50%;
+            border: 3px solid #fff; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); pointer-events: none;
+        }
+        .compare-labels { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-muted); margin-top: 6px; }
+
+        .wall-manager {
+            background: var(--bg-white); border-radius: var(--radius-sm); padding: 16px;
+            margin-top: 12px; width: 100%; border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        .layer-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+        .layer-chip {
+            display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px;
+            border-radius: 60px; border: 2px solid #e8e0d8; font-size: 0.75rem; font-weight: 600;
+            background: var(--bg-cream); cursor: pointer; transition: all 0.2s ease;
+        }
+        .layer-chip.active { border-color: var(--primary); background: var(--primary-light); color: var(--primary-dark); }
+        .layer-chip .dot { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(0, 0, 0, 0.1); }
+        .layer-chip .remove-btn { color: var(--text-muted); margin-left: 4px; font-size: 0.8rem; }
+        .layer-chip .remove-btn:hover { color: #dc3545; }
+
+        .palette-sidebar {
+            background: var(--bg-white); border-radius: var(--radius-sm); padding: 18px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04); max-height: 620px; overflow-y: auto;
+        }
+        .color-list { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 12px; }
+        .color-item { display: flex; align-items: center; gap: 8px; padding: 6px; border-radius: 6px; cursor: pointer; border: 1px solid transparent; }
+        .color-item:hover { background: var(--bg-cream); }
+        .color-item.active { border-color: var(--primary); background: var(--bg-cream); }
+        .color-item .swatch { width: 22px; height: 22px; border-radius: 4px; }
+        .color-item .info .name { font-size: 0.65rem; font-weight: 600; }
+        .color-item .info .code { font-size: 0.55rem; color: var(--text-muted); }
+        .toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: var(--text-dark); color: #fff; padding: 12px 24px; border-radius: 60px;
+            font-weight: 500; font-size: 0.85rem; z-index: 9999; opacity: 0; transition: all 0.4s ease;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        @media (max-width: 1024px) { .visualizer-layout { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <div class="toast" id="toast"></div>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo"><span class="logo-icon">R</span>Rangoli<span>Paints</span></a>
+        </div>
+    </nav>
+
+    <section class="visualizer-section">
+        <div class="container">
+            <div style="text-align: center;">
+                <span class="badge">Advanced Dual-Mode Visualizer</span>
+                <h2 style="font-size: 2.2rem; font-weight: 800;">Precision Paint Visualizer</h2>
+            </div>
+
+            <div class="visualizer-wrapper">
+                <div class="visualizer-layout">
+                    <div>
+                        <!-- Selection Tools Switcher -->
+                        <div class="mode-toggle">
+                            <button class="mode-btn active" id="wandModeBtn">✨ Smart Wand (Click Surface)</button>
+                            <button class="mode-btn" id="polyModeBtn">📐 Polygon Tool (Point-to-Point)</button>
+                        </div>
+
+                        <div class="canvas-area" id="canvasArea">
+                            <canvas id="mainCanvas"></canvas>
+                            <div class="canvas-placeholder" id="canvasPlaceholder">
+                                <h3>Upload Photo</h3>
+                                <div class="upload-area">
+                                    <label for="imageUpload">📤 Choose Image</label>
+                                    <input type="file" id="imageUpload" accept="image/*" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="canvas-controls">
+                            <label for="replaceImageInput" class="btn-control-label" id="replaceLabel" style="display:none;">
+                                🔄 Replace Image
+                            </label>
+                            <input type="file" id="replaceImageInput" accept="image/*" />
+
+                            <div class="tolerance-picker" id="tolContainer">
+                                <span>Sensitivity:</span>
+                                <input type="range" id="toleranceRange" min="15" max="60" value="32" />
+                            </div>
+
+                            <button id="finishPolyBtn" style="display:none; background:#28a745; color:#fff;">✅ Finish Shape</button>
+                            <button id="cancelPolyBtn" style="display:none; background:#dc3545; color:#fff;">✕ Cancel Shape</button>
+
+                            <button id="compareBtn">🔁 Compare</button>
+                            <button id="resetBtn">↺ Clear Layers</button>
+                            <button id="downloadBtn">⬇ Download PNG</button>
+                        </div>
+
+                        <div style="text-align:center;margin-top:8px;">
+                            <span id="statusBadge" class="status-badge waiting">📸 Upload an image to start</span>
+                        </div>
+
+                        <div class="wall-manager" id="wallManager" style="display:none;">
+                            <h4>🧱 Surface Layers (Click layer to modify color)</h4>
+                            <div class="layer-list" id="layerList"></div>
+                        </div>
+
+                        <div class="compare-section" id="compareSection">
+                            <h4>🔁 Before vs After Slider</h4>
+                            <div class="compare-slider" id="compareSlider">
+                                <div class="thumb" id="compareThumb"></div>
+                            </div>
+                            <div class="compare-labels">
+                                <span>Original Photo</span>
+                                <span>Painted Preview</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="palette-sidebar">
+                        <h3>🎨 Color Palette</h3>
+                        <div class="color-list" id="colorList"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const COLOR_PALETTE = [
+            { name: 'Teal', hex: '#3A8C8C' },
+            { name: 'Sage Green', hex: '#8A9A86' },
+            { name: 'Lilac', hex: '#D8C8E8' },
+            { name: 'Blush Pink', hex: '#E8C8C8' },
+            { name: 'Sky Blue', hex: '#7EC8E3' },
+            { name: 'Mist Grey', hex: '#B0B8C0' },
+            { name: 'Warm Cream', hex: '#F5E6D3' },
+            { name: 'Terracotta', hex: '#C87A5A' },
+            { name: 'Soft Butter', hex: '#F5E8B8' },
+            { name: 'Pearl White', hex: '#F0EDE8' },
+            { name: 'Charcoal', hex: '#3A3A44' },
+            { name: 'Deep Blue', hex: '#2C5F8A' }
+        ];
+
+        const state = {
+            image: null,
+            originalImageData: null,
+            smoothedImageData: null,
+            renderedCompositeData: null,
+            layers: [],
+            activeLayerId: null,
+            nextLayerId: 1,
+            selectedColor: '#3A8C8C',
+            selectedColorName: 'Teal',
+            toolMode: 'wand', // 'wand' or 'poly'
+            polyPoints: [],
+            compareMode: false,
+            compareAmount: 0.5
+        };
+
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+        const placeholder = document.getElementById('canvasPlaceholder');
+        const statusBadge = document.getElementById('statusBadge');
+        const wallManager = document.getElementById('wallManager');
+        const layerListEl = document.getElementById('layerList');
+        const colorListEl = document.getElementById('colorList');
+        const imageUpload = document.getElementById('imageUpload');
+        const replaceImageInput = document.getElementById('replaceImageInput');
+        const replaceLabel = document.getElementById('replaceLabel');
+        const compareSection = document.getElementById('compareSection');
+        const compareSlider = document.getElementById('compareSlider');
+        const compareThumb = document.getElementById('compareThumb');
+        const compareBtn = document.getElementById('compareBtn');
+        const wandModeBtn = document.getElementById('wandModeBtn');
+        const polyModeBtn = document.getElementById('polyModeBtn');
+        const finishPolyBtn = document.getElementById('finishPolyBtn');
+        const cancelPolyBtn = document.getElementById('cancelPolyBtn');
+        const toleranceRange = document.getElementById('toleranceRange');
+        const tolContainer = document.getElementById('tolContainer');
+
+        let isDraggingCompare = false;
+
+        function init() {
+            renderColors();
+            setupEvents();
+            setupCompareEvents();
+        }
+
+        function renderColors() {
+            colorListEl.innerHTML = COLOR_PALETTE.map(c => `
+                <div class="color-item ${c.name === state.selectedColorName ? 'active' : ''}" data-hex="${c.hex}" data-name="${c.name}">
+                    <div class="swatch" style="background:${c.hex}"></div>
+                    <div class="info">
+                        <div class="name">${c.name}</div>
+                        <div class="code">${c.hex}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            colorListEl.querySelectorAll('.color-item').forEach(el => {
+                el.addEventListener('click', () => {
+                    colorListEl.querySelectorAll('.color-item').forEach(i => i.classList.remove('active'));
+                    el.classList.add('active');
+                    applyColorToActiveLayer(el.dataset.hex, el.dataset.name);
+                });
+            });
+        }
+
+        function setupEvents() {
+            imageUpload.addEventListener('change', (e) => {
+                if (e.target.files[0]) handleUpload(e.target.files[0]);
+                e.target.value = '';
+            });
+
+            replaceImageInput.addEventListener('change', (e) => {
+                if (e.target.files[0]) handleUpload(e.target.files[0]);
+                e.target.value = '';
+            });
+
+            wandModeBtn.addEventListener('click', () => setToolMode('wand'));
+            polyModeBtn.addEventListener('click', () => setToolMode('poly'));
+
+            finishPolyBtn.addEventListener('click', finishPolygonSelection);
+            cancelPolyBtn.addEventListener('click', cancelPolygonSelection);
+
+            canvas.addEventListener('click', (e) => {
+                if (!state.image || state.compareMode) return;
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                const x = Math.round((e.clientX - rect.left) * scaleX);
+                const y = Math.round((e.clientY - rect.top) * scaleY);
+
+                if (state.toolMode === 'wand') {
+                    selectWandArea(x, y);
+                } else if (state.toolMode === 'poly') {
+                    addPolyPoint(x, y);
+                }
+            });
+
+            document.getElementById('resetBtn').addEventListener('click', resetAll);
+            document.getElementById('downloadBtn').addEventListener('click', download);
+            compareBtn.addEventListener('click', toggleCompare);
+        }
+
+        function setToolMode(mode) {
+            state.toolMode = mode;
+            if (mode === 'wand') {
+                wandModeBtn.classList.add('active');
+                polyModeBtn.classList.remove('active');
+                finishPolyBtn.style.display = 'none';
+                cancelPolyBtn.style.display = 'none';
+                tolContainer.style.display = 'inline-flex';
+                cancelPolygonSelection();
+                showToast('Mode: Click any surface to paint');
+            } else {
+                polyModeBtn.classList.add('active');
+                wandModeBtn.classList.remove('active');
+                finishPolyBtn.style.display = 'inline-flex';
+                cancelPolyBtn.style.display = 'inline-flex';
+                tolContainer.style.display = 'none';
+                showToast('Mode: Click corners to outline exact area');
+            }
+        }
+
+        function handleUpload(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    canvas.width = img.naturalWidth || img.width;
+                    canvas.height = img.naturalHeight || img.height;
+
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    state.image = img;
+                    state.originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+                    // Compute smooth bilateral color map for Wand selection
+                    computeSmoothedMap();
+
+                    state.layers = [];
+                    state.activeLayerId = null;
+                    state.nextLayerId = 1;
+                    state.compareMode = false;
+
+                    compareSection.style.display = 'none';
+                    compareBtn.classList.remove('active');
+                    placeholder.style.display = 'none';
+                    replaceLabel.style.display = 'inline-flex';
+                    wallManager.style.display = 'none';
+
+                    statusBadge.className = 'status-badge ready';
+                    statusBadge.textContent = '✅ Photo loaded! Click any surface or use Polygon Tool for sharp edges.';
+                    showToast('Photo Loaded Successfully');
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function computeSmoothedMap() {
+            const w = canvas.width;
+            const h = canvas.height;
+            const src = state.originalImageData.data;
+            const smooth = ctx.createImageData(w, h);
+            const sd = smooth.data;
+
+            // 5x5 Bilateral-like smoothing filter to bridged gaps on rough texture
+            for (let y = 2; y < h - 2; y++) {
+                for (let x = 2; x < w - 2; x++) {
+                    let r = 0, g = 0, b = 0, count = 0;
+                    for (let dy = -2; dy <= 2; dy++) {
+                        for (let dx = -2; dx <= 2; dx++) {
+                            const idx = ((y + dy) * w + (x + dx)) * 4;
+                            r += src[idx];
+                            g += src[idx + 1];
+                            b += src[idx + 2];
+                            count++;
+                        }
+                    }
+                    const i = (y * w + x) * 4;
+                    sd[i] = r / count;
+                    sd[i + 1] = g / count;
+                    sd[i + 2] = b / count;
+                    sd[i + 3] = 255;
+                }
+            }
+            state.smoothedImageData = smooth;
+        }
+
+        function rgbToLab(r, g, b) {
+            r /= 255; g /= 255; b /= 255;
+            r = r > 0.04045 ? Math.pow((r + 0.055) / 1.055, 2.4) : r / 12.92;
+            g = g > 0.04045 ? Math.pow((g + 0.055) / 1.055, 2.4) : g / 12.92;
+            b = b > 0.04045 ? Math.pow((b + 0.055) / 1.055, 2.4) : b / 12.92;
+
+            let x = (r * 0.4124 + g * 0.3576 + b * 0.1805) / 0.95047;
+            let y = (r * 0.2126 + g * 0.7152 + b * 0.0722) / 1.00000;
+            let z = (r * 0.0193 + g * 0.1192 + b * 0.9505) / 1.08883;
+
+            x = x > 0.008856 ? Math.pow(x, 1/3) : (7.787 * x) + (16/116);
+            y = y > 0.008856 ? Math.pow(y, 1/3) : (7.787 * y) + (16/116);
+            z = z > 0.008856 ? Math.pow(z, 1/3) : (7.787 * z) + (16/116);
+
+            return [(116 * y) - 16, 500 * (x - y), 200 * (y - z)];
+        }
+
+        // ============================================================
+        // MODE 1: SMART WAND (Smooth Multi-Pass Flood fill)
+        // ============================================================
+        function selectWandArea(seedX, seedY) {
+            const w = canvas.width;
+            const h = canvas.height;
+            const src = state.smoothedImageData.data;
+
+            const clickedIdx = seedY * w + seedX;
+            for (let layer of state.layers) {
+                if (layer.mask[clickedIdx] === 1) {
+                    state.activeLayerId = layer.id;
+                    state.selectedColor = layer.hex;
+                    state.selectedColorName = layer.colorName;
+                    renderColors();
+                    updateLayerUI();
+                    showToast(`Active: ${layer.name} (${layer.colorName})`);
+                    return;
+                }
+            }
+
+            const seedIdx = clickedIdx * 4;
+            const seedLab = rgbToLab(src[seedIdx], src[seedIdx + 1], src[seedIdx + 2]);
+
+            const visited = new Uint8Array(w * h);
+            const rawMask = new Uint8Array(w * h);
+            const queue = [clickedIdx];
+            visited[clickedIdx] = 1;
+
+            const userTol = parseFloat(toleranceRange.value);
+
+            while (queue.length > 0) {
+                const curr = queue.pop();
+                const cx = curr % w;
+                const cy = Math.floor(curr / w);
+
+                rawMask[curr] = 1;
+
+                const neighbors = [-1, 1, -w, w];
+                for (let i = 0; i < neighbors.length; i++) {
+                    const n = curr + neighbors[i];
+                    const nx = n % w;
+                    const ny = Math.floor(n / w);
+
+                    if (nx < 0 || nx >= w || ny < 0 || ny >= h) continue;
+                    if (visited[n]) continue;
+
+                    const p = n * 4;
+                    const currLab = rgbToLab(src[p], src[p + 1], src[p + 2]);
+
+                    const dE = Math.sqrt(
+                        Math.pow(seedLab[0] - currLab[0], 2) +
+                        Math.pow(seedLab[1] - currLab[1], 2) +
+                        Math.pow(seedLab[2] - currLab[2], 2)
+                    );
+
+                    if (dE < userTol) {
+                        visited[n] = 1;
+                        queue.push(n);
+                    }
+                }
+            }
+
+            // Morphological Dilate/Close Pass (Fills tiny texture specks)
+            const cleanMask = new Uint8Array(w * h);
+            for (let y = 2; y < h - 2; y++) {
+                for (let x = 2; x < w - 2; x++) {
+                    const idx = y * w + x;
+                    if (rawMask[idx] === 1) {
+                        cleanMask[idx] = 1;
+                    } else {
+                        let count = 0;
+                        for (let dy = -2; dy <= 2; dy++) {
+                            for (let dx = -2; dx <= 2; dx++) {
+                                if (rawMask[(y + dy) * w + (x + dx)]) count++;
+                            }
+                        }
+                        if (count >= 13) cleanMask[idx] = 1;
+                    }
+                }
+            }
+
+            addLayerToState(`Surface ${state.nextLayerId}`, cleanMask);
+        }
+
+        // ============================================================
+        // MODE 2: POLYGON LASSO (Manual Outline Tool for Precise Edges)
+        // ============================================================
+        function addPolyPoint(x, y) {
+            state.polyPoints.push({ x, y });
+            renderAllLayersComposite();
+            drawPolyOutline();
+            showToast(`Point added (${state.polyPoints.length}). Click Finish when done.`);
+        }
+
+        function drawPolyOutline() {
+            if (state.polyPoints.length === 0) return;
+            ctx.beginPath();
+            ctx.moveTo(state.polyPoints[0].x, state.polyPoints[0].y);
+            for (let i = 1; i < state.polyPoints.length; i++) {
+                ctx.lineTo(state.polyPoints[i].x, state.polyPoints[i].y);
+            }
+            ctx.strokeStyle = '#C84E3A';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            // Draw dot vertices
+            for (let p of state.polyPoints) {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 5, 0, 2 * Math.PI);
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fill();
+                ctx.strokeStyle = '#C84E3A';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+        }
+
+        function finishPolygonSelection() {
+            if (state.polyPoints.length < 3) {
+                showToast('⚠️ Click at least 3 points to outline a surface shape.');
+                return;
+            }
+
+            const w = canvas.width;
+            const h = canvas.height;
+
+            // Render polygon on offscreen canvas to generate pixel mask
+            const offCanvas = document.createElement('canvas');
+            offCanvas.width = w;
+            offCanvas.height = h;
+            const offCtx = offCanvas.getContext('2d');
+
+            offCtx.beginPath();
+            offCtx.moveTo(state.polyPoints[0].x, state.polyPoints[0].y);
+            for (let i = 1; i < state.polyPoints.length; i++) {
+                offCtx.lineTo(state.polyPoints[i].x, state.polyPoints[i].y);
+            }
+            offCtx.closePath();
+            offCtx.fillStyle = '#FFFFFF';
+            offCtx.fill();
+
+            const maskData = offCtx.getImageData(0, 0, w, h).data;
+            const mask = new Uint8Array(w * h);
+            for (let i = 0; i < w * h; i++) {
+                if (maskData[i * 4] > 128) mask[i] = 1;
+            }
+
+            state.polyPoints = [];
+            addLayerToState(`Custom Area ${state.nextLayerId}`, mask);
+        }
+
+        function cancelPolygonSelection() {
+            state.polyPoints = [];
+            renderAllLayersComposite();
+        }
+
+        // ============================================================
+        // LAYER & COLOR MANAGEMENT
+        // ============================================================
+        function addLayerToState(name, mask) {
+            const newLayer = {
+                id: state.nextLayerId++,
+                name: name,
+                mask: mask,
+                hex: state.selectedColor,
+                colorName: state.selectedColorName
+            };
+
+            state.layers.push(newLayer);
+            state.activeLayerId = newLayer.id;
+
+            wallManager.style.display = 'block';
+            updateLayerUI();
+            renderAllLayersComposite();
+
+            statusBadge.className = 'status-badge painted';
+            statusBadge.textContent = `🎨 Added ${newLayer.name} (${newLayer.colorName}). Click another area to paint!`;
+            showToast(`Added ${newLayer.name}`);
+        }
+
+        function renderAllLayersComposite() {
+            if (!state.originalImageData) return;
+
+            const w = canvas.width;
+            const h = canvas.height;
+            const src = state.originalImageData.data;
+            const output = ctx.createImageData(w, h);
+            const out = output.data;
+
+            out.set(src);
+
+            for (let layer of state.layers) {
+                const mask = layer.mask;
+                const tr = parseInt(layer.hex.slice(1, 3), 16);
+                const tg = parseInt(layer.hex.slice(3, 5), 16);
+                const tb = parseInt(layer.hex.slice(5, 7), 16);
+
+                for (let i = 0; i < w * h; i++) {
+                    if (mask[i] === 1) {
+                        const idx = i * 4;
+                        const origR = src[idx];
+                        const origG = src[idx + 1];
+                        const origB = src[idx + 2];
+
+                        const lum = (0.299 * origR + 0.587 * origG + 0.114 * origB) / 255.0;
+
+                        let nr = (tr * lum * 1.15);
+                        let ng = (tg * lum * 1.15);
+                        let nb = (tb * lum * 1.15);
+
+                        if (lum > 0.82) {
+                            const gl = (lum - 0.82) * 5.5;
+                            nr = nr * (1 - gl * 0.4) + 255 * (gl * 0.4);
+                            ng = ng * (1 - gl * 0.4) + 255 * (gl * 0.4);
+                            nb = nb * (1 - gl * 0.4) + 255 * (gl * 0.4);
+                        }
+
+                        out[idx] = Math.min(255, Math.max(0, nr));
+                        out[idx + 1] = Math.min(255, Math.max(0, ng));
+                        out[idx + 2] = Math.min(255, Math.max(0, nb));
+                    }
+                }
+            }
+
+            state.renderedCompositeData = output;
+
+            if (state.compareMode) {
+                renderCompareView();
+            } else {
+                ctx.putImageData(output, 0, 0);
+            }
+        }
+
+        function applyColorToActiveLayer(hex, name) {
+            state.selectedColor = hex;
+            state.selectedColorName = name;
+
+            if (state.activeLayerId !== null) {
+                const activeLayer = state.layers.find(l => l.id === state.activeLayerId);
+                if (activeLayer) {
+                    activeLayer.hex = hex;
+                    activeLayer.colorName = name;
+                    renderAllLayersComposite();
+                    updateLayerUI();
+                    showToast(`Updated ${activeLayer.name} → ${name}`);
+                    return;
+                }
+            }
+            showToast('Click any surface in the photo to apply this color');
+        }
+
+        function updateLayerUI() {
+            if (state.layers.length === 0) {
+                wallManager.style.display = 'none';
+                return;
+            }
+
+            layerListEl.innerHTML = state.layers.map(l => `
+                <div class="layer-chip ${l.id === state.activeLayerId ? 'active' : ''}" onclick="selectLayer(${l.id})">
+                    <div class="dot" style="background:${l.hex}"></div>
+                    <span>${l.name} (${l.colorName})</span>
+                    <span class="remove-btn" onclick="removeLayer(${l.id}, event)">✕</span>
+                </div>
+            `).join('');
+        }
+
+        function selectLayer(id) {
+            state.activeLayerId = id;
+            const layer = state.layers.find(l => l.id === id);
+            if (layer) {
+                state.selectedColor = layer.hex;
+                state.selectedColorName = layer.colorName;
+                renderColors();
+                updateLayerUI();
+            }
+        }
+
+        function removeLayer(id, event) {
+            event.stopPropagation();
+            state.layers = state.layers.filter(l => l.id !== id);
+            if (state.activeLayerId === id) {
+                state.activeLayerId = state.layers.length > 0 ? state.layers[state.layers.length - 1].id : null;
+            }
+            renderAllLayersComposite();
+            updateLayerUI();
+            showToast('Removed layer');
+        }
+
+        // ============================================================
+        // COMPARE SLIDER FEATURE
+        // ============================================================
+        function setupCompareEvents() {
+            compareSlider.addEventListener('mousedown', (e) => {
+                isDraggingCompare = true;
+                updateComparePosition(e);
+            });
+            window.addEventListener('mousemove', (e) => {
+                if (isDraggingCompare) updateComparePosition(e);
+            });
+            window.addEventListener('mouseup', () => { isDraggingCompare = false; });
+
+            compareSlider.addEventListener('touchstart', (e) => {
+                isDraggingCompare = true;
+                updateComparePosition(e.touches[0]);
+            }, { passive: false });
+            compareSlider.addEventListener('touchmove', (e) => {
+                if (isDraggingCompare) updateComparePosition(e.touches[0]);
+            }, { passive: false });
+            compareSlider.addEventListener('touchend', () => { isDraggingCompare = false; });
+        }
+
+        function updateComparePosition(e) {
+            const rect = compareSlider.getBoundingClientRect();
+            let pos = (e.clientX - rect.left) / rect.width;
+            pos = Math.max(0, Math.min(1, pos));
+            state.compareAmount = pos;
+            compareThumb.style.left = `${pos * 100}%`;
+            if (state.compareMode) renderCompareView();
+        }
+
+        function toggleCompare() {
+            if (state.layers.length === 0) {
+                showToast('⚠️ Paint at least one area to use Compare');
+                return;
+            }
+
+            state.compareMode = !state.compareMode;
+            if (state.compareMode) {
+                compareSection.style.display = 'block';
+                compareBtn.classList.add('active');
+                renderCompareView();
+                showToast('Drag slider to compare Before / After');
+            } else {
+                compareSection.style.display = 'none';
+                compareBtn.classList.remove('active');
+                if (state.renderedCompositeData) {
+                    ctx.putImageData(state.renderedCompositeData, 0, 0);
+                }
+            }
+        }
+
+        function renderCompareView() {
+            if (!state.originalImageData || !state.renderedCompositeData) return;
+
+            const w = canvas.width;
+            const h = canvas.height;
+            const orig = state.originalImageData.data;
+            const comp = state.renderedCompositeData.data;
+            const output = ctx.createImageData(w, h);
+            const out = output.data;
+
+            const splitX = Math.round(w * state.compareAmount);
+
+            for (let y = 0; y < h; y++) {
+                for (let x = 0; x < w; x++) {
+                    const idx = (y * w + x) * 4;
+                    if (x < splitX) {
+                        out[idx] = orig[idx];
+                        out[idx + 1] = orig[idx + 1];
+                        out[idx + 2] = orig[idx + 2];
+                    } else {
+                        out[idx] = comp[idx];
+                        out[idx + 1] = comp[idx + 1];
+                        out[idx + 2] = comp[idx + 2];
+                    }
+                    out[idx + 3] = 255;
+                }
+            }
+
+            ctx.putImageData(output, 0, 0);
+            ctx.beginPath();
+            ctx.moveTo(splitX, 0);
+            ctx.lineTo(splitX, h);
+            ctx.strokeStyle = '#C84E3A';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+        }
+
+        function resetAll() {
+            if (!state.originalImageData) return;
+            state.layers = [];
+            state.activeLayerId = null;
+            state.compareMode = false;
+            compareSection.style.display = 'none';
+            compareBtn.classList.remove('active');
+            cancelPolygonSelection();
+            ctx.putImageData(state.originalImageData, 0, 0);
+            wallManager.style.display = 'none';
+            statusBadge.className = 'status-badge ready';
+            statusBadge.textContent = '✅ Cleared all layers. Click any surface to paint.';
+            showToast('All layers cleared');
+        }
+
+        function download() {
+            if (!state.image) return;
+            const link = document.createElement('a');
+            link.download = 'rangoli-painted-photo.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

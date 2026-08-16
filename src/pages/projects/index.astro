@@ -1,0 +1,450 @@
+---
+Astro.response.headers.set(
+    "Cache-Control",
+    "public, max-age=0, s-maxage=90, stale-while-revalidate=30",
+);
+
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import { queryWordPress } from "../../lib/wordpress";
+
+const PAGEJSON = `
+query ALLPROJECTSS {
+  page(id: "/projects", idType: URI) {
+    title
+    content
+    seo {
+      canonical
+      cornerstone
+      fullHead
+    }
+  }
+}
+`;
+
+const ALLPROJECTS = `
+query ALLPROJECTS {
+  myproject(first: 100) {
+    nodes {
+      id
+      title
+      content
+      slug
+      excerpt
+      date
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+          mediaDetails {
+            width
+            height
+            sizes {
+              name
+              sourceUrl
+              width
+              height
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`;
+
+const pagedata = await queryWordPress(PAGEJSON);
+const projectsdata = await queryWordPress(ALLPROJECTS);
+
+const alldata = pagedata?.page;
+const seodata = alldata?.seo || {};
+const projectsList = projectsdata?.myproject?.nodes || [];
+
+function getCardImage(project) {
+    const node = project.featuredImage?.node;
+    if (!node) {
+        return {
+            src: "https://staging.vincenzoroofing.com/wp-content/uploads/2026/08/home-1.webp",
+            alt: project.title,
+        };
+    }
+    const sizes = node.mediaDetails?.sizes || [];
+    const preferred =
+        sizes.find((s) => s.name === "medium_large") ||
+        sizes.find((s) => s.name === "medium") ||
+        null;
+
+    return {
+        src: preferred?.sourceUrl || node.sourceUrl,
+        alt: node.altText || project.title,
+    };
+}
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead
+            useYoast={true}
+            canonical={seodata?.canonical || ""}
+            focuskw={seodata?.focuskw || ""}
+        />
+        {seodata?.fullHead && <Fragment set:html={seodata.fullHead} />}
+    </head>
+    <body>
+        <Header />
+
+        <main id="top">
+            <section class="page-hero">
+                <div class="container">
+                    <div class="breadcrumb">
+                        <a href="/">Home</a><span>/</span><span>Projects</span>
+                    </div>
+                    <Fragment set:html={alldata?.content || "error"} />
+                </div>
+            </section>
+            <div class="container">
+                <div class="grid">
+                    {
+                        projectsList.map((project) => {
+                            const img = getCardImage(project);
+                            return (
+                                <a
+                                    class="card"
+                                    href={`/projects/${project.slug}`}
+                                >
+                                    <div
+                                        class="thumb"
+                                        style="background:linear-gradient(180deg,#4A7FD4 0%,#EAF0FA 100%);"
+                                    >
+                                        <>
+                                            <span class="tick tl" />
+                                            <span class="tick tr" />
+                                        </>
+                                        <span class="status">PROJECTS</span>
+                                        <img
+                                            src={img.src}
+                                            alt={img.alt}
+                                            loading="lazy"
+                                        />
+                                    </div>
+                                    <div class="card-body">
+                                        <h3>{project.title}</h3>
+                                        <Fragment
+                                            set:html={project.excerpt || ""}
+                                        />
+                                        <span class="view">
+                                            View project
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                            >
+                                                <path
+                                                    d="M5 12h14M13 6l6 6-6 6"
+                                                    stroke="currentColor"
+                                                    stroke-width="2"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                />
+                                            </svg>
+                                        </span>
+                                    </div>
+                                </a>
+                            );
+                        })
+                    }
+                </div>
+            </div>
+        </main>
+
+        <Footer />
+        <style is:global>
+            :root {
+                --blue: #0d47a1;
+                --blue-bright: #1a5fd0;
+                --blue-soft: #4a7fd4;
+                --blue-pale: #eaf0fa;
+                --ink: #111111;
+                --ink-deep: #0a0a0a;
+                --deep: #071f45;
+                --deep-2: #0a2e6b;
+                --ink-soft: #1c1c1e;
+                --white: #ffffff;
+                --off: #f6f7f9;
+                --grey: #54575c;
+                --grey-light: #8a8d92;
+                --line: #e6e8ec;
+                --line-dark: rgba(255, 255, 255, 0.1);
+                --r-lg: 22px;
+                --r-md: 16px;
+                --r-sm: 12px;
+                --sh-sm:
+                    0 1px 3px rgba(17, 17, 17, 0.05),
+                    0 4px 14px rgba(17, 17, 17, 0.05);
+                --sh-md:
+                    0 4px 10px rgba(17, 17, 17, 0.05),
+                    0 16px 40px rgba(17, 17, 17, 0.1);
+                --sh-lg:
+                    0 8px 20px rgba(17, 17, 17, 0.08),
+                    0 32px 80px rgba(17, 17, 17, 0.18);
+                --sh-blue: 0 8px 24px rgba(13, 71, 161, 0.32);
+                --ease: cubic-bezier(0.22, 0.61, 0.21, 1);
+                --font-head: "Space Grotesk", sans-serif;
+                --font-body: "Inter", sans-serif;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+            body {
+                font-family: var(--font-body);
+                color: var(--ink);
+                background: var(--off);
+                -webkit-font-smoothing: antialiased;
+            }
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+            img {
+                max-width: 100%;
+                display: block;
+            }
+
+            .wrap {
+                max-width: 1180px;
+                margin: 0 auto;
+                padding: 0 32px;
+            }
+
+            .grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 28px;
+                padding: 36px 0 100px;
+            }
+            .card {
+                background: var(--white);
+                border-radius: var(--r-lg);
+                border: 1px solid var(--line);
+                overflow: hidden;
+                box-shadow: var(--sh-sm);
+                transition:
+                    transform 0.35s var(--ease),
+                    box-shadow 0.35s var(--ease);
+                display: flex;
+                flex-direction: column;
+            }
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: var(--sh-lg);
+            }
+            .card:hover .thumb svg .roofline {
+                stroke-dashoffset: 0;
+            }
+
+            .thumb {
+                position: relative;
+                aspect-ratio: 4/3;
+                display: flex;
+                align-items: flex-end;
+                justify-content: center;
+                overflow: hidden;
+            }
+            .page-hero h1 {
+                margin-bottom: 10px;
+            }
+            .thumb .tick {
+                position: absolute;
+                width: 14px;
+                height: 14px;
+                border-color: rgba(255, 255, 255, 0.55);
+                border-style: solid;
+                z-index: 2;
+            }
+            .thumb .tick.tl {
+                top: 12px;
+                left: 12px;
+                border-width: 2px 0 0 2px;
+            }
+            .thumb .tick.tr {
+                top: 12px;
+                right: 12px;
+                border-width: 2px 2px 0 0;
+            }
+            .thumb svg {
+                width: 100%;
+                height: 100%;
+            }
+            .thumb .roofline {
+                stroke-dasharray: 400;
+                stroke-dashoffset: 400;
+                transition: stroke-dashoffset 1s var(--ease);
+            }
+            .status {
+                position: absolute;
+                top: 14px;
+                right: 14px;
+                z-index: 2;
+                font-family: var(--font-head);
+                font-size: 10.5px;
+                font-weight: 700;
+                letter-spacing: 0.06em;
+                color: var(--white);
+                background: rgba(7, 31, 69, 0.55);
+                backdrop-filter: blur(4px);
+                padding: 5px 10px;
+                border-radius: 6px;
+                /* transform: rotate(2deg); */
+                border: 1px solid rgba(255, 255, 255, 0.35);
+            }
+
+            .card-body {
+                padding: 22px 22px 24px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                flex: 1;
+            }
+            .tags {
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+            .tag {
+                font-size: 11.5px;
+                font-weight: 600;
+                color: var(--blue);
+                background: var(--blue-pale);
+                padding: 4px 10px;
+                border-radius: 999px;
+            }
+            .card h3 {
+                font-family: var(--font-head);
+                font-size: 19px;
+                color: var(--deep);
+                line-height: 1.25;
+                letter-spacing: -0.01em;
+            }
+            .card .loc {
+                font-size: 13px;
+                color: var(--grey-light);
+            }
+            .card p {
+                font-size: 14px;
+                color: var(--grey);
+                line-height: 1.55;
+            }
+            .view {
+                margin-top: auto;
+                padding-top: 8px;
+                font-size: 13.5px;
+                font-weight: 600;
+                color: var(--blue);
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+            }
+            .view svg {
+                width: 14px;
+                height: 14px;
+                transition: transform 0.2s var(--ease);
+            }
+            .card:hover .view svg {
+                transform: translateX(3px);
+            }
+
+            .cta {
+                background: linear-gradient(160deg, var(--deep), var(--deep-2));
+                border-radius: var(--r-lg);
+                margin: 0 auto 100px;
+                max-width: 1180px;
+                padding: 56px 48px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 24px;
+                flex-wrap: wrap;
+                box-shadow: var(--sh-lg);
+            }
+            .cta h2 {
+                font-family: var(--font-head);
+                color: var(--white);
+                font-size: 28px;
+                letter-spacing: -0.01em;
+                max-width: 420px;
+                line-height: 1.2;
+            }
+            .cta a {
+                background: var(--white);
+                color: var(--deep);
+                font-weight: 600;
+                font-size: 14.5px;
+                padding: 14px 26px;
+                border-radius: 999px;
+                white-space: nowrap;
+                transition: transform 0.2s var(--ease);
+            }
+            .cta a:hover {
+                transform: translateY(-2px);
+            }
+
+            footer {
+                border-top: 1px solid var(--line);
+                padding: 36px 0;
+            }
+            .foot-inner {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+            footer p {
+                font-size: 13px;
+                color: var(--grey-light);
+            }
+            .thumb img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                object-position: center;
+            }
+
+            @media (max-width: 900px) {
+                .grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+            @media (max-width: 640px) {
+                .wrap {
+                    padding: 0 20px;
+                }
+                .nav {
+                    padding: 16px 20px;
+                }
+                .nav ul {
+                    display: none;
+                }
+                .grid {
+                    grid-template-columns: 1fr;
+                }
+                .cta {
+                    padding: 40px 28px;
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                * {
+                    transition: none !important;
+                    animation: none !important;
+                }
+            }
+        </style>
+    </body>
+</html>
