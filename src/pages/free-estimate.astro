@@ -1488,7 +1488,7 @@ const pageData = alldata?.freeEstimateMainPage || {};
                 submitBtn.textContent = "Sending...";
 
                 try {
-                    const res = await fetch("/api/send-estimate", {
+                    const res = await fetch("/api/send-estimate/", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(data),

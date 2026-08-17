@@ -332,10 +332,10 @@ const deferredJson = JSON.stringify(deferredPayload).replace(/</g, "\\u003c");
               </div>
               <div class="blog-content">
                 <span class="blog-date">${escapeHtml(post.date)}</span>
-                <h3><a href="/blog/${encodeURIComponent(post.slug)}">${escapeHtml(post.title)}</a></h3>
+                <h3><a href="/blog/${encodeURIComponent(post.slug)}/">${escapeHtml(post.title)}</a></h3>
                 <p>${escapeHtml(post.excerpt)}</p>
                 <div class="blog-footer">
-                  <a href="/blog/${encodeURIComponent(post.slug)}" class="read-more-link">Read Article</a>
+                  <a href="/blog/${encodeURIComponent(post.slug)}/" class="read-more-link">Read Article</a>
                 </div>
               </div>
             `;

@@ -76,6 +76,12 @@ export default defineConfig({
   // keep working exactly as before. This is the "hybrid" setup: static
   // pages + serverless-only-where-needed.
   output: 'static',
+  // Forces every route to resolve with a trailing slash, both at build time
+  // and in dev. On static output this is what actually fixes the /blog vs
+  // /blog/ mismatch on Vercel — middleware.js only runs for on-demand
+  // (SSR) routes, and static pages are served straight from the CDN
+  // without ever touching the middleware.
+  trailingSlash: 'always',
   adapter: getAdapter(),
   integrations: [mdx(), sitemap()],
   fonts: [
