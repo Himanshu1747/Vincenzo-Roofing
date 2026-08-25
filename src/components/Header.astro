@@ -116,7 +116,7 @@ const currentPath = Astro.url.pathname;
     <div class="header-logo">
       <a href="/" class="logo" aria-label={`${logoAlt || "Home"} home`}>
         <img
-          src={logoUrl}
+          src={logoUrl || "/logo.png"}
           alt={logoAlt}
           width={logoWidth}
           height={logoHeight}

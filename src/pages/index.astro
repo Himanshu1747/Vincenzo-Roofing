@@ -95,6 +95,15 @@ query homepagedata {
         faqAnswer
       }
       readyForARoofContent
+      recentContentProjects
+      recenetProjectGrids{
+        recentProjectImage{
+          node{
+            mediaItemUrl
+          }
+        }
+        recentProjectTitle
+      }
     }
   }
 }
@@ -447,80 +456,41 @@ const hp = page?.homePage || {};
             </section>
 
             <!-- Gallery Section -->
-            <section class="section" id="gallery">
-                <div class="container">
-                    <div class="sec-header">
-                        <p><span class="eyebrow">Recent Projects</span></p>
-                        <h2 class="sec-head">
-                            Real Roofs Across <span class="accent"
-                                >New Hampshire</span
-                            >
-                        </h2>
-                        <p>
-                            Every project below was done by our own crew. Photos
-                            are ours, not stock — take a look at the work before
-                            you call.
-                        </p>
-                    </div>
+           <section class="section" id="gallery">
+    <div class="container">
+        <div class="sec-header">
+            {
+                hp?.recentContentProjects && (
+                    <Fragment set:html={hp.recentContentProjects} />
+                )
+            }
+        </div>
 
-                    <div class="gallery-masonry">
-                        <a
-                            href="javascript:void(0)"
-                            class="photo-frame"
-                            data-cat="residential"
-                        >
-                            <img
-                                src="/location-1.webp"
-                                alt="Keene, NH — Metal Roof Detail"
-                                width="434"
-                                height="289"
-                                loading="lazy"
-                                decoding="async"
-                            />
-                            <div class="g-cap">
-                                Keene, NH — Metal Roof Detail
-                            </div>
-                        </a>
-
-                        <a
-                            href="javascript:void(0)"
-                            class="photo-frame"
-                            data-cat="residential"
-                        >
-                            <img
-                                src="/location-2.webp"
-                                alt="Dover, NH — Multi-Unit Roofing"
-                                width="434"
-                                height="289"
-                                loading="lazy"
-                                decoding="async"
-                            />
-                            <div class="g-cap">
-                                Dover, NH — Multi-Unit Roofing
-                            </div>
-                        </a>
-
-                        <a
-                            href="javascript:void(0)"
-                            class="photo-frame"
-                            data-cat="residential"
-                        >
-                            <img
-                                src="/location-3.webp"
-                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 434px"
-                                alt="Derry, NH — Emergency Tarping"
-                                width="434"
-                                height="289"
-                                loading="lazy"
-                                decoding="async"
-                            />
-                            <div class="g-cap">
-                                Derry, NH — Emergency Tarping
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </section>
+        <div class="gallery-masonry">
+            {
+                hp?.recenetProjectGrids?.map((project) => (
+                    <a
+                        href="javascript:void(0)"
+                        class="photo-frame"
+                        data-cat="residential"
+                    >
+                        <img
+                            src={project?.recentProjectImage?.node?.mediaItemUrl}
+                            alt={project?.recentProjectTitle || "Project Image"}
+                            width="434"
+                            height="289"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                        <div class="g-cap">
+                            {project?.recentProjectTitle}
+                        </div>
+                    </a>
+                ))
+            }
+        </div>
+    </div>
+</section>
 
             <!-- Emergency Response Banner -->
             <section class="emergency">
