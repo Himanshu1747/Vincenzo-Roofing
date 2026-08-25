@@ -75,21 +75,21 @@ if (!post) {
 
 const galleryImages = post.allprojectsacf?.galleryImage?.nodes || [];
 
-// Helper function to find Large image -> Medium image -> Original sourceUrl
+// Both lightbox link and img source use Large -> Original fallback
 function getImageUrls(imgNode: any) {
     const originalUrl = imgNode?.sourceUrl || "";
     const sizes = imgNode?.mediaDetails?.sizes || [];
 
     const largeObj = sizes.find((s: any) => s.name === "large");
 
-    // Fall back to originalUrl if large does not exist, bypassing medium
-    const displayUrl = largeObj?.sourceUrl || originalUrl;
+    const imageUrl = largeObj?.sourceUrl || originalUrl;
 
     return {
-        full: originalUrl,    // Original image for Lightbox modal
-        display: displayUrl,  // Large -> Original for <img> thumbnail
+        full: imageUrl,
+        display: imageUrl,
     };
 }
+
 function formatDate(dateString: string) {
     if (!dateString) return "";
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -175,7 +175,6 @@ function truncateWords(text: string, wordLimit: number = 5) {
 
                 <!-- Sidebar -->
                 <aside class="sidebar">
-                    <!-- Recent Articles Widget -->
                     <div class="sidebar-widget">
                         <h3>Explore Projects</h3>
 
@@ -259,8 +258,7 @@ function truncateWords(text: string, wordLimit: number = 5) {
         </main>
 
         <Footer />
-
-        <style is:global>
+ <style is:global>
             /* Single Post Header & Meta */
             .article-header {
                 padding: 50px 0 40px;
@@ -684,7 +682,6 @@ function truncateWords(text: string, wordLimit: number = 5) {
                 }
             }
         </style>
-
         <script
             is:inline
             src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"
