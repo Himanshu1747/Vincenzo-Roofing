@@ -1,0 +1,8 @@
+{
+  "redirects": [
+    { "source": "/storm-emergency", "destination": "/service/storm-emergency/", "permanent": true },
+    { "source": "/storm-emergency/", "destination": "/service/storm-emergency/", "permanent": true },
+    { "source": "/service", "destination": "/", "permanent": true },
+    { "source": "/service/", "destination": "/", "permanent": true }
+  ]
+}

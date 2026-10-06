@@ -81,7 +81,15 @@ export default defineConfig({
   // /blog/ mismatch on Vercel — middleware.js only runs for on-demand
   // (SSR) routes, and static pages are served straight from the CDN
   // without ever touching the middleware.
-  trailingSlash: 'always',
+  // Production always uses trailing slashes. Only on `astro dev` it is relaxed to
+  // 'ignore', otherwise Astro's dev server shows its own default 404/hint page for
+  // URLs typed without a slash (e.g. /services) instead of our custom 404 page.
+  trailingSlash: process.argv.includes('dev') ? 'ignore' : 'always',
+  // Old/wrong URLs that Google already found -> permanent redirect to the right page.
+  redirects: {
+    '/storm-emergency': '/service/storm-emergency/',
+    '/service': '/',
+  },
   adapter: getAdapter(),
   integrations: [mdx(), sitemap()],
   fonts: [

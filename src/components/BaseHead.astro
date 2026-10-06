@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 import FallbackImage from "../assets/blog-placeholder-1.jpg";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL } from "../consts";
 
 const {
   title,
@@ -16,6 +16,23 @@ const customTitle = title || SITE_TITLE;
 const customDesc = description || SITE_DESCRIPTION;
 const socialImage = typeof image === "string" ? image : image?.src;
 
+// Canonical: always on the main (production) domain, path taken from the
+// WordPress/Yoast canonical when given, otherwise from the current page.
+const siteOrigin = SITE_URL.replace(/\/+$/, "");
+let canonicalPath = Astro.url.pathname;
+if (canonical) {
+  try {
+    canonicalPath = new URL(canonical, siteOrigin).pathname;
+  } catch (e) {
+    /* keep current page path */
+  }
+}
+if (!canonicalPath.startsWith("/")) canonicalPath = "/" + canonicalPath;
+if (!canonicalPath.endsWith("/") && !/\.[a-z0-9]+$/i.test(canonicalPath)) {
+  canonicalPath += "/";
+}
+const canonicalUrl = siteOrigin + canonicalPath;
+
 ---
 
 <meta charset="UTF-8" />
@@ -24,13 +41,7 @@ const socialImage = typeof image === "string" ? image : image?.src;
 
 
 {/* Canonical / SEO */}
-{
-  canonical ? (
-    <link rel="canonical" href={canonical} />
-  ) : (
-    <link rel="canonical" href={Astro.url} />
-  )
-}
+<link rel="canonical" href={canonicalUrl} />
 {focuskw && <meta name="keywords" content={focuskw} />}
 
 {

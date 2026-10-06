@@ -21,6 +21,23 @@ const REQUEST_TIMEOUT_MS = 4000;
 const MAX_RETRIES = 1;
 const RETRY_DELAY_MS = 200;
 
+// Some WordPress content contains a leaked PHP snippet inside links, e.g.
+// href="<?php echo esc_url( home_url( '/contact/' ) ); ?>". PHP never runs
+// inside post content, so the browser/Google treats it as a broken relative
+// URL. Turn it into the plain path ("/contact/") before it reaches any page.
+const LEAKED_PHP_URL =
+  /(?:<|&lt;|&#0*60;)\?php\s+echo\s+esc_url\(\s*home_url\(\s*(?:'|"|&#0*39;|&#0*039;|&apos;|&quot;|&#8217;|&#8216;)([^'"&<>]*?)(?:'|"|&#0*39;|&#0*039;|&apos;|&quot;|&#8217;|&#8216;)\s*\)\s*\)\s*;?\s*\?(?:>|&gt;|&#0*62;)/gi;
+
+function cleanLeakedPhp(data) {
+  try {
+    const json = JSON.stringify(data);
+    if (!json.includes("esc_url") ) return data;
+    return JSON.parse(json.replace(LEAKED_PHP_URL, (_m, path) => path || "/"));
+  } catch (e) {
+    return data;
+  }
+}
+
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function fetchWithTimeout(endpoint, body) {
@@ -68,7 +85,7 @@ async function fetchWithRetry(endpoint, body) {
         return null;
       }
 
-      return json.data;
+      return cleanLeakedPhp(json.data);
     } catch (error) {
       lastError = error;
       // AbortError (timeout) or network error -- worth a retry.

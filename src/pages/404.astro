@@ -1,0 +1,118 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+// Custom "page not found" page. The host (Vercel / Netlify) serves this file
+// automatically for any URL that does not exist, and with a real 404 status,
+// which is what Google expects (a redirect to home would be a "soft 404").
+
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/about/", label: "About" },
+  { href: "/blog/", label: "Blog" },
+  { href: "/contact/", label: "Contact us" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/fav.png" type="image/x-icon" />
+    <title>Page Not Found | Vincenzo's Roofing</title>
+    <meta name="robots" content="noindex, follow" />
+  </head>
+  <body>
+    <Header />
+
+    <main id="top">
+      <section class="nf-wrap">
+        <div class="container">
+          <div class="nf-inner">
+            <div class="nf-code" aria-hidden="true">404</div>
+            <h1>We could not find that page</h1>
+            <p>
+              The link may be broken, or the page may have moved. Here are some
+              good places to pick up from.
+            </p>
+            <div class="nf-pills">
+              {
+                links.map((l) => (
+                  <a class="nf-pill" href={l.href}>
+                    {l.label}
+                    <span aria-hidden="true">→</span>
+                  </a>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+
+    <style>
+      .nf-wrap {
+        padding: 90px 0 110px;
+        background: var(--white);
+      }
+      .nf-inner {
+        max-width: 720px;
+      }
+      .nf-code {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 800;
+        font-size: clamp(90px, 16vw, 170px);
+        line-height: 1;
+        letter-spacing: -0.03em;
+        color: var(--blue-bright);
+        margin-bottom: 18px;
+      }
+      .nf-inner h1 {
+        font-size: clamp(30px, 4.4vw, 46px);
+        line-height: 1.15;
+        margin-bottom: 16px;
+      }
+      .nf-inner p {
+        color: var(--grey);
+        font-size: 17px;
+        max-width: 640px;
+      }
+      .nf-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 32px;
+      }
+      .nf-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--blue);
+        background: var(--white);
+        border: 1.5px solid var(--line);
+        border-radius: 100px;
+        padding: 11px 20px;
+        transition: background 0.25s var(--ease), border-color 0.25s var(--ease),
+          color 0.25s var(--ease), transform 0.25s var(--ease);
+      }
+      .nf-pill:hover {
+        background: var(--blue);
+        border-color: var(--blue);
+        color: var(--white);
+        transform: translateY(-2px);
+      }
+      @media (max-width: 600px) {
+        .nf-wrap {
+          padding: 60px 0 80px;
+        }
+      }
+    </style>
+  </body>
+</html>
